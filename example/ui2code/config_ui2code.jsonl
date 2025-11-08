@@ -1,0 +1,11 @@
+{
+    "input_jsonl": "./input_data/data_agent.jsonl",
+    "output_prefix": "./output/",
+    "models": [
+      "claude-sonnet-4-20250514-thinking"
+    ],
+    "num_workers": 20,
+    "api_key": "sk-xxxxxxxx",
+    "api_base": "https://api-gateway.xxxxxxx",
+    "max_completion_tokens": 32000
+  } 

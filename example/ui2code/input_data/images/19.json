@@ -1,0 +1,466 @@
+{
+  "html_file": "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/htmls/19.html",
+  "steps": [
+    {
+      "step_type": "list",
+      "img_name": "start",
+      "domtree": "{'id': 24, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 23, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 22, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'max-w-7xl mx-auto'}, 'children': [{'id': 20, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-6'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-1 space-y-6'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 2, 'tag': 'DIV', 'attrs': {'class': 'mb-4'}, 'children': [{'id': 0, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '选择你的宠物'}, {'id': 1, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50'}, 'children': [], 'can_interact': True, 'visible_text': '🐕 小狗', 'options': [{'value': 'dog', 'text': '🐕 小狗', 'selected': True}, {'value': 'cat', 'text': '🐱 小猫', 'selected': False}, {'value': 'rabbit', 'text': '🐰 小兔', 'selected': False}]}]}]}]}, {'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'}, 'children': [{'id': 10, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-green-200'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 7, 'tag': 'DIV', 'attrs': {}, 'children': [{'id': 5, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '食物数量'}, {'id': 6, 'tag': 'INPUT', 'attrs': {'type': 'number', 'min': '1', 'max': '10', 'class': 'w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50', 'value': '1'}, 'children': [], 'can_interact': True, 'input_value': '1', 'visible_text': '1'}]}, {'id': 8, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '喂食小宠物'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-purple-200'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 11, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '开始训练'}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'flex gap-3'}, 'children': [{'id': 15, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '输入新昵称...', 'class': 'flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50', 'maxlength': '20', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '确认昵称'}]}]}]}]}]}]}]}]}",
+      "actions_seqs": [
+        {
+          "action": "select",
+          "id": "1",
+          "value": "🐱 小猫",
+          "dom_info": {
+            "id": 1,
+            "tag": "SELECT",
+            "attrs": {
+              "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+            },
+            "visible_text": "🐕 小狗"
+          }
+        },
+        {
+          "action": "input",
+          "id": "6",
+          "input_val": "3",
+          "dom_info": {
+            "id": 6,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "number",
+              "min": "1",
+              "max": "10",
+              "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+              "value": "1"
+            },
+            "visible_text": "1"
+          }
+        },
+        {
+          "action": "click",
+          "id": "8",
+          "dom_info": {
+            "id": 8,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "喂食小宠物"
+          }
+        },
+        {
+          "action": "click",
+          "id": "11",
+          "dom_info": {
+            "id": 11,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "开始训练"
+          }
+        },
+        {
+          "action": "input",
+          "id": "15",
+          "input_val": "球球",
+          "dom_info": {
+            "id": 15,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "输入新昵称...",
+              "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+              "maxlength": "20",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "16",
+          "dom_info": {
+            "id": 16,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "确认昵称"
+          }
+        }
+      ],
+      "actions_seqs_detail": [
+        [
+          {
+            "action": "select",
+            "id": "1",
+            "value": "🐱 小猫",
+            "dom_info": {
+              "id": 1,
+              "tag": "SELECT",
+              "attrs": {
+                "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+              },
+              "visible_text": "🐕 小狗"
+            }
+          }
+        ],
+        [
+          {
+            "action": "input",
+            "id": "6",
+            "input_val": "3",
+            "dom_info": {
+              "id": 6,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "number",
+                "min": "1",
+                "max": "10",
+                "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+                "value": "1"
+              },
+              "visible_text": "1"
+            }
+          },
+          {
+            "action": "click",
+            "id": "8",
+            "dom_info": {
+              "id": 8,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              },
+              "visible_text": "喂食小宠物"
+            }
+          }
+        ],
+        [
+          {
+            "action": "click",
+            "id": "11",
+            "dom_info": {
+              "id": 11,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              },
+              "visible_text": "开始训练"
+            }
+          }
+        ],
+        [
+          {
+            "action": "input",
+            "id": "15",
+            "input_val": "球球",
+            "dom_info": {
+              "id": 15,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "text",
+                "placeholder": "输入新昵称...",
+                "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+                "maxlength": "20",
+                "value": ""
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "click",
+            "id": "16",
+            "dom_info": {
+              "id": 16,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              },
+              "visible_text": "确认昵称"
+            }
+          }
+        ]
+      ],
+      "model_output": "ChatCompletionMessage(content='\\\\boxed{select[1][🐱 小猫]}\\n\\\\boxed{enter[6][3], click[8]}\\n\\\\boxed{click[11]}\\n\\\\boxed{enter[15][球球], click[16]}', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "step_idx": 0
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/select_1___小猫.png"
+      ],
+      "domtree": "{'id': 24, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 23, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 22, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'max-w-7xl mx-auto'}, 'children': [{'id': 20, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-6'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-1 space-y-6'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 2, 'tag': 'DIV', 'attrs': {'class': 'mb-4'}, 'children': [{'id': 0, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '选择你的宠物'}, {'id': 1, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50'}, 'children': [], 'can_interact': True, 'visible_text': '🐕 小狗', 'options': [{'value': 'dog', 'text': '🐕 小狗', 'selected': True}, {'value': 'cat', 'text': '🐱 小猫', 'selected': False}, {'value': 'rabbit', 'text': '🐰 小兔', 'selected': False}]}]}]}]}, {'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'}, 'children': [{'id': 10, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-green-200'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 7, 'tag': 'DIV', 'attrs': {}, 'children': [{'id': 5, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '食物数量'}, {'id': 6, 'tag': 'INPUT', 'attrs': {'type': 'number', 'min': '1', 'max': '10', 'class': 'w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50', 'value': '1'}, 'children': [], 'can_interact': True, 'input_value': '1', 'visible_text': '1'}]}, {'id': 8, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '喂食小宠物'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-purple-200'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 11, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '开始训练'}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'flex gap-3'}, 'children': [{'id': 15, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '输入新昵称...', 'class': 'flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50', 'maxlength': '20', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '确认昵称'}]}]}]}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "select",
+          "id": "1",
+          "value": "🐱 小猫",
+          "dom_info": {
+            "id": 1,
+            "tag": "SELECT",
+            "attrs": {
+              "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+            },
+            "visible_text": "🐕 小狗"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "ChatCompletionMessage(content='\\\\boxed{select[1][🐱 小猫]}\\n\\\\boxed{enter[6][3], click[8]}\\n\\\\boxed{click[11]}\\n\\\\boxed{enter[15][球球], click[16]}', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "detect_output": "ChatCompletionMessage(content='\\\\boxed{有}\\n\\\\terminate{完成}\\n理由：\\n- 互动组件为下拉选择“select_1___小猫”。执行后页面应切换展示为“小猫”，并可能在日志中记录切换行为。\\n- 对比两张图：\\n  - 下拉框从“小狗”变为“小猫”；\\n  - “宠物展示”卡片中的图片由小狗换为小猫，标题文字由“小狗”变为“小猫”，描述文本也随之变为猫的描述；\\n  - “互动日志”新增一条“切换到了小猫”的记录并带有时间戳；\\n  - 其他模块（宠物状态条、页面布局等）保持不变。\\n- 以上变化与该交互应产生的效果一致，因此判定为“有”。\\n- 尽管内容有更新，但页面结构与组件未新增，仍与起始图高度相似，仅为内容与日志条目的微小变化，不构成新的重要部分或新组件出现，因此判定为“完成”。', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "pass": true,
+      "step_idx": 1
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/input_6_3.png",
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/input_6_3_喂食小宠物.png"
+      ],
+      "domtree": "{'id': 24, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 23, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 22, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'max-w-7xl mx-auto'}, 'children': [{'id': 20, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-6'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-1 space-y-6'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 2, 'tag': 'DIV', 'attrs': {'class': 'mb-4'}, 'children': [{'id': 0, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '选择你的宠物'}, {'id': 1, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50'}, 'children': [], 'can_interact': True, 'visible_text': '🐕 小狗', 'options': [{'value': 'dog', 'text': '🐕 小狗', 'selected': True}, {'value': 'cat', 'text': '🐱 小猫', 'selected': False}, {'value': 'rabbit', 'text': '🐰 小兔', 'selected': False}]}]}]}]}, {'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'}, 'children': [{'id': 10, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-green-200'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 7, 'tag': 'DIV', 'attrs': {}, 'children': [{'id': 5, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '食物数量'}, {'id': 6, 'tag': 'INPUT', 'attrs': {'type': 'number', 'min': '1', 'max': '10', 'class': 'w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50', 'value': '1'}, 'children': [], 'can_interact': True, 'input_value': '1', 'visible_text': '1'}]}, {'id': 8, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '喂食小宠物'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-purple-200'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 11, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '开始训练'}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'flex gap-3'}, 'children': [{'id': 15, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '输入新昵称...', 'class': 'flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50', 'maxlength': '20', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '确认昵称'}]}]}]}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "input",
+          "id": "6",
+          "input_val": "3",
+          "dom_info": {
+            "id": 6,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "number",
+              "min": "1",
+              "max": "10",
+              "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+              "value": "1"
+            },
+            "visible_text": "1"
+          }
+        },
+        {
+          "action": "click",
+          "id": "8",
+          "dom_info": {
+            "id": 8,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "喂食小宠物"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "ChatCompletionMessage(content='\\\\boxed{select[1][🐱 小猫]}\\n\\\\boxed{enter[6][3], click[8]}\\n\\\\boxed{click[11]}\\n\\\\boxed{enter[15][球球], click[16]}', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "detect_output": "ChatCompletionMessage(content='\\\\boxed{有}\\n\\\\terminate{完成}\\n理由：\\n1. 本次互动为“喂食小宠物”。从首图到末图，喂食数量由1改为3.0后点击“喂食小宠物”，页面出现了应有的结果性变化：宠物状态条发生变化（饥饿度从50%变为80%，心情值从70%变为75%），互动日志新增一条“喂食了3份食物，小可爱很开心！”且带有新的时间戳。这些都表明喂食动作被执行并生效，属于符合互动组件预期的页面变化，所以判断为“有”。\\n2. 与起始图相比，末图并未出现新的重要模块或新的交互组件，仅是在原有组件内的数据与日志内容更新，页面结构整体保持相同，因此无需继续检测，判为“完成”。', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "pass": true,
+      "step_idx": 2
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/开始训练.png"
+      ],
+      "domtree": "{'id': 24, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 23, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 22, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'max-w-7xl mx-auto'}, 'children': [{'id': 20, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-6'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-1 space-y-6'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 2, 'tag': 'DIV', 'attrs': {'class': 'mb-4'}, 'children': [{'id': 0, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '选择你的宠物'}, {'id': 1, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50'}, 'children': [], 'can_interact': True, 'visible_text': '🐕 小狗', 'options': [{'value': 'dog', 'text': '🐕 小狗', 'selected': True}, {'value': 'cat', 'text': '🐱 小猫', 'selected': False}, {'value': 'rabbit', 'text': '🐰 小兔', 'selected': False}]}]}]}]}, {'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'}, 'children': [{'id': 10, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-green-200'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 7, 'tag': 'DIV', 'attrs': {}, 'children': [{'id': 5, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '食物数量'}, {'id': 6, 'tag': 'INPUT', 'attrs': {'type': 'number', 'min': '1', 'max': '10', 'class': 'w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50', 'value': '1'}, 'children': [], 'can_interact': True, 'input_value': '1', 'visible_text': '1'}]}, {'id': 8, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '喂食小宠物'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-purple-200'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 11, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '开始训练'}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'flex gap-3'}, 'children': [{'id': 15, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '输入新昵称...', 'class': 'flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50', 'maxlength': '20', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '确认昵称'}]}]}]}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "click",
+          "id": "11",
+          "dom_info": {
+            "id": 11,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "开始训练"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "ChatCompletionMessage(content='\\\\boxed{select[1][🐱 小猫]}\\n\\\\boxed{enter[6][3], click[8]}\\n\\\\boxed{click[11]}\\n\\\\boxed{enter[15][球球], click[16]}', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "detect_output": "ChatCompletionMessage(content='\\\\boxed{有}\\n\\\\terminate{完成}\\n理由：\\n- 本次序列仅两张图，表示进行了一次操作：点击“开始训练”。\\n- 预期效果：训练应更新宠物状态（如经验值增加，可能影响饥饿度/心情）并在“互动日志”中新增一条训练结果记录。\\n- 实际比对：\\n  - “宠物状态”中经验值由30%提升到40%，饥饿度由50%降至47%，心情值保持70%。\\n  - “互动日志”新增“训练结果：变得更加聪明了！获得10经验值”的记录，并带有时间戳，原有欢迎记录被保留。\\n- 因此页面产生了与“开始训练”组件相匹配的有效变化，判断为“有”。\\n- 最后一张与起始图相比未出现新的重要模块或界面结构，仅为数值与日志内容更新，不构成新的重要部分，故判定为“完成”。', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "pass": true,
+      "step_idx": 3
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/input_15_球球.png",
+        "/Users/mingdexu/Documents/WEBVIA-For-Publish/publish_ver/example/agent/images/19/input_15_球球_确认昵称.png"
+      ],
+      "domtree": "{'id': 24, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 23, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 22, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'max-w-7xl mx-auto'}, 'children': [{'id': 20, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-6'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-1 space-y-6'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 2, 'tag': 'DIV', 'attrs': {'class': 'mb-4'}, 'children': [{'id': 0, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '选择你的宠物'}, {'id': 1, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50'}, 'children': [], 'can_interact': True, 'visible_text': '🐕 小狗', 'options': [{'value': 'dog', 'text': '🐕 小狗', 'selected': True}, {'value': 'cat', 'text': '🐱 小猫', 'selected': False}, {'value': 'rabbit', 'text': '🐰 小兔', 'selected': False}]}]}]}]}, {'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'}, 'children': [{'id': 10, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-green-200'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 7, 'tag': 'DIV', 'attrs': {}, 'children': [{'id': 5, 'tag': 'LABEL', 'attrs': {'class': 'block text-sm font-medium text-gray-700 mb-2'}, 'children': [], 'can_interact': True, 'visible_text': '食物数量'}, {'id': 6, 'tag': 'INPUT', 'attrs': {'type': 'number', 'min': '1', 'max': '10', 'class': 'w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50', 'value': '1'}, 'children': [], 'can_interact': True, 'input_value': '1', 'visible_text': '1'}]}, {'id': 8, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '喂食小宠物'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-purple-200'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'space-y-4'}, 'children': [{'id': 11, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '开始训练'}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-3xl shadow-lg p-6 border-2 border-pink-200'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'flex gap-3'}, 'children': [{'id': 15, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '输入新昵称...', 'class': 'flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50', 'maxlength': '20', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg'}, 'children': [], 'can_interact': True, 'visible_text': '确认昵称'}]}]}]}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "input",
+          "id": "15",
+          "input_val": "球球",
+          "dom_info": {
+            "id": 15,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "输入新昵称...",
+              "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+              "maxlength": "20",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "16",
+          "dom_info": {
+            "id": 16,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            },
+            "visible_text": "确认昵称"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "ChatCompletionMessage(content='\\\\boxed{select[1][🐱 小猫]}\\n\\\\boxed{enter[6][3], click[8]}\\n\\\\boxed{click[11]}\\n\\\\boxed{enter[15][球球], click[16]}', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "detect_output": "ChatCompletionMessage(content='\\\\boxed{有}\\n\\n理由：\\n- 操作序列为：在“宠物昵称设置”输入框中输入“球球”→点击“确认昵称”。\\n- 第三张图（最终图）中页面发生了与该组件预期一致的结果变化：\\n  - 页面标题副文从“你的小伙伴：小可爱”变为“你的小伙伴：球球”，说明昵称已被应用到全局显示。\\n  - 互动日志新增一条记录“宠物昵称更改为：球球”并带有时间戳，表明系统已保存并记录此次修改。\\n  - 昵称输入框被清空回到占位符状态，符合“提交后重置”的常见交互。\\n- 这些变化均不是按钮高亮或仅局部无效变化，而是实质性的保存与展示更新。\\n\\n\\\\terminate{完成}\\n\\n理由：\\n- 与起始图相比，最终图只是在现有区域内更新了文字（头部副标题与日志列表增加一条记录），页面结构、组件布局并无新增模块/弹窗/新页面等“新的重要部分”出现。\\n- 新内容（日志条目与昵称文本）属于已有组件内的内容更新，非需要继续探索的新界面或新功能入口，因此判定为完成。', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)",
+      "pass": true,
+      "step_idx": 4
+    }
+  ],
+  "total_compare_steps": 4,
+  "total_compare_records": [
+    "select1",
+    "input6,click8",
+    "click11",
+    "input15,click16"
+  ],
+  "pass_num": 4,
+  "pass_texts": [
+    "select1",
+    "input6,click8",
+    "click11",
+    "input15,click16"
+  ],
+  "pass_rate": 1.0,
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+      },
+      "visible_text": "🐕 小狗"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+        "value": "1"
+      },
+      "visible_text": "1"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "喂食小宠物"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "开始训练"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入新昵称...",
+        "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+        "maxlength": "20",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "确认昵称"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+      },
+      "visible_text": "🐕 小狗"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+        "value": "1"
+      },
+      "visible_text": "1"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "喂食小宠物"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "开始训练"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入新昵称...",
+        "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+        "maxlength": "20",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "确认昵称"
+    }
+  ]
+}

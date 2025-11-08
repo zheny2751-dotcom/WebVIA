@@ -1,0 +1,5 @@
+{
+  "input_folder": "../agent/example_output_images",
+  "output_file": "./input_data/data_agent.jsonl",
+  "max_images": 20
+}

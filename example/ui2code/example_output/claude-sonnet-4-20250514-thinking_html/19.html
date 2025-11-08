@@ -1,0 +1,303 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物互动乐园</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [selectedPet, setSelectedPet] = useState('dog');
+            const [petName, setPetName] = useState('小可爱');
+            const [hunger, setHunger] = useState(50);
+            const [mood, setMood] = useState(70);
+            const [experience, setExperience] = useState(30);
+            const [foodAmount, setFoodAmount] = useState('1');
+            const [newNickname, setNewNickname] = useState('');
+            const [logs, setLogs] = useState([{
+                text: '欢迎来到宠物互动乐园！',
+                time: '11:57:02 PM'
+            }]);
+
+            const pets = {
+                dog: {
+                    emoji: '🐶',
+                    name: '小狗',
+                    description: '忠诚可爱的小狗，最喜欢和主人玩耍！汪汪～',
+                    image: 'https://picsum.photos/id/237/200/160'
+                },
+                cat: {
+                    emoji: '🐱',
+                    name: '小猫',
+                    description: '优雅神秘的小猫，独立又温柔，喵～',
+                    image: 'https://picsum.photos/id/96/200/160'
+                }
+            };
+
+            const getCurrentTime = () => {
+                const now = new Date();
+                return now.toLocaleTimeString('en-US', { 
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            };
+
+            const addLog = (text) => {
+                const newLog = {
+                    text: text,
+                    time: getCurrentTime()
+                };
+                setLogs(prevLogs => [newLog, ...prevLogs]);
+            };
+
+            const handlePetChange = (e) => {
+                const petType = e.target.value;
+                setSelectedPet(petType);
+                addLog(`切换到了${pets[petType].name}`);
+            };
+
+            const handleFeed = () => {
+                const amount = parseFloat(foodAmount) || 0;
+                if (amount > 0) {
+                    const hungerIncrease = amount * 10;
+                    const moodIncrease = 5;
+                    
+                    setHunger(prev => Math.min(prev + hungerIncrease, 100));
+                    setMood(prev => Math.min(prev + moodIncrease, 100));
+                    
+                    addLog(`喂食了${amount}食物，${petName}很开心！`);
+                }
+            };
+
+            const handleTrain = () => {
+                const hungerDecrease = 3;
+                const expIncrease = 10;
+                
+                setHunger(prev => Math.max(prev - hungerDecrease, 0));
+                setExperience(prev => Math.min(prev + expIncrease, 100));
+                
+                addLog(`训练结果：变得更加聪明了！获得${expIncrease}经验值`);
+            };
+
+            const handleNicknameChange = () => {
+                if (newNickname.trim()) {
+                    setPetName(newNickname.trim());
+                    addLog(`宠物昵称更改为：${newNickname.trim()}`);
+                    setNewNickname('');
+                }
+            };
+
+            const currentPet = pets[selectedPet];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100 p-6">
+                    <div className="max-w-7xl mx-auto">
+                        {/* Header */}
+                        <div className="text-center mb-8">
+                            <h1 className="text-3xl font-bold text-purple-600 mb-2">
+                                🐾 宠物互动乐园 ❤️
+                            </h1>
+                            <p className="text-lg text-gray-600">你的小伙伴：{petName}</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Left Column */}
+                            <div className="space-y-6">
+                                {/* Pet Display */}
+                                <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                    <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                        ⭐ 宠物展示
+                                    </h2>
+                                    
+                                    <div className="mb-4">
+                                        <p className="text-sm text-gray-600 mb-2">选择你的宠物</p>
+                                        <select 
+                                            value={selectedPet}
+                                            onChange={handlePetChange}
+                                            className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                        >
+                                            <option value="dog">🐶 小狗</option>
+                                            <option value="cat">🐱 小猫</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="text-center">
+                                        <img 
+                                            src={currentPet.image}
+                                            alt={currentPet.name}
+                                            className="w-48 h-36 object-cover rounded-lg mx-auto mb-4"
+                                        />
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                                            {currentPet.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-600">
+                                            {currentPet.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Pet Status */}
+                                <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                    <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                        📊 宠物状态
+                                    </h2>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-sm font-medium text-red-600">🍽 饥饿度</span>
+                                                <span className="text-sm font-semibold">{Math.round(hunger)}%</span>
+                                            </div>
+                                            <div className="w-full bg-gray-200 rounded-full h-3">
+                                                <div 
+                                                    className="bg-red-500 h-3 rounded-full transition-all duration-300"
+                                                    style={{ width: `${hunger}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-sm font-medium text-yellow-600">😊 心情</span>
+                                                <span className="text-sm font-semibold">{Math.round(mood)}%</span>
+                                            </div>
+                                            <div className="w-full bg-gray-200 rounded-full h-3">
+                                                <div 
+                                                    className="bg-yellow-500 h-3 rounded-full transition-all duration-300"
+                                                    style={{ width: `${mood}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-sm font-medium text-blue-600">🎓 经验值</span>
+                                                <span className="text-sm font-semibold">{Math.round(experience)}%</span>
+                                            </div>
+                                            <div className="w-full bg-gray-200 rounded-full h-3">
+                                                <div 
+                                                    className="bg-blue-500 h-3 rounded-full transition-all duration-300"
+                                                    style={{ width: `${experience}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Right Column */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {/* Top Row */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/* Feeding */}
+                                    <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                            🍎 宠物喂养
+                                        </h2>
+                                        
+                                        <div className="space-y-4">
+                                            <div>
+                                                <p className="text-sm text-gray-600 mb-2">食物数量</p>
+                                                <input 
+                                                    type="text"
+                                                    value={foodAmount}
+                                                    onChange={(e) => setFoodAmount(e.target.value)}
+                                                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-green-50"
+                                                />
+                                            </div>
+                                            
+                                            <button 
+                                                onClick={handleFeed}
+                                                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                                            >
+                                                💚 喂食小宠物
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Training */}
+                                    <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                            🔥 宠物训练
+                                        </h2>
+                                        
+                                        <p className="text-sm text-gray-600 mb-6">
+                                            点击训练按钮，帮助你的宠物学习新技能！
+                                        </p>
+                                        
+                                        <button 
+                                            onClick={handleTrain}
+                                            className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                                        >
+                                            🚀 开始训练
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Pet Nickname */}
+                                <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                    <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                        💜 宠物昵称设置
+                                    </h2>
+                                    
+                                    <div className="flex gap-4">
+                                        <input 
+                                            type="text"
+                                            value={newNickname}
+                                            onChange={(e) => setNewNickname(e.target.value)}
+                                            placeholder="输入新昵称..."
+                                            className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                        />
+                                        <button 
+                                            onClick={handleNicknameChange}
+                                            className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors whitespace-nowrap"
+                                        >
+                                            ✅ 确认昵称
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Activity Log */}
+                                <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                    <h2 className="text-xl font-semibold mb-4 flex items-center">
+                                        📄 互动日志
+                                    </h2>
+                                    
+                                    <div className="space-y-3 max-h-48 overflow-y-auto">
+                                        {logs.map((log, index) => (
+                                            <div key={index} className="bg-blue-50 p-3 rounded-lg">
+                                                <div className="flex justify-between items-center">
+                                                    <p className="text-sm text-gray-700">{log.text}</p>
+                                                    <span className="text-xs text-gray-500 whitespace-nowrap ml-2">{log.time}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
