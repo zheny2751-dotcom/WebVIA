@@ -5,9 +5,10 @@
 ![image](./assets/WEBVIA.png)
 
 <p align="center">
-   📃 <a href="https://arxiv.org/abs/XXX" target="_blank"> Paper </a>
+   📃 <a href="https://arxiv.org/abs/XXX" target="_blank"> Paper </a>;
+   🤗 <a href="https://huggingface.co/your_model_link" target="_blank">Model</a> &nbsp; • &nbsp;
+   🌐 <a href="https://zheny2751-dotcom.github.io/webvia.github.io/" target="_blank">Demo</a>
 </p>
-
 ---
 
 ## 🧭 Overview
