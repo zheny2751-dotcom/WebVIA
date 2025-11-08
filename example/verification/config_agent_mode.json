@@ -1,0 +1,13 @@
+{
+    "input_type": "agent",
+    "input_dir": "./htmls",
+    "task_source_jsonl": "./input_data/data_agent.jsonl",
+    "output_image_dir": "./results/verify_images",
+    "model_name": "gpt-5-2025-08-07",
+    "bug_dir": "./results/buglogs",
+    "webenv_path": "./webenv-init/webenv.py",
+    "api_key": "sk-xxxxxxxx",
+    "api_base": "https://api-gateway.xxxxxxx",
+    "num_port": 8,
+    "port_base": 8000
+}
