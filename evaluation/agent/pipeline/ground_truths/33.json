@@ -1,0 +1,332 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg transition-all duration-300 bg-purple-600 text-white shadow-lg"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg transition-all duration-300 text-purple-300 hover:text-white hover:bg-purple-700/50"
+      },
+      "visible_text": "探索"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg transition-all duration-300 text-purple-300 hover:text-white hover:bg-purple-700/50"
+      },
+      "visible_text": "社区"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+      },
+      "visible_text": "星球漫游"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "vote",
+        "class": "text-purple-600",
+        "value": "earth"
+      },
+      "visible_text": "earth"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "mt-4 px-6 py-2 rounded-lg transition-all duration-300 bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "投票"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none"
+      },
+      "visible_text": "请选择一个星球"
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入消息...",
+        "class": "flex-1 bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-2 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 rounded-lg transition-colors bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "发送"
+    },
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "邮箱地址",
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-3 rounded-lg transition-all duration-300 font-semibold bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "注册加入"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-lg transition-colors"
+      },
+      "visible_text": "返回探索"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg transition-all duration-300 text-purple-300 hover:text-white hover:bg-purple-700/50"
+      },
+      "visible_text": "探索"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg transition-all duration-300 text-purple-300 hover:text-white hover:bg-purple-700/50"
+      },
+      "visible_text": "社区"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+      },
+      "visible_text": "星球漫游"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "vote",
+        "class": "text-purple-600",
+        "value": "earth"
+      },
+      "visible_text": "earth"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "mt-4 px-6 py-2 rounded-lg transition-all duration-300 bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "投票"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none"
+      },
+      "visible_text": "请选择一个星球"
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入消息...",
+        "class": "flex-1 bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-2 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 rounded-lg transition-colors bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "发送"
+    },
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "邮箱地址",
+        "class": "w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-3 rounded-lg transition-all duration-300 font-semibold bg-gray-600 cursor-not-allowed"
+      },
+      "visible_text": "注册加入"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-lg transition-colors"
+      },
+      "visible_text": "返回探索"
+    }
+  ]
+}

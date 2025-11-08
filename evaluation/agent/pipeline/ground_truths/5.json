@@ -1,0 +1,412 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-yellow-400 text-blue-800 px-4 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
+      },
+      "visible_text": "注册"
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+      },
+      "visible_text": "🔥 今日榜单"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "⭐ 昨日榜单"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "👑 本周榜单"
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入你的神评，一战成沙发王！",
+        "class": "w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "🤣 段子笑话"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "🚀 抢沙发"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索用户名或评论内容...",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 40,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "password",
+        "placeholder": "密码",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors duration-300"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 25,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 40,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "password",
+        "placeholder": "密码",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors duration-300"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-colors duration-300"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 32,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-400 hover:text-white transition-colors duration-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入你的神评，一战成沙发王！",
+        "class": "w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "🤣 段子笑话"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "🚀 抢沙发"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索用户名或评论内容...",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 40,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "password",
+        "placeholder": "密码",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors duration-300"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-yellow-400 text-blue-800 px-4 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
+      },
+      "visible_text": "注册"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "⭐ 昨日榜单"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "👑 本周榜单"
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入你的神评，一战成沙发王！",
+        "class": "w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "🤣 段子笑话"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "🚀 抢沙发"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索用户名或评论内容...",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 40,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "password",
+        "placeholder": "密码",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors duration-300"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-colors duration-300"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 32,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-400 hover:text-white transition-colors duration-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入你的神评，一战成沙发王！",
+        "class": "w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "🤣 段子笑话"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "🚀 抢沙发"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索用户名或评论内容...",
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    }
+  ]
+}

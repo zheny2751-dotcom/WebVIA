@@ -1,0 +1,118 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+      },
+      "visible_text": "🐕 小狗"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+        "value": "1"
+      },
+      "visible_text": "1"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "喂食小宠物"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "开始训练"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入新昵称...",
+        "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+        "maxlength": "20",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "确认昵称"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-pink-300 rounded-xl focus:border-purple-400 focus:outline-none bg-pink-50"
+      },
+      "visible_text": "🐕 小狗"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "class": "w-full p-3 border-2 border-green-300 rounded-xl focus:border-green-400 focus:outline-none bg-green-50",
+        "value": "1"
+      },
+      "visible_text": "1"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-green-400 to-green-500 text-white font-bold py-3 px-6 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "喂食小宠物"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-purple-400 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "开始训练"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入新昵称...",
+        "class": "flex-1 p-3 border-2 border-pink-300 rounded-xl focus:border-pink-400 focus:outline-none bg-pink-50",
+        "maxlength": "20",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "确认昵称"
+    }
+  ]
+}

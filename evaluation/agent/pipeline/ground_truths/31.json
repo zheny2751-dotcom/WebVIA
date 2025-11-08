@@ -1,0 +1,226 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-blue-500 text-white"
+      },
+      "visible_text": "自评模块"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+      },
+      "visible_text": "互评模块"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+      },
+      "visible_text": "统计报告"
+    },
+    {
+      "id": 8,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "placeholder": "请详细描述您在此次项目中的表现、收获和不足..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "text-xl text-gray-300 hover:text-yellow-400 cursor-pointer"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+      },
+      "visible_text": "提交自评"
+    },
+    {
+      "id": 8,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部分数"
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "按姓名排序"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+      },
+      "visible_text": "筛选/排序"
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "text-xl text-gray-300 hover:text-yellow-400 cursor-pointer"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入对该同学的评价意见...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+      },
+      "visible_text": "提交互评"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+      },
+      "visible_text": "导出评估报告"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-blue-500 text-white"
+      },
+      "visible_text": "自评模块"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+      },
+      "visible_text": "互评模块"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+      },
+      "visible_text": "统计报告"
+    },
+    {
+      "id": 8,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "placeholder": "请详细描述您在此次项目中的表现、收获和不足..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "text-xl text-gray-300 hover:text-yellow-400 cursor-pointer"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+      },
+      "visible_text": "提交自评"
+    },
+    {
+      "id": 8,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部分数"
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "按姓名排序"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+      },
+      "visible_text": "筛选/排序"
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "text-xl text-gray-300 hover:text-yellow-400 cursor-pointer"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入对该同学的评价意见...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+      },
+      "visible_text": "提交互评"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+      },
+      "visible_text": "导出评估报告"
+    }
+  ]
+}

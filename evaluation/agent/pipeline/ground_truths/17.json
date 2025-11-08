@@ -1,0 +1,282 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "gender",
+        "class": "mr-2 text-indigo-600",
+        "value": "男"
+      },
+      "visible_text": "男",
+      "OR": true
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择年龄段"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+      },
+      "visible_text": "下一步"
+    },
+    {
+      "id": 0,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single1",
+        "class": "mr-3 text-indigo-600",
+        "value": "手机"
+      },
+      "visible_text": "手机",
+      "OR": true
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single2",
+        "class": "mr-3 text-indigo-600",
+        "value": "1-3小时"
+      },
+      "visible_text": "1-3小时",
+      "OR": true
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single3",
+        "class": "mr-3 text-indigo-600",
+        "value": "非常满意"
+      },
+      "visible_text": "非常满意",
+      "OR": true
+    },
+    {
+      "id": 30,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 text-indigo-600"
+      },
+      "visible_text": "on",
+      "OR": true
+    },
+    {
+      "id": 50,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 text-indigo-600"
+      },
+      "visible_text": "on",
+      "OR": true
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 1,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "您可以在这里写下对我们服务的任何意见、建议或想法...",
+        "rows": "6",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
+      },
+      "visible_text": "重新开始"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "gender",
+        "class": "mr-2 text-indigo-600",
+        "value": "男"
+      },
+      "visible_text": "男"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择年龄段"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+      },
+      "visible_text": "下一步"
+    },
+    {
+      "id": 0,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single1",
+        "class": "mr-3 text-indigo-600",
+        "value": "手机"
+      },
+      "visible_text": "手机"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single2",
+        "class": "mr-3 text-indigo-600",
+        "value": "1-3小时"
+      },
+      "visible_text": "1-3小时"
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "single3",
+        "class": "mr-3 text-indigo-600",
+        "value": "非常满意"
+      },
+      "visible_text": "非常满意"
+    },
+    {
+      "id": 30,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 text-indigo-600"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 50,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 text-indigo-600"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 1,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "您可以在这里写下对我们服务的任何意见、建议或想法...",
+        "rows": "6",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
+      },
+      "visible_text": "重新开始"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 3,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的名称",
+        "class": "px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors w-full sm:w-auto",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "开始打卡"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "查看历史"
+    },
+    {
+      "id": 3,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors"
+      },
+      "visible_text": "300ml 中杯"
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "每次喝水量 ml",
+        "class": "flex-1 px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors",
+        "min": "1",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "添加喝水量"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-red-500 hover:text-red-700 transition-colors p-2 rounded hover:bg-red-50"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-teal-500 hover:bg-teal-600 text-white py-2 rounded-lg transition-colors shadow-md"
+      },
+      "visible_text": "关闭"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 3,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的名称",
+        "class": "px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors w-full sm:w-auto",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "开始打卡"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "查看历史"
+    },
+    {
+      "id": 3,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors"
+      },
+      "visible_text": "300ml 中杯"
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "每次喝水量 ml",
+        "class": "flex-1 px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors",
+        "min": "1",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "添加喝水量"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-red-500 hover:text-red-700 transition-colors p-2 rounded hover:bg-red-50"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-teal-500 hover:bg-teal-600 text-white py-2 rounded-lg transition-colors shadow-md"
+      },
+      "visible_text": "关闭"
+    }
+  ]
+}

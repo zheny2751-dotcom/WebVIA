@@ -1,0 +1,157 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-700 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "主页"
+    },
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入品牌名称",
+        "value": "Your Brand"
+      },
+      "visible_text": "Your Brand"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "无衬线"
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "经典黑白"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "圆形"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "生成 LOGO"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
+      },
+      "visible_text": "随机配色"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
+      },
+      "visible_text": "重置"
+    },
+    {
+      "id": 29,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-2 py-1 border border-gray-300 rounded text-sm"
+      },
+      "visible_text": "浅灰"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors text-sm"
+      },
+      "visible_text": "使用此模板"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入品牌名称",
+        "value": "Your Brand"
+      },
+      "visible_text": "Your Brand"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "无衬线"
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "经典黑白"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "圆形"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "生成 LOGO"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
+      },
+      "visible_text": "随机配色"
+    },
+    {
+      "id": 29,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-2 py-1 border border-gray-300 rounded text-sm"
+      },
+      "visible_text": "浅灰"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors text-sm"
+      },
+      "visible_text": "使用此模板"
+    }
+  ]
+}

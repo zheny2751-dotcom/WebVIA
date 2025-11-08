@@ -1,0 +1,213 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入户号（如：001、002）",
+        "class": "flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors",
+        "value": "001"
+      },
+      "visible_text": "001"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md"
+      },
+      "visible_text": "查询"
+    },
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入支付金额",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none",
+        "step": "0.01",
+        "min": "0",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "立即支付"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "导出PDF账单"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的问题或建议...",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-yellow-500 focus:outline-none resize-none",
+        "rows": "4"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "提交留言"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+      },
+      "visible_text": "确认支付"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入支付金额",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none",
+        "step": "0.01",
+        "min": "0",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "立即支付"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "导出PDF账单"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的问题或建议...",
+        "class": "w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-yellow-500 focus:outline-none resize-none",
+        "rows": "4"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors font-medium shadow-md",
+        "disabled": ""
+      },
+      "visible_text": "提交留言"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+      },
+      "visible_text": "确认支付"
+    }
+  ]
+}

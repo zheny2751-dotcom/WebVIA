@@ -1,0 +1,178 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入正整数金额",
+        "class": "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+      },
+      "visible_text": "请选择用户"
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 transform hover:scale-105"
+      },
+      "visible_text": "立即打赏"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "总榜"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200"
+      },
+      "visible_text": "刷新排行榜"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入昵称关键字",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+      },
+      "visible_text": "查看更多"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition-colors duration-200"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+      },
+      "visible_text": "确认"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入正整数金额",
+        "class": "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+      },
+      "visible_text": "请选择用户"
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 transform hover:scale-105"
+      },
+      "visible_text": "立即打赏"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "总榜"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200"
+      },
+      "visible_text": "刷新排行榜"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入昵称关键字",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+      },
+      "visible_text": "查看更多"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition-colors duration-200"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+      },
+      "visible_text": "确认"
+    }
+  ]
+}

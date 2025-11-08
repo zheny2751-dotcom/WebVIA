@@ -1,0 +1,199 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+      },
+      "visible_text": "张三"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-4 rounded-lg border-2 transition-all border-gray-200 hover:border-gray-300"
+      },
+      "visible_text": "¥50"
+    },
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入金额 (1-5000元)",
+        "class": "w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "查询"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-blue-600 hover:text-blue-800"
+      },
+      "visible_text": "查看发票"
+    },
+    {
+      "id": 51,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-white"
+      },
+      "visible_text": "充值指南"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      },
+      "visible_text": "个人中心"
+    },
+    {
+      "id": 2,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      },
+      "visible_text": "退出登录"
+    },
+    {
+      "id": 67,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+      },
+      "visible_text": "关闭"
+    },
+    {
+      "id": 68,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "下载发票"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+      },
+      "visible_text": "张三"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-4 rounded-lg border-2 transition-all border-gray-200 hover:border-gray-300"
+      },
+      "visible_text": "¥50"
+    },
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入金额 (1-5000元)",
+        "class": "w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "查询"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-blue-600 hover:text-blue-800"
+      },
+      "visible_text": "查看发票"
+    },
+    {
+      "id": 67,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+      },
+      "visible_text": "关闭"
+    }
+  ]
+}

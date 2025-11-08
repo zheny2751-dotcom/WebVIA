@@ -1,0 +1,359 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "排行榜"
+    },
+    {
+      "id": 2,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "我的成绩"
+    },
+    {
+      "id": 3,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "关于我们"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-center bg-blue-100 hover:bg-blue-200 text-blue-600 p-2 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+      },
+      "visible_text": "学术类"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "刷新图表"
+    },
+    {
+      "id": 48,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入选手姓名",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 51,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入团队或学校名称",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 54,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "全国数学竞赛"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入成绩得分",
+        "min": "0",
+        "max": "100",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "提交"
+    },
+    {
+      "id": 63,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入用户名",
+        "class": "flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "查看"
+    },
+    {
+      "id": 69,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": "教育部"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "block w-full text-left p-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+      },
+      "visible_text": "全国数学竞赛"
+    },
+    {
+      "id": 37,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+      },
+      "visible_text": "体育类"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "block w-full text-left p-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+      },
+      "visible_text": "田径锦标赛"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+      },
+      "visible_text": "学术类"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "刷新图表"
+    },
+    {
+      "id": 48,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入选手姓名",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 51,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入团队或学校名称",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 54,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "全国数学竞赛"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入成绩得分",
+        "min": "0",
+        "max": "100",
+        "class": "w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "提交"
+    },
+    {
+      "id": 63,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入用户名",
+        "class": "flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "查看"
+    },
+    {
+      "id": 37,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+      },
+      "visible_text": "体育类"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "block w-full text-left p-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+      },
+      "visible_text": "田径锦标赛"
+    }
+  ]
+}

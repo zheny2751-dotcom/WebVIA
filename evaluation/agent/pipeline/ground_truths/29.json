@@ -1,0 +1,316 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md text-sm font-medium transition-colors bg-indigo-100 text-indigo-700"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-600 hover:text-indigo-600"
+      },
+      "visible_text": "评估问卷"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-600 hover:text-indigo-600"
+      },
+      "visible_text": "推荐结果"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+      },
+      "visible_text": "开始评估"
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择年级"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择学习偏好"
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "数学成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "语文成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "英语成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "科学成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border-2 transition-all bg-white border-gray-300 text-gray-700 hover:border-indigo-300"
+      },
+      "visible_text": "编程"
+    },
+    {
+      "id": 46,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors shadow-lg"
+      },
+      "visible_text": "提交问卷，生成推荐"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+      },
+      "visible_text": "开始评估"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 text-white p-3 rounded-lg hover:opacity-90 transition-opacity flex items-center space-x-2"
+      },
+      "visible_text": "🧪\n理科综合"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-600 hover:text-indigo-600"
+      },
+      "visible_text": "评估问卷"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-600 hover:text-indigo-600"
+      },
+      "visible_text": "推荐结果"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+      },
+      "visible_text": "开始评估"
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择年级"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      },
+      "visible_text": "请选择学习偏好"
+    },
+    {
+      "id": 18,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "数学成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "语文成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "英语成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "150",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        "placeholder": "科学成绩",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border-2 transition-all bg-white border-gray-300 text-gray-700 hover:border-indigo-300"
+      },
+      "visible_text": "编程"
+    },
+    {
+      "id": 46,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors shadow-lg"
+      },
+      "visible_text": "提交问卷，生成推荐"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+      },
+      "visible_text": "开始评估"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 text-white p-3 rounded-lg hover:opacity-90 transition-opacity flex items-center space-x-2"
+      },
+      "visible_text": "🧪\n理科综合"
+    }
+  ]
+}

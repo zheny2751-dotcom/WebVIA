@@ -1,0 +1,349 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-blue-600"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-blue-600"
+      },
+      "visible_text": "产品"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm font-medium transition-colors duration-200 text-blue-600 border-b-2 border-blue-600"
+      },
+      "visible_text": "用户评价"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-blue-600"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部星级"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "按时间从新到旧"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索评价内容或用户名",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "写评价"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": " 举报"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 71,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "请输入您的用户名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 74,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "★★★★★ 5星"
+    },
+    {
+      "id": 77,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "4",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "请分享您的使用体验..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 81,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "提交评价"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部星级"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "按时间从新到旧"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索评价内容或用户名",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "写评价"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600"
+      },
+      "visible_text": "0"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": " 举报"
+    },
+    {
+      "id": 71,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+      },
+      "visible_text": "加载更多"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm font-medium transition-colors duration-200 text-blue-600 border-b-2 border-blue-600"
+      },
+      "visible_text": "用户评价"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部星级"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "按时间从新到旧"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索评价内容或用户名",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "写评价"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600"
+      },
+      "visible_text": "12"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": " 举报"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 71,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "请输入您的用户名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 74,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "★★★★★ 5星"
+    },
+    {
+      "id": 77,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "4",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "请分享您的使用体验..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 81,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "提交评价"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部星级"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "按时间从新到旧"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索评价内容或用户名",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "写评价"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600"
+      },
+      "visible_text": "0",
+      "OR": true
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded-full text-sm transition-colors duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": " 举报"
+    },
+    {
+      "id": 71,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+      },
+      "visible_text": "加载更多"
+    }
+  ]
+}

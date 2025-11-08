@@ -1,0 +1,260 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "5星 - 非常满意"
+    },
+    {
+      "id": 15,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请分享您的使用体验...",
+        "rows": "4",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+      },
+      "visible_text": "发布点评"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部评分"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "最热"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "12"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "回复"
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-700 font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "加载更多点评 (2 条剩余)"
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-blue-600 text-white shadow-md"
+      },
+      "visible_text": "最新"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "0"
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-700 font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "加载更多点评 (3 条剩余)"
+    },
+    {
+      "id": 34,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "写下您的回复...",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors duration-200"
+      },
+      "visible_text": "发送"
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "1"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "5星 - 非常满意"
+    },
+    {
+      "id": 15,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请分享您的使用体验...",
+        "rows": "4",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+      },
+      "visible_text": "发布点评"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部评分"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "最热"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "12"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "回复"
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-700 font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "加载更多点评 (2 条剩余)"
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-blue-600 text-white shadow-md"
+      },
+      "visible_text": "最新"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+      },
+      "visible_text": "0"
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-700 font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+      },
+      "visible_text": "加载更多点评 (3 条剩余)"
+    },
+    {
+      "id": 34,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "写下您的回复...",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors duration-200"
+      },
+      "visible_text": "发送"
+    }
+  ]
+}

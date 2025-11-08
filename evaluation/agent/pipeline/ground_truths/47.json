@@ -1,0 +1,308 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all bg-blue-600 text-white shadow-lg"
+      },
+      "visible_text": "隐私简介"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "个人档案"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "隐私设置"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "协议政策"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "历史版本"
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的邮箱地址",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的手机号码",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors font-semibold"
+      },
+      "visible_text": "保存档案"
+    },
+    {
+      "id": 28,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors"
+      },
+      "visible_text": "重置"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "私密"
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "版本 v1.0"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "下载此版本"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors"
+      },
+      "visible_text": "查看变更日志"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "收起详情"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors"
+      },
+      "visible_text": "我已阅读并同意"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors"
+      },
+      "visible_text": "下载完整版本"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "个人档案"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "隐私设置"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "协议政策"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-slate-300 hover:bg-slate-700 hover:text-white"
+      },
+      "visible_text": "历史版本"
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的邮箱地址",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "class": "w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入您的手机号码",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors font-semibold"
+      },
+      "visible_text": "保存档案"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "私密"
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "版本 v1.0"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "收起详情"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors"
+      },
+      "visible_text": "我已阅读并同意"
+    }
+  ]
+}

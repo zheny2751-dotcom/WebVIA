@@ -1,0 +1,498 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "当前期刊"
+    },
+    {
+      "id": 2,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "往期目录"
+    },
+    {
+      "id": 3,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "关于我们"
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors"
+      },
+      "visible_text": "登录/注册"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "计算机科学"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入关键词搜索...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "阅读全文"
+    },
+    {
+      "id": 25,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "发表您的观点...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "发表评论"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "下载电子版 PDF"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "输入您的邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "订阅更新"
+    },
+    {
+      "id": 40,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 47,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-white transition-colors ml-1"
+      },
+      "visible_text": "隐私政策"
+    },
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "当前期刊"
+    },
+    {
+      "id": 2,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "往期目录"
+    },
+    {
+      "id": 3,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-blue-200 transition-colors"
+      },
+      "visible_text": "关于我们"
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors"
+      },
+      "visible_text": "登录/注册"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "计算机科学"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入关键词搜索...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "阅读全文"
+    },
+    {
+      "id": 25,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "发表您的观点...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "发表评论"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "下载电子版 PDF"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "输入您的邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "订阅更新"
+    },
+    {
+      "id": 40,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 47,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-white transition-colors ml-1"
+      },
+      "visible_text": "隐私政策"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "收起全文"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "收起全文"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "计算机科学"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入关键词搜索...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "阅读全文"
+    },
+    {
+      "id": 25,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "发表您的观点...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "发表评论"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "输入您的邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "订阅更新"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "计算机科学"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入关键词搜索...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "阅读全文"
+    },
+    {
+      "id": 25,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "发表您的观点...",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "发表评论"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "输入您的邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "订阅更新"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "收起全文"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+      },
+      "visible_text": "收起全文"
+    }
+  ]
+}

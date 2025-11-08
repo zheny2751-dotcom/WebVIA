@@ -1,0 +1,212 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入要缩短的链接，如：https://www.example.com",
+        "class": "w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-colors border-gray-300 focus:ring-blue-200",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "bg-blue-500 text-white px-6 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+      },
+      "visible_text": "生成短链接"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": "short.ly"
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": "默认白"
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 35,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入分享时要附带的文字...",
+        "rows": "4",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+      },
+      "visible_text": "什么是短链接？"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
+      },
+      "visible_text": "复制"
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
+      },
+      "visible_text": "微信好友"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入要缩短的链接，如：https://www.example.com",
+        "class": "w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-colors border-gray-300 focus:ring-blue-200",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "bg-blue-500 text-white px-6 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+      },
+      "visible_text": "生成短链接"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": "short.ly"
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": "默认白"
+    },
+    {
+      "id": 21,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 35,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "输入分享时要附带的文字...",
+        "rows": "4",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+      },
+      "visible_text": "什么是短链接？"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 rounded-md transition-colors hover:bg-white hover:bg-opacity-10"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
+      },
+      "visible_text": "复制"
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
+      },
+      "visible_text": "微信好友"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "投票"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "统计"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "反馈"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入邻居姓名...",
+        "class": "flex-1 p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none"
+      },
+      "visible_text": "全部角色"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+      },
+      "visible_text": "筛选"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 px-4 rounded-lg hover:from-pink-600 hover:to-red-600 transition-all transform hover:scale-105"
+      },
+      "visible_text": "投票支持"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 text-white px-8 py-3 rounded-lg hover:bg-teal-600 transition-colors text-lg font-semibold"
+      },
+      "visible_text": "查看投票排行榜"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none"
+      },
+      "visible_text": "请选择角色"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors disabled:bg-gray-400"
+      },
+      "visible_text": "生成统计图"
+    },
+    {
+      "id": 9,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "在这里输入您的反馈...",
+        "rows": "4",
+        "class": "w-full p-3 border-2 border-orange-300 rounded-lg focus:border-orange-500 focus:outline-none resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors disabled:bg-gray-400"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 text-white px-8 py-3 rounded-lg hover:bg-teal-600 transition-colors text-lg font-semibold"
+      },
+      "visible_text": "隐藏排行榜"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "投票"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "统计"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 rounded-lg font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+      },
+      "visible_text": "反馈"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "flex-1 p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none"
+      },
+      "visible_text": "全部角色"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+      },
+      "visible_text": "筛选"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 px-4 rounded-lg hover:from-pink-600 hover:to-red-600 transition-all transform hover:scale-105"
+      },
+      "visible_text": "投票支持"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 text-white px-8 py-3 rounded-lg hover:bg-teal-600 transition-colors text-lg font-semibold"
+      },
+      "visible_text": "查看投票排行榜"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none"
+      },
+      "visible_text": "请选择角色"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors disabled:bg-gray-400"
+      },
+      "visible_text": "生成统计图"
+    },
+    {
+      "id": 9,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "在这里输入您的反馈...",
+        "rows": "4",
+        "class": "w-full p-3 border-2 border-orange-300 rounded-lg focus:border-orange-500 focus:outline-none resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors disabled:bg-gray-400"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-teal-500 text-white px-8 py-3 rounded-lg hover:bg-teal-600 transition-colors text-lg font-semibold"
+      },
+      "visible_text": "隐藏排行榜"
+    }
+  ]
+}

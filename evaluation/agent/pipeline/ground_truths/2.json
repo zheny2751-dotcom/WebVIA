@@ -1,0 +1,281 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "返回首页"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "随机置顶"
+    },
+    {
+      "id": 43,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block hover:text-blue-400 transition-colors"
+      },
+      "visible_text": "学校官网"
+    },
+    {
+      "id": 44,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block hover:text-blue-400 transition-colors"
+      },
+      "visible_text": "校友会"
+    },
+    {
+      "id": 45,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block hover:text-blue-400 transition-colors"
+      },
+      "visible_text": "就业指导"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500"
+      },
+      "visible_text": "15"
+    },
+    {
+      "id": 20,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入毕业寄语...",
+        "class": "w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "默认字体"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "天空蓝"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105"
+      },
+      "visible_text": "提交寄语"
+    },
+    {
+      "id": 27,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 28,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "全校总览"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "随机云图"
+    },
+    {
+      "id": 32,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-5 h-5 text-blue-600 rounded focus:ring-blue-500",
+        "checked": ""
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+      },
+      "visible_text": "导出为图片"
+    },
+    {
+      "id": 37,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+      },
+      "visible_text": "生成分享链接"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500"
+      },
+      "visible_text": "23"
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+      },
+      "visible_text": "复制"
+    },
+    {
+      "id": 46,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+      },
+      "visible_text": "关闭"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500"
+      },
+      "visible_text": "15",
+      "OR": true
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "随机置顶"
+    },
+    {
+      "id": 20,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入毕业寄语...",
+        "class": "w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "默认字体"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "天空蓝"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105"
+      },
+      "visible_text": "提交寄语"
+    },
+    {
+      "id": 27,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 28,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "全校总览"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "随机云图"
+    },
+    {
+      "id": 32,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-5 h-5 text-blue-600 rounded focus:ring-blue-500",
+        "checked": ""
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 37,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+      },
+      "visible_text": "生成分享链接"
+    },
+    {
+      "id": 46,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+      },
+      "visible_text": "关闭"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-1 rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500"
+      },
+      "visible_text": "15",
+      "OR": true
+    }
+  ]
+}

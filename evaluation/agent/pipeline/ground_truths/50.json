@@ -1,0 +1,291 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-green-600"
+      },
+      "visible_text": "项目介绍"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "了解详情"
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入捐赠金额",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "确认捐赠"
+    },
+    {
+      "id": 36,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "请输入您的电话号码",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "环保活动"
+    },
+    {
+      "id": 48,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "提交报名"
+    },
+    {
+      "id": 54,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "分享您的公益心得，传递正能量...",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "发表留言"
+    },
+    {
+      "id": 58,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors ml-4"
+      },
+      "visible_text": "12"
+    },
+    {
+      "id": 71,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "hover:text-white"
+      },
+      "visible_text": "关于我们"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "收起详情"
+    },
+    {
+      "id": 71,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 72,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "确认"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "了解详情"
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入捐赠金额",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "微信支付"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "确认捐赠"
+    },
+    {
+      "id": 36,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 39,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "请输入您的电话号码",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      },
+      "visible_text": "环保活动"
+    },
+    {
+      "id": 48,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "提交报名"
+    },
+    {
+      "id": 54,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "分享您的公益心得，传递正能量...",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 55,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "发表留言"
+    },
+    {
+      "id": 58,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors ml-4"
+      },
+      "visible_text": "12"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "收起详情"
+    },
+    {
+      "id": 71,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 72,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+      },
+      "visible_text": "确认"
+    }
+  ]
+}

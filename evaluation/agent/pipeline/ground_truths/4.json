@@ -1,0 +1,218 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-book-bg hover:text-vintage-light px-3 py-2 rounded-md text-sm font-medium transition-colors"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-vintage-light hover:text-book-bg px-3 py-2 rounded-md text-sm font-medium transition-colors"
+      },
+      "visible_text": "各地书摊"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-vintage-light hover:text-book-bg px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+      },
+      "visible_text": "我的收藏\n0"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+      },
+      "visible_text": "全部地区"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入书名或作者",
+        "class": "flex-1 p-2 border border-vintage-light rounded-l-md focus:ring-2 focus:ring-vintage-green focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-green text-white px-4 py-2 rounded-r-md hover:bg-vintage-dark transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-brown text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+      },
+      "visible_text": "确认筛选"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors"
+      },
+      "visible_text": "重置筛选"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-vintage-brown text-white py-2 rounded-md hover:bg-opacity-90 transition-colors"
+      },
+      "visible_text": "查看详情",
+      "OR": true
+    },
+    {
+      "id": 69,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-green text-white px-8 py-3 rounded-md hover:bg-vintage-dark transition-colors"
+      },
+      "visible_text": "加载更多书籍",
+      "OR": true
+    },
+    {
+      "id": 75,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 rounded-md transition-colors bg-vintage-green hover:bg-vintage-dark text-white"
+      },
+      "visible_text": "加入收藏",
+      "OR": true
+    },
+    {
+      "id": 77,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 82,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 rounded-md transition-colors bg-red-500 hover:bg-red-600 text-white"
+      },
+      "visible_text": "移除收藏"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-vintage-light hover:text-book-bg px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+      },
+      "visible_text": "我的收藏\n0"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-3 h-3 rounded-full transition-colors bg-white bg-opacity-50"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+      },
+      "visible_text": "全部地区"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入书名或作者",
+        "class": "flex-1 p-2 border border-vintage-light rounded-l-md focus:ring-2 focus:ring-vintage-green focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-green text-white px-4 py-2 rounded-r-md hover:bg-vintage-dark transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-brown text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+      },
+      "visible_text": "确认筛选"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-vintage-brown text-white py-2 rounded-md hover:bg-opacity-90 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 69,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-vintage-green text-white px-8 py-3 rounded-md hover:bg-vintage-dark transition-colors"
+      },
+      "visible_text": "加载更多书籍",
+      "OR": true
+    },
+    {
+      "id": 75,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 rounded-md transition-colors bg-vintage-green hover:bg-vintage-dark text-white"
+      },
+      "visible_text": "加入收藏"
+    },
+    {
+      "id": 82,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 rounded-md transition-colors bg-red-500 hover:bg-red-600 text-white"
+      },
+      "visible_text": "移除收藏"
+    }
+  ]
+}

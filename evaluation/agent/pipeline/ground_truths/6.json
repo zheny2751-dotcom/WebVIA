@@ -1,0 +1,154 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 rounded-full font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-lg"
+      },
+      "visible_text": "刷新今日运气"
+    },
+    {
+      "id": 2,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "写下你的今日幸运故事…",
+        "class": "w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors duration-200 resize-none h-32"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-3 rounded-xl font-bold transform hover:scale-105 transition-all duration-200 shadow-lg"
+      },
+      "visible_text": "提交故事"
+    },
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-colors duration-200 bg-white"
+      },
+      "visible_text": "全部",
+      "OR": true
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-3 py-1 rounded-full transition-all duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": "15"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-xl"
+      },
+      "visible_text": "查看运气走势图"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-xl"
+      },
+      "visible_text": "查看运气走势图"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700 text-2xl"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700 text-2xl"
+      },
+      "visible_text": ""
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 rounded-full font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-lg"
+      },
+      "visible_text": "刷新今日运气"
+    },
+    {
+      "id": 2,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "写下你的今日幸运故事…",
+        "class": "w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors duration-200 resize-none h-32"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-3 rounded-xl font-bold transform hover:scale-105 transition-all duration-200 shadow-lg"
+      },
+      "visible_text": "提交故事"
+    },
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-colors duration-200 bg-white"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-3 py-1 rounded-full transition-all duration-200 bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600"
+      },
+      "visible_text": "15",
+      "OR": true
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-xl"
+      },
+      "visible_text": "查看运气走势图"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transform hover:scale-105 transition-all duration-200 shadow-xl"
+      },
+      "visible_text": "查看运气走势图"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700 text-2xl"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700 text-2xl"
+      },
+      "visible_text": ""
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "example@email.com",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入您的年龄",
+        "min": "13",
+        "max": "120",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg "
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "frequency",
+        "class": "mr-3 w-4 h-4 text-blue-600",
+        "value": "每天"
+      },
+      "visible_text": "每天"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 w-4 h-4 text-blue-600",
+        "value": "界面设计"
+      },
+      "visible_text": "界面设计"
+    },
+    {
+      "id": 40,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300"
+      },
+      "visible_text": "请选择年龄段"
+    },
+    {
+      "id": 46,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all border-gray-300 hover:border-gray-400"
+      },
+      "visible_text": "🙂\n满意"
+    },
+    {
+      "id": 56,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请分享您宝贵的建议或意见，帮助我们改进产品体验...",
+        "rows": "5",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg "
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 61,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 sm:flex-none bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "重置问卷"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-6 bg-blue-50 hover:bg-blue-100 text-blue-600 py-3 rounded-lg font-medium transition-colors"
+      },
+      "visible_text": "需要帮助？"
+    },
+    {
+      "id": 72,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors"
+      },
+      "visible_text": "知道了"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入您的姓名",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "example@email.com",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入您的年龄",
+        "min": "13",
+        "max": "120",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg "
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "radio",
+        "name": "frequency",
+        "class": "mr-3 w-4 h-4 text-blue-600",
+        "value": "每天"
+      },
+      "visible_text": "每天"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 w-4 h-4 text-blue-600",
+        "value": "界面设计"
+      },
+      "visible_text": "界面设计"
+    },
+    {
+      "id": 40,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors border-gray-300"
+      },
+      "visible_text": "请选择年龄段"
+    },
+    {
+      "id": 46,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all border-gray-300 hover:border-gray-400"
+      },
+      "visible_text": "🙂\n满意"
+    },
+    {
+      "id": 56,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请分享您宝贵的建议或意见，帮助我们改进产品体验...",
+        "rows": "5",
+        "class": "w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg "
+      },
+      "visible_text": "提交问卷"
+    },
+    {
+      "id": 61,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 sm:flex-none bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "重置问卷"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-6 bg-blue-50 hover:bg-blue-100 text-blue-600 py-3 rounded-lg font-medium transition-colors"
+      },
+      "visible_text": "需要帮助？"
+    },
+    {
+      "id": 72,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors"
+      },
+      "visible_text": "知道了"
+    }
+  ]
+}

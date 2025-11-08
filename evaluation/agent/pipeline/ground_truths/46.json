@@ -1,0 +1,230 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 text-orange-600 border border-orange-600 rounded-lg hover:bg-orange-50 transition-colors"
+      },
+      "visible_text": "登录"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-colors"
+      },
+      "visible_text": "注册"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部类型"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部城市"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 px-4 rounded-lg font-semibold transition-colors bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600"
+      },
+      "visible_text": "立即领取"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-colors"
+      },
+      "visible_text": "立即订阅"
+    },
+    {
+      "id": 44,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的宝贵意见和建议...",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none",
+        "rows": "4"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "请输入手机号码",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 63,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部类型"
+    },
+    {
+      "id": 67,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-colors"
+      },
+      "visible_text": "确认订阅"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "我的优惠"
+    },
+    {
+      "id": 56,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部类型"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部城市"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 px-4 rounded-lg font-semibold transition-colors bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600"
+      },
+      "visible_text": "立即领取"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-colors"
+      },
+      "visible_text": "立即订阅"
+    },
+    {
+      "id": 44,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的宝贵意见和建议...",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none",
+        "rows": "4"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入邮箱地址",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "请输入手机号码",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 63,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      },
+      "visible_text": "全部类型"
+    },
+    {
+      "id": 67,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-colors"
+      },
+      "visible_text": "确认订阅"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "我的优惠"
+    },
+    {
+      "id": 56,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ]
+}

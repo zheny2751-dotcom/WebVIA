@@ -1,0 +1,877 @@
+{
+  "html_file": "benchmark_all/RW_245.html",
+  "steps": [
+    {
+      "step_type": "list",
+      "img_name": "start",
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seqs": [
+        {
+          "action": "select",
+          "id": "0",
+          "value": "登录扫码",
+          "dom_info": {
+            "id": 0,
+            "tag": "SELECT",
+            "attrs": {
+              "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+            },
+            "visible_text": "支付扫码"
+          }
+        },
+        {
+          "action": "input",
+          "id": "2",
+          "input_val": "123456",
+          "dom_info": {
+            "id": 2,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "授权码",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "5",
+          "input_val": "testuser",
+          "dom_info": {
+            "id": 5,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "用户名",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "8",
+          "input_val": "13800138000",
+          "dom_info": {
+            "id": 8,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "tel",
+              "placeholder": "手机号",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "11",
+          "input_val": "user@example.com",
+          "dom_info": {
+            "id": 11,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "email",
+              "placeholder": "邮箱",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "16",
+          "dom_info": {
+            "id": 16,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 "
+            },
+            "visible_text": "生成二维码"
+          }
+        },
+        {
+          "action": "click",
+          "id": "20",
+          "dom_info": {
+            "id": 20,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+            },
+            "visible_text": "清空记录"
+          }
+        },
+        {
+          "action": "click",
+          "id": "22",
+          "dom_info": {
+            "id": 22,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+            },
+            "visible_text": "查看帮助"
+          }
+        },
+        {
+          "action": "input",
+          "id": "23",
+          "input_val": "这是一次测试反馈",
+          "dom_info": {
+            "id": 23,
+            "tag": "TEXTAREA",
+            "attrs": {
+              "placeholder": "请输入您的反馈意见...",
+              "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none",
+              "rows": "3"
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "24",
+          "dom_info": {
+            "id": 24,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+            },
+            "visible_text": "提交反馈"
+          }
+        },
+        {
+          "action": "click",
+          "id": "30",
+          "dom_info": {
+            "id": 30,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            },
+            "visible_text": "回到顶部"
+          }
+        }
+      ],
+      "actions_seqs_detail": [
+        [
+          {
+            "action": "select",
+            "id": "0",
+            "value": "登录扫码",
+            "dom_info": {
+              "id": 0,
+              "tag": "SELECT",
+              "attrs": {
+                "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+              },
+              "visible_text": "支付扫码"
+            }
+          }
+        ],
+        [
+          {
+            "action": "input",
+            "id": "2",
+            "input_val": "123456",
+            "dom_info": {
+              "id": 2,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "text",
+                "placeholder": "授权码",
+                "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+                "value": ""
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "input",
+            "id": "5",
+            "input_val": "testuser",
+            "dom_info": {
+              "id": 5,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "text",
+                "placeholder": "用户名",
+                "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+                "value": ""
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "input",
+            "id": "8",
+            "input_val": "13800138000",
+            "dom_info": {
+              "id": 8,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "tel",
+                "placeholder": "手机号",
+                "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+                "value": ""
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "input",
+            "id": "11",
+            "input_val": "user@example.com",
+            "dom_info": {
+              "id": 11,
+              "tag": "INPUT",
+              "attrs": {
+                "type": "email",
+                "placeholder": "邮箱",
+                "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+                "value": ""
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "click",
+            "id": "16",
+            "dom_info": {
+              "id": 16,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 "
+              },
+              "visible_text": "生成二维码"
+            }
+          }
+        ],
+        [
+          {
+            "action": "click",
+            "id": "20",
+            "dom_info": {
+              "id": 20,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+              },
+              "visible_text": "清空记录"
+            }
+          }
+        ],
+        [
+          {
+            "action": "click",
+            "id": "22",
+            "dom_info": {
+              "id": 22,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+              },
+              "visible_text": "查看帮助"
+            }
+          }
+        ],
+        [
+          {
+            "action": "input",
+            "id": "23",
+            "input_val": "这是一次测试反馈",
+            "dom_info": {
+              "id": 23,
+              "tag": "TEXTAREA",
+              "attrs": {
+                "placeholder": "请输入您的反馈意见...",
+                "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none",
+                "rows": "3"
+              },
+              "visible_text": ""
+            }
+          },
+          {
+            "action": "click",
+            "id": "24",
+            "dom_info": {
+              "id": 24,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+              },
+              "visible_text": "提交反馈"
+            }
+          }
+        ],
+        [
+          {
+            "action": "click",
+            "id": "30",
+            "dom_info": {
+              "id": 30,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              },
+              "visible_text": "回到顶部"
+            }
+          }
+        ]
+      ],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "step_idx": 0
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_select_0_登录扫码.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "select",
+          "id": "0",
+          "value": "登录扫码",
+          "dom_info": {
+            "id": 0,
+            "tag": "SELECT",
+            "attrs": {
+              "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+            },
+            "visible_text": "支付扫码"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：在第一次截图中，“场景选择”下拉框显示为“支付扫码”，而在最后一次操作后的截图中，该下拉框已切换为“登录扫码”，页面的场景选项发生了预期的变化。\\n\\n\\\\terminate{完成}\\n\\n理由：与本次起始图及之前的历史起始图相比，页面仅在下拉框的选中值上发生了切换，未出现新的重要区域或组件，变化较小且与已有内容高度重复，故无需继续检测。 </answer>",
+      "pass": true,
+      "step_idx": 1
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_input_2_123456.png",
+        "./glm_benchmark_v7/RW_245/_input_2_123456_input_5_testuser.png",
+        "./glm_benchmark_v7/RW_245/_input_2_123456_input_5_testuser_input_8_13800138000.png",
+        "./glm_benchmark_v7/RW_245/_input_2_123456_input_5_testuser_input_8_13800138000_input_11_user_example_com.png",
+        "./glm_benchmark_v7/RW_245/_input_2_123456_input_5_testuser_input_8_13800138000_input_11_user_example_com_生成二维码.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "input",
+          "id": "2",
+          "input_val": "123456",
+          "dom_info": {
+            "id": 2,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "授权码",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "5",
+          "input_val": "testuser",
+          "dom_info": {
+            "id": 5,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "text",
+              "placeholder": "用户名",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "8",
+          "input_val": "13800138000",
+          "dom_info": {
+            "id": 8,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "tel",
+              "placeholder": "手机号",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "input",
+          "id": "11",
+          "input_val": "user@example.com",
+          "dom_info": {
+            "id": 11,
+            "tag": "INPUT",
+            "attrs": {
+              "type": "email",
+              "placeholder": "邮箱",
+              "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+              "value": ""
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "16",
+          "dom_info": {
+            "id": 16,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 "
+            },
+            "visible_text": "生成二维码"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：在最后一次点击“生成二维码”后，页面下方新增了二维码预览区域（包含图片和“扫描上方二维码”提示），同时右侧“扫码记录”中新增了一条“支付扫码 testuser 2025/9/16 22:24:32”记录，符合交互预期。\\n\\n\\\\terminate{继续}\\n\\n理由：与本次起始图及之前所有历史起始图相比，本次最终图中出现了全新的二维码生成预览区域，该部分在任何先前截图中均未出现，属于重要新增内容，需继续检测。 </answer>",
+      "pass": true,
+      "step_idx": 2
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_清空记录.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "click",
+          "id": "20",
+          "dom_info": {
+            "id": 20,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+            },
+            "visible_text": "清空记录"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：在第一次截图中，“扫码记录”列表中显示了多条历史记录，并且可见“清空记录”按钮；在最后一次截图中，记录区域已变为“暂无记录”占位提示，说明点击“清空记录”后页面内容发生了符合预期的变化，旧有记录被真正清除。\\n\\n\\\\terminate{完成}\\n\\n理由：与本次起始图及之前的所有起始图相比，页面并未出现新的重要交互组件或版块，仅是原有“扫码记录”区域的内容从有列表变为空状态，未引入新的功能或显著元素，故无需继续检测。 </answer>",
+      "pass": true,
+      "step_idx": 3
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_查看帮助.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "click",
+          "id": "22",
+          "dom_info": {
+            "id": 22,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+            },
+            "visible_text": "查看帮助"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：在第二张图片中，点击“查看帮助”后页面中央弹出了“使用帮助”对话框，显示了操作步骤说明，此为明显的交互组件变化；而第一张图片并未出现该对话框。\\n\\n\\\\terminate{继续}\\n\\n理由：最后一张图片相比本次起始图以及之前的所有起始图，新增了“使用帮助”弹窗这一重要部分，页面与历史截图不极度相似，需继续检测。 </answer>",
+      "pass": true,
+      "step_idx": 4
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_input_23_这是一次测试反馈.png",
+        "./glm_benchmark_v7/RW_245/_input_23_这是一次测试反馈_提交反馈.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "input",
+          "id": "23",
+          "input_val": "这是一次测试反馈",
+          "dom_info": {
+            "id": 23,
+            "tag": "TEXTAREA",
+            "attrs": {
+              "placeholder": "请输入您的反馈意见...",
+              "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none",
+              "rows": "3"
+            },
+            "visible_text": ""
+          }
+        },
+        {
+          "action": "click",
+          "id": "24",
+          "dom_info": {
+            "id": 24,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+            },
+            "visible_text": "提交反馈"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：在最后一次操作（点击“提交反馈”）之后，页面右下方出现了一个绿色的提示框“反馈已提交”，这是在操作前的起始图和中间图中均未出现的新反馈提交成功提示，符合预期的交互组件变化。\\n\\n\\\\terminate{继续}\\n\\n理由：最终截图中新增了“反馈已提交”提示，与本次序列的起始图以及之前的所有历史起始图相比，页面中出现了一个新的重要部分，需继续检测。 </answer>",
+      "pass": true,
+      "step_idx": 5
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "start",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_回到顶部.png"
+      ],
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "click",
+          "id": "30",
+          "dom_info": {
+            "id": 30,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            },
+            "visible_text": "回到顶部"
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer> \\\\boxed{select[0][登录扫码]}\\n\\n\\\\boxed{enter[2][123456], enter[5][testuser], enter[8][13800138000], enter[11][user@example.com], click[16]}\\n\\n\\\\boxed{click[20]}\\n\\n\\\\boxed{click[22]}\\n\\n\\\\boxed{enter[23][这是一次测试反馈], click[24]}\\n\\n\\\\boxed{click[30]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{无}\\n\\n理由：两张截图在点击“回到顶部”前后内容完全一致，页面未发生预期的滚动或其它可见变化。\\n\\n\\\\terminate{完成}\\n\\n理由：最终截图与本次起始图及之前所有起始图对比，无任何新的重要部分出现，页面整体高度相似，无需继续检测。 </answer>",
+      "pass": false,
+      "step_idx": 6
+    },
+    {
+      "step_type": "list",
+      "img_name": "./glm_benchmark_v7/RW_245/_input_2_123456_input_5_testuser_input_8_13800138000_input_11_user_example_com_生成二维码.png",
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': '123456'}, 'children': [], 'can_interact': True, 'input_value': '123456', 'visible_text': '123456'}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': 'testuser'}, 'children': [], 'can_interact': True, 'input_value': 'testuser', 'visible_text': 'testuser'}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': '13800138000'}, 'children': [], 'can_interact': True, 'input_value': '13800138000', 'visible_text': '13800138000'}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': 'user@example.com'}, 'children': [], 'can_interact': True, 'input_value': 'user@example.com', 'visible_text': 'user@example.com'}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seqs": [],
+      "actions_seqs_detail": [],
+      "model_output": "<think> </think> <answer> 本页面所有操作已完成 </answer>",
+      "step_idx": 7
+    },
+    {
+      "step_type": "list",
+      "img_name": "./glm_benchmark_v7/RW_245/_查看帮助.png",
+      "domtree": "{'id': 39, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 38, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 37, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': False, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': False, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '回到顶部'}]}]}, {'id': 36, 'tag': 'DIV', 'attrs': {'class': 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4'}, 'children': [{'id': 35, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl p-6 max-w-md w-full max-h-96 overflow-y-auto'}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'class': 'flex justify-between items-center mb-4'}, 'children': [{'id': 33, 'tag': 'BUTTON', 'attrs': {'class': 'text-gray-500 hover:text-gray-700'}, 'children': [], 'can_interact': True, 'visible_text': ''}]}]}]}]}]}]}",
+      "actions_seqs": [
+        {
+          "action": "click",
+          "id": "33",
+          "dom_info": {
+            "id": 33,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "text-gray-500 hover:text-gray-700"
+            },
+            "visible_text": ""
+          }
+        }
+      ],
+      "actions_seqs_detail": [
+        [
+          {
+            "action": "click",
+            "id": "33",
+            "dom_info": {
+              "id": 33,
+              "tag": "BUTTON",
+              "attrs": {
+                "class": "text-gray-500 hover:text-gray-700"
+              },
+              "visible_text": ""
+            }
+          }
+        ]
+      ],
+      "model_output": "<think> </think> <answer>  \\\\boxed{click[33]} </answer>",
+      "step_idx": 8
+    },
+    {
+      "step_type": "compare",
+      "img_name_before": "./glm_benchmark_v7/RW_245/_查看帮助.png",
+      "img_name_list_after": [
+        "./glm_benchmark_v7/RW_245/_查看帮助_click_33.png"
+      ],
+      "domtree": "{'id': 39, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 38, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 37, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': False, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': False, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': False, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': False, 'visible_text': '回到顶部'}]}]}, {'id': 36, 'tag': 'DIV', 'attrs': {'class': 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4'}, 'children': [{'id': 35, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl p-6 max-w-md w-full max-h-96 overflow-y-auto'}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'class': 'flex justify-between items-center mb-4'}, 'children': [{'id': 33, 'tag': 'BUTTON', 'attrs': {'class': 'text-gray-500 hover:text-gray-700'}, 'children': [], 'can_interact': True, 'visible_text': ''}]}]}]}]}]}]}",
+      "actions_seq": [
+        {
+          "action": "click",
+          "id": "33",
+          "dom_info": {
+            "id": 33,
+            "tag": "BUTTON",
+            "attrs": {
+              "class": "text-gray-500 hover:text-gray-700"
+            },
+            "visible_text": ""
+          }
+        }
+      ],
+      "component_info": [],
+      "model_output": "<think> </think> <answer>  \\\\boxed{click[33]} </answer>",
+      "detect_output": "<think> </think> <answer> \\\\boxed{有}\\n\\n理由：从第一张图到第二张图，帮助弹窗（“使用帮助”对话框）被成功关闭，页面主体内容恢复到默认状态，说明点击操作触发了预期的交互变化。\\n\\n\\\\terminate{完成}\\n\\n理由：最终页面与本次起始图及之前的所有起始图相比，仅去除了帮助弹窗，未出现任何新的重要部分或交互组件，页面整体无明显新内容。 </answer>",
+      "pass": true,
+      "step_idx": 9
+    },
+    {
+      "step_type": "list",
+      "img_name": "./glm_benchmark_v7/RW_245/_input_23_这是一次测试反馈_提交反馈.png",
+      "domtree": "{'id': 35, 'tag': 'BODY', 'attrs': {}, 'children': [{'id': 34, 'tag': 'DIV', 'attrs': {'id': 'root'}, 'children': [{'id': 33, 'tag': 'DIV', 'attrs': {'class': 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'}, 'children': [{'id': 29, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 py-8 max-w-6xl'}, 'children': [{'id': 28, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 lg:grid-cols-3 gap-8'}, 'children': [{'id': 19, 'tag': 'DIV', 'attrs': {'class': 'lg:col-span-2 space-y-8'}, 'children': [{'id': 1, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 0, 'tag': 'SELECT', 'attrs': {'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg'}, 'children': [], 'can_interact': True, 'visible_text': '支付扫码', 'options': [{'value': '支付扫码', 'text': '支付扫码', 'selected': True}, {'value': '登录扫码', 'text': '登录扫码', 'selected': False}, {'value': '信息扫码', 'text': '信息扫码', 'selected': False}]}]}, {'id': 15, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 14, 'tag': 'DIV', 'attrs': {'class': 'grid grid-cols-1 md:grid-cols-2 gap-4'}, 'children': [{'id': 4, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 3, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 2, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '授权码', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 7, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 6, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 5, 'tag': 'INPUT', 'attrs': {'type': 'text', 'placeholder': '用户名', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 10, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 9, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 8, 'tag': 'INPUT', 'attrs': {'type': 'tel', 'placeholder': '手机号', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}, {'id': 13, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 12, 'tag': 'DIV', 'attrs': {'class': 'relative'}, 'children': [{'id': 11, 'tag': 'INPUT', 'attrs': {'type': 'email', 'placeholder': '邮箱', 'class': 'w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500', 'value': ''}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}]}]}]}]}, {'id': 18, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 17, 'tag': 'DIV', 'attrs': {'class': 'text-center'}, 'children': [{'id': 16, 'tag': 'BUTTON', 'attrs': {'class': 'bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 '}, 'children': [], 'can_interact': True, 'visible_text': '生成二维码'}]}]}]}, {'id': 27, 'tag': 'DIV', 'attrs': {'class': 'space-y-8'}, 'children': [{'id': 21, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 20, 'tag': 'BUTTON', 'attrs': {'class': 'w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '清空记录'}]}, {'id': 26, 'tag': 'DIV', 'attrs': {'class': 'bg-white rounded-xl shadow-lg p-6'}, 'children': [{'id': 22, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '查看帮助'}, {'id': 25, 'tag': 'DIV', 'attrs': {'class': 'space-y-3'}, 'children': [{'id': 23, 'tag': 'TEXTAREA', 'attrs': {'placeholder': '请输入您的反馈意见...', 'class': 'w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none', 'rows': '3'}, 'children': [], 'can_interact': True, 'input_value': '', 'visible_text': ''}, {'id': 24, 'tag': 'BUTTON', 'attrs': {'class': 'w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '提交反馈'}]}]}]}]}]}, {'id': 32, 'tag': 'FOOTER', 'attrs': {'class': 'bg-gray-800 text-white py-8'}, 'children': [{'id': 31, 'tag': 'DIV', 'attrs': {'class': 'container mx-auto px-4 flex justify-between items-center'}, 'children': [{'id': 30, 'tag': 'BUTTON', 'attrs': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200'}, 'children': [], 'can_interact': True, 'visible_text': '回到顶部'}]}]}]}]}]}",
+      "actions_seqs": [],
+      "actions_seqs_detail": [],
+      "model_output": "<think> </think> <answer>  本页面所有操作已完成 </answer>",
+      "step_idx": 10
+    }
+  ],
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+      },
+      "visible_text": "支付扫码"
+    },
+    {
+      "id": 2,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "授权码",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 5,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "手机号",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "邮箱",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 "
+      },
+      "visible_text": "生成二维码"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+      },
+      "visible_text": "清空记录"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+      },
+      "visible_text": "查看帮助"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 30,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+      },
+      "visible_text": "回到顶部"
+    },
+    {
+      "id": 33,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+      },
+      "visible_text": "支付扫码"
+    },
+    {
+      "id": 2,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "授权码",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 5,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "用户名",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "tel",
+        "placeholder": "手机号",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "邮箱",
+        "class": "w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 border-gray-200 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 "
+      },
+      "visible_text": "生成二维码"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+      },
+      "visible_text": "清空记录"
+    },
+    {
+      "id": 22,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+      },
+      "visible_text": "查看帮助"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "class": "w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none",
+        "rows": "3"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 33,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ]
+}

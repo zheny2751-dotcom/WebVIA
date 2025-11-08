@@ -1,0 +1,199 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索问题或关键词...",
+        "class": "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-blue-600 font-semibold"
+      },
+      "visible_text": "常见问题"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "ml-4 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+      },
+      "visible_text": "展开"
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 40,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请详细描述您遇到的问题...",
+        "rows": "4",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 43,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-2xl transition-colors text-gray-300 hover:text-yellow-400"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 50,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 53,
+      "tag": "A",
+      "attrs": {
+        "href": "https://example.com/user-guide",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "class": "flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+      },
+      "visible_text": "用户操作指南"
+    },
+    {
+      "id": 54,
+      "tag": "A",
+      "attrs": {
+        "href": "https://example.com/api-docs",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "class": "flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+      },
+      "visible_text": "开发者文档"
+    },
+    {
+      "id": 55,
+      "tag": "A",
+      "attrs": {
+        "href": "https://example.com/video-tutorials",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "class": "flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+      },
+      "visible_text": "视频教程"
+    },
+    {
+      "id": 56,
+      "tag": "A",
+      "attrs": {
+        "href": "https://example.com/community",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "class": "flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+      },
+      "visible_text": "用户社区"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "ml-4 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+      },
+      "visible_text": "展开"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索问题或关键词...",
+        "class": "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "ml-4 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+      },
+      "visible_text": "展开"
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 40,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请详细描述您遇到的问题...",
+        "rows": "4",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 43,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-2xl transition-colors text-gray-300 hover:text-yellow-400"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 50,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "ml-4 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+      },
+      "visible_text": "展开"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg",
+        "placeholder": "请输入搜索关键词...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 15,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md text-left focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex justify-between items-center"
+      },
+      "visible_text": "选择标签"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "开始日期",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "结束日期",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm border rounded-md bg-white border-gray-300 hover:bg-gray-50"
+      },
+      "visible_text": "2"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none"
+      },
+      "visible_text": "如何快速搜索知识库内容？"
+    },
+    {
+      "id": 48,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-sm text-gray-600 hover:text-gray-900"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-sm text-gray-600 hover:text-gray-800 flex items-center"
+      },
+      "visible_text": "查询历史 (1)"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-sm text-red-600 hover:text-red-800"
+      },
+      "visible_text": "清除历史"
+    },
+    {
+      "id": 20,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center p-2 hover:bg-gray-50 cursor-pointer"
+      },
+      "visible_text": "React"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+      },
+      "visible_text": "帮助"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 7,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg",
+        "placeholder": "请输入搜索关键词...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 15,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full p-2 border border-gray-300 rounded-md text-left focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex justify-between items-center"
+      },
+      "visible_text": "选择标签"
+    },
+    {
+      "id": 22,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "开始日期",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "placeholder": "结束日期",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "加载更多"
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 text-sm border rounded-md bg-white border-gray-300 hover:bg-gray-50"
+      },
+      "visible_text": "2"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none"
+      },
+      "visible_text": "如何快速搜索知识库内容？"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-sm text-gray-600 hover:text-gray-800 flex items-center"
+      },
+      "visible_text": "查询历史 (1)"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-sm text-red-600 hover:text-red-800"
+      },
+      "visible_text": "清除历史"
+    },
+    {
+      "id": 20,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center p-2 hover:bg-gray-50 cursor-pointer"
+      },
+      "visible_text": "React"
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "参与自省"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "查看榜单"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "帮助与资源"
+    },
+    {
+      "id": 9,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请诚实地描述您的经历和感受，这将帮助其他人理解和反思类似情况。您的身份信息将完全保密。",
+        "class": "w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+      },
+      "visible_text": "冷落"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "10",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent",
+        "value": "5"
+      },
+      "visible_text": "5"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-semibold py-4 px-6 rounded-lg hover:from-yellow-500 hover:to-orange-500 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交自省"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "刷新榜单"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors mb-4"
+      },
+      "visible_text": "生成今日自省趋势图"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+      },
+      "visible_text": "查看帮助"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-red-50 hover:bg-red-100 text-red-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+      },
+      "visible_text": "相关求助渠道"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "首页"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "参与自省"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "查看榜单"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "帮助与资源"
+    },
+    {
+      "id": 9,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请诚实地描述您的经历和感受，这将帮助其他人理解和反思类似情况。您的身份信息将完全保密。",
+        "class": "w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+      },
+      "visible_text": "冷落"
+    },
+    {
+      "id": 15,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "10",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent",
+        "value": "5"
+      },
+      "visible_text": "5"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-semibold py-4 px-6 rounded-lg hover:from-yellow-500 hover:to-orange-500 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交自省"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 8,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+      },
+      "visible_text": "查看帮助"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-red-50 hover:bg-red-100 text-red-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+      },
+      "visible_text": "相关求助渠道"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-600 hover:text-gray-800 hover:bg-yellow-100"
+      },
+      "visible_text": "首页"
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-green-600 transition-colors"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border-2 border-green-300 rounded-lg focus:outline-none focus:border-green-500 bg-white"
+      },
+      "visible_text": "立春"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "查看动画"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "暂停"
+    },
+    {
+      "id": 16,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "例如：立春雨水到...",
+        "class": "w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
+      },
+      "visible_text": "提交答案"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-500 bg-white"
+      },
+      "visible_text": "请选择答案"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center justify-center space-x-2"
+      },
+      "visible_text": "提交测验"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "flex-1 px-4 py-3 border-2 border-orange-300 rounded-lg focus:outline-none focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "订阅"
+    },
+    {
+      "id": 1,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-green-600 transition-colors"
+      },
+      "visible_text": "节气日历"
+    },
+    {
+      "id": 31,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": "中国传统文化网"
+    },
+    {
+      "id": 2,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-green-600 transition-colors"
+      },
+      "visible_text": "关于我们"
+    },
+    {
+      "id": 32,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": "民俗学研究院"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border-2 border-green-300 rounded-lg focus:outline-none focus:border-green-500 bg-white"
+      },
+      "visible_text": "立春"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "查看动画"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "暂停"
+    },
+    {
+      "id": 16,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "例如：立春雨水到...",
+        "class": "w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
+      },
+      "visible_text": "提交答案"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-500 bg-white"
+      },
+      "visible_text": "请选择答案"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center justify-center space-x-2"
+      },
+      "visible_text": "提交测验"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "请输入您的邮箱地址",
+        "class": "flex-1 px-4 py-3 border-2 border-orange-300 rounded-lg focus:outline-none focus:border-orange-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "订阅"
+    },
+    {
+      "id": 32,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "block text-gray-300 hover:text-white transition-colors"
+      },
+      "visible_text": "民俗学研究院"
+    }
+  ]
+}

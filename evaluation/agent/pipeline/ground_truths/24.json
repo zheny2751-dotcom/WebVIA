@@ -1,0 +1,334 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 5,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入户号",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+      },
+      "visible_text": "查询用户信息"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500"
+      },
+      "visible_text": "请选择月份"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-yellow-600 text-white py-3 rounded-lg hover:bg-yellow-700 transition duration-200"
+      },
+      "visible_text": "查询用电量"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+      },
+      "visible_text": "选择年份"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+      },
+      "visible_text": "选择月份"
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200"
+      },
+      "visible_text": "查询用水量"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "预计用电度数",
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "预计用水立方米",
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+      },
+      "visible_text": "选择电价"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+      },
+      "visible_text": "选择水价"
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-200"
+      },
+      "visible_text": "估算费用"
+    },
+    {
+      "id": 28,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入缴费金额",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-200"
+      },
+      "visible_text": "立即缴费"
+    },
+    {
+      "id": 32,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+      },
+      "visible_text": "请选择常见问题"
+    },
+    {
+      "id": 33,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-200"
+      },
+      "visible_text": "查看答案"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-blue-600 hover:text-blue-800 p-2"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 38,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition duration-200"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 39,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition duration-200"
+      },
+      "visible_text": "确认支付"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 5,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入户号",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 6,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+      },
+      "visible_text": "查询用户信息"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500"
+      },
+      "visible_text": "请选择月份"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-yellow-600 text-white py-3 rounded-lg hover:bg-yellow-700 transition duration-200"
+      },
+      "visible_text": "查询用电量"
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+      },
+      "visible_text": "选择年份"
+    },
+    {
+      "id": 14,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+      },
+      "visible_text": "选择月份"
+    },
+    {
+      "id": 16,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200"
+      },
+      "visible_text": "查询用水量"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "预计用电度数",
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "预计用水立方米",
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+      },
+      "visible_text": "选择电价"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+      },
+      "visible_text": "选择水价"
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-200"
+      },
+      "visible_text": "估算费用"
+    },
+    {
+      "id": 28,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "placeholder": "请输入缴费金额",
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-200"
+      },
+      "visible_text": "立即缴费"
+    },
+    {
+      "id": 32,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+      },
+      "visible_text": "请选择常见问题"
+    },
+    {
+      "id": 33,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-200"
+      },
+      "visible_text": "查看答案"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-blue-600 hover:text-blue-800 p-2"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 38,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition duration-200"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 39,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition duration-200"
+      },
+      "visible_text": "确认支付"
+    }
+  ]
+}

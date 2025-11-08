@@ -1,0 +1,341 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "排行榜"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "请选择目标"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "100",
+        "placeholder": "输入0-100",
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "打卡"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入目标名称",
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 34,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "简单"
+    },
+    {
+      "id": 37,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "日"
+    },
+    {
+      "id": 39,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "添加目标"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "刷新数据"
+    },
+    {
+      "id": 47,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-sm text-gray-500 hover:text-blue-600"
+      },
+      "visible_text": "帮助中心"
+    },
+    {
+      "id": 48,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-sm text-gray-500 hover:text-blue-600"
+      },
+      "visible_text": "用户协议"
+    },
+    {
+      "id": 49,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-sm text-gray-500 hover:text-blue-600"
+      },
+      "visible_text": "隐私政策"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "主页"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "设置"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "详情"
+    },
+    {
+      "id": 47,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-gray-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 51,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "排行榜"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 22,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "请选择目标"
+    },
+    {
+      "id": 25,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "0",
+        "max": "100",
+        "placeholder": "输入0-100",
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "打卡"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入目标名称",
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 34,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "简单"
+    },
+    {
+      "id": 37,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white border-gray-300"
+      },
+      "visible_text": "日"
+    },
+    {
+      "id": 39,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "添加目标"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+      },
+      "visible_text": "刷新数据"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "主页"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg font-medium transition-all text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "设置"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "详情"
+    },
+    {
+      "id": 47,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 7,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-gray-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 51,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "text-gray-500 hover:text-gray-700"
+      },
+      "visible_text": ""
+    }
+  ]
+}

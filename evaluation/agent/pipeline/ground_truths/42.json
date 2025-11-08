@@ -1,0 +1,362 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 2,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "订阅邮件通知",
+        "class": "hidden sm:block bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200"
+      },
+      "visible_text": "订阅"
+    },
+    {
+      "id": 5,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "显示详情"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-center lg:justify-start mb-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+      },
+      "visible_text": "收起菜单"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
+      },
+      "visible_text": "快速入门"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "常见问题"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "用户反馈"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+      },
+      "visible_text": "中文"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "查看答案"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": "请选择反馈类型"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索联系方式...",
+        "class": "flex-1 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "隐藏答案"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": "中"
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入反馈标题",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请详细描述您的反馈...",
+        "rows": "4",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "your@email.com",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 2,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "订阅邮件通知",
+        "class": "hidden sm:block bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200"
+      },
+      "visible_text": "订阅"
+    },
+    {
+      "id": 5,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "显示详情"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 10,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center justify-center lg:justify-start mb-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+      },
+      "visible_text": "收起菜单"
+    },
+    {
+      "id": 13,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "常见问题"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "用户反馈"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+      },
+      "visible_text": "联系我们"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+      },
+      "visible_text": "中文"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "查看答案"
+    },
+    {
+      "id": 20,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": "请选择反馈类型"
+    },
+    {
+      "id": 19,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索联系方式...",
+        "class": "flex-1 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "隐藏答案"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": "中"
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "请输入反馈标题",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 29,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请详细描述您的反馈...",
+        "rows": "4",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 32,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "placeholder": "your@email.com",
+        "class": "w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+      },
+      "visible_text": "提交反馈"
+    }
+  ]
+}

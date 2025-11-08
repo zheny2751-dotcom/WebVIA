@@ -1,0 +1,420 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "成员管理"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+      },
+      "visible_text": "发布公告"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索成员姓名或ID...",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部状态"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded text-white bg-red-500 hover:bg-red-600"
+      },
+      "visible_text": "禁用"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "活动报名"
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 15,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "rows": "4",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      },
+      "visible_text": "发布"
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "资源库"
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "意见反馈"
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "文档"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "下载"
+    },
+    {
+      "id": 10,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "rows": "4",
+        "placeholder": "请详细描述您的意见或建议...",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "placeholder": "邮箱或电话",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "中"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "placeholder": "请输入您的邮箱地址",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "社区公告"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "成员管理"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+      },
+      "visible_text": "发布公告"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索成员姓名或ID...",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部状态"
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-1 rounded text-white bg-red-500 hover:bg-red-600"
+      },
+      "visible_text": "禁用"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "活动报名"
+    },
+    {
+      "id": 12,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 15,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "rows": "4",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      },
+      "visible_text": "发布"
+    },
+    {
+      "id": 17,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "button",
+        "class": "px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "资源库"
+    },
+    {
+      "id": 4,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "意见反馈"
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "文档"
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "下载"
+    },
+    {
+      "id": 10,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "rows": "4",
+        "placeholder": "请详细描述您的意见或建议...",
+        "required": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "placeholder": "邮箱或电话",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "中"
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 9,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "email",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "placeholder": "请输入您的邮箱地址",
+        "required": "",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "BUTTON",
+      "attrs": {
+        "type": "submit",
+        "class": "w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+      },
+      "visible_text": "订阅通讯"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+      },
+      "visible_text": "社区公告"
+    }
+  ]
+}

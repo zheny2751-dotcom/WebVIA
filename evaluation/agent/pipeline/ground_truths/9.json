@@ -1,0 +1,300 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入动物名称...",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-pink-400 text-white rounded-full hover:bg-pink-500 transition-colors"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full hover:from-pink-500 hover:to-blue-500 transition-all transform hover:scale-105"
+      },
+      "visible_text": "给TA打分",
+      "OR": true
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "设置你的昵称...",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-300 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": "",
+      "OR": true
+    },
+    {
+      "id": 28,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "设置昵称",
+      "OR": true
+    },
+    {
+      "id": 30,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "分享你对小动物的想法...",
+        "rows": "3",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-300 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-gradient-to-r from-blue-400 to-pink-400 text-white rounded-full hover:from-blue-500 hover:to-pink-500 transition-all h-fit"
+      },
+      "visible_text": "提交评论"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-green-400 text-white rounded-full hover:bg-green-500 transition-colors flex items-center justify-center"
+      },
+      "visible_text": "分享到微信",
+      "OR": true
+    },
+    {
+      "id": 13,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "分享你对小动物的想法...",
+        "rows": "3",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-300 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-gradient-to-r from-blue-400 to-pink-400 text-white rounded-full hover:from-blue-500 hover:to-pink-500 transition-all h-fit"
+      },
+      "visible_text": "提交评论"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-red-400 text-white rounded-full hover:bg-red-500 transition-colors flex items-center justify-center"
+      },
+      "visible_text": "分享到微博"
+    },
+    {
+      "id": 43,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "step": "0.1",
+        "placeholder": "输入分数...",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent mb-4 text-center text-lg",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full hover:from-pink-500 hover:to-blue-500 transition-all"
+      },
+      "visible_text": "确认打分"
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入动物名称...",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 5,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-pink-400 text-white rounded-full hover:bg-pink-500 transition-colors"
+      },
+      "visible_text": "搜索"
+    },
+    {
+      "id": 9,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full hover:from-pink-500 hover:to-blue-500 transition-all transform hover:scale-105"
+      },
+      "visible_text": "给TA打分",
+      "OR": true
+    },
+    {
+      "id": 27,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "设置你的昵称...",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-300 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 28,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition-colors"
+      },
+      "visible_text": "设置昵称"
+    },
+    {
+      "id": 30,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "分享你对小动物的想法...",
+        "rows": "3",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-300 focus:border-transparent resize-none"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 31,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-gradient-to-r from-blue-400 to-pink-400 text-white rounded-full hover:from-blue-500 hover:to-pink-500 transition-all h-fit"
+      },
+      "visible_text": "提交评论"
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-green-400 text-white rounded-full hover:bg-green-500 transition-colors flex items-center justify-center"
+      },
+      "visible_text": "分享到微信"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "设置你的昵称...",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-300 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 14,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-gradient-to-r from-blue-400 to-pink-400 text-white rounded-full hover:from-blue-500 hover:to-pink-500 transition-all h-fit"
+      },
+      "visible_text": "提交评论"
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-red-400 text-white rounded-full hover:bg-red-500 transition-colors flex items-center justify-center"
+      },
+      "visible_text": "分享到微博"
+    },
+    {
+      "id": 43,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "10",
+        "step": "0.1",
+        "placeholder": "输入分数...",
+        "class": "w-full px-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent mb-4 text-center text-lg",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full hover:from-pink-500 hover:to-blue-500 transition-all"
+      },
+      "visible_text": "确认打分"
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 py-3 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
+      },
+      "visible_text": "取消"
+    },
+    {
+      "id": 1,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+      },
+      "visible_text": "全部"
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索任务标题或描述...",
+        "class": "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部状态"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "新建任务"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200 transition-colors",
+        "title": "切换状态"
+      },
+      "visible_text": "",
+      "OR": true
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-100 text-blue-700 p-2 rounded-lg hover:bg-blue-200 transition-colors",
+        "title": "编辑任务"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200 transition-colors",
+        "title": "删除任务"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 44,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入任务标题",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 47,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "rows": "3",
+        "placeholder": "输入任务描述"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 50,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "中优先级"
+    },
+    {
+      "id": 53,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "工作"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 61,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "创建任务"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "保存修改"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "搜索任务标题或描述...",
+        "class": "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 6,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部分类"
+    },
+    {
+      "id": 9,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "全部状态"
+    },
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+      },
+      "visible_text": "新建任务"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200 transition-colors",
+        "title": "切换状态"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-blue-100 text-blue-700 p-2 rounded-lg hover:bg-blue-200 transition-colors",
+        "title": "编辑任务"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200 transition-colors",
+        "title": "删除任务"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 44,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入任务标题",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 47,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "rows": "3",
+        "placeholder": "输入任务描述"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 50,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "中优先级"
+    },
+    {
+      "id": 53,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "工作"
+    },
+    {
+      "id": 57,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 61,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "创建任务"
+    },
+    {
+      "id": 64,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "保存修改"
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "120",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300",
+        "placeholder": "请输入年龄",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "请选择性别"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "请选择兴趣分类"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm"
+      },
+      "visible_text": "添加自定义兴趣"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "5",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请详细描述您最喜欢的兴趣爱好，以及它们给您带来的乐趣和收获..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 text-sm"
+      },
+      "visible_text": "清空描述"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg hover:from-blue-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "生成推荐"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交调查"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "fixed bottom-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center z-50"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 35,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-400 hover:text-white transition-colors duration-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 text-sm"
+      },
+      "visible_text": "清空描述"
+    },
+    {
+      "id": 41,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg hover:from-blue-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "生成推荐"
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交调查"
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "重置表单"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入自定义兴趣",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center space-x-2 cursor-pointer"
+      },
+      "visible_text": "跑步",
+      "OR": true
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300",
+        "placeholder": "请输入您的姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 4,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "min": "1",
+        "max": "120",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300",
+        "placeholder": "请输入年龄",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 7,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "请选择性别"
+    },
+    {
+      "id": 12,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "请选择兴趣分类"
+    },
+    {
+      "id": 15,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm"
+      },
+      "visible_text": "添加自定义兴趣"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "5",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请详细描述您最喜欢的兴趣爱好，以及它们给您带来的乐趣和收获..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 text-sm"
+      },
+      "visible_text": "清空描述"
+    },
+    {
+      "id": 26,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg hover:from-blue-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "生成推荐"
+    },
+    {
+      "id": 29,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交调查"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 44,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "提交调查"
+    },
+    {
+      "id": 45,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      },
+      "visible_text": "重置表单"
+    },
+    {
+      "id": 17,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "请输入自定义兴趣",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 18,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 20,
+      "tag": "LABEL",
+      "attrs": {
+        "class": "flex items-center space-x-2 cursor-pointer"
+      },
+      "visible_text": "跑步"
+    }
+  ]
+}

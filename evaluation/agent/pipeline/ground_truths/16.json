@@ -1,0 +1,290 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入事件标题",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "rows": "3",
+        "placeholder": "输入事件描述"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "中优先级"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all transform hover:scale-105"
+      },
+      "visible_text": "添加事件"
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "搜索事件...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "按日期排序"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 60,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "使用指南"
+    },
+    {
+      "id": 62,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "常见问题"
+    },
+    {
+      "id": 64,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 70,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "常见问题"
+    },
+    {
+      "id": 72,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-600 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": "功能介绍"
+    },
+    {
+      "id": 76,
+      "tag": "A",
+      "attrs": {
+        "href": "#",
+        "class": "text-gray-400 hover:text-blue-600 transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 89,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "保存"
+    },
+    {
+      "id": 76,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
+      },
+      "visible_text": "确认删除"
+    },
+    {
+      "id": 77,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+      },
+      "visible_text": "取消"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 8,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "输入事件标题",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 11,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "rows": "3",
+        "placeholder": "输入事件描述"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 14,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "date",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 17,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "中优先级"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all transform hover:scale-105"
+      },
+      "visible_text": "添加事件"
+    },
+    {
+      "id": 23,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        "placeholder": "搜索事件...",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 26,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      },
+      "visible_text": "按日期排序"
+    },
+    {
+      "id": 31,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-3 h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 35,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 89,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "保存"
+    },
+    {
+      "id": 76,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
+      },
+      "visible_text": "确认删除"
+    },
+    {
+      "id": 77,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+      },
+      "visible_text": "取消"
+    }
+  ]
+}

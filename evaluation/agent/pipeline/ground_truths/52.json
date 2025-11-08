@@ -1,0 +1,308 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 bg-blue-600 text-white shadow-lg"
+      },
+      "visible_text": "首页"
+    },
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "荣誉墙"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "提交荣誉"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "统计分析"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入姓名或荣誉名称...",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部年份"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "时间降序"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 text-red-500 hover:text-red-600 transition-colors pulse-animation"
+      },
+      "visible_text": "25"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请输入获奖者姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请输入荣誉或奖项名称",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "01月"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "4",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请详细描述荣誉内容、获奖原因、贡献等..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105"
+      },
+      "visible_text": "提交荣誉"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部年份"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+      },
+      "visible_text": "刷新统计"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "收起详情"
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 1,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "荣誉墙"
+    },
+    {
+      "id": 2,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "提交荣誉"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center px-4 py-2 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100"
+      },
+      "visible_text": "统计分析"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "placeholder": "输入姓名或荣誉名称...",
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "全部年份"
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      },
+      "visible_text": "时间降序"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex items-center space-x-1 text-red-500 hover:text-red-600 transition-colors pulse-animation"
+      },
+      "visible_text": "25"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "查看详情"
+    },
+    {
+      "id": 10,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请输入获奖者姓名",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 13,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "text",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请输入荣誉或奖项名称",
+        "value": ""
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 16,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "2024年"
+    },
+    {
+      "id": 19,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "01月"
+    },
+    {
+      "id": 23,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "rows": "4",
+        "class": "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300",
+        "placeholder": "请详细描述荣誉内容、获奖原因、贡献等..."
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 25,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105"
+      },
+      "visible_text": "提交荣誉"
+    },
+    {
+      "id": 10,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      },
+      "visible_text": "全部年份"
+    },
+    {
+      "id": 12,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+      },
+      "visible_text": "刷新统计"
+    },
+    {
+      "id": 23,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      },
+      "visible_text": "收起详情"
+    }
+  ]
+}

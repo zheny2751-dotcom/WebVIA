@@ -1,0 +1,551 @@
+{
+  "all_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border bg-white border-gray-300"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-blue-600 disabled:opacity-50 transition-all duration-300"
+      },
+      "visible_text": "一键加速"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-2 text-teal-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+      },
+      "visible_text": "清理选中"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "电量校准"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "选择应用"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "卸载应用"
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "class": "flex-1 p-2 border rounded-lg bg-white border-gray-300",
+        "placeholder": "流量上限(GB)",
+        "value": "10"
+      },
+      "visible_text": "10"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "设置"
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "快速扫描"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始扫描"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-green-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-gray-400"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始测速"
+    },
+    {
+      "id": 45,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-2 text-teal-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 58,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+      },
+      "visible_text": "释放空间"
+    },
+    {
+      "id": 60,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg bg-white border-gray-300"
+      },
+      "visible_text": "Bug反馈"
+    },
+    {
+      "id": 61,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "rows": "3",
+        "class": "w-full p-2 border rounded-lg resize-none bg-white border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 62,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border bg-white border-gray-300"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-blue-600 disabled:opacity-50 transition-all duration-300"
+      },
+      "visible_text": "一键加速"
+    },
+    {
+      "id": 6,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-2 text-teal-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 19,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+      },
+      "visible_text": "清理选中"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "电量校准"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "选择应用"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "卸载应用"
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "class": "flex-1 p-2 border rounded-lg bg-white border-gray-300",
+        "placeholder": "流量上限(GB)",
+        "value": "10"
+      },
+      "visible_text": "10"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "设置"
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "快速扫描"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始扫描"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-green-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 36,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-gray-400"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始测速"
+    },
+    {
+      "id": 45,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "checkbox",
+        "class": "mr-2 text-teal-500"
+      },
+      "visible_text": "on"
+    },
+    {
+      "id": 58,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+      },
+      "visible_text": "释放空间"
+    },
+    {
+      "id": 60,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg bg-white border-gray-300"
+      },
+      "visible_text": "Bug反馈"
+    },
+    {
+      "id": 61,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "rows": "3",
+        "class": "w-full p-2 border rounded-lg resize-none bg-white border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 62,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 38,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-green-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 38,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-green-500"
+      },
+      "visible_text": ""
+    }
+  ],
+  "pass_action_dom_elements": [
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border bg-white border-gray-300"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-blue-600 disabled:opacity-50 transition-all duration-300"
+      },
+      "visible_text": "一键加速"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "电量校准"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "选择应用"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "卸载应用"
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "快速扫描"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始扫描"
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始测速"
+    },
+    {
+      "id": 60,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg bg-white border-gray-300"
+      },
+      "visible_text": "Bug反馈"
+    },
+    {
+      "id": 61,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "rows": "3",
+        "class": "w-full p-2 border rounded-lg resize-none bg-white border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 62,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    },
+    {
+      "id": 0,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "px-4 py-2 rounded-lg border bg-white border-gray-300"
+      },
+      "visible_text": "浅色模式"
+    },
+    {
+      "id": 3,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-blue-600 disabled:opacity-50 transition-all duration-300"
+      },
+      "visible_text": "一键加速"
+    },
+    {
+      "id": 21,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full mt-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "电量校准"
+    },
+    {
+      "id": 23,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "选择应用"
+    },
+    {
+      "id": 24,
+      "tag": "BUTTON",
+      "attrs": {
+        "disabled": "",
+        "class": "w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      },
+      "visible_text": "卸载应用"
+    },
+    {
+      "id": 26,
+      "tag": "INPUT",
+      "attrs": {
+        "type": "number",
+        "class": "flex-1 p-2 border rounded-lg bg-white border-gray-300",
+        "placeholder": "流量上限(GB)",
+        "value": "10"
+      },
+      "visible_text": "10"
+    },
+    {
+      "id": 27,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      },
+      "visible_text": "设置"
+    },
+    {
+      "id": 30,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg mb-4 bg-white border-gray-300"
+      },
+      "visible_text": "快速扫描"
+    },
+    {
+      "id": 32,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始扫描"
+    },
+    {
+      "id": 34,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-12 h-6 rounded-full transition-colors bg-green-500"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 42,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+      },
+      "visible_text": "开始测速"
+    },
+    {
+      "id": 60,
+      "tag": "SELECT",
+      "attrs": {
+        "class": "w-full p-2 border rounded-lg bg-white border-gray-300"
+      },
+      "visible_text": "Bug反馈"
+    },
+    {
+      "id": 61,
+      "tag": "TEXTAREA",
+      "attrs": {
+        "placeholder": "请输入您的反馈意见...",
+        "rows": "3",
+        "class": "w-full p-2 border rounded-lg resize-none bg-white border-gray-300"
+      },
+      "visible_text": ""
+    },
+    {
+      "id": 62,
+      "tag": "BUTTON",
+      "attrs": {
+        "class": "w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+      },
+      "visible_text": "提交反馈"
+    }
+  ]
+}
