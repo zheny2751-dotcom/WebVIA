@@ -1,0 +1,612 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荣誉墙</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        .pulse-animation { animation: pulse 0.3s ease-in-out; }
+        .sparkle { animation: sparkle 0.5s ease-in-out; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #7c3aed 100%);
+        }
+        .honor-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .honor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .honor-card.expanded {
+            border-color: #fbbf24;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const initialHonors = [
+            {
+                id: 1,
+                name: "张三",
+                title: "年度优秀员工",
+                year: "2023",
+                month: "12",
+                date: "2023-12-15",
+                description: "在本年度工作中表现突出，业绩优异，团队协作能力强，获得领导和同事的一致认可。",
+                likes: 25,
+                image: "https://picsum.photos/id/1005/300/200"
+            },
+            {
+                id: 2,
+                name: "李四",
+                title: "技术创新奖",
+                year: "2023",
+                month: "11",
+                date: "2023-11-20",
+                description: "在技术研发方面有重大突破，提出的创新方案为公司节约成本200万元。",
+                likes: 42,
+                image: "https://picsum.photos/id/1025/300/200"
+            },
+            {
+                id: 3,
+                name: "王五",
+                title: "客户服务之星",
+                year: "2023",
+                month: "10",
+                date: "2023-10-18",
+                description: "客户满意度达到99.8%，处理客户投诉及时有效，获得客户一致好评。",
+                likes: 18,
+                image: "https://picsum.photos/id/1027/300/200"
+            },
+            {
+                id: 4,
+                name: "赵六",
+                title: "项目管理专家",
+                year: "2022",
+                month: "12",
+                date: "2022-12-25",
+                description: "成功管理5个大型项目，按时按质完成交付，为公司创造价值超过1000万元。",
+                likes: 35,
+                image: "https://picsum.photos/id/1035/300/200"
+            },
+            {
+                id: 5,
+                name: "钱七",
+                title: "销售冠军",
+                year: "2022",
+                month: "06",
+                date: "2022-06-30",
+                description: "年度销售业绩突破3000万元，连续6个月蝉联销售第一名。",
+                likes: 28,
+                image: "https://picsum.photos/id/1040/300/200"
+            }
+        ];
+
+        function App() {
+            const [currentTab, setCurrentTab] = useState('home');
+            const [honors, setHonors] = useState(initialHonors);
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [selectedYear, setSelectedYear] = useState('all');
+            const [sortBy, setSortBy] = useState('date-desc');
+            const [expandedCard, setExpandedCard] = useState(null);
+            const [showBackToTop, setShowBackToTop] = useState(false);
+            const [formData, setFormData] = useState({
+                name: '',
+                title: '',
+                year: '2024',
+                month: '01',
+                description: ''
+            });
+            const [formErrors, setFormErrors] = useState({});
+            const [submitSuccess, setSubmitSuccess] = useState(false);
+            const [statsYear, setStatsYear] = useState('all');
+
+            const mainRef = useRef(null);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setShowBackToTop(window.pageYOffset > 300);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const filteredAndSortedHonors = () => {
+                let filtered = honors.filter(honor => {
+                    const matchesSearch = honor.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                                        honor.title.toLowerCase().includes(searchKeyword.toLowerCase());
+                    const matchesYear = selectedYear === 'all' || honor.year === selectedYear;
+                    return matchesSearch && matchesYear;
+                });
+
+                return filtered.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'date-asc':
+                            return new Date(a.date) - new Date(b.date);
+                        case 'date-desc':
+                            return new Date(b.date) - new Date(a.date);
+                        case 'likes-desc':
+                            return b.likes - a.likes;
+                        default:
+                            return new Date(b.date) - new Date(a.date);
+                    }
+                });
+            };
+
+            const handleLike = (id) => {
+                setHonors(prev => prev.map(honor => 
+                    honor.id === id ? { ...honor, likes: honor.likes + 1 } : honor
+                ));
+            };
+
+            const toggleExpanded = (id) => {
+                setExpandedCard(prev => prev === id ? null : id);
+            };
+
+            const validateForm = () => {
+                const errors = {};
+                if (!formData.name.trim()) errors.name = '姓名不能为空';
+                if (!formData.title.trim()) errors.title = '荣誉名称不能为空';
+                if (!formData.description.trim()) errors.description = '荣誉描述不能为空';
+                return errors;
+            };
+
+            const handleSubmit = () => {
+                const errors = validateForm();
+                setFormErrors(errors);
+
+                if (Object.keys(errors).length === 0) {
+                    const newHonor = {
+                        id: Date.now(),
+                        name: formData.name,
+                        title: formData.title,
+                        year: formData.year,
+                        month: formData.month,
+                        date: `${formData.year}-${formData.month}-15`,
+                        description: formData.description,
+                        likes: 0,
+                        image: `https://picsum.photos/id/${Math.floor(Math.random() * 50) + 1000}/300/200`
+                    };
+                    setHonors(prev => [newHonor, ...prev]);
+                    setFormData({ name: '', title: '', year: '2024', month: '01', description: '' });
+                    setSubmitSuccess(true);
+                    setTimeout(() => setSubmitSuccess(false), 3000);
+                }
+            };
+
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            const getStats = () => {
+                const filteredHonors = statsYear === 'all' ? honors : honors.filter(h => h.year === statsYear);
+                return {
+                    totalHonors: filteredHonors.length,
+                    totalLikes: filteredHonors.reduce((sum, h) => sum + h.likes, 0),
+                    yearDistribution: filteredHonors.reduce((acc, h) => {
+                        acc[h.year] = (acc[h.year] || 0) + 1;
+                        return acc;
+                    }, {})
+                };
+            };
+
+            const availableYears = [...new Set(honors.map(h => h.year))].sort().reverse();
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <nav className="bg-white shadow-lg sticky top-0 z-50">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center space-x-8">
+                                    <h1 className="text-2xl font-bold gradient-bg bg-clip-text text-transparent">荣誉墙</h1>
+                                    <div className="flex space-x-4">
+                                        {[
+                                            { id: 'home', label: '首页', icon: 'home' },
+                                            { id: 'honors', label: '荣誉墙', icon: 'trophy' },
+                                            { id: 'submit', label: '提交荣誉', icon: 'plus' },
+                                            { id: 'stats', label: '统计分析', icon: 'chart-bar' }
+                                        ].map(tab => (
+                                            <button
+                                                key={tab.id}
+                                                onClick={() => setCurrentTab(tab.id)}
+                                                className={`flex items-center px-4 py-2 rounded-lg transition-all duration-200 ${
+                                                    currentTab === tab.id
+                                                        ? 'bg-blue-600 text-white shadow-lg'
+                                                        : 'text-gray-600 hover:bg-gray-100'
+                                                }`}
+                                            >
+                                                <i className={`fas fa-${tab.icon} mr-2`}></i>
+                                                {tab.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <main ref={mainRef}>
+                        {currentTab === 'home' && (
+                            <div className="relative">
+                                <div 
+                                    className="h-96 bg-cover bg-center gradient-bg flex items-center justify-center"
+                                    style={{backgroundImage: `linear-gradient(rgba(30, 58, 138, 0.8), rgba(124, 58, 237, 0.8)), url('https://picsum.photos/id/1018/1920/800')`}}
+                                >
+                                    <h1 
+                                        className="text-6xl font-bold text-white text-center transition-transform duration-300 hover:scale-105 cursor-default"
+                                    >
+                                        荣誉墙
+                                        <p className="text-xl mt-4 font-normal">记录每一份荣光，见证每一次成长</p>
+                                    </h1>
+                                </div>
+                                
+                                <div className="max-w-7xl mx-auto px-4 py-16">
+                                    <div className="grid md:grid-cols-3 gap-8">
+                                        <div className="text-center p-8 bg-white rounded-xl shadow-lg">
+                                            <i className="fas fa-trophy text-5xl text-yellow-500 mb-4"></i>
+                                            <h3 className="text-2xl font-bold mb-4">展示荣誉</h3>
+                                            <p className="text-gray-600">浏览所有获得的荣誉和奖项，见证每一份努力的成果</p>
+                                        </div>
+                                        <div className="text-center p-8 bg-white rounded-xl shadow-lg">
+                                            <i className="fas fa-plus-circle text-5xl text-blue-500 mb-4"></i>
+                                            <h3 className="text-2xl font-bold mb-4">提交荣誉</h3>
+                                            <p className="text-gray-600">分享您的荣誉时刻，让更多人看到您的优秀表现</p>
+                                        </div>
+                                        <div className="text-center p-8 bg-white rounded-xl shadow-lg">
+                                            <i className="fas fa-chart-line text-5xl text-green-500 mb-4"></i>
+                                            <h3 className="text-2xl font-bold mb-4">数据统计</h3>
+                                            <p className="text-gray-600">查看荣誉统计数据，了解团队整体表现和发展趋势</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentTab === 'honors' && (
+                            <div className="max-w-7xl mx-auto px-4 py-8">
+                                <div className="mb-8">
+                                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                                        <div className="grid md:grid-cols-3 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">搜索荣誉</label>
+                                                <input
+                                                    type="text"
+                                                    value={searchKeyword}
+                                                    onChange={(e) => setSearchKeyword(e.target.value)}
+                                                    placeholder="输入姓名或荣誉名称..."
+                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">筛选年份</label>
+                                                <select
+                                                    value={selectedYear}
+                                                    onChange={(e) => setSelectedYear(e.target.value)}
+                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                >
+                                                    <option value="all">全部年份</option>
+                                                    {availableYears.map(year => (
+                                                        <option key={year} value={year}>{year}年</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">排序方式</label>
+                                                <select
+                                                    value={sortBy}
+                                                    onChange={(e) => setSortBy(e.target.value)}
+                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                >
+                                                    <option value="date-desc">时间降序</option>
+                                                    <option value="date-asc">时间升序</option>
+                                                    <option value="likes-desc">点赞数高→低</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {filteredAndSortedHonors().map(honor => (
+                                        <div
+                                            key={honor.id}
+                                            className={`honor-card bg-white rounded-xl shadow-lg overflow-hidden ${
+                                                expandedCard === honor.id ? 'expanded' : ''
+                                            }`}
+                                        >
+                                            <img
+                                                src={honor.image}
+                                                alt={honor.title}
+                                                className="w-full h-48 object-cover"
+                                            />
+                                            <div className="p-6">
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <div>
+                                                        <h3 className="text-xl font-bold text-gray-800">{honor.name}</h3>
+                                                        <p className="text-blue-600 font-semibold">{honor.title}</p>
+                                                        <p className="text-gray-500 text-sm">{honor.date}</p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => handleLike(honor.id)}
+                                                        className="flex items-center space-x-1 text-red-500 hover:text-red-600 transition-colors pulse-animation"
+                                                    >
+                                                        <i className="fas fa-heart"></i>
+                                                        <span className="sparkle">{honor.likes}</span>
+                                                    </button>
+                                                </div>
+
+                                                {expandedCard === honor.id && (
+                                                    <div className="mb-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400 fade-in">
+                                                        <p className="text-gray-700">{honor.description}</p>
+                                                    </div>
+                                                )}
+
+                                                <div className="flex space-x-2">
+                                                    <button
+                                                        onClick={() => toggleExpanded(honor.id)}
+                                                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                                    >
+                                                        {expandedCard === honor.id ? '收起详情' : '查看详情'}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {filteredAndSortedHonors().length === 0 && (
+                                    <div className="text-center py-16">
+                                        <i className="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                                        <p className="text-xl text-gray-500">未找到符合条件的荣誉记录</p>
+                                        <p className="text-gray-400 mt-2">请尝试调整搜索条件或筛选选项</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {currentTab === 'submit' && (
+                            <div className="max-w-4xl mx-auto px-4 py-8">
+                                <div className="bg-white rounded-xl shadow-lg p-8">
+                                    <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">提交新荣誉</h2>
+                                    
+                                    {submitSuccess && (
+                                        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg fade-in">
+                                            <i className="fas fa-check-circle mr-2"></i>
+                                            荣誉提交成功！已添加到荣誉墙中。
+                                        </div>
+                                    )}
+
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                姓名 <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    formErrors.name ? 'border-red-500' : 'border-gray-300'
+                                                }`}
+                                                placeholder="请输入获奖者姓名"
+                                            />
+                                            {formErrors.name && (
+                                                <p className="mt-1 text-sm text-red-500">{formErrors.name}</p>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                荣誉名称 <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={formData.title}
+                                                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    formErrors.title ? 'border-red-500' : 'border-gray-300'
+                                                }`}
+                                                placeholder="请输入荣誉或奖项名称"
+                                            />
+                                            {formErrors.title && (
+                                                <p className="mt-1 text-sm text-red-500">{formErrors.title}</p>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">获奖年份</label>
+                                            <select
+                                                value={formData.year}
+                                                onChange={(e) => setFormData({...formData, year: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                {[2024, 2023, 2022, 2021, 2020].map(year => (
+                                                    <option key={year} value={year}>{year}年</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">获奖月份</label>
+                                            <select
+                                                value={formData.month}
+                                                onChange={(e) => setFormData({...formData, month: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                {Array.from({length: 12}, (_, i) => {
+                                                    const month = String(i + 1).padStart(2, '0');
+                                                    return (
+                                                        <option key={month} value={month}>{month}月</option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-6">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            荣誉描述 <span className="text-red-500">*</span>
+                                        </label>
+                                        <textarea
+                                            value={formData.description}
+                                            onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                            rows={4}
+                                            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                formErrors.description ? 'border-red-500' : 'border-gray-300'
+                                            }`}
+                                            placeholder="请详细描述荣誉内容、获奖原因、贡献等..."
+                                        />
+                                        {formErrors.description && (
+                                            <p className="mt-1 text-sm text-red-500">{formErrors.description}</p>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-8 text-center">
+                                        <button
+                                            onClick={handleSubmit}
+                                            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105"
+                                        >
+                                            <i className="fas fa-plus mr-2"></i>
+                                            提交荣誉
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentTab === 'stats' && (
+                            <div className="max-w-6xl mx-auto px-4 py-8">
+                                <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">统计分析</h2>
+                                
+                                <div className="mb-6">
+                                    <div className="bg-white p-4 rounded-xl shadow-lg flex items-center justify-between">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">统计年份</label>
+                                            <select
+                                                value={statsYear}
+                                                onChange={(e) => setStatsYear(e.target.value)}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                <option value="all">全部年份</option>
+                                                {availableYears.map(year => (
+                                                    <option key={year} value={year}>{year}年</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                const elements = document.querySelectorAll('.stat-card');
+                                                elements.forEach(el => el.classList.add('sparkle'));
+                                                setTimeout(() => {
+                                                    elements.forEach(el => el.classList.remove('sparkle'));
+                                                }, 500);
+                                            }}
+                                            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                                        >
+                                            <i className="fas fa-sync-alt mr-2"></i>
+                                            刷新统计
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                                    <div className="stat-card bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg text-white">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-blue-100 text-sm">总荣誉数</p>
+                                                <p className="text-3xl font-bold">{getStats().totalHonors}</p>
+                                            </div>
+                                            <i className="fas fa-trophy text-4xl text-blue-200"></i>
+                                        </div>
+                                    </div>
+
+                                    <div className="stat-card bg-gradient-to-r from-red-500 to-red-600 p-6 rounded-xl shadow-lg text-white">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-red-100 text-sm">总点赞数</p>
+                                                <p className="text-3xl font-bold">{getStats().totalLikes}</p>
+                                            </div>
+                                            <i className="fas fa-heart text-4xl text-red-200"></i>
+                                        </div>
+                                    </div>
+
+                                    <div className="stat-card bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl shadow-lg text-white">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-green-100 text-sm">平均点赞</p>
+                                                <p className="text-3xl font-bold">
+                                                    {getStats().totalHonors > 0 ? Math.round(getStats().totalLikes / getStats().totalHonors) : 0}
+                                                </p>
+                                            </div>
+                                            <i className="fas fa-star text-4xl text-green-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white p-6 rounded-xl shadow-lg">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">年度荣誉分布</h3>
+                                    <div className="space-y-4">
+                                        {Object.entries(getStats().yearDistribution).sort((a, b) => b[0] - a[0]).map(([year, count]) => (
+                                            <div key={year} className="flex items-center">
+                                                <div className="w-20 text-sm font-medium text-gray-600">{year}年</div>
+                                                <div className="flex-1 mx-4">
+                                                    <div className="bg-gray-200 rounded-full h-4">
+                                                        <div
+                                                            className="bg-blue-500 h-4 rounded-full transition-all duration-500"
+                                                            style={{
+                                                                width: `${Math.max((count / Math.max(...Object.values(getStats().yearDistribution))) * 100, 5)}%`
+                                                            }}
+                                                        ></div>
+                                                    </div>
+                                                </div>
+                                                <div className="w-12 text-right text-sm font-semibold text-gray-800">{count}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {Object.keys(getStats().yearDistribution).length === 0 && (
+                                        <p className="text-center text-gray-500 py-8">暂无数据</p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </main>
+
+                    {showBackToTop && (
+                        <button
+                            onClick={scrollToTop}
+                            className="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center z-50"
+                        >
+                            <i className="fas fa-arrow-up"></i>
+                        </button>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

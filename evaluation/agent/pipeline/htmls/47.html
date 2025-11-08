@@ -1,0 +1,506 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私档案管理系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function PrivacyProfileApp() {
+            const [activeSection, setActiveSection] = useState('intro');
+            const [profileData, setProfileData] = useState({
+                name: '',
+                email: '',
+                phone: ''
+            });
+            const [privacySettings, setPrivacySettings] = useState({
+                viewPermission: 'private',
+                dataSharing: false,
+                analytics: true,
+                marketing: false
+            });
+            const [policyExpanded, setPolicyExpanded] = useState(false);
+            const [selectedVersion, setSelectedVersion] = useState('v1.0');
+            const [formErrors, setFormErrors] = useState({});
+            const [saveStatus, setSaveStatus] = useState('');
+
+            const validateForm = () => {
+                const errors = {};
+                if (!profileData.name.trim()) errors.name = '姓名不能为空';
+                if (!profileData.email.trim()) {
+                    errors.email = '邮箱不能为空';
+                } else if (!/\S+@\S+\.\S+/.test(profileData.email)) {
+                    errors.email = '邮箱格式不正确';
+                }
+                if (!profileData.phone.trim()) {
+                    errors.phone = '手机号不能为空';
+                } else if (!/^1[3-9]\d{9}$/.test(profileData.phone)) {
+                    errors.phone = '手机号格式不正确';
+                }
+                setFormErrors(errors);
+                return Object.keys(errors).length === 0;
+            };
+
+            const handleSaveProfile = () => {
+                if (validateForm()) {
+                    setSaveStatus('保存成功！');
+                    setTimeout(() => setSaveStatus(''), 3000);
+                } else {
+                    setSaveStatus('请检查表单信息');
+                    setTimeout(() => setSaveStatus(''), 3000);
+                }
+            };
+
+            const versionData = {
+                'v1.0': {
+                    date: '2024-01-15',
+                    changes: '初始版本发布，包含基础隐私保护功能',
+                    features: ['个人信息加密存储', '基础权限控制', '数据导出功能']
+                },
+                'v1.1': {
+                    date: '2024-02-20',
+                    changes: '增强安全性，新增双因子认证',
+                    features: ['双因子认证', '高级权限控制', '审计日志', '数据备份']
+                },
+                'v1.2': {
+                    date: '2024-03-10',
+                    changes: '用户体验优化，新增隐私设置向导',
+                    features: ['隐私设置向导', 'UI界面优化', '性能提升', '移动端适配']
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+                    <header className="bg-slate-800/90 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center space-x-3">
+                                    <i className="fas fa-shield-alt text-blue-400 text-2xl"></i>
+                                    <h1 className="text-xl font-bold text-white">隐私档案管理系统</h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <button className="text-slate-300 hover:text-white transition-colors">
+                                        <i className="fas fa-user-circle text-xl"></i>
+                                    </button>
+                                    <button className="text-slate-300 hover:text-white transition-colors">
+                                        <i className="fas fa-cog text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="flex max-w-7xl mx-auto">
+                        <nav className="w-64 bg-slate-800/50 backdrop-blur-sm border-r border-slate-700 min-h-screen">
+                            <div className="p-6">
+                                <ul className="space-y-2">
+                                    {[
+                                        { id: 'intro', icon: 'fas fa-info-circle', label: '隐私简介' },
+                                        { id: 'profile', icon: 'fas fa-user-edit', label: '个人档案' },
+                                        { id: 'settings', icon: 'fas fa-cogs', label: '隐私设置' },
+                                        { id: 'policy', icon: 'fas fa-file-contract', label: '协议政策' },
+                                        { id: 'versions', icon: 'fas fa-history', label: '历史版本' }
+                                    ].map(item => (
+                                        <li key={item.id}>
+                                            <button
+                                                onClick={() => setActiveSection(item.id)}
+                                                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                                                    activeSection === item.id
+                                                        ? 'bg-blue-600 text-white shadow-lg'
+                                                        : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                                                }`}
+                                            >
+                                                <i className={item.icon}></i>
+                                                <span>{item.label}</span>
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </nav>
+
+                        <main className="flex-1 p-8">
+                            {activeSection === 'intro' && (
+                                <div className="space-y-8">
+                                    <div className="text-center">
+                                        <h2 className="text-3xl font-bold text-white mb-4">欢迎使用隐私档案管理系统</h2>
+                                        <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+                                            保护您的隐私是我们的首要任务。本系统采用最先进的加密技术和隐私保护措施。
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                            <img src="https://picsum.photos/id/60/400/200" alt="隐私保护" className="w-full h-48 object-cover rounded-lg mb-4" />
+                                            <h3 className="text-xl font-semibold text-white mb-3 flex items-center">
+                                                <i className="fas fa-lock text-blue-400 mr-3"></i>
+                                                数据安全保护
+                                            </h3>
+                                            <p className="text-slate-300">
+                                                采用AES-256加密算法，确保您的个人信息在传输和存储过程中的安全性。所有数据都经过多重加密处理。
+                                            </p>
+                                        </div>
+                                        
+                                        <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                            <img src="https://picsum.photos/id/192/400/200" alt="权限控制" className="w-full h-48 object-cover rounded-lg mb-4" />
+                                            <h3 className="text-xl font-semibold text-white mb-3 flex items-center">
+                                                <i className="fas fa-user-shield text-green-400 mr-3"></i>
+                                                精细权限控制
+                                            </h3>
+                                            <p className="text-slate-300">
+                                                提供灵活的权限管理系统，您可以精确控制谁能访问您的信息，以及可以访问哪些具体内容。
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-3 gap-6">
+                                        {[
+                                            { icon: 'fas fa-eye-slash', title: '隐私优先', desc: '默认最高隐私保护级别' },
+                                            { icon: 'fas fa-history', title: '版本管理', desc: '完整的修改历史记录' },
+                                            { icon: 'fas fa-download', title: '数据导出', desc: '随时导出您的所有数据' }
+                                        ].map((feature, index) => (
+                                            <div key={index} className="bg-slate-800/40 rounded-lg p-6 text-center border border-slate-700">
+                                                <i className={`${feature.icon} text-3xl text-blue-400 mb-4`}></i>
+                                                <h4 className="text-lg font-semibold text-white mb-2">{feature.title}</h4>
+                                                <p className="text-slate-300 text-sm">{feature.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeSection === 'profile' && (
+                                <div className="max-w-2xl mx-auto">
+                                    <h2 className="text-2xl font-bold text-white mb-6">个人档案填写</h2>
+                                    
+                                    <div className="bg-slate-800/60 rounded-xl p-8 backdrop-blur-sm border border-slate-700">
+                                        <div className="space-y-6">
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                                    <i className="fas fa-user mr-2"></i>姓名
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={profileData.name}
+                                                    onChange={(e) => setProfileData({...profileData, name: e.target.value})}
+                                                    className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    placeholder="请输入您的姓名"
+                                                />
+                                                {formErrors.name && <p className="text-red-400 text-sm mt-1">{formErrors.name}</p>}
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                                    <i className="fas fa-envelope mr-2"></i>邮箱地址
+                                                </label>
+                                                <input
+                                                    type="email"
+                                                    value={profileData.email}
+                                                    onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                                                    className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    placeholder="请输入您的邮箱地址"
+                                                />
+                                                {formErrors.email && <p className="text-red-400 text-sm mt-1">{formErrors.email}</p>}
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                                    <i className="fas fa-phone mr-2"></i>手机号码
+                                                </label>
+                                                <input
+                                                    type="tel"
+                                                    value={profileData.phone}
+                                                    onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
+                                                    className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    placeholder="请输入您的手机号码"
+                                                />
+                                                {formErrors.phone && <p className="text-red-400 text-sm mt-1">{formErrors.phone}</p>}
+                                            </div>
+
+                                            <div className="flex justify-between items-center pt-4">
+                                                <button
+                                                    onClick={() => setProfileData({name: '', email: '', phone: ''})}
+                                                    className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors"
+                                                >
+                                                    <i className="fas fa-undo mr-2"></i>重置
+                                                </button>
+                                                <button
+                                                    onClick={handleSaveProfile}
+                                                    className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors font-semibold"
+                                                >
+                                                    <i className="fas fa-save mr-2"></i>保存档案
+                                                </button>
+                                            </div>
+
+                                            {saveStatus && (
+                                                <div className={`p-4 rounded-lg ${saveStatus.includes('成功') ? 'bg-green-600/20 text-green-300' : 'bg-red-600/20 text-red-300'}`}>
+                                                    <i className={`${saveStatus.includes('成功') ? 'fas fa-check-circle' : 'fas fa-exclamation-triangle'} mr-2`}></i>
+                                                    {saveStatus}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeSection === 'settings' && (
+                                <div className="max-w-3xl mx-auto">
+                                    <h2 className="text-2xl font-bold text-white mb-6">隐私设置管理</h2>
+                                    
+                                    <div className="grid gap-6">
+                                        <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                            <h3 className="text-lg font-semibold text-white mb-4">浏览权限设置</h3>
+                                            <div className="flex items-center space-x-4">
+                                                <label className="text-slate-300 mr-4">访问级别：</label>
+                                                <select
+                                                    value={privacySettings.viewPermission}
+                                                    onChange={(e) => setPrivacySettings({...privacySettings, viewPermission: e.target.value})}
+                                                    className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+                                                >
+                                                    <option value="public">公开</option>
+                                                    <option value="friends">仅好友</option>
+                                                    <option value="private">私密</option>
+                                                </select>
+                                            </div>
+                                            <div className="mt-4 p-4 bg-slate-700/50 rounded-lg">
+                                                <p className="text-slate-300">
+                                                    当前设置：<span className="text-blue-400 font-semibold">
+                                                        {privacySettings.viewPermission === 'public' ? '公开 - 所有人都可以查看您的档案' :
+                                                         privacySettings.viewPermission === 'friends' ? '仅好友 - 只有您的好友可以查看' :
+                                                         '私密 - 只有您自己可以查看'}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                            <h3 className="text-lg font-semibold text-white mb-4">数据共享选项</h3>
+                                            <div className="space-y-4">
+                                                <label className="flex items-center space-x-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={privacySettings.dataSharing}
+                                                        onChange={(e) => setPrivacySettings({...privacySettings, dataSharing: e.target.checked})}
+                                                        className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+                                                    />
+                                                    <span className="text-slate-300">允许数据共享用于服务改进</span>
+                                                </label>
+                                                
+                                                <label className="flex items-center space-x-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={privacySettings.analytics}
+                                                        onChange={(e) => setPrivacySettings({...privacySettings, analytics: e.target.checked})}
+                                                        className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+                                                    />
+                                                    <span className="text-slate-300">允许匿名分析数据收集</span>
+                                                </label>
+                                                
+                                                <label className="flex items-center space-x-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={privacySettings.marketing}
+                                                        onChange={(e) => setPrivacySettings({...privacySettings, marketing: e.target.checked})}
+                                                        className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500"
+                                                    />
+                                                    <span className="text-slate-300">接收个性化推荐和营销信息</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                            <h3 className="text-lg font-semibold text-white mb-4">当前设置状态</h3>
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                    <h4 className="font-medium text-blue-400 mb-2">访问权限</h4>
+                                                    <p className="text-slate-300 text-sm">
+                                                        {privacySettings.viewPermission === 'public' ? '🌐 公开访问' :
+                                                         privacySettings.viewPermission === 'friends' ? '👥 仅好友可见' :
+                                                         '🔒 完全私密'}
+                                                    </p>
+                                                </div>
+                                                <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                    <h4 className="font-medium text-blue-400 mb-2">数据使用</h4>
+                                                    <p className="text-slate-300 text-sm">
+                                                        {[privacySettings.dataSharing, privacySettings.analytics, privacySettings.marketing].filter(Boolean).length} 项已启用
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeSection === 'policy' && (
+                                <div className="max-w-4xl mx-auto">
+                                    <h2 className="text-2xl font-bold text-white mb-6">协议政策阅读</h2>
+                                    
+                                    <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-xl font-semibold text-white">隐私政策摘要</h3>
+                                            <button
+                                                onClick={() => setPolicyExpanded(!policyExpanded)}
+                                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+                                            >
+                                                <i className={`fas ${policyExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} mr-2`}></i>
+                                                {policyExpanded ? '收起详情' : '查看详情'}
+                                            </button>
+                                        </div>
+                                        
+                                        <div className="space-y-4">
+                                            <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                <h4 className="font-medium text-blue-400 mb-2">📋 政策概述</h4>
+                                                <p className="text-slate-300 text-sm">
+                                                    我们致力于保护您的隐私和个人信息安全。本政策说明我们如何收集、使用、存储和保护您的个人数据。
+                                                </p>
+                                            </div>
+                                            
+                                            <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                <h4 className="font-medium text-green-400 mb-2">🔒 数据保护</h4>
+                                                <p className="text-slate-300 text-sm">
+                                                    我们采用行业标准的加密技术和安全措施来保护您的数据，绝不会在未经您同意的情况下与第三方共享。
+                                                </p>
+                                            </div>
+
+                                            {policyExpanded && (
+                                                <div className="space-y-4 border-t border-slate-600 pt-4">
+                                                    <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                        <h4 className="font-medium text-yellow-400 mb-3">📊 数据收集范围</h4>
+                                                        <ul className="text-slate-300 text-sm space-y-1">
+                                                            <li>• 基本身份信息（姓名、邮箱、电话）</li>
+                                                            <li>• 账户使用情况和偏好设置</li>
+                                                            <li>• 设备信息和技术数据</li>
+                                                            <li>• 服务使用日志和分析数据</li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                        <h4 className="font-medium text-purple-400 mb-3">🎯 数据使用目的</h4>
+                                                        <ul className="text-slate-300 text-sm space-y-1">
+                                                            <li>• 提供和改进我们的服务</li>
+                                                            <li>• 个性化用户体验</li>
+                                                            <li>• 账户安全和欺诈防护</li>
+                                                            <li>• 法律合规和争议解决</li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div className="p-4 bg-slate-700/50 rounded-lg">
+                                                        <h4 className="font-medium text-red-400 mb-3">⚖️ 您的权利</h4>
+                                                        <ul className="text-slate-300 text-sm space-y-1">
+                                                            <li>• 访问和查看您的个人数据</li>
+                                                            <li>• 更正或更新不准确的信息</li>
+                                                            <li>• 删除您的个人数据</li>
+                                                            <li>• 限制或拒绝数据处理</li>
+                                                            <li>• 数据可携带权</li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div className="flex justify-center space-x-4 pt-4">
+                                                        <button className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors">
+                                                            <i className="fas fa-check mr-2"></i>我已阅读并同意
+                                                        </button>
+                                                        <button className="px-6 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors">
+                                                            <i className="fas fa-download mr-2"></i>下载完整版本
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeSection === 'versions' && (
+                                <div className="max-w-4xl mx-auto">
+                                    <h2 className="text-2xl font-bold text-white mb-6">历史版本查看</h2>
+                                    
+                                    <div className="bg-slate-800/60 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+                                        <div className="flex items-center justify-between mb-6">
+                                            <h3 className="text-lg font-semibold text-white">选择版本</h3>
+                                            <select
+                                                value={selectedVersion}
+                                                onChange={(e) => setSelectedVersion(e.target.value)}
+                                                className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                {Object.keys(versionData).map(version => (
+                                                    <option key={version} value={version}>
+                                                        版本 {version}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        <div className="space-y-6">
+                                            <div className="p-6 bg-slate-700/50 rounded-lg">
+                                                <div className="flex items-center justify-between mb-4">
+                                                    <h4 className="text-xl font-semibold text-blue-400">版本 {selectedVersion}</h4>
+                                                    <span className="text-slate-400">发布日期: {versionData[selectedVersion].date}</span>
+                                                </div>
+                                                
+                                                <div className="mb-4">
+                                                    <h5 className="font-medium text-white mb-2">更新内容</h5>
+                                                    <p className="text-slate-300">{versionData[selectedVersion].changes}</p>
+                                                </div>
+                                                
+                                                <div>
+                                                    <h5 className="font-medium text-white mb-3">主要功能</h5>
+                                                    <div className="grid md:grid-cols-2 gap-3">
+                                                        {versionData[selectedVersion].features.map((feature, index) => (
+                                                            <div key={index} className="flex items-center space-x-2">
+                                                                <i className="fas fa-check-circle text-green-400"></i>
+                                                                <span className="text-slate-300">{feature}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="grid md:grid-cols-3 gap-4">
+                                                <div className="p-4 bg-slate-700/30 rounded-lg text-center">
+                                                    <i className="fas fa-users text-blue-400 text-2xl mb-2"></i>
+                                                    <h5 className="font-medium text-white">用户数量</h5>
+                                                    <p className="text-slate-300">{selectedVersion === 'v1.0' ? '1,250' : selectedVersion === 'v1.1' ? '3,420' : '5,890'}</p>
+                                                </div>
+                                                <div className="p-4 bg-slate-700/30 rounded-lg text-center">
+                                                    <i className="fas fa-shield-alt text-green-400 text-2xl mb-2"></i>
+                                                    <h5 className="font-medium text-white">安全等级</h5>
+                                                    <p className="text-slate-300">{selectedVersion === 'v1.0' ? '标准' : selectedVersion === 'v1.1' ? '高级' : '企业级'}</p>
+                                                </div>
+                                                <div className="p-4 bg-slate-700/30 rounded-lg text-center">
+                                                    <i className="fas fa-star text-yellow-400 text-2xl mb-2"></i>
+                                                    <h5 className="font-medium text-white">用户评分</h5>
+                                                    <p className="text-slate-300">{selectedVersion === 'v1.0' ? '4.2' : selectedVersion === 'v1.1' ? '4.6' : '4.8'}/5.0</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="flex justify-center space-x-4">
+                                                <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors">
+                                                    <i className="fas fa-download mr-2"></i>下载此版本
+                                                </button>
+                                                <button className="px-6 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-500 transition-colors">
+                                                    <i className="fas fa-eye mr-2"></i>查看变更日志
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </main>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<PrivacyProfileApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打赏排名</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const initialUsers = [
+            { id: 1, nickname: "星空大师", amount: 188888, avatar: "https://picsum.photos/id/1/50/50" },
+            { id: 2, nickname: "梦想家", amount: 156888, avatar: "https://picsum.photos/id/2/50/50" },
+            { id: 3, nickname: "阳光女孩", amount: 145200, avatar: "https://picsum.photos/id/3/50/50" },
+            { id: 4, nickname: "音乐之声", amount: 134500, avatar: "https://picsum.photos/id/4/50/50" },
+            { id: 5, nickname: "舞蹈精灵", amount: 128900, avatar: "https://picsum.photos/id/5/50/50" },
+            { id: 6, nickname: "游戏达人", amount: 118800, avatar: "https://picsum.photos/id/6/50/50" },
+            { id: 7, nickname: "美食博主", amount: 108500, avatar: "https://picsum.photos/id/7/50/50" },
+            { id: 8, nickname: "旅行者", amount: 98600, avatar: "https://picsum.photos/id/8/50/50" },
+            { id: 9, nickname: "知识分享", amount: 88700, avatar: "https://picsum.photos/id/9/50/50" },
+            { id: 10, nickname: "健身教练", amount: 78800, avatar: "https://picsum.photos/id/10/50/50" },
+            { id: 11, nickname: "摄影师", amount: 68900, avatar: "https://picsum.photos/id/11/50/50" },
+            { id: 12, nickname: "画家", amount: 58100, avatar: "https://picsum.photos/id/12/50/50" },
+            { id: 13, nickname: "书法家", amount: 48200, avatar: "https://picsum.photos/id/13/50/50" },
+            { id: 14, nickname: "科技探索", amount: 38300, avatar: "https://picsum.photos/id/14/50/50" },
+            { id: 15, nickname: "萌宠达人", amount: 28400, avatar: "https://picsum.photos/id/15/50/50" },
+            { id: 16, nickname: "时尚穿搭", amount: 18500, avatar: "https://picsum.photos/id/16/50/50" },
+            { id: 17, nickname: "搞笑达人", amount: 15600, avatar: "https://picsum.photos/id/17/50/50" },
+            { id: 18, nickname: "心理咨询", amount: 12700, avatar: "https://picsum.photos/id/18/50/50" },
+            { id: 19, nickname: "理财专家", amount: 9800, avatar: "https://picsum.photos/id/19/50/50" },
+            { id: 20, nickname: "教育导师", amount: 6900, avatar: "https://picsum.photos/id/20/50/50" }
+        ];
+
+        function App() {
+            const [users, setUsers] = useState(initialUsers);
+            const [currentPage, setCurrentPage] = useState(1);
+            const [filterType, setFilterType] = useState('total');
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [tipAmount, setTipAmount] = useState('');
+            const [selectedUser, setSelectedUser] = useState('');
+            const [showModal, setShowModal] = useState(false);
+            const [modalContent, setModalContent] = useState('');
+            const [totalAmount, setTotalAmount] = useState(2588800);
+            const [todayTips, setTodayTips] = useState(1286);
+            const [onlineUsers, setOnlineUsers] = useState(3456);
+            const [amountError, setAmountError] = useState('');
+            const [successMessage, setSuccessMessage] = useState('');
+
+            const itemsPerPage = 10;
+
+            const handleAmountChange = (e) => {
+                const value = e.target.value;
+                setTipAmount(value);
+                
+                if (value && !/^\d+$/.test(value)) {
+                    setAmountError('请输入正整数');
+                } else if (value && parseInt(value) <= 0) {
+                    setAmountError('金额必须大于0');
+                } else {
+                    setAmountError('');
+                }
+            };
+
+            const handleTip = () => {
+                if (!tipAmount || amountError) {
+                    setAmountError('请输入有效的打赏金额');
+                    return;
+                }
+                if (!selectedUser) {
+                    setAmountError('请选择打赏对象');
+                    return;
+                }
+                
+                const user = users.find(u => u.id === parseInt(selectedUser));
+                setModalContent(`确认向 ${user.nickname} 打赏 ${tipAmount} 元吗？`);
+                setShowModal(true);
+            };
+
+            const confirmTip = () => {
+                const amount = parseInt(tipAmount);
+                const userId = parseInt(selectedUser);
+                
+                setUsers(prevUsers => 
+                    prevUsers.map(user => 
+                        user.id === userId 
+                            ? { ...user, amount: user.amount + amount }
+                            : user
+                    ).sort((a, b) => b.amount - a.amount)
+                );
+                
+                setTotalAmount(prev => prev + amount);
+                setTodayTips(prev => prev + 1);
+                
+                setTipAmount('');
+                setSelectedUser('');
+                setShowModal(false);
+                setSuccessMessage('打赏成功！');
+                setTimeout(() => setSuccessMessage(''), 3000);
+            };
+
+            const getFilteredUsers = () => {
+                let filtered = [...users];
+                
+                if (searchKeyword) {
+                    filtered = filtered.filter(user => 
+                        user.nickname.toLowerCase().includes(searchKeyword.toLowerCase())
+                    );
+                }
+                
+                if (filterType === 'day') {
+                    filtered = filtered.map(user => ({ ...user, amount: Math.floor(user.amount * 0.1) }));
+                } else if (filterType === 'week') {
+                    filtered = filtered.map(user => ({ ...user, amount: Math.floor(user.amount * 0.3) }));
+                } else if (filterType === 'month') {
+                    filtered = filtered.map(user => ({ ...user, amount: Math.floor(user.amount * 0.7) }));
+                }
+                
+                return filtered.sort((a, b) => b.amount - a.amount);
+            };
+
+            const getCurrentPageUsers = () => {
+                const filtered = getFilteredUsers();
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                return filtered.slice(startIndex, startIndex + itemsPerPage);
+            };
+
+            const refreshRanking = () => {
+                setCurrentPage(1);
+                setUsers(prevUsers => [...prevUsers].sort((a, b) => b.amount - a.amount));
+                setSuccessMessage('排行榜已刷新！');
+                setTimeout(() => setSuccessMessage(''), 2000);
+            };
+
+            const handleSearch = () => {
+                setCurrentPage(1);
+                if (searchKeyword) {
+                    setSuccessMessage(`搜索"${searchKeyword}"的结果`);
+                    setTimeout(() => setSuccessMessage(''), 2000);
+                }
+            };
+
+            const loadMore = () => {
+                setCurrentPage(prev => prev + 1);
+            };
+
+            const totalPages = Math.ceil(getFilteredUsers().length / itemsPerPage);
+            const currentUsers = getCurrentPageUsers();
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+                    <header className="bg-gradient-to-r from-orange-400 to-red-400 text-white shadow-lg">
+                        <div className="container mx-auto px-4 py-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-4">
+                                    <img src="https://picsum.photos/id/100/60/60" alt="Logo" className="w-12 h-12 rounded-full border-2 border-white" />
+                                    <h1 className="text-3xl font-bold">打赏排名</h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <i className="fas fa-crown text-yellow-300"></i>
+                                    <span className="text-lg">实时互动平台</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-400">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-gray-600 text-sm">总打赏金额</p>
+                                        <p className="text-2xl font-bold text-orange-600">¥{totalAmount.toLocaleString()}</p>
+                                    </div>
+                                    <i className="fas fa-coins text-3xl text-orange-400"></i>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-400">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-gray-600 text-sm">今日打赏次数</p>
+                                        <p className="text-2xl font-bold text-red-600">{todayTips}</p>
+                                    </div>
+                                    <i className="fas fa-heart text-3xl text-red-400"></i>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-400">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-gray-600 text-sm">在线用户</p>
+                                        <p className="text-2xl font-bold text-yellow-600">{onlineUsers}</p>
+                                    </div>
+                                    <i className="fas fa-users text-3xl text-yellow-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-1 space-y-6">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-gift text-orange-500 mr-2"></i>
+                                        立即打赏
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">打赏金额</label>
+                                            <input
+                                                type="text"
+                                                value={tipAmount}
+                                                onChange={handleAmountChange}
+                                                placeholder="请输入正整数金额"
+                                                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${amountError ? 'border-red-500' : 'border-gray-300'}`}
+                                            />
+                                            {amountError && <p className="text-red-500 text-sm mt-1">{amountError}</p>}
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">选择打赏对象</label>
+                                            <select
+                                                value={selectedUser}
+                                                onChange={(e) => setSelectedUser(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                            >
+                                                <option value="">请选择用户</option>
+                                                {users.slice(0, 20).map(user => (
+                                                    <option key={user.id} value={user.id}>
+                                                        {user.nickname} (¥{user.amount.toLocaleString()})
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        <button
+                                            onClick={handleTip}
+                                            className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 transform hover:scale-105"
+                                        >
+                                            <i className="fas fa-heart mr-2"></i>
+                                            立即打赏
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-filter text-blue-500 mr-2"></i>
+                                        筛选排序
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">排行榜类型</label>
+                                            <select
+                                                value={filterType}
+                                                onChange={(e) => setFilterType(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                <option value="day">日榜</option>
+                                                <option value="week">周榜</option>
+                                                <option value="month">月榜</option>
+                                                <option value="total">总榜</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <button
+                                            onClick={refreshRanking}
+                                            className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200"
+                                        >
+                                            <i className="fas fa-sync-alt mr-2"></i>
+                                            刷新排行榜
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-search text-green-500 mr-2"></i>
+                                        搜索用户
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <input
+                                            type="text"
+                                            value={searchKeyword}
+                                            onChange={(e) => setSearchKeyword(e.target.value)}
+                                            placeholder="输入昵称关键字"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        />
+                                        
+                                        <button
+                                            onClick={handleSearch}
+                                            className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200"
+                                        >
+                                            <i className="fas fa-search mr-2"></i>
+                                            搜索
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-2">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <h3 className="text-xl font-semibold text-gray-800 flex items-center">
+                                            <i className="fas fa-trophy text-yellow-500 mr-2"></i>
+                                            打赏排行榜
+                                        </h3>
+                                        <span className="text-sm text-gray-500">
+                                            {filterType === 'day' && '日榜'}
+                                            {filterType === 'week' && '周榜'}
+                                            {filterType === 'month' && '月榜'}
+                                            {filterType === 'total' && '总榜'}
+                                        </span>
+                                    </div>
+                                    
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full">
+                                            <thead>
+                                                <tr className="border-b border-gray-200">
+                                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">排名</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">用户</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">打赏金额</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {currentUsers.map((user, index) => {
+                                                    const globalRank = (currentPage - 1) * itemsPerPage + index + 1;
+                                                    return (
+                                                        <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+                                                            <td className="py-4 px-4">
+                                                                <div className="flex items-center">
+                                                                    {globalRank <= 3 && (
+                                                                        <i className={`fas fa-medal mr-2 ${
+                                                                            globalRank === 1 ? 'text-yellow-500' :
+                                                                            globalRank === 2 ? 'text-gray-400' :
+                                                                            'text-orange-600'
+                                                                        }`}></i>
+                                                                    )}
+                                                                    <span className="font-semibold">{globalRank}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-4 px-4">
+                                                                <div className="flex items-center space-x-3">
+                                                                    <img src={user.avatar} alt={user.nickname} className="w-10 h-10 rounded-full" />
+                                                                    <span className="font-medium">{user.nickname}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-4 px-4">
+                                                                <span className="text-orange-600 font-semibold">
+                                                                    ¥{user.amount.toLocaleString()}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    {currentPage < totalPages && (
+                                        <div className="mt-6 text-center">
+                                            <button
+                                                onClick={loadMore}
+                                                className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+                                            >
+                                                <i className="fas fa-chevron-down mr-2"></i>
+                                                查看更多
+                                            </button>
+                                        </div>
+                                    )}
+                                    
+                                    {currentUsers.length === 0 && (
+                                        <div className="text-center py-8 text-gray-500">
+                                            <i className="fas fa-search text-4xl mb-4"></i>
+                                            <p>暂无匹配结果</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="container mx-auto px-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">关于我们</h4>
+                                    <p className="text-gray-300">打赏排名平台致力于为用户提供公平、透明的互动体验。</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">联系客服</h4>
+                                    <div className="space-y-2 text-gray-300">
+                                        <p><i className="fas fa-phone mr-2"></i>客服热线：400-888-9999</p>
+                                        <p><i className="fas fa-envelope mr-2"></i>邮箱：service@tipranking.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                                <p>&copy; 2024 打赏排名平台. 保留所有权利.</p>
+                            </div>
+                        </div>
+                    </footer>
+
+                    {showModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+                                <h4 className="text-lg font-semibold mb-4">确认打赏</h4>
+                                <p className="text-gray-600 mb-6">{modalContent}</p>
+                                <div className="flex space-x-4">
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition-colors duration-200"
+                                    >
+                                        取消
+                                    </button>
+                                    <button
+                                        onClick={confirmTip}
+                                        className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200"
+                                    >
+                                        确认
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {successMessage && (
+                        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+                            <i className="fas fa-check-circle mr-2"></i>
+                            {successMessage}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

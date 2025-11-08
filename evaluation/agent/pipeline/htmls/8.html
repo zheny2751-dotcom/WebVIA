@@ -1,0 +1,403 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二十四节气民俗动画体验</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes highlight {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(34, 197, 94, 0.2); }
+        }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        .highlight { animation: highlight 2s ease-in-out infinite; }
+        .season-spring { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+        .season-summer { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .season-autumn { background: linear-gradient(135deg, #ffeadd 0%, #fab2ae 100%); }
+        .season-winter { background: linear-gradient(135deg, #e0f7ff 0%, #b3e5fc 100%); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const solarTerms = [
+            { name: '立春', season: 'spring', color: 'green', description: '立春是二十四节气之首，标志着春天的开始。民间有"打春"的习俗，人们会制作春饼，寓意迎接新春。', proverb: '立春雨水到，早起晚睡觉', foods: ['春饼', '萝卜', '韭菜', '汤圆'] },
+            { name: '雨水', season: 'spring', color: 'green', description: '雨水时节，降雨增多，气温回升。民间有"拉保保"的习俗，即认干爹干妈的传统。', proverb: '雨水连绵是丰年，农民不用力耕田', foods: ['蜂蜜', '红枣', '银耳', '梨'] },
+            { name: '惊蛰', season: 'spring', color: 'green', description: '惊蛰时节，春雷始鸣，万物复苏。民间有"打小人"的习俗，祈求驱除霉运。', proverb: '惊蛰过，暖和和，蛤蟆老角唱山歌', foods: ['梨', '蜂蜜', '竹笋', '蛋'] },
+            { name: '春分', season: 'spring', color: 'green', description: '春分日昼夜等长，是踏青的好时节。民间有竖蛋、放风筝的传统习俗。', proverb: '春分秋分，昼夜平分', foods: ['太阳糕', '春菜', '汤圆', '驴打滚'] },
+            { name: '清明', season: 'spring', color: 'green', description: '清明节是重要的祭祀节日，有扫墓踏青的传统。青团是这个时节的特色食品。', proverb: '清明时节雨纷纷，路上行人欲断魂', foods: ['青团', '薄饼', '艾草', '鸡蛋'] },
+            { name: '谷雨', season: 'spring', color: 'green', description: '谷雨是春季最后一个节气，有喝谷雨茶、赏牡丹的习俗。', proverb: '谷雨前后，种瓜点豆', foods: ['春茶', '香椿', '豆腐', '菠菜'] },
+            { name: '立夏', season: 'summer', color: 'red', description: '立夏标志着夏季的开始，有称重、吃蛋、斗蛋的传统习俗。', proverb: '立夏三天遍地锄', foods: ['立夏蛋', '莴笋', '蚕豆', '樱桃'] },
+            { name: '小满', season: 'summer', color: 'red', description: '小满时节，麦类等作物籽粒开始饱满。江南有祭车神、祈蚕的习俗。', proverb: '小满大满江河满', foods: ['苦菜', '枇杷', '蒜苗', '小麦'] },
+            { name: '芒种', season: 'summer', color: 'red', description: '芒种是农忙时节，有送花神、煮梅的传统。江南一带有吃青梅的习俗。', proverb: '芒种忙，麦上场', foods: ['青梅', '杏子', '茶叶', '薄荷'] },
+            { name: '夏至', season: 'summer', color: 'red', description: '夏至日昼最长夜最短。北方有吃面条的习俗，南方有吃荔枝、狗肉的传统。', proverb: '夏至不过不热', foods: ['面条', '荔枝', '绿豆汤', '凉粉'] },
+            { name: '小暑', season: 'summer', color: 'red', description: '小暑标志炎热天气的开始，有吃莲藕、黄瓜等清热食物的习俗。', proverb: '小暑大暑，上蒸下煮', foods: ['莲藕', '绿豆', '苦瓜', '丝瓜'] },
+            { name: '大暑', season: 'summer', color: 'red', description: '大暑是一年中最热的时期，有喝伏茶、晒伏姜的传统习俗。', proverb: '大暑小暑，淹死老鼠', foods: ['伏茶', '绿豆汤', '西瓜', '冬瓜'] },
+            { name: '立秋', season: 'autumn', color: 'orange', description: '立秋是秋季的开始，有"贴秋膘"的习俗，人们开始进补准备过冬。', proverb: '立秋之日凉风至', foods: ['红烧肉', '炖鸡', '桃子', '茄子'] },
+            { name: '处暑', season: 'autumn', color: 'orange', description: '处暑表示暑热结束，有放河灯、开渔节等民俗活动。', proverb: '处暑天还暑，好似秋老虎', foods: ['鸭肉', '百合', '蜂蜜', '秋梨'] },
+            { name: '白露', season: 'autumn', color: 'orange', description: '白露时节露水增多，有饮白露茶、酿白露米酒的传统。', proverb: '白露身不露，寒露脚不露', foods: ['白露茶', '龙眼', '红薯', '芋头'] },
+            { name: '秋分', season: 'autumn', color: 'orange', description: '秋分昼夜等长，有竖蛋、吃汤圆、赏桂花的传统习俗。', proverb: '秋分秋分，昼夜平分', foods: ['汤圆', '桂花糕', '螃蟹', '南瓜'] },
+            { name: '寒露', season: 'autumn', color: 'orange', description: '寒露时节天气转凉，有赏菊、登高、吃花糕的习俗。', proverb: '寒露不算冷，霜降变了天', foods: ['菊花酒', '花糕', '柿子', '石榴'] },
+            { name: '霜降', season: 'autumn', color: 'orange', description: '霜降是秋季最后一个节气，有吃柿子、登高赏菊的传统。', proverb: '霜降杀百草', foods: ['柿子', '山楂', '萝卜', '白果'] },
+            { name: '立冬', season: 'winter', color: 'blue', description: '立冬标志着冬季的开始，北方有吃饺子的习俗，南方有吃鸡鸭鱼肉进补。', proverb: '立冬补冬，补嘴空', foods: ['饺子', '羊肉', '白萝卜', '大白菜'] },
+            { name: '小雪', season: 'winter', color: 'blue', description: '小雪时节开始下雪，有腌腊肉、晒鱼干等准备过冬食物的习俗。', proverb: '小雪封山，大雪封河', foods: ['腊肉', '白萝卜', '大白菜', '冬笋'] },
+            { name: '大雪', season: 'winter', color: 'blue', description: '大雪时节雪量增大，有进补、滑冰等习俗，北方开始储存大白菜过冬。', proverb: '大雪年年有，不在三九在四九', foods: ['羊肉汤', '大白菜', '萝卜', '冬枣'] },
+            { name: '冬至', season: 'winter', color: 'blue', description: '冬至是重要的传统节日，北方吃饺子，南方吃汤圆，有"冬至大如年"的说法。', proverb: '冬至到，吃水饺', foods: ['饺子', '汤圆', '羊肉汤', '红豆粥'] },
+            { name: '小寒', season: 'winter', color: 'blue', description: '小寒标志着最寒冷时期的开始，有吃糯米饭、喝腊八粥的传统。', proverb: '小寒大寒，冷成冰团', foods: ['糯米饭', '腊八粥', '年糕', '羊肉'] },
+            { name: '大寒', season: 'winter', color: 'blue', description: '大寒是最后一个节气，有喝鸡汤、做年货等迎新年的准备活动。', proverb: '大寒到顶点，日后天渐暖', foods: ['鸡汤', '年糕', '腊味', '干果'] }
+        ];
+
+        const questions = [
+            { term: '立春', question: '立春时节主要的传统食物是？', options: ['春饼', '粽子', '月饼', '汤圆'], correct: 0 },
+            { term: '清明', question: '清明节的特色食品是？', options: ['青团', '粽子', '月饼', '年糕'], correct: 0 },
+            { term: '夏至', question: '夏至节气北方主要吃什么？', options: ['面条', '饺子', '包子', '馒头'], correct: 0 },
+            { term: '中秋', question: '秋分时节适合的活动是？', options: ['赏桂花', '踏青', '游泳', '滑雪'], correct: 0 },
+            { term: '冬至', question: '冬至节气的传统食物是？', options: ['饺子和汤圆', '春饼', '粽子', '月饼'], correct: 0 }
+        ];
+
+        function SolarTermApp() {
+            const [selectedTerm, setSelectedTerm] = useState('立春');
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [showDetails, setShowDetails] = useState(false);
+            const [guessInput, setGuessInput] = useState('');
+            const [guessResult, setGuessResult] = useState('');
+            const [quizAnswer, setQuizAnswer] = useState('');
+            const [quizResult, setQuizResult] = useState('');
+            const [email, setEmail] = useState('');
+            const [subscribeResult, setSubscribeResult] = useState('');
+            const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+
+            const currentTerm = solarTerms.find(term => term.name === selectedTerm);
+
+            const handleTermChange = (e) => {
+                setSelectedTerm(e.target.value);
+                setShowDetails(false);
+                setIsPlaying(false);
+                setGuessResult('');
+                setQuizResult('');
+                const newQuestion = questions.find(q => q.term === e.target.value) || questions[0];
+                setCurrentQuestion(newQuestion);
+            };
+
+            const handlePlayAnimation = () => {
+                setShowDetails(true);
+                setIsPlaying(true);
+            };
+
+            const handlePauseAnimation = () => {
+                setIsPlaying(false);
+            };
+
+            const handleGuessSubmit = () => {
+                if (guessInput.trim()) {
+                    const correctAnswer = currentTerm.proverb;
+                    if (guessInput.includes(currentTerm.name) || guessInput.includes('春') || guessInput.includes('夏') || guessInput.includes('秋') || guessInput.includes('冬')) {
+                        setGuessResult(`很棒！正确答案是："${correctAnswer}"。您的理解很到位！`);
+                    } else {
+                        setGuessResult(`正确答案是："${correctAnswer}"。这句谚语反映了${currentTerm.name}时节的气候特点和农事活动。`);
+                    }
+                }
+            };
+
+            const handleQuizSubmit = () => {
+                if (quizAnswer) {
+                    const isCorrect = parseInt(quizAnswer) === currentQuestion.correct;
+                    setQuizResult(isCorrect ? 
+                        `✅ 回答正确！${currentQuestion.options[currentQuestion.correct]}确实是${selectedTerm}时节的传统食物。` : 
+                        `❌ 答案不对。正确答案是：${currentQuestion.options[currentQuestion.correct]}。`
+                    );
+                }
+            };
+
+            const handleSubscribe = () => {
+                if (email && email.includes('@')) {
+                    setSubscribeResult('🎉 订阅成功！我们会定期为您推送二十四节气的民俗文化资讯。');
+                    setEmail('');
+                } else {
+                    setSubscribeResult('❌ 请输入有效的邮箱地址');
+                }
+            };
+
+            const AnimationComponent = ({ term, isPlaying }) => {
+                if (!isPlaying) return null;
+                
+                const animations = {
+                    '立春': (
+                        <div className="relative w-full h-48 overflow-hidden rounded-lg bg-gradient-to-b from-green-100 to-green-200">
+                            <div className={`absolute top-4 left-4 w-8 h-8 bg-pink-400 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0s'}}></div>
+                            <div className={`absolute top-8 right-8 w-6 h-6 bg-yellow-400 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0.5s'}}></div>
+                            <div className={`absolute bottom-4 left-1/2 w-10 h-10 bg-green-500 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '1s'}}></div>
+                            <div className="absolute bottom-0 w-full h-8 bg-green-300"></div>
+                        </div>
+                    ),
+                    '夏至': (
+                        <div className="relative w-full h-48 overflow-hidden rounded-lg bg-gradient-to-b from-yellow-100 to-orange-200">
+                            <div className={`absolute top-4 left-1/2 w-16 h-16 bg-yellow-400 rounded-full ${isPlaying ? 'float-animation' : ''}`}></div>
+                            <div className="absolute top-20 left-2 w-2 h-8 bg-yellow-300 transform rotate-12"></div>
+                            <div className="absolute top-20 right-2 w-2 h-8 bg-yellow-300 transform -rotate-12"></div>
+                            <div className="absolute bottom-0 w-full h-12 bg-orange-300"></div>
+                        </div>
+                    ),
+                    '秋分': (
+                        <div className="relative w-full h-48 overflow-hidden rounded-lg bg-gradient-to-b from-orange-100 to-yellow-200">
+                            <div className={`absolute top-4 left-4 w-4 h-4 bg-orange-500 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0s'}}></div>
+                            <div className={`absolute top-12 right-8 w-6 h-6 bg-red-500 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0.8s'}}></div>
+                            <div className={`absolute top-20 left-12 w-5 h-5 bg-yellow-600 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '1.2s'}}></div>
+                            <div className="absolute bottom-0 w-full h-8 bg-orange-400"></div>
+                        </div>
+                    ),
+                    '冬至': (
+                        <div className="relative w-full h-48 overflow-hidden rounded-lg bg-gradient-to-b from-blue-100 to-white">
+                            <div className={`absolute top-4 left-8 w-3 h-3 bg-white rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0s'}}></div>
+                            <div className={`absolute top-8 right-12 w-4 h-4 bg-blue-200 rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '0.6s'}}></div>
+                            <div className={`absolute top-16 left-1/2 w-2 h-2 bg-white rounded-full ${isPlaying ? 'float-animation' : ''}`} style={{animationDelay: '1.0s'}}></div>
+                            <div className="absolute bottom-0 w-full h-12 bg-blue-200"></div>
+                        </div>
+                    )
+                };
+
+                return animations[term] || animations['立春'];
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
+                    <header className="bg-white shadow-sm border-b-2 border-green-200">
+                        <div className="container mx-auto px-4 py-4">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center space-x-4">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                                        <i className="fas fa-leaf text-white text-xl"></i>
+                                    </div>
+                                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">二十四节气民俗动画体验</h1>
+                                </div>
+                                <nav className="hidden md:flex space-x-6">
+                                    <a href="#" className="text-gray-600 hover:text-green-600 transition-colors">首页</a>
+                                    <a href="#" className="text-gray-600 hover:text-green-600 transition-colors">节气日历</a>
+                                    <a href="#" className="text-gray-600 hover:text-green-600 transition-colors">关于我们</a>
+                                    <a href="#" className="text-gray-600 hover:text-green-600 transition-colors">联系</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="container mx-auto px-4 py-8">
+                        <section className="mb-12 bg-white rounded-2xl shadow-lg p-8 border border-green-100">
+                            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+                                <i className="fas fa-calendar-alt text-green-500 mr-3"></i>
+                                节气日历交互体验
+                            </h2>
+                            
+                            <div className="flex flex-col md:flex-row gap-6 items-center justify-center mb-8">
+                                <div className="flex items-center space-x-4">
+                                    <label className="font-semibold text-gray-700">选择节气：</label>
+                                    <select 
+                                        value={selectedTerm} 
+                                        onChange={handleTermChange}
+                                        className="px-4 py-2 border-2 border-green-300 rounded-lg focus:outline-none focus:border-green-500 bg-white"
+                                    >
+                                        {solarTerms.map(term => (
+                                            <option key={term.name} value={term.name}>{term.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div className="flex space-x-3">
+                                    <button 
+                                        onClick={handlePlayAnimation}
+                                        className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
+                                    >
+                                        <i className="fas fa-play"></i>
+                                        <span>查看动画</span>
+                                    </button>
+                                    <button 
+                                        onClick={handlePauseAnimation}
+                                        className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+                                    >
+                                        <i className="fas fa-pause"></i>
+                                        <span>暂停</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <h3 className="text-xl font-bold text-gray-800">节气动画</h3>
+                                    <AnimationComponent term={selectedTerm} isPlaying={isPlaying} />
+                                </div>
+                                
+                                {showDetails && (
+                                    <div className={`space-y-4 fade-in ${isPlaying ? 'highlight' : ''}`}>
+                                        <h3 className="text-xl font-bold text-gray-800">
+                                            {selectedTerm} - {currentTerm.season === 'spring' ? '春' : 
+                                                               currentTerm.season === 'summer' ? '夏' : 
+                                                               currentTerm.season === 'autumn' ? '秋' : '冬'}季
+                                        </h3>
+                                        <div className={`p-6 rounded-lg season-${currentTerm.season}`}>
+                                            <img src={`https://picsum.photos/id/${solarTerms.findIndex(t => t.name === selectedTerm) + 100}/300/200`} 
+                                                 alt={selectedTerm} 
+                                                 className="w-full h-32 object-cover rounded-lg mb-4" />
+                                            <p className="text-gray-700 leading-relaxed">{currentTerm.description}</p>
+                                            <div className="mt-4 flex items-center space-x-2">
+                                                <i className="fas fa-quote-left text-gray-500"></i>
+                                                <span className="italic text-gray-600">{currentTerm.proverb}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+
+                        <div className="grid md:grid-cols-2 gap-8 mb-12">
+                            <section className="bg-white rounded-2xl shadow-lg p-8 border border-blue-100">
+                                <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                                    <i className="fas fa-puzzle-piece text-blue-500 mr-3"></i>
+                                    节气民俗猜谜
+                                </h2>
+                                <div className="space-y-4">
+                                    <p className="text-gray-700">请输入您知道的关于<span className="font-bold text-blue-600">{selectedTerm}</span>的谚语或民俗：</p>
+                                    <input 
+                                        type="text" 
+                                        value={guessInput}
+                                        onChange={(e) => setGuessInput(e.target.value)}
+                                        placeholder="例如：立春雨水到..."
+                                        className="w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                    />
+                                    <button 
+                                        onClick={handleGuessSubmit}
+                                        className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
+                                    >
+                                        <i className="fas fa-check"></i>
+                                        <span>提交答案</span>
+                                    </button>
+                                    {guessResult && (
+                                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg fade-in">
+                                            <p className="text-blue-800">{guessResult}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+
+                            <section className="bg-white rounded-2xl shadow-lg p-8 border border-purple-100">
+                                <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                                    <i className="fas fa-question-circle text-purple-500 mr-3"></i>
+                                    节气小测验
+                                </h2>
+                                <div className="space-y-4">
+                                    <p className="text-gray-700 font-semibold">{currentQuestion.question}</p>
+                                    <select 
+                                        value={quizAnswer}
+                                        onChange={(e) => setQuizAnswer(e.target.value)}
+                                        className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-500 bg-white"
+                                    >
+                                        <option value="">请选择答案</option>
+                                        {currentQuestion.options.map((option, index) => (
+                                            <option key={index} value={index}>{option}</option>
+                                        ))}
+                                    </select>
+                                    <button 
+                                        onClick={handleQuizSubmit}
+                                        className="w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center justify-center space-x-2"
+                                    >
+                                        <i className="fas fa-paper-plane"></i>
+                                        <span>提交测验</span>
+                                    </button>
+                                    {quizResult && (
+                                        <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg fade-in">
+                                            <p className="text-purple-800">{quizResult}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        </div>
+
+                        <section className="bg-white rounded-2xl shadow-lg p-8 border border-orange-100 mb-12">
+                            <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+                                <i className="fas fa-envelope text-orange-500 mr-3"></i>
+                                订阅民俗资讯
+                            </h2>
+                            <div className="max-w-md mx-auto space-y-4">
+                                <p className="text-gray-700 text-center">获取最新的二十四节气民俗文化资讯</p>
+                                <div className="flex space-x-3">
+                                    <input 
+                                        type="email" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="请输入您的邮箱地址"
+                                        className="flex-1 px-4 py-3 border-2 border-orange-300 rounded-lg focus:outline-none focus:border-orange-500"
+                                    />
+                                    <button 
+                                        onClick={handleSubscribe}
+                                        className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2"
+                                    >
+                                        <i className="fas fa-bell"></i>
+                                        <span>订阅</span>
+                                    </button>
+                                </div>
+                                {subscribeResult && (
+                                    <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg text-center fade-in">
+                                        <p className="text-orange-800">{subscribeResult}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    </main>
+
+                    <footer className="bg-gray-800 text-white py-12">
+                        <div className="container mx-auto px-4">
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <div>
+                                    <h3 className="text-xl font-bold mb-4">二十四节气民俗动画体验</h3>
+                                    <p className="text-gray-300">传承中华民俗文化，感受节气之美</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">友情链接</h4>
+                                    <div className="space-y-2">
+                                        <a href="#" className="block text-gray-300 hover:text-white transition-colors">中国传统文化网</a>
+                                        <a href="#" className="block text-gray-300 hover:text-white transition-colors">民俗学研究院</a>
+                                        <a href="#" className="block text-gray-300 hover:text-white transition-colors">节气文化博物馆</a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">关注我们</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-2xl text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-weibo"></i>
+                                        </a>
+                                        <a href="#" className="text-2xl text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-weixin"></i>
+                                        </a>
+                                        <a href="#" className="text-2xl text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-qq"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+                                <p className="text-gray-300">© 2024 二十四节气民俗动画体验平台. 保留所有权利.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<SolarTermApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

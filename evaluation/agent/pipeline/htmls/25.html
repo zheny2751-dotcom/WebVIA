@@ -1,0 +1,593 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获奖展示平台</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const initialAwards = [
+            {
+                id: 1,
+                title: "年度最佳创新奖",
+                category: "金奖",
+                year: "2023",
+                winner: "张伟",
+                organization: "科技创新有限公司",
+                description: "在人工智能领域取得重大突破，开发了具有自主学习能力的智能系统，为行业发展做出了重要贡献。该项目历时两年，团队克服了诸多技术难题，最终实现了技术突破。",
+                image: "https://picsum.photos/id/1/400/250",
+                likes: 128,
+                testimonial: "非常荣幸能够获得这个奖项，这是对我们团队努力的最好认可。我们将继续在AI领域深耕，为社会创造更多价值。",
+                expanded: false
+            },
+            {
+                id: 2,
+                title: "最佳团队协作奖",
+                category: "银奖",
+                year: "2023",
+                winner: "李明",
+                organization: "协同发展集团",
+                description: "带领团队完成了复杂的跨部门协作项目，提升了组织效率30%。项目涉及多个业务线，通过创新的协作模式实现了资源优化配置。",
+                image: "https://picsum.photos/id/2/400/250",
+                likes: 89,
+                testimonial: "团队的成功离不开每一位成员的付出，这个奖项属于我们所有人。协作的力量是无穷的。",
+                expanded: false
+            },
+            {
+                id: 3,
+                title: "技术突破奖",
+                category: "金奖",
+                year: "2022",
+                winner: "王芳",
+                organization: "前沿科技研究院",
+                description: "在量子计算领域实现重大技术突破，相关研究成果发表在国际顶级期刊上。该技术有望在未来5-10年内实现商业化应用。",
+                image: "https://picsum.photos/id/3/400/250",
+                likes: 156,
+                testimonial: "科学研究需要持之以恒的精神，很高兴我们的努力得到了认可。希望这项技术能够造福人类。",
+                expanded: false
+            },
+            {
+                id: 4,
+                title: "社会责任奖",
+                category: "特别奖",
+                year: "2023",
+                winner: "陈强",
+                organization: "公益慈善基金会",
+                description: "积极投身公益事业，组织了多项社会公益活动，帮助了数千名困难群众。在教育扶贫、环境保护等方面做出了突出贡献。",
+                image: "https://picsum.photos/id/4/400/250",
+                likes: 203,
+                testimonial: "能够帮助到有需要的人是我最大的快乐。社会责任不是口号，而是行动。",
+                expanded: false
+            },
+            {
+                id: 5,
+                title: "年度新人奖",
+                category: "铜奖",
+                year: "2023",
+                winner: "刘洋",
+                organization: "新锐设计工作室",
+                description: "作为新人在设计领域展现了出色的创意和执行能力，设计作品获得了客户和同行的一致好评。短短一年时间就完成了20多个优质项目。",
+                image: "https://picsum.photos/id/5/400/250",
+                likes: 67,
+                testimonial: "感谢公司给我这个平台，让我能够发挥自己的创意。我会继续努力，创作出更好的作品。",
+                expanded: false
+            },
+            {
+                id: 6,
+                title: "可持续发展奖",
+                category: "银奖",
+                year: "2022",
+                winner: "赵敏",
+                organization: "绿色能源科技",
+                description: "在可再生能源领域做出重要贡献，开发的太阳能技术提高了能源转换效率25%。项目已在多个地区成功推广应用。",
+                image: "https://picsum.photos/id/6/400/250",
+                likes: 142,
+                testimonial: "保护地球是我们共同的责任，很高兴能够通过技术创新为环境保护贡献力量。",
+                expanded: false
+            }
+        ];
+
+        const initialComments = [
+            {
+                id: 1,
+                author: "用户001",
+                content: "恭喜所有获奖者！你们的成就激励着我们每一个人。",
+                timestamp: "2023-12-15 14:30"
+            },
+            {
+                id: 2,
+                author: "技术爱好者",
+                content: "特别关注技术创新类的奖项，希望能看到更多技术突破。",
+                timestamp: "2023-12-15 15:45"
+            },
+            {
+                id: 3,
+                author: "创业者",
+                content: "这些获奖项目给了我很多启发，谢谢分享！",
+                timestamp: "2023-12-15 16:20"
+            }
+        ];
+
+        function AwardShowcase() {
+            const [awards, setAwards] = useState(initialAwards);
+            const [filteredAwards, setFilteredAwards] = useState(initialAwards);
+            const [selectedYear, setSelectedYear] = useState("全部");
+            const [selectedCategory, setSelectedCategory] = useState("全部");
+            const [searchKeyword, setSearchKeyword] = useState("");
+            const [comments, setComments] = useState(initialComments);
+            const [newComment, setNewComment] = useState("");
+            const [showExportLink, setShowExportLink] = useState(false);
+
+            const years = ["全部", "2023", "2022"];
+            const categories = ["全部", "金奖", "银奖", "铜奖", "特别奖"];
+
+            useEffect(() => {
+                filterAwards();
+            }, [selectedYear, selectedCategory, searchKeyword, awards]);
+
+            const filterAwards = () => {
+                let filtered = [...awards];
+
+                if (selectedYear !== "全部") {
+                    filtered = filtered.filter(award => award.year === selectedYear);
+                }
+
+                if (selectedCategory !== "全部") {
+                    filtered = filtered.filter(award => award.category === selectedCategory);
+                }
+
+                if (searchKeyword.trim()) {
+                    const keyword = searchKeyword.toLowerCase();
+                    filtered = filtered.filter(award => 
+                        award.title.toLowerCase().includes(keyword) ||
+                        award.winner.toLowerCase().includes(keyword) ||
+                        award.organization.toLowerCase().includes(keyword)
+                    );
+                }
+
+                setFilteredAwards(filtered);
+            };
+
+            const handleSearch = () => {
+                filterAwards();
+            };
+
+            const toggleAwardDetail = (id) => {
+                const updatedAwards = awards.map(award => 
+                    award.id === id ? { ...award, expanded: !award.expanded } : award
+                );
+                setAwards(updatedAwards);
+            };
+
+            const handleLike = (id) => {
+                const updatedAwards = awards.map(award => 
+                    award.id === id ? { ...award, likes: award.likes + 1 } : award
+                );
+                setAwards(updatedAwards);
+            };
+
+            const handleCommentSubmit = () => {
+                if (newComment.trim()) {
+                    const comment = {
+                        id: comments.length + 1,
+                        author: `用户${String(comments.length + 1).padStart(3, '0')}`,
+                        content: newComment.trim(),
+                        timestamp: new Date().toLocaleString('zh-CN', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })
+                    };
+                    setComments([...comments, comment]);
+                    setNewComment("");
+                }
+            };
+
+            const handleExport = () => {
+                setShowExportLink(true);
+                setTimeout(() => setShowExportLink(false), 3000);
+            };
+
+            const getStatistics = () => {
+                const total = awards.length;
+                const byCategory = categories.slice(1).reduce((acc, cat) => {
+                    acc[cat] = awards.filter(award => award.category === cat).length;
+                    return acc;
+                }, {});
+                const totalLikes = awards.reduce((sum, award) => sum + award.likes, 0);
+                return { total, byCategory, totalLikes };
+            };
+
+            const stats = getStatistics();
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
+                        <div className="container mx-auto px-4 py-8">
+                            <div className="text-center">
+                                <h1 className="text-4xl font-bold mb-4">
+                                    <i className="fas fa-trophy mr-3 text-yellow-300"></i>
+                                    获奖展示平台
+                                </h1>
+                                <p className="text-xl opacity-90">表彰卓越成就，激励创新发展</p>
+                            </div>
+                            
+                            <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                                    <div className="text-2xl font-bold">{stats.total}</div>
+                                    <div className="text-sm opacity-80">总获奖项目</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                                    <div className="text-2xl font-bold">{stats.byCategory['金奖'] || 0}</div>
+                                    <div className="text-sm opacity-80">金奖项目</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                                    <div className="text-2xl font-bold">{stats.totalLikes}</div>
+                                    <div className="text-sm opacity-80">总点赞数</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                                    <div className="text-2xl font-bold">{comments.length}</div>
+                                    <div className="text-sm opacity-80">留言数量</div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                                <i className="fas fa-filter mr-2 text-blue-600"></i>
+                                筛选与搜索
+                            </h2>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">年份</label>
+                                    <select 
+                                        value={selectedYear}
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        {years.map(year => (
+                                            <option key={year} value={year}>{year}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">奖项类别</label>
+                                    <select 
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        {categories.map(category => (
+                                            <option key={category} value={category}>{category}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">关键词搜索</label>
+                                    <input
+                                        type="text"
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword(e.target.value)}
+                                        placeholder="搜索项目、获奖者或机构..."
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">操作</label>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={handleSearch}
+                                            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                        >
+                                            <i className="fas fa-search mr-1"></i>
+                                            搜索
+                                        </button>
+                                        <button
+                                            onClick={handleExport}
+                                            className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                                        >
+                                            <i className="fas fa-download mr-1"></i>
+                                            导出
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {showExportLink && (
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                                    <div className="flex items-center">
+                                        <i className="fas fa-check-circle text-green-600 mr-2"></i>
+                                        <span className="text-green-800">
+                                            数据导出完成！
+                                            <a href="#" className="ml-2 text-green-600 underline hover:text-green-800">
+                                                下载 awards_data.csv
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="flex flex-wrap gap-2">
+                                {categories.slice(1).map(category => (
+                                    <span key={category} className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                        category === '金奖' ? 'bg-yellow-100 text-yellow-800' :
+                                        category === '银奖' ? 'bg-gray-100 text-gray-800' :
+                                        category === '铜奖' ? 'bg-orange-100 text-orange-800' :
+                                        'bg-purple-100 text-purple-800'
+                                    }`}>
+                                        {category}: {stats.byCategory[category] || 0}项
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                                        <i className="fas fa-award mr-2 text-yellow-600"></i>
+                                        获奖项目展示
+                                        <span className="text-sm font-normal text-gray-500 ml-2">
+                                            (共{filteredAwards.length}项)
+                                        </span>
+                                    </h2>
+                                    
+                                    <div className="space-y-6">
+                                        {filteredAwards.map(award => (
+                                            <div key={award.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                                                <div className="p-6">
+                                                    <div className="flex flex-col md:flex-row gap-4">
+                                                        <img 
+                                                            src={award.image} 
+                                                            alt={award.title}
+                                                            className="w-full md:w-32 h-32 object-cover rounded-lg"
+                                                        />
+                                                        
+                                                        <div className="flex-1">
+                                                            <div className="flex items-start justify-between mb-2">
+                                                                <h3 className="text-xl font-bold text-gray-800">
+                                                                    {searchKeyword && award.title.toLowerCase().includes(searchKeyword.toLowerCase()) ? (
+                                                                        <span dangerouslySetInnerHTML={{
+                                                                            __html: award.title.replace(
+                                                                                new RegExp(searchKeyword, 'gi'), 
+                                                                                '<mark class="bg-yellow-200">$&</mark>'
+                                                                            )
+                                                                        }} />
+                                                                    ) : award.title}
+                                                                </h3>
+                                                                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                                                    award.category === '金奖' ? 'bg-yellow-100 text-yellow-800' :
+                                                                    award.category === '银奖' ? 'bg-gray-100 text-gray-800' :
+                                                                    award.category === '铜奖' ? 'bg-orange-100 text-orange-800' :
+                                                                    'bg-purple-100 text-purple-800'
+                                                                }`}>
+                                                                    {award.category}
+                                                                </span>
+                                                            </div>
+                                                            
+                                                            <div className="text-gray-600 mb-3">
+                                                                <span className="font-medium">获奖者：</span>
+                                                                {searchKeyword && award.winner.toLowerCase().includes(searchKeyword.toLowerCase()) ? (
+                                                                    <span dangerouslySetInnerHTML={{
+                                                                        __html: award.winner.replace(
+                                                                            new RegExp(searchKeyword, 'gi'), 
+                                                                            '<mark class="bg-yellow-200">$&</mark>'
+                                                                        )
+                                                                    }} />
+                                                                ) : award.winner}
+                                                                <span className="mx-2">|</span>
+                                                                <span className="font-medium">机构：</span>
+                                                                {searchKeyword && award.organization.toLowerCase().includes(searchKeyword.toLowerCase()) ? (
+                                                                    <span dangerouslySetInnerHTML={{
+                                                                        __html: award.organization.replace(
+                                                                            new RegExp(searchKeyword, 'gi'), 
+                                                                            '<mark class="bg-yellow-200">$&</mark>'
+                                                                        )
+                                                                    }} />
+                                                                ) : award.organization}
+                                                                <span className="mx-2">|</span>
+                                                                <span className="font-medium">年份：</span>{award.year}
+                                                            </div>
+                                                            
+                                                            <p className="text-gray-700 mb-4 line-clamp-2">
+                                                                {award.description}
+                                                            </p>
+                                                            
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="flex gap-2">
+                                                                    <button
+                                                                        onClick={() => toggleAwardDetail(award.id)}
+                                                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                                                                    >
+                                                                        <i className={`fas ${award.expanded ? 'fa-chevron-up' : 'fa-chevron-down'} mr-1`}></i>
+                                                                        {award.expanded ? '收起详情' : '查看详情'}
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => handleLike(award.id)}
+                                                                        className="bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors text-sm border border-red-200"
+                                                                    >
+                                                                        <i className="fas fa-heart mr-1"></i>
+                                                                        {award.likes}
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {award.expanded && (
+                                                        <div className="mt-6 pt-6 border-t border-gray-200">
+                                                            <h4 className="font-bold text-gray-800 mb-3">
+                                                                <i className="fas fa-info-circle mr-2 text-blue-600"></i>
+                                                                项目详情
+                                                            </h4>
+                                                            <p className="text-gray-700 mb-4 leading-relaxed">
+                                                                {award.description}
+                                                            </p>
+                                                            
+                                                            <h4 className="font-bold text-gray-800 mb-3">
+                                                                <i className="fas fa-quote-left mr-2 text-green-600"></i>
+                                                                获奖者感言
+                                                            </h4>
+                                                            <blockquote className="bg-gray-50 border-l-4 border-blue-500 pl-4 py-3 italic text-gray-700">
+                                                                "{award.testimonial}"
+                                                                <footer className="text-sm text-gray-500 mt-2">
+                                                                    — {award.winner}，{award.organization}
+                                                                </footer>
+                                                            </blockquote>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                        
+                                        {filteredAwards.length === 0 && (
+                                            <div className="text-center py-12">
+                                                <i className="fas fa-search text-gray-300 text-4xl mb-4"></i>
+                                                <p className="text-gray-500 text-lg">未找到符合条件的获奖项目</p>
+                                                <p className="text-gray-400 text-sm mt-2">请尝试调整筛选条件或搜索关键词</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">
+                                        <i className="fas fa-chart-bar mr-2 text-purple-600"></i>
+                                        统计概览
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        {Object.entries(stats.byCategory).map(([category, count]) => (
+                                            <div key={category} className="flex items-center justify-between">
+                                                <span className="text-gray-700">{category}</span>
+                                                <div className="flex items-center">
+                                                    <div className={`w-20 h-2 rounded-full mr-2 ${
+                                                        category === '金奖' ? 'bg-yellow-400' :
+                                                        category === '银奖' ? 'bg-gray-400' :
+                                                        category === '铜奖' ? 'bg-orange-400' :
+                                                        'bg-purple-400'
+                                                    }`} style={{width: `${(count / stats.total) * 100}%`}}></div>
+                                                    <span className="text-sm font-medium text-gray-600 w-8">{count}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">
+                                        <i className="fas fa-comments mr-2 text-blue-600"></i>
+                                        互动留言区
+                                    </h3>
+                                    
+                                    <div className="mb-4">
+                                        <textarea
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            placeholder="分享您的想法和祝贺..."
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                            rows="3"
+                                        ></textarea>
+                                        <button
+                                            onClick={handleCommentSubmit}
+                                            disabled={!newComment.trim()}
+                                            className="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                        >
+                                            <i className="fas fa-paper-plane mr-1"></i>
+                                            提交留言
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                                        {comments.map(comment => (
+                                            <div key={comment.id} className="bg-gray-50 rounded-lg p-3">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-medium text-gray-800 text-sm">
+                                                        <i className="fas fa-user-circle mr-1 text-gray-400"></i>
+                                                        {comment.author}
+                                                    </span>
+                                                    <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                                                </div>
+                                                <p className="text-gray-700 text-sm leading-relaxed">{comment.content}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg p-6 text-white">
+                                    <h3 className="text-xl font-bold mb-4">
+                                        <i className="fas fa-bullhorn mr-2"></i>
+                                        平台公告
+                                    </h3>
+                                    <div className="space-y-3 text-sm">
+                                        <p className="opacity-90">
+                                            <i className="fas fa-calendar-alt mr-2"></i>
+                                            2024年度获奖申报即将开始，敬请关注！
+                                        </p>
+                                        <p className="opacity-90">
+                                            <i className="fas fa-trophy mr-2"></i>
+                                            新增"科技创新奖"和"可持续发展奖"两个奖项类别
+                                        </p>
+                                        <p className="opacity-90">
+                                            <i className="fas fa-users mr-2"></i>
+                                            欢迎更多优秀团队和个人参与评选
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="container mx-auto px-4 text-center">
+                            <div className="flex items-center justify-center mb-4">
+                                <i className="fas fa-trophy text-yellow-400 text-2xl mr-3"></i>
+                                <span className="text-xl font-bold">获奖展示平台</span>
+                            </div>
+                            <p className="text-gray-400 mb-4">激励创新，表彰卓越，共创美好未来</p>
+                            <div className="flex justify-center space-x-6 text-sm">
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                                    <i className="fas fa-envelope mr-1"></i>
+                                    联系我们
+                                </a>
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                                    <i className="fas fa-file-alt mr-1"></i>
+                                    申报指南
+                                </a>
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                                    <i className="fas fa-question-circle mr-1"></i>
+                                    常见问题
+                                </a>
+                            </div>
+                            <div className="mt-6 pt-6 border-t border-gray-700 text-gray-400 text-xs">
+                                © 2023 获奖展示平台. 保留所有权利.
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<AwardShowcase />, document.getElementById('root'));
+    </script>
+</body>
+</html>

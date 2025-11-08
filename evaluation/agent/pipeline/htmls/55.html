@@ -1,0 +1,493 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教室课桌涂鸦墙</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap');
+        
+        .chalk-title {
+            font-family: 'Kalam', cursive;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .desk-surface {
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            background-image: 
+                linear-gradient(90deg, rgba(139,69,19,0.3) 1px, transparent 1px),
+                linear-gradient(rgba(139,69,19,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+        }
+        
+        .graffiti-text {
+            font-family: 'Kalam', cursive;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            cursor: move;
+            user-select: none;
+        }
+        
+        .sticker-item {
+            cursor: move;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        
+        .sticker-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .classroom-bg {
+            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 30%, #DEB887 100%);
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.2) 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 1px, transparent 1px),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.1) 1px, transparent 1px);
+        }
+        
+        .board-shadow {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        const GraffitiWall = () => {
+            const [graffitis, setGraffitis] = useState([]);
+            const [inputText, setInputText] = useState('');
+            const [selectedColor, setSelectedColor] = useState('#ffffff');
+            const [selectedSize, setSelectedSize] = useState('medium');
+            const [selectedSticker, setSelectedSticker] = useState('😊');
+            const [dragItem, setDragItem] = useState(null);
+            const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+            const [galleryCategory, setGalleryCategory] = useState('all');
+            const [feedback, setFeedback] = useState('');
+            const [feedbackMessage, setFeedbackMessage] = useState('');
+            const [history, setHistory] = useState([]);
+            
+            const deskRef = useRef(null);
+
+            const colors = [
+                { name: '粉笔白', value: '#ffffff' },
+                { name: '黄色', value: '#ffeb3b' },
+                { name: '蓝色', value: '#2196f3' },
+                { name: '粉红', value: '#e91e63' },
+                { name: '绿色', value: '#4caf50' },
+                { name: '橙色', value: '#ff9800' }
+            ];
+
+            const sizes = [
+                { name: '小', value: 'small', size: '16px' },
+                { name: '中', value: 'medium', size: '24px' },
+                { name: '大', value: 'large', size: '32px' }
+            ];
+
+            const stickers = [
+                { name: '笑脸', emoji: '😊' },
+                { name: '星星', emoji: '⭐' },
+                { name: '书本', emoji: '📚' },
+                { name: '小花', emoji: '🌸' },
+                { name: '心心', emoji: '💖' },
+                { name: '音符', emoji: '🎵' },
+                { name: '闪电', emoji: '⚡' },
+                { name: '彩虹', emoji: '🌈' }
+            ];
+
+            const galleryItems = {
+                all: [
+                    { id: 1, name: '数学公式', preview: 'E=mc²' },
+                    { id: 2, name: '英语单词', preview: 'LOVE' },
+                    { id: 3, name: '爱心涂鸦', preview: '💕' },
+                    { id: 4, name: '加油打气', preview: '加油!' }
+                ],
+                favorites: [
+                    { id: 1, name: '数学公式', preview: 'E=mc²' },
+                    { id: 3, name: '爱心涂鸦', preview: '💕' }
+                ],
+                popular: [
+                    { id: 2, name: '英语单词', preview: 'LOVE' },
+                    { id: 4, name: '加油打气', preview: '加油!' }
+                ]
+            };
+
+            const addGraffiti = () => {
+                if (!inputText.trim()) return;
+                
+                const newGraffiti = {
+                    id: Date.now(),
+                    type: 'text',
+                    content: inputText,
+                    color: selectedColor,
+                    size: selectedSize,
+                    x: Math.random() * 300 + 50,
+                    y: Math.random() * 200 + 50
+                };
+                
+                setHistory([...history, [...graffitis]]);
+                setGraffitis([...graffitis, newGraffiti]);
+                setInputText('');
+            };
+
+            const addSticker = () => {
+                const newSticker = {
+                    id: Date.now(),
+                    type: 'sticker',
+                    content: selectedSticker,
+                    x: Math.random() * 300 + 50,
+                    y: Math.random() * 200 + 50
+                };
+                
+                setHistory([...history, [...graffitis]]);
+                setGraffitis([...graffitis, newSticker]);
+            };
+
+            const clearAll = () => {
+                setHistory([...history, [...graffitis]]);
+                setGraffitis([]);
+            };
+
+            const undo = () => {
+                if (history.length > 0) {
+                    const lastState = history[history.length - 1];
+                    setGraffitis(lastState);
+                    setHistory(history.slice(0, -1));
+                }
+            };
+
+            const handleMouseDown = (e, item) => {
+                const rect = deskRef.current.getBoundingClientRect();
+                setDragItem(item);
+                setDragOffset({
+                    x: e.clientX - rect.left - item.x,
+                    y: e.clientY - rect.top - item.y
+                });
+            };
+
+            const handleMouseMove = (e) => {
+                if (!dragItem) return;
+                
+                const rect = deskRef.current.getBoundingClientRect();
+                const newX = e.clientX - rect.left - dragOffset.x;
+                const newY = e.clientY - rect.top - dragOffset.y;
+                
+                setGraffitis(graffitis.map(g => 
+                    g.id === dragItem.id 
+                        ? { ...g, x: Math.max(0, Math.min(newX, 450)), y: Math.max(0, Math.min(newY, 250)) }
+                        : g
+                ));
+            };
+
+            const handleMouseUp = () => {
+                setDragItem(null);
+            };
+
+            const loadGalleryItem = (item) => {
+                const newGraffiti = {
+                    id: Date.now(),
+                    type: 'text',
+                    content: item.preview,
+                    color: '#ffffff',
+                    size: 'medium',
+                    x: Math.random() * 300 + 50,
+                    y: Math.random() * 200 + 50
+                };
+                
+                setHistory([...history, [...graffitis]]);
+                setGraffitis([...graffitis, newGraffiti]);
+            };
+
+            const submitFeedback = () => {
+                if (!feedback.trim()) return;
+                setFeedbackMessage(`感谢反馈：${feedback}`);
+                setFeedback('');
+                setTimeout(() => setFeedbackMessage(''), 3000);
+            };
+
+            useEffect(() => {
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                
+                return () => {
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                };
+            }, [dragItem, dragOffset]);
+
+            return (
+                <div className="min-h-screen classroom-bg">
+                    <div className="container mx-auto px-4 py-6">
+                        <header className="text-center mb-8">
+                            <h1 className="text-6xl font-bold chalk-title mb-4">
+                                教室课桌涂鸦墙
+                            </h1>
+                            <div className="flex justify-center items-center space-x-4 text-white">
+                                <i className="fas fa-chalk-board text-2xl"></i>
+                                <span className="text-lg">在这里留下你的创意涂鸦吧！</span>
+                                <i className="fas fa-palette text-2xl"></i>
+                            </div>
+                        </header>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                            <div className="lg:col-span-3">
+                                <div className="bg-white rounded-lg p-6 board-shadow">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-desktop mr-2"></i>
+                                        涂鸦展示区
+                                    </h2>
+                                    
+                                    <div 
+                                        ref={deskRef}
+                                        className="desk-surface rounded-lg relative h-80 overflow-hidden border-4 border-yellow-800"
+                                        style={{ minHeight: '320px' }}
+                                    >
+                                        {graffitis.length === 0 && (
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <div className="text-center">
+                                                    <i className="fas fa-pencil-alt text-4xl text-yellow-600 mb-2"></i>
+                                                    <p className="text-yellow-200 text-lg">空白的课桌等待你的涂鸦...</p>
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {graffitis.map(item => (
+                                            <div
+                                                key={item.id}
+                                                className={item.type === 'text' ? 'graffiti-text' : 'sticker-item text-2xl'}
+                                                style={{
+                                                    position: 'absolute',
+                                                    left: `${item.x}px`,
+                                                    top: `${item.y}px`,
+                                                    color: item.color || '#ffffff',
+                                                    fontSize: item.type === 'text' ? sizes.find(s => s.value === item.size)?.size : '32px'
+                                                }}
+                                                onMouseDown={(e) => handleMouseDown(e, item)}
+                                            >
+                                                {item.content}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        <button
+                                            onClick={undo}
+                                            disabled={history.length === 0}
+                                            className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                                        >
+                                            <i className="fas fa-undo mr-2"></i>
+                                            撤销
+                                        </button>
+                                        <button
+                                            onClick={clearAll}
+                                            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center"
+                                        >
+                                            <i className="fas fa-trash mr-2"></i>
+                                            清空涂鸦墙
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 bg-white rounded-lg p-6 board-shadow">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-images mr-2"></i>
+                                        涂鸦图库
+                                    </h3>
+                                    
+                                    <div className="mb-4">
+                                        <select
+                                            value={galleryCategory}
+                                            onChange={(e) => setGalleryCategory(e.target.value)}
+                                            className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                        >
+                                            <option value="all">所有涂鸦</option>
+                                            <option value="favorites">我的收藏</option>
+                                            <option value="popular">热门涂鸦</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        {galleryItems[galleryCategory].map(item => (
+                                            <div
+                                                key={item.id}
+                                                onClick={() => loadGalleryItem(item)}
+                                                className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors"
+                                            >
+                                                <div className="text-2xl mb-1">{item.preview}</div>
+                                                <div className="text-sm text-gray-600">{item.name}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-lg p-6 board-shadow">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-pen mr-2"></i>
+                                        添加文字涂鸦
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <input
+                                            type="text"
+                                            value={inputText}
+                                            onChange={(e) => setInputText(e.target.value)}
+                                            placeholder="输入你的涂鸦文字..."
+                                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                            maxLength={20}
+                                        />
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">选择颜色</label>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {colors.map(color => (
+                                                    <button
+                                                        key={color.value}
+                                                        onClick={() => setSelectedColor(color.value)}
+                                                        className={`p-2 rounded-lg border-2 text-xs ${
+                                                            selectedColor === color.value 
+                                                                ? 'border-blue-500 bg-blue-50' 
+                                                                : 'border-gray-300'
+                                                        }`}
+                                                        style={{ backgroundColor: color.value, color: color.value === '#ffffff' ? '#000' : '#fff' }}
+                                                    >
+                                                        {color.name}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">字体大小</label>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {sizes.map(size => (
+                                                    <button
+                                                        key={size.value}
+                                                        onClick={() => setSelectedSize(size.value)}
+                                                        className={`p-2 rounded-lg border-2 ${
+                                                            selectedSize === size.value 
+                                                                ? 'border-blue-500 bg-blue-50' 
+                                                                : 'border-gray-300'
+                                                        }`}
+                                                    >
+                                                        {size.name}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        
+                                        <button
+                                            onClick={addGraffiti}
+                                            disabled={!inputText.trim()}
+                                            className="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-plus mr-2"></i>
+                                            发布涂鸦
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-lg p-6 board-shadow">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-smile mr-2"></i>
+                                        图案贴纸
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">选择贴纸</label>
+                                            <select
+                                                value={selectedSticker}
+                                                onChange={(e) => setSelectedSticker(e.target.value)}
+                                                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                            >
+                                                {stickers.map(sticker => (
+                                                    <option key={sticker.emoji} value={sticker.emoji}>
+                                                        {sticker.emoji} {sticker.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        <div className="text-center text-4xl p-4 border-2 border-dashed border-gray-300 rounded-lg">
+                                            {selectedSticker}
+                                        </div>
+                                        
+                                        <button
+                                            onClick={addSticker}
+                                            className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-plus mr-2"></i>
+                                            添加贴纸
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-lg p-6 board-shadow">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-comment mr-2"></i>
+                                        使用反馈
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <textarea
+                                            value={feedback}
+                                            onChange={(e) => setFeedback(e.target.value)}
+                                            placeholder="分享你的使用体验..."
+                                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none h-20 resize-none"
+                                            maxLength={100}
+                                        />
+                                        
+                                        <button
+                                            onClick={submitFeedback}
+                                            disabled={!feedback.trim()}
+                                            className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交反馈
+                                        </button>
+                                        
+                                        {feedbackMessage && (
+                                            <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                                                <i className="fas fa-check-circle mr-2"></i>
+                                                {feedbackMessage}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <footer className="mt-8 text-center text-white">
+                            <div className="flex justify-center items-center space-x-4 mb-4">
+                                <img src="https://picsum.photos/id/1/40/40" alt="装饰" className="rounded-full"/>
+                                <span>让我们一起创造美好的课堂回忆</span>
+                                <img src="https://picsum.photos/id/2/40/40" alt="装饰" className="rounded-full"/>
+                            </div>
+                            <p className="text-sm opacity-75">
+                                <i className="fas fa-heart mr-1"></i>
+                                青春不散场，涂鸦永流传
+                                <i className="fas fa-heart ml-1"></i>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<GraffitiWall />, document.getElementById('root'));
+    </script>
+</body>
+</html>

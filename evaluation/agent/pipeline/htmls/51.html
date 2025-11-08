@@ -1,0 +1,554 @@
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+  <title>LOGO设计师</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useRef, useEffect } = React;
+
+    const App = () => {
+      const [brandName, setBrandName] = useState('Your Brand');
+      const [fontStyle, setFontStyle] = useState('sans-serif');
+      const [colorTheme, setColorTheme] = useState('classic');
+      const [graphicTemplate, setGraphicTemplate] = useState('circle');
+      const [backgroundMode, setBackgroundMode] = useState('light');
+      const [showGrid, setShowGrid] = useState(false);
+      const [scale, setScale] = useState(1);
+      const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+      const [isDragging, setIsDragging] = useState(false);
+      
+      const fontOptions = [
+        { value: 'sans-serif', label: '无衬线' },
+        { value: 'serif', label: '衬线' },
+        { value: 'cursive', label: '手写' },
+        { value: 'fantasy', label: '艺术' }
+      ];
+
+      const colorThemes = {
+        classic: { primary: '#000000', secondary: '#666666', accent: '#ffffff' },
+        gradient: { primary: '#667eea', secondary: '#764ba2', accent: '#f093fb' },
+        flat: { primary: '#3498db', secondary: '#2ecc71', accent: '#e74c3c' },
+        metal: { primary: '#c0c0c0', secondary: '#ffd700', accent: '#cd7f32' }
+      };
+
+      const colorOptions = [
+        { value: 'classic', label: '经典黑白' },
+        { value: 'gradient', label: '渐变' },
+        { value: 'flat', label: '扁平' },
+        { value: 'metal', label: '金属质感' }
+      ];
+
+      const graphicOptions = [
+        { value: 'circle', label: '圆形' },
+        { value: 'square', label: '方形' },
+        { value: 'triangle', label: '三角形' },
+        { value: 'diamond', label: '菱形' },
+        { value: 'star', label: '星形' },
+        { value: 'hexagon', label: '六边形' }
+      ];
+
+      const templates = [
+        {
+          id: 1,
+          name: '科技风',
+          font: 'sans-serif',
+          color: 'gradient',
+          graphic: 'circle',
+          image: 'https://picsum.photos/id/1/150/150'
+        },
+        {
+          id: 2,
+          name: '经典商务',
+          font: 'serif',
+          color: 'classic',
+          graphic: 'square',
+          image: 'https://picsum.photos/id/2/150/150'
+        },
+        {
+          id: 3,
+          name: '创意艺术',
+          font: 'cursive',
+          color: 'flat',
+          graphic: 'star',
+          image: 'https://picsum.photos/id/3/150/150'
+        },
+        {
+          id: 4,
+          name: '简约现代',
+          font: 'sans-serif',
+          color: 'flat',
+          graphic: 'triangle',
+          image: 'https://picsum.photos/id/4/150/150'
+        },
+        {
+          id: 5,
+          name: '奢华品牌',
+          font: 'serif',
+          color: 'metal',
+          graphic: 'diamond',
+          image: 'https://picsum.photos/id/5/150/150'
+        },
+        {
+          id: 6,
+          name: '科幻未来',
+          font: 'fantasy',
+          color: 'gradient',
+          graphic: 'hexagon',
+          image: 'https://picsum.photos/id/6/150/150'
+        }
+      ];
+
+      const handleRandomColor = () => {
+        const themes = Object.keys(colorThemes);
+        const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+        setColorTheme(randomTheme);
+      };
+
+      const handleReset = () => {
+        setBrandName('Your Brand');
+        setFontStyle('sans-serif');
+        setColorTheme('classic');
+        setGraphicTemplate('circle');
+        setBackgroundMode('light');
+        setShowGrid(false);
+        setScale(1);
+        setDragOffset({ x: 0, y: 0 });
+      };
+
+      const useTemplate = (template) => {
+        setBrandName('Your Brand');
+        setFontStyle(template.font);
+        setColorTheme(template.color);
+        setGraphicTemplate(template.graphic);
+      };
+
+      const generateLogo = () => {
+        const svg = document.getElementById('logo-preview');
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        canvas.width = 400;
+        canvas.height = 300;
+        
+        const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+        const url = URL.createObjectURL(svgBlob);
+        
+        img.onload = function() {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob(function(blob) {
+            const link = document.createElement('a');
+            link.download = `${brandName.replace(/\s+/g, '_')}_logo.png`;
+            link.href = URL.createObjectURL(blob);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          });
+        };
+        img.src = url;
+      };
+
+      const currentColors = colorThemes[colorTheme];
+
+      const handleMouseDown = (e) => {
+        setIsDragging(true);
+        const rect = e.currentTarget.getBoundingClientRect();
+        setDragOffset({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      };
+
+      const handleMouseMove = (e) => {
+        if (isDragging) {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setDragOffset({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+          });
+        }
+      };
+
+      const handleMouseUp = () => {
+        setIsDragging(false);
+      };
+
+      const renderGraphic = () => {
+        const size = 80;
+        const centerX = 200 + (isDragging ? (dragOffset.x - 200) * 0.1 : 0);
+        const centerY = 150 + (isDragging ? (dragOffset.y - 150) * 0.1 : 0);
+
+        const baseProps = {
+          fill: colorTheme === 'gradient' ? 'url(#gradient)' : currentColors.primary,
+          stroke: currentColors.secondary,
+          strokeWidth: 2
+        };
+
+        switch(graphicTemplate) {
+          case 'circle':
+            return <circle cx={centerX} cy={centerY} r={size/2} {...baseProps} />;
+          case 'square':
+            return <rect x={centerX-size/2} y={centerY-size/2} width={size} height={size} {...baseProps} />;
+          case 'triangle':
+            return <polygon points={`${centerX},${centerY-size/2} ${centerX-size/2},${centerY+size/2} ${centerX+size/2},${centerY+size/2}`} {...baseProps} />;
+          case 'diamond':
+            return <polygon points={`${centerX},${centerY-size/2} ${centerX+size/2},${centerY} ${centerX},${centerY+size/2} ${centerX-size/2},${centerY}`} {...baseProps} />;
+          case 'star':
+            const points = [];
+            for(let i = 0; i < 5; i++) {
+              const angle = (i * 144 - 90) * Math.PI / 180;
+              const x1 = centerX + Math.cos(angle) * size/2;
+              const y1 = centerY + Math.sin(angle) * size/2;
+              const angle2 = ((i + 0.5) * 144 - 90) * Math.PI / 180;
+              const x2 = centerX + Math.cos(angle2) * size/4;
+              const y2 = centerY + Math.sin(angle2) * size/4;
+              points.push(`${x1},${y1}`, `${x2},${y2}`);
+            }
+            return <polygon points={points.join(' ')} {...baseProps} />;
+          case 'hexagon':
+            const hexPoints = [];
+            for(let i = 0; i < 6; i++) {
+              const angle = (i * 60 - 90) * Math.PI / 180;
+              const x = centerX + Math.cos(angle) * size/2;
+              const y = centerY + Math.sin(angle) * size/2;
+              hexPoints.push(`${x},${y}`);
+            }
+            return <polygon points={hexPoints.join(' ')} {...baseProps} />;
+          default:
+            return <circle cx={centerX} cy={centerY} r={size/2} {...baseProps} />;
+        }
+      };
+
+      return (
+        <div className="min-h-screen bg-gray-50">
+          <nav className="bg-white shadow-lg fixed top-0 w-full z-50">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="flex justify-between items-center h-16">
+                <div className="flex items-center">
+                  <h1 className="text-2xl font-bold text-blue-600">LOGO设计师</h1>
+                </div>
+                <div className="hidden md:flex space-x-8">
+                  <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">主页</a>
+                  <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">模板库</a>
+                  <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">我的作品</a>
+                  <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">帮助</a>
+                </div>
+                <div className="md:hidden">
+                  <button className="text-gray-700">
+                    <i className="fas fa-bars"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <div className="pt-16">
+            <div className="max-w-7xl mx-auto px-4 py-8">
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                
+                <div className="lg:col-span-1">
+                  <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-xl font-bold text-gray-800 mb-6">设计工具</h2>
+                    
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">品牌名称</label>
+                      <input
+                        type="text"
+                        value={brandName}
+                        onChange={(e) => setBrandName(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="输入品牌名称"
+                      />
+                    </div>
+
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">字体风格</label>
+                      <select
+                        value={fontStyle}
+                        onChange={(e) => setFontStyle(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {fontOptions.map(option => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">颜色主题</label>
+                      <select
+                        value={colorTheme}
+                        onChange={(e) => setColorTheme(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {colorOptions.map(option => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">图形模板</label>
+                      <select
+                        value={graphicTemplate}
+                        onChange={(e) => setGraphicTemplate(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {graphicOptions.map(option => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-3">
+                      <button
+                        onClick={generateLogo}
+                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                      >
+                        <i className="fas fa-download mr-2"></i>生成 LOGO
+                      </button>
+                      
+                      <button
+                        onClick={handleRandomColor}
+                        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
+                      >
+                        <i className="fas fa-random mr-2"></i>随机配色
+                      </button>
+                      
+                      <button
+                        onClick={handleReset}
+                        className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
+                      >
+                        <i className="fas fa-undo mr-2"></i>重置
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2">
+                  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-xl font-bold text-gray-800">实时预览</h2>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => setShowGrid(!showGrid)}
+                          className={`px-3 py-1 rounded text-sm ${showGrid ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 hover:text-white transition-colors`}
+                        >
+                          网格
+                        </button>
+                        <select
+                          value={backgroundMode}
+                          onChange={(e) => setBackgroundMode(e.target.value)}
+                          className="px-2 py-1 border border-gray-300 rounded text-sm"
+                        >
+                          <option value="light">浅灰</option>
+                          <option value="grid">格子</option>
+                          <option value="transparent">透明</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div className={`relative border rounded-lg overflow-hidden cursor-move ${
+                      backgroundMode === 'light' ? 'bg-gray-100' :
+                      backgroundMode === 'grid' ? 'bg-gray-50' : 'bg-white'
+                    }`}
+                    style={{
+                      backgroundImage: backgroundMode === 'grid' ? 
+                        'linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f0f0f0 75%), linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)' : 'none',
+                      backgroundSize: backgroundMode === 'grid' ? '20px 20px' : 'auto',
+                      backgroundPosition: backgroundMode === 'grid' ? '0 0, 0 10px, 10px -10px, -10px 0px' : 'auto'
+                    }}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}>
+                      <svg
+                        id="logo-preview"
+                        viewBox="0 0 400 300"
+                        className="w-full h-64"
+                        style={{ transform: `scale(${scale})` }}
+                      >
+                        <defs>
+                          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor={currentColors.primary} />
+                            <stop offset="50%" stopColor={currentColors.secondary} />
+                            <stop offset="100%" stopColor={currentColors.accent} />
+                          </linearGradient>
+                          {showGrid && (
+                            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ccc" strokeWidth="1"/>
+                            </pattern>
+                          )}
+                        </defs>
+                        
+                        {showGrid && <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5" />}
+                        
+                        {renderGraphic()}
+                        
+                        <text
+                          x="200"
+                          y="240"
+                          textAnchor="middle"
+                          style={{
+                            fontFamily: fontStyle,
+                            fontSize: '24px',
+                            fill: currentColors.secondary,
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {brandName}
+                        </text>
+                      </svg>
+                    </div>
+                    
+                    <div className="flex items-center justify-center mt-4 space-x-4">
+                      <button
+                        onClick={() => setScale(Math.max(0.5, scale - 0.1))}
+                        className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                      >
+                        <i className="fas fa-minus"></i>
+                      </button>
+                      <span className="text-sm text-gray-600">{Math.round(scale * 100)}%</span>
+                      <button
+                        onClick={() => setScale(Math.min(2, scale + 0.1))}
+                        className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                      >
+                        <i className="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-xl font-bold text-gray-800 mb-6">模板库</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {templates.map(template => (
+                        <div key={template.id} className="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
+                          <img
+                            src={template.image}
+                            alt={template.name}
+                            className="w-full h-32 object-cover rounded-md mb-3"
+                          />
+                          <h3 className="font-medium text-gray-800 mb-2">{template.name}</h3>
+                          <button
+                            onClick={() => useTemplate(template)}
+                            className="w-full bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors text-sm"
+                          >
+                            使用此模板
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-1">
+                  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">设计指南</h3>
+                    <div className="space-y-3 text-sm text-gray-600">
+                      <div className="flex items-start space-x-2">
+                        <i className="fas fa-lightbulb text-yellow-500 mt-0.5"></i>
+                        <p>选择与品牌调性匹配的字体风格</p>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <i className="fas fa-palette text-purple-500 mt-0.5"></i>
+                        <p>颜色搭配要考虑品牌定位和目标受众</p>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <i className="fas fa-shapes text-blue-500 mt-0.5"></i>
+                        <p>图形元素应该简洁且具有识别性</p>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <i className="fas fa-mobile-alt text-green-500 mt-0.5"></i>
+                        <p>确保LOGO在不同尺寸下都清晰可见</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">当前设计</h3>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">品牌名称:</span>
+                        <span className="font-medium">{brandName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">字体:</span>
+                        <span className="font-medium">{fontOptions.find(f => f.value === fontStyle)?.label}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">颜色:</span>
+                        <span className="font-medium">{colorOptions.find(c => c.value === colorTheme)?.label}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">图形:</span>
+                        <span className="font-medium">{graphicOptions.find(g => g.value === graphicTemplate)?.label}</span>
+                      </div>
+                      <div className="mt-4 p-3 bg-gray-50 rounded">
+                        <h4 className="font-medium text-gray-800 mb-2">颜色预览</h4>
+                        <div className="flex space-x-2">
+                          <div 
+                            className="w-6 h-6 rounded border"
+                            style={{ backgroundColor: currentColors.primary }}
+                            title="主色"
+                          ></div>
+                          <div 
+                            className="w-6 h-6 rounded border"
+                            style={{ backgroundColor: currentColors.secondary }}
+                            title="辅色"
+                          ></div>
+                          <div 
+                            className="w-6 h-6 rounded border"
+                            style={{ backgroundColor: currentColors.accent }}
+                            title="强调色"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer className="bg-gray-800 text-white py-8">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="mb-4 md:mb-0">
+                  <p>&copy; 2024 LOGO设计师. 保留所有权利.</p>
+                </div>
+                <div className="flex space-x-6">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

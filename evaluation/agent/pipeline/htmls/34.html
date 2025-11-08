@@ -1,0 +1,712 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手机管家</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function PhoneManager() {
+            const [darkMode, setDarkMode] = useState(false);
+            const [systemInfo, setSystemInfo] = useState({
+                brand: 'iPhone',
+                model: '14 Pro',
+                version: 'iOS 17.0',
+                memory: 8192,
+                storage: 256000
+            });
+            
+            const [acceleration, setAcceleration] = useState({
+                memoryUsed: 6500,
+                isAccelerating: false
+            });
+            
+            const [cacheItems, setCacheItems] = useState([
+                { id: 1, name: '应用缓存', size: 1200, checked: false },
+                { id: 2, name: '图片缓存', size: 850, checked: false },
+                { id: 3, name: '视频缓存', size: 2100, checked: false },
+                { id: 4, name: '浏览器缓存', size: 450, checked: false }
+            ]);
+            
+            const [battery, setBattery] = useState({
+                level: 85,
+                temperature: 32,
+                health: 88,
+                isCalibrating: false
+            });
+            
+            const [apps, setApps] = useState([
+                { id: 1, name: '微信', version: '8.0.44', size: 2800 },
+                { id: 2, name: '抖音', version: '27.3.0', size: 1200 },
+                { id: 3, name: '支付宝', version: '10.3.36', size: 950 },
+                { id: 4, name: '淘宝', version: '10.25.10', size: 1800 }
+            ]);
+            const [selectedApp, setSelectedApp] = useState('');
+            
+            const [dataLimit, setDataLimit] = useState(10);
+            const [currentUsage] = useState(7.2);
+            
+            const [scanning, setScanning] = useState({
+                isScanning: false,
+                progress: 0,
+                type: 'quick',
+                result: null
+            });
+            
+            const [permissions, setPermissions] = useState({
+                camera: true,
+                microphone: false,
+                location: true
+            });
+            
+            const [speedTest, setSpeedTest] = useState({
+                isTesting: false,
+                download: 0,
+                upload: 0
+            });
+            
+            const [storage, setStorage] = useState([
+                { id: 1, name: '系统', used: 45, total: 128, checked: false },
+                { id: 2, name: '应用', used: 32, total: 128, checked: false },
+                { id: 3, name: '照片', used: 28, total: 128, checked: false },
+                { id: 4, name: '其他', used: 15, total: 128, checked: false }
+            ]);
+            
+            const [feedback, setFeedback] = useState({
+                type: 'bug',
+                content: '',
+                list: []
+            });
+            
+            const handleAccelerate = () => {
+                setAcceleration(prev => ({ ...prev, isAccelerating: true }));
+                setTimeout(() => {
+                    setAcceleration(prev => ({
+                        memoryUsed: Math.max(2000, prev.memoryUsed - Math.random() * 2000),
+                        isAccelerating: false
+                    }));
+                }, 2000);
+            };
+            
+            const handleCacheClean = () => {
+                const selectedItems = cacheItems.filter(item => item.checked);
+                const totalCleaned = selectedItems.reduce((sum, item) => sum + item.size, 0);
+                
+                setCacheItems(prev => 
+                    prev.map(item => item.checked ? { ...item, size: 0, checked: false } : item)
+                );
+                
+                setSystemInfo(prev => ({
+                    ...prev,
+                    storage: prev.storage + totalCleaned
+                }));
+            };
+            
+            const handleBatteryCalibration = () => {
+                setBattery(prev => ({ ...prev, isCalibrating: true }));
+                setTimeout(() => {
+                    setBattery(prev => ({
+                        ...prev,
+                        health: Math.min(100, prev.health + Math.random() * 5),
+                        isCalibrating: false
+                    }));
+                }, 3000);
+            };
+            
+            const handleUninstallApp = () => {
+                if (selectedApp) {
+                    setApps(prev => prev.filter(app => app.name !== selectedApp));
+                    setSelectedApp('');
+                }
+            };
+            
+            const handleSetDataLimit = () => {
+                
+            };
+            
+            const handleStartScan = () => {
+                setScanning(prev => ({ ...prev, isScanning: true, progress: 0, result: null }));
+                
+                const interval = setInterval(() => {
+                    setScanning(prev => {
+                        if (prev.progress >= 100) {
+                            clearInterval(interval);
+                            return {
+                                ...prev,
+                                isScanning: false,
+                                result: { threats: Math.floor(Math.random() * 3), scanned: 1247 }
+                            };
+                        }
+                        return { ...prev, progress: prev.progress + 2 };
+                    });
+                }, 100);
+            };
+            
+            const togglePermission = (permission) => {
+                setPermissions(prev => ({
+                    ...prev,
+                    [permission]: !prev[permission]
+                }));
+            };
+            
+            const handleSpeedTest = () => {
+                setSpeedTest(prev => ({ ...prev, isTesting: true, download: 0, upload: 0 }));
+                
+                const interval = setInterval(() => {
+                    setSpeedTest(prev => {
+                        const newDownload = Math.random() * 100;
+                        const newUpload = Math.random() * 50;
+                        
+                        if (prev.download > 80) {
+                            clearInterval(interval);
+                            return { ...prev, isTesting: false };
+                        }
+                        
+                        return {
+                            ...prev,
+                            download: newDownload,
+                            upload: newUpload
+                        };
+                    });
+                }, 500);
+            };
+            
+            const handleStorageClean = () => {
+                const selectedStorage = storage.filter(item => item.checked);
+                setStorage(prev => 
+                    prev.map(item => 
+                        item.checked 
+                            ? { ...item, used: Math.max(5, item.used - Math.random() * 20), checked: false }
+                            : item
+                    )
+                );
+            };
+            
+            const handleFeedbackSubmit = () => {
+                if (feedback.content.trim()) {
+                    setFeedback(prev => ({
+                        ...prev,
+                        list: [...prev.list, {
+                            id: Date.now(),
+                            type: prev.type,
+                            content: prev.content,
+                            time: new Date().toLocaleString()
+                        }],
+                        content: ''
+                    }));
+                }
+            };
+            
+            const themeClasses = darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900';
+            const cardClasses = darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200';
+            
+            return (
+                <div className={`min-h-screen transition-colors duration-300 ${themeClasses}`}>
+                    <div className="container mx-auto px-4 py-6">
+                        <header className="mb-8">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center space-x-3">
+                                    <i className="fas fa-mobile-alt text-3xl text-teal-500"></i>
+                                    <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-500 to-blue-500 bg-clip-text text-transparent">
+                                        手机管家
+                                    </h1>
+                                </div>
+                                <select 
+                                    value={darkMode ? 'dark' : 'light'}
+                                    onChange={(e) => setDarkMode(e.target.value === 'dark')}
+                                    className={`px-4 py-2 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                >
+                                    <option value="light">浅色模式</option>
+                                    <option value="dark">深色模式</option>
+                                </select>
+                            </div>
+                        </header>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-info-circle text-teal-500 mr-2"></i>
+                                    系统概览
+                                </h3>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between">
+                                        <span>设备品牌:</span>
+                                        <span className="font-medium">{systemInfo.brand}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>型号:</span>
+                                        <span className="font-medium">{systemInfo.model}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>系统版本:</span>
+                                        <span className="font-medium">{systemInfo.version}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>剩余内存:</span>
+                                        <span className="font-medium text-teal-500">{(systemInfo.memory - acceleration.memoryUsed).toFixed(0)}MB</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>剩余存储:</span>
+                                        <span className="font-medium text-blue-500">{(systemInfo.storage / 1000).toFixed(1)}GB</span>
+                                    </div>
+                                </div>
+                                <img src="https://picsum.photos/id/1/300/200" alt="Device" className="w-full h-32 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-rocket text-teal-500 mr-2"></i>
+                                    手机加速
+                                </h3>
+                                <div className="text-center">
+                                    <div className="mb-4">
+                                        <div className="text-3xl font-bold text-red-500 mb-2">
+                                            {acceleration.memoryUsed.toFixed(0)}MB
+                                        </div>
+                                        <p className="text-sm text-gray-500">已使用内存</p>
+                                    </div>
+                                    <button
+                                        onClick={handleAccelerate}
+                                        disabled={acceleration.isAccelerating}
+                                        className="w-full py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-blue-600 disabled:opacity-50 transition-all duration-300"
+                                    >
+                                        {acceleration.isAccelerating ? (
+                                            <i className="fas fa-spinner fa-spin mr-2"></i>
+                                        ) : (
+                                            <i className="fas fa-rocket mr-2"></i>
+                                        )}
+                                        {acceleration.isAccelerating ? '加速中...' : '一键加速'}
+                                    </button>
+                                </div>
+                                <img src="https://picsum.photos/id/2/300/150" alt="Speed" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-trash text-teal-500 mr-2"></i>
+                                    缓存清理
+                                </h3>
+                                <div className="space-y-3 mb-4">
+                                    {cacheItems.map(item => (
+                                        <div key={item.id} className="flex items-center justify-between">
+                                            <label className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={item.checked}
+                                                    onChange={(e) => setCacheItems(prev => 
+                                                        prev.map(cache => 
+                                                            cache.id === item.id 
+                                                                ? { ...cache, checked: e.target.checked }
+                                                                : cache
+                                                        )
+                                                    )}
+                                                    className="mr-2 text-teal-500"
+                                                />
+                                                <span>{item.name}</span>
+                                            </label>
+                                            <span className="text-sm text-gray-500">{item.size}MB</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button
+                                    onClick={handleCacheClean}
+                                    className="w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                                >
+                                    <i className="fas fa-broom mr-2"></i>
+                                    清理选中
+                                </button>
+                                <img src="https://picsum.photos/id/3/300/100" alt="Clean" className="w-full h-20 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-battery-three-quarters text-teal-500 mr-2"></i>
+                                    电池健康
+                                </h3>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between">
+                                        <span>当前电量:</span>
+                                        <span className="font-medium text-green-500">{battery.level}%</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>温度:</span>
+                                        <span className="font-medium">{battery.temperature}°C</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>健康度:</span>
+                                        <span className="font-medium text-blue-500">{battery.health.toFixed(1)}%</span>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={handleBatteryCalibration}
+                                    disabled={battery.isCalibrating}
+                                    className="w-full mt-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+                                >
+                                    {battery.isCalibrating ? (
+                                        <>
+                                            <i className="fas fa-spinner fa-spin mr-2"></i>
+                                            校准中...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <i className="fas fa-tools mr-2"></i>
+                                            电量校准
+                                        </>
+                                    )}
+                                </button>
+                                <img src="https://picsum.photos/id/4/300/120" alt="Battery" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-th-large text-teal-500 mr-2"></i>
+                                    应用管理
+                                </h3>
+                                <select
+                                    value={selectedApp}
+                                    onChange={(e) => setSelectedApp(e.target.value)}
+                                    className={`w-full p-2 border rounded-lg mb-4 ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                >
+                                    <option value="">选择应用</option>
+                                    {apps.map(app => (
+                                        <option key={app.id} value={app.name}>{app.name}</option>
+                                    ))}
+                                </select>
+                                
+                                {selectedApp && (
+                                    <div className="space-y-2 mb-4">
+                                        {apps.filter(app => app.name === selectedApp).map(app => (
+                                            <div key={app.id}>
+                                                <div className="flex justify-between">
+                                                    <span>版本:</span>
+                                                    <span>{app.version}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>占用空间:</span>
+                                                    <span>{app.size}MB</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                <button
+                                    onClick={handleUninstallApp}
+                                    disabled={!selectedApp}
+                                    className="w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    <i className="fas fa-unlink mr-2"></i>
+                                    卸载应用
+                                </button>
+                                <img src="https://picsum.photos/id/5/300/120" alt="Apps" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-chart-line text-teal-500 mr-2"></i>
+                                    流量监控
+                                </h3>
+                                <div className="mb-4">
+                                    <div className="flex justify-between mb-2">
+                                        <span>本月已用:</span>
+                                        <span className="font-medium">{currentUsage}GB</span>
+                                    </div>
+                                    <div className="flex justify-between mb-4">
+                                        <span>设定上限:</span>
+                                        <span className="font-medium text-red-500">{dataLimit}GB</span>
+                                    </div>
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                        <div 
+                                            className="bg-gradient-to-r from-teal-500 to-blue-500 h-2 rounded-full transition-all duration-300"
+                                            style={{ width: `${(currentUsage / dataLimit) * 100}%` }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div className="flex space-x-2">
+                                    <input
+                                        type="number"
+                                        value={dataLimit}
+                                        onChange={(e) => setDataLimit(Number(e.target.value))}
+                                        className={`flex-1 p-2 border rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                        placeholder="流量上限(GB)"
+                                    />
+                                    <button
+                                        onClick={handleSetDataLimit}
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                                    >
+                                        设置
+                                    </button>
+                                </div>
+                                <img src="https://picsum.photos/id/6/300/100" alt="Data" className="w-full h-20 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-shield-alt text-teal-500 mr-2"></i>
+                                    病毒查杀
+                                </h3>
+                                <div className="mb-4">
+                                    <select
+                                        value={scanning.type}
+                                        onChange={(e) => setScanning(prev => ({ ...prev, type: e.target.value }))}
+                                        className={`w-full p-2 border rounded-lg mb-4 ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                        disabled={scanning.isScanning}
+                                    >
+                                        <option value="quick">快速扫描</option>
+                                        <option value="deep">深度扫描</option>
+                                    </select>
+                                    
+                                    {scanning.isScanning && (
+                                        <div className="mb-4">
+                                            <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                                <div 
+                                                    className="bg-gradient-to-r from-green-500 to-teal-500 h-2 rounded-full transition-all duration-300"
+                                                    style={{ width: `${scanning.progress}%` }}
+                                                ></div>
+                                            </div>
+                                            <p className="text-sm text-center">扫描进度: {scanning.progress}%</p>
+                                        </div>
+                                    )}
+                                    
+                                    {scanning.result && (
+                                        <div className="mb-4 p-3 bg-green-100 border border-green-300 rounded-lg">
+                                            <p className="text-green-800">
+                                                扫描完成！共扫描 {scanning.result.scanned} 个文件，
+                                                发现 {scanning.result.threats} 个威胁
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                                <button
+                                    onClick={handleStartScan}
+                                    disabled={scanning.isScanning}
+                                    className="w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+                                >
+                                    {scanning.isScanning ? (
+                                        <>
+                                            <i className="fas fa-spinner fa-spin mr-2"></i>
+                                            扫描中...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <i className="fas fa-search mr-2"></i>
+                                            开始扫描
+                                        </>
+                                    )}
+                                </button>
+                                <img src="https://picsum.photos/id/7/300/120" alt="Security" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-user-secret text-teal-500 mr-2"></i>
+                                    隐私保护
+                                </h3>
+                                <div className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <i className="fas fa-camera mr-2"></i>
+                                            <span>摄像头权限</span>
+                                        </div>
+                                        <button
+                                            onClick={() => togglePermission('camera')}
+                                            className={`w-12 h-6 rounded-full transition-colors ${
+                                                permissions.camera ? 'bg-green-500' : 'bg-gray-400'
+                                            }`}
+                                        >
+                                            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                                                permissions.camera ? 'translate-x-6' : 'translate-x-0.5'
+                                            }`}></div>
+                                        </button>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <i className="fas fa-microphone mr-2"></i>
+                                            <span>麦克风权限</span>
+                                        </div>
+                                        <button
+                                            onClick={() => togglePermission('microphone')}
+                                            className={`w-12 h-6 rounded-full transition-colors ${
+                                                permissions.microphone ? 'bg-green-500' : 'bg-gray-400'
+                                            }`}
+                                        >
+                                            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                                                permissions.microphone ? 'translate-x-6' : 'translate-x-0.5'
+                                            }`}></div>
+                                        </button>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <i className="fas fa-map-marker-alt mr-2"></i>
+                                            <span>位置权限</span>
+                                        </div>
+                                        <button
+                                            onClick={() => togglePermission('location')}
+                                            className={`w-12 h-6 rounded-full transition-colors ${
+                                                permissions.location ? 'bg-green-500' : 'bg-gray-400'
+                                            }`}
+                                        >
+                                            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                                                permissions.location ? 'translate-x-6' : 'translate-x-0.5'
+                                            }`}></div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <img src="https://picsum.photos/id/8/300/120" alt="Privacy" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-tachometer-alt text-teal-500 mr-2"></i>
+                                    网络测速
+                                </h3>
+                                <div className="text-center">
+                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <div className="text-2xl font-bold text-green-500">
+                                                {speedTest.download.toFixed(1)}
+                                            </div>
+                                            <p className="text-sm text-gray-500">下载 (Mbps)</p>
+                                        </div>
+                                        <div>
+                                            <div className="text-2xl font-bold text-blue-500">
+                                                {speedTest.upload.toFixed(1)}
+                                            </div>
+                                            <p className="text-sm text-gray-500">上传 (Mbps)</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleSpeedTest}
+                                        disabled={speedTest.isTesting}
+                                        className="w-full py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+                                    >
+                                        {speedTest.isTesting ? (
+                                            <>
+                                                <i className="fas fa-spinner fa-spin mr-2"></i>
+                                                测速中...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <i className="fas fa-play mr-2"></i>
+                                                开始测速
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                                <img src="https://picsum.photos/id/9/300/120" alt="Speed" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-hdd text-teal-500 mr-2"></i>
+                                    存储管理
+                                </h3>
+                                <div className="space-y-3 mb-4">
+                                    {storage.map(item => (
+                                        <div key={item.id} className="flex items-center justify-between">
+                                            <label className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={item.checked}
+                                                    onChange={(e) => setStorage(prev => 
+                                                        prev.map(s => 
+                                                            s.id === item.id 
+                                                                ? { ...s, checked: e.target.checked }
+                                                                : s
+                                                        )
+                                                    )}
+                                                    className="mr-2 text-teal-500"
+                                                />
+                                                <span>{item.name}</span>
+                                            </label>
+                                            <div className="text-right">
+                                                <div className="text-sm font-medium">{item.used.toFixed(1)}GB</div>
+                                                <div className="w-20 bg-gray-200 rounded-full h-1">
+                                                    <div 
+                                                        className="bg-gradient-to-r from-orange-500 to-red-500 h-1 rounded-full"
+                                                        style={{ width: `${(item.used / item.total) * 100}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button
+                                    onClick={handleStorageClean}
+                                    className="w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                                >
+                                    <i className="fas fa-broom mr-2"></i>
+                                    释放空间
+                                </button>
+                                <img src="https://picsum.photos/id/10/300/120" alt="Storage" className="w-full h-24 object-cover rounded-lg mt-4" />
+                            </div>
+                            
+                            <div className={`p-6 rounded-xl border shadow-lg ${cardClasses}`}>
+                                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-comment text-teal-500 mr-2"></i>
+                                    用户反馈
+                                </h3>
+                                <div className="space-y-4">
+                                    <select
+                                        value={feedback.type}
+                                        onChange={(e) => setFeedback(prev => ({ ...prev, type: e.target.value }))}
+                                        className={`w-full p-2 border rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                    >
+                                        <option value="bug">Bug反馈</option>
+                                        <option value="feature">功能建议</option>
+                                        <option value="improvement">改进意见</option>
+                                        <option value="other">其他</option>
+                                    </select>
+                                    <textarea
+                                        value={feedback.content}
+                                        onChange={(e) => setFeedback(prev => ({ ...prev, content: e.target.value }))}
+                                        placeholder="请输入您的反馈意见..."
+                                        rows="3"
+                                        className={`w-full p-2 border rounded-lg resize-none ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                                    />
+                                    <button
+                                        onClick={handleFeedbackSubmit}
+                                        className="w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+                                    >
+                                        <i className="fas fa-paper-plane mr-2"></i>
+                                        提交反馈
+                                    </button>
+                                </div>
+                                
+                                {feedback.list.length > 0 && (
+                                    <div className="mt-4">
+                                        <h4 className="font-semibold mb-2">反馈记录:</h4>
+                                        <div className="space-y-2 max-h-32 overflow-y-auto">
+                                            {feedback.list.slice(-3).map(item => (
+                                                <div key={item.id} className={`p-2 rounded text-sm ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                                                    <div className="flex justify-between">
+                                                        <span className="font-medium">{item.type}</span>
+                                                        <span className="text-xs text-gray-500">{item.time}</span>
+                                                    </div>
+                                                    <p className="mt-1">{item.content}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                <img src="https://picsum.photos/id/11/300/100" alt="Feedback" className="w-full h-20 object-cover rounded-lg mt-4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<PhoneManager />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库查询系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        const mockData = {
+            documents: [
+                {
+                    id: 1,
+                    title: "React 18 新特性详解",
+                    summary: "深入了解React 18的并发特性、自动批处理和新的钩子函数，掌握现代前端开发技术。",
+                    date: "2024-01-15",
+                    tags: ["React", "前端开发", "JavaScript"],
+                    category: "技术文档",
+                    image: "https://picsum.photos/id/1/300/200"
+                },
+                {
+                    id: 2,
+                    title: "Tailwind CSS 响应式设计指南",
+                    summary: "学习如何使用Tailwind CSS创建完美的响应式布局，提升用户体验。",
+                    date: "2024-01-12",
+                    tags: ["CSS", "响应式", "设计"],
+                    category: "设计规范",
+                    image: "https://picsum.photos/id/2/300/200"
+                },
+                {
+                    id: 3,
+                    title: "Node.js 性能优化最佳实践",
+                    summary: "掌握Node.js应用的性能优化技巧，包括内存管理、异步处理和缓存策略。",
+                    date: "2024-01-10",
+                    tags: ["Node.js", "性能优化", "后端"],
+                    category: "技术文档",
+                    image: "https://picsum.photos/id/3/300/200"
+                },
+                {
+                    id: 4,
+                    title: "数据库设计原则与规范",
+                    summary: "了解数据库设计的基本原则，包括范式理论、索引优化和查询性能调优。",
+                    date: "2024-01-08",
+                    tags: ["数据库", "设计", "SQL"],
+                    category: "技术文档",
+                    image: "https://picsum.photos/id/4/300/200"
+                },
+                {
+                    id: 5,
+                    title: "API 安全开发指南",
+                    summary: "学习API安全开发的最佳实践，包括身份验证、授权和数据加密。",
+                    date: "2024-01-05",
+                    tags: ["API", "安全", "开发"],
+                    category: "安全规范",
+                    image: "https://picsum.photos/id/5/300/200"
+                },
+                {
+                    id: 6,
+                    title: "微服务架构设计模式",
+                    summary: "探索微服务架构的设计模式和实施策略，构建可扩展的分布式系统。",
+                    date: "2024-01-03",
+                    tags: ["微服务", "架构", "分布式"],
+                    category: "架构设计",
+                    image: "https://picsum.photos/id/6/300/200"
+                },
+                {
+                    id: 7,
+                    title: "代码审查流程规范",
+                    summary: "建立有效的代码审查流程，提高代码质量和团队协作效率。",
+                    date: "2024-01-01",
+                    tags: ["代码审查", "流程", "团队"],
+                    category: "流程规范",
+                    image: "https://picsum.photos/id/7/300/200"
+                },
+                {
+                    id: 8,
+                    title: "Docker 容器化部署实战",
+                    summary: "学习使用Docker进行应用容器化，实现快速部署和环境一致性。",
+                    date: "2023-12-28",
+                    tags: ["Docker", "容器", "部署"],
+                    category: "技术文档",
+                    image: "https://picsum.photos/id/8/300/200"
+                },
+                {
+                    id: 9,
+                    title: "Git 版本控制高级技巧",
+                    summary: "掌握Git的高级功能，包括分支策略、合并冲突解决和历史重写。",
+                    date: "2023-12-25",
+                    tags: ["Git", "版本控制", "开发工具"],
+                    category: "工具使用",
+                    image: "https://picsum.photos/id/9/300/200"
+                },
+                {
+                    id: 10,
+                    title: "敏捷开发方法论",
+                    summary: "了解敏捷开发的核心理念和实践方法，提升项目交付效率。",
+                    date: "2023-12-22",
+                    tags: ["敏捷", "项目管理", "方法论"],
+                    category: "流程规范",
+                    image: "https://picsum.photos/id/10/300/200"
+                }
+            ],
+            hotDocuments: [
+                { id: 1, title: "React 18 新特性详解", views: 1256, description: "React 18带来了许多革命性的新特性，包括并发渲染、自动批处理等。" },
+                { id: 2, title: "Tailwind CSS 响应式设计指南", views: 987, description: "Tailwind CSS是一个功能优先的CSS框架，能够快速构建现代化的用户界面。" },
+                { id: 3, title: "Node.js 性能优化最佳实践", views: 856, description: "Node.js性能优化涉及多个方面，包括代码优化、内存管理和系统配置。" },
+                { id: 4, title: "数据库设计原则与规范", views: 743, description: "良好的数据库设计是应用程序性能和可维护性的基础。" },
+                { id: 5, title: "API 安全开发指南", views: 672, description: "API安全是现代应用开发中不可忽视的重要环节。" }
+            ],
+            faqs: [
+                {
+                    id: 1,
+                    question: "如何快速搜索知识库内容？",
+                    answer: "使用页面顶部的搜索框输入关键词，系统会自动匹配相关文档。您也可以使用侧边栏的分类和标签进行精确筛选。"
+                },
+                {
+                    id: 2,
+                    question: "支持哪些文档格式？",
+                    answer: "知识库支持多种格式的文档，包括PDF、Word、PowerPoint、Markdown等常见格式。"
+                },
+                {
+                    id: 3,
+                    question: "如何收藏感兴趣的文档？",
+                    answer: "点击文档标题进入详情页面，然后点击收藏按钮即可将文档加入个人收藏夹。"
+                },
+                {
+                    id: 4,
+                    question: "查询历史保存多久？",
+                    answer: "系统会保存您最近的5条查询历史，您可以随时点击历史记录快速重新搜索。"
+                }
+            ],
+            suggestions: ["React 18", "Tailwind CSS", "Node.js", "API 安全", "数据库设计", "微服务架构", "代码审查", "Docker", "Git", "敏捷开发"],
+            categories: ["全部分类", "技术文档", "设计规范", "安全规范", "架构设计", "流程规范", "工具使用"],
+            tags: ["React", "前端开发", "JavaScript", "CSS", "响应式", "设计", "Node.js", "性能优化", "后端", "数据库", "SQL", "API", "安全", "开发", "微服务", "架构", "分布式", "代码审查", "流程", "团队", "Docker", "容器", "部署", "Git", "版本控制", "开发工具", "敏捷", "项目管理", "方法论"]
+        };
+
+        const Modal = ({ isOpen, onClose, title, children }) => {
+            if (!isOpen) return null;
+
+            return (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+                            <button
+                                onClick={onClose}
+                                className="text-gray-400 hover:text-gray-600 text-2xl"
+                            >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>
+                        {children}
+                    </div>
+                </div>
+            );
+        };
+
+        const Header = () => {
+            return (
+                <header className="bg-white shadow-sm border-b border-gray-200">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-center h-16">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0">
+                                    <i className="fas fa-book text-blue-600 text-2xl mr-2"></i>
+                                    <span className="text-xl font-bold text-gray-900">知识库</span>
+                                </div>
+                            </div>
+                            <nav className="flex space-x-8">
+                                <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+                                    <i className="fas fa-home mr-1"></i>首页
+                                </a>
+                                <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+                                    <i className="fas fa-question-circle mr-1"></i>帮助
+                                </a>
+                                <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+                                    <i className="fas fa-user mr-1"></i>用户中心
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const Sidebar = ({ 
+            selectedCategory, 
+            onCategoryChange, 
+            selectedTags, 
+            onTagsChange, 
+            dateRange, 
+            onDateRangeChange 
+        }) => {
+            const [isTagsOpen, setIsTagsOpen] = useState(false);
+
+            const handleTagToggle = (tag) => {
+                const newTags = selectedTags.includes(tag)
+                    ? selectedTags.filter(t => t !== tag)
+                    : [...selectedTags, tag];
+                onTagsChange(newTags);
+            };
+
+            return (
+                <div className="w-64 bg-white p-6 border-r border-gray-200">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">筛选条件</h3>
+                    
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <i className="fas fa-folder mr-1"></i>分类
+                        </label>
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => onCategoryChange(e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                            {mockData.categories.map((category, index) => (
+                                <option key={index} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <i className="fas fa-tags mr-1"></i>标签
+                        </label>
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsTagsOpen(!isTagsOpen)}
+                                className="w-full p-2 border border-gray-300 rounded-md text-left focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex justify-between items-center"
+                            >
+                                <span className="text-gray-600">
+                                    {selectedTags.length > 0 ? `已选择 ${selectedTags.length} 个标签` : '选择标签'}
+                                </span>
+                                <i className={`fas fa-chevron-${isTagsOpen ? 'up' : 'down'}`}></i>
+                            </button>
+                            {isTagsOpen && (
+                                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                                    {mockData.tags.map((tag, index) => (
+                                        <label key={index} className="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedTags.includes(tag)}
+                                                onChange={() => handleTagToggle(tag)}
+                                                className="mr-2 text-blue-600 focus:ring-blue-500"
+                                            />
+                                            <span className="text-sm text-gray-700">{tag}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        {selectedTags.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-1">
+                                {selectedTags.map((tag, index) => (
+                                    <span key={index} className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                                        {tag}
+                                        <button
+                                            onClick={() => handleTagToggle(tag)}
+                                            className="ml-1 text-blue-600 hover:text-blue-800"
+                                        >
+                                            ×
+                                        </button>
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <i className="fas fa-calendar mr-1"></i>日期范围
+                        </label>
+                        <div className="space-y-2">
+                            <input
+                                type="date"
+                                value={dateRange.start}
+                                onChange={(e) => onDateRangeChange({ ...dateRange, start: e.target.value })}
+                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="开始日期"
+                            />
+                            <input
+                                type="date"
+                                value={dateRange.end}
+                                onChange={(e) => onDateRangeChange({ ...dateRange, end: e.target.value })}
+                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="结束日期"
+                            />
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const SearchArea = ({ 
+            searchTerm, 
+            onSearchTermChange, 
+            onSearch, 
+            searchHistory, 
+            onClearHistory,
+            onHistoryClick 
+        }) => {
+            const [showSuggestions, setShowSuggestions] = useState(false);
+            const [showHistory, setShowHistory] = useState(false);
+
+            const handleSuggestionClick = (suggestion) => {
+                onSearchTermChange(suggestion);
+                setShowSuggestions(false);
+                onSearch(suggestion);
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter') {
+                    onSearch(searchTerm);
+                    setShowSuggestions(false);
+                }
+            };
+
+            return (
+                <div className="bg-white p-6 border-b border-gray-200">
+                    <div className="max-w-2xl mx-auto">
+                        <div className="relative mb-4">
+                            <div className="flex">
+                                <div className="relative flex-1">
+                                    <input
+                                        type="text"
+                                        value={searchTerm}
+                                        onChange={(e) => onSearchTermChange(e.target.value)}
+                                        onFocus={() => setShowSuggestions(true)}
+                                        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                                        onKeyPress={handleKeyPress}
+                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+                                        placeholder="请输入搜索关键词..."
+                                    />
+                                    <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    
+                                    {showSuggestions && (
+                                        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+                                            <div className="p-2 border-b border-gray-100">
+                                                <span className="text-xs text-gray-500">建议搜索词</span>
+                                            </div>
+                                            {mockData.suggestions.map((suggestion, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => handleSuggestionClick(suggestion)}
+                                                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-gray-700"
+                                                >
+                                                    <i className="fas fa-search mr-2 text-gray-400"></i>
+                                                    {suggestion}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <button
+                                    onClick={() => onSearch(searchTerm)}
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <i className="fas fa-search mr-2"></i>搜索
+                                </button>
+                            </div>
+                        </div>
+
+                        {searchHistory.length > 0 && (
+                            <div className="bg-gray-50 rounded-lg p-4">
+                                <div className="flex justify-between items-center mb-2">
+                                    <button
+                                        onClick={() => setShowHistory(!showHistory)}
+                                        className="text-sm text-gray-600 hover:text-gray-800 flex items-center"
+                                    >
+                                        <i className={`fas fa-chevron-${showHistory ? 'up' : 'down'} mr-1`}></i>
+                                        查询历史 ({searchHistory.length})
+                                    </button>
+                                    <button
+                                        onClick={onClearHistory}
+                                        className="text-sm text-red-600 hover:text-red-800"
+                                    >
+                                        <i className="fas fa-trash mr-1"></i>清除历史
+                                    </button>
+                                </div>
+                                {showHistory && (
+                                    <div className="space-y-1">
+                                        {searchHistory.map((term, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => onHistoryClick(term)}
+                                                className="block w-full text-left px-3 py-1 text-sm text-gray-600 hover:bg-white hover:text-gray-800 rounded"
+                                            >
+                                                <i className="fas fa-history mr-2"></i>
+                                                {term}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const ResultsArea = ({ 
+            results, 
+            currentPage, 
+            totalPages, 
+            onPageChange, 
+            onLoadMore, 
+            hasMore,
+            isLoading 
+        }) => {
+            if (isLoading) {
+                return (
+                    <div className="flex-1 p-6">
+                        <div className="text-center py-12">
+                            <i className="fas fa-spinner fa-spin text-3xl text-blue-600 mb-4"></i>
+                            <p className="text-gray-600">正在搜索...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (results.length === 0) {
+                return (
+                    <div className="flex-1 p-6">
+                        <div className="text-center py-12">
+                            <i className="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                            <h3 className="text-xl text-gray-600 mb-2">未找到匹配内容</h3>
+                            <p className="text-gray-500">请尝试使用其他关键词或调整筛选条件</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="flex-1 p-6">
+                    <div className="mb-4">
+                        <p className="text-gray-600">找到 {results.length} 个相关结果</p>
+                    </div>
+                    
+                    <div className="space-y-4 mb-6">
+                        {results.map((doc) => (
+                            <div key={doc.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                                <div className="flex">
+                                    <img 
+                                        src={doc.image} 
+                                        alt={doc.title}
+                                        className="w-24 h-24 object-cover rounded-lg mr-4 flex-shrink-0"
+                                    />
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
+                                            {doc.title}
+                                        </h3>
+                                        <p className="text-gray-700 mb-3 line-clamp-2">{doc.summary}</p>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                                <span>
+                                                    <i className="fas fa-calendar mr-1"></i>
+                                                    {doc.date}
+                                                </span>
+                                                <span>
+                                                    <i className="fas fa-folder mr-1"></i>
+                                                    {doc.category}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-wrap gap-1">
+                                                {doc.tags.slice(0, 3).map((tag, index) => (
+                                                    <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                                {doc.tags.length > 3 && (
+                                                    <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+                                                        +{doc.tags.length - 3}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-center items-center space-x-4">
+                        {hasMore && (
+                            <button
+                                onClick={onLoadMore}
+                                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <i className="fas fa-plus mr-2"></i>加载更多
+                            </button>
+                        )}
+                        
+                        {!hasMore && results.length > 10 && (
+                            <p className="text-gray-500">已加载全部内容</p>
+                        )}
+                    </div>
+
+                    {totalPages > 1 && (
+                        <div className="flex justify-center mt-6">
+                            <nav className="flex space-x-2">
+                                <button
+                                    onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-3 py-2 text-sm bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    <i className="fas fa-chevron-left"></i>
+                                </button>
+                                
+                                {[...Array(totalPages)].map((_, index) => {
+                                    const page = index + 1;
+                                    if (page === 1 || page === totalPages || (page >= currentPage - 2 && page <= currentPage + 2)) {
+                                        return (
+                                            <button
+                                                key={page}
+                                                onClick={() => onPageChange(page)}
+                                                className={`px-3 py-2 text-sm border rounded-md ${
+                                                    currentPage === page
+                                                        ? 'bg-blue-600 text-white border-blue-600'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                }`}
+                                            >
+                                                {page}
+                                            </button>
+                                        );
+                                    } else if (page === currentPage - 3 || page === currentPage + 3) {
+                                        return <span key={page} className="px-3 py-2 text-sm text-gray-500">...</span>;
+                                    }
+                                    return null;
+                                })}
+                                
+                                <button
+                                    onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+                                    disabled={currentPage === totalPages}
+                                    className="px-3 py-2 text-sm bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    <i className="fas fa-chevron-right"></i>
+                                </button>
+                            </nav>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const RecommendationArea = ({ onDocumentClick }) => {
+            const [expandedFaq, setExpandedFaq] = useState(null);
+
+            const toggleFaq = (faqId) => {
+                setExpandedFaq(expandedFaq === faqId ? null : faqId);
+            };
+
+            return (
+                <div className="w-80 bg-white p-6 border-l border-gray-200">
+                    <div className="mb-8">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            <i className="fas fa-fire text-red-500 mr-2"></i>热门文档
+                        </h3>
+                        <div className="space-y-3">
+                            {mockData.hotDocuments.map((doc, index) => (
+                                <div key={doc.id} className="border-b border-gray-100 pb-3 last:border-b-0">
+                                    <div className="flex items-start">
+                                        <span className={`inline-block w-6 h-6 text-xs text-white rounded text-center leading-6 mr-3 flex-shrink-0 ${
+                                            index === 0 ? 'bg-red-500' : index === 1 ? 'bg-orange-500' : index === 2 ? 'bg-yellow-500' : 'bg-gray-400'
+                                        }`}>
+                                            {index + 1}
+                                        </span>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 
+                                                className="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer mb-1 line-clamp-2"
+                                                onClick={() => onDocumentClick(doc)}
+                                            >
+                                                {doc.title}
+                                            </h4>
+                                            <p className="text-xs text-gray-500">
+                                                <i className="fas fa-eye mr-1"></i>
+                                                {doc.views} 次浏览
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            <i className="fas fa-question-circle text-blue-500 mr-2"></i>常见问题
+                        </h3>
+                        <div className="space-y-2">
+                            {mockData.faqs.map((faq) => (
+                                <div key={faq.id} className="border border-gray-200 rounded-lg">
+                                    <button
+                                        onClick={() => toggleFaq(faq.id)}
+                                        className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none"
+                                    >
+                                        <span className="text-sm font-medium text-gray-700">{faq.question}</span>
+                                        <i className={`fas fa-chevron-${expandedFaq === faq.id ? 'up' : 'down'} text-gray-400`}></i>
+                                    </button>
+                                    {expandedFaq === faq.id && (
+                                        <div className="px-4 pb-3 border-t border-gray-200">
+                                            <p className="text-sm text-gray-600">{faq.answer}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Footer = () => {
+            return (
+                <footer className="bg-gray-50 border-t border-gray-200">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="flex justify-between items-center">
+                            <div className="text-sm text-gray-600">
+                                © 2024 知识库查询系统. 保留所有权利.
+                            </div>
+                            <div className="flex space-x-6">
+                                <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                                    <i className="fas fa-envelope mr-1"></i>联系我们
+                                </a>
+                                <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                                    <i className="fas fa-phone mr-1"></i>技术支持
+                                </a>
+                                <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                                    <i className="fas fa-file-alt mr-1"></i>使用条款
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        const App = () => {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('全部分类');
+            const [selectedTags, setSelectedTags] = useState([]);
+            const [dateRange, setDateRange] = useState({ start: '', end: '' });
+            const [searchResults, setSearchResults] = useState(mockData.documents);
+            const [searchHistory, setSearchHistory] = useState([]);
+            const [currentPage, setCurrentPage] = useState(1);
+            const [itemsPerPage] = useState(5);
+            const [isLoading, setIsLoading] = useState(false);
+            const [modalDocument, setModalDocument] = useState(null);
+
+            const filterResults = useCallback(() => {
+                let filtered = mockData.documents;
+
+                if (searchTerm.trim()) {
+                    filtered = filtered.filter(doc =>
+                        doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        doc.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        doc.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                    );
+                }
+
+                if (selectedCategory && selectedCategory !== '全部分类') {
+                    filtered = filtered.filter(doc => doc.category === selectedCategory);
+                }
+
+                if (selectedTags.length > 0) {
+                    filtered = filtered.filter(doc =>
+                        selectedTags.every(tag => doc.tags.includes(tag))
+                    );
+                }
+
+                if (dateRange.start) {
+                    filtered = filtered.filter(doc => doc.date >= dateRange.start);
+                }
+
+                if (dateRange.end) {
+                    filtered = filtered.filter(doc => doc.date <= dateRange.end);
+                }
+
+                return filtered;
+            }, [searchTerm, selectedCategory, selectedTags, dateRange]);
+
+            useEffect(() => {
+                setIsLoading(true);
+                const timer = setTimeout(() => {
+                    const filtered = filterResults();
+                    setSearchResults(filtered);
+                    setCurrentPage(1);
+                    setIsLoading(false);
+                }, 300);
+
+                return () => clearTimeout(timer);
+            }, [filterResults]);
+
+            const handleSearch = (term) => {
+                if (term.trim()) {
+                    setSearchTerm(term);
+                    
+                    const newHistory = [term, ...searchHistory.filter(h => h !== term)].slice(0, 5);
+                    setSearchHistory(newHistory);
+                }
+            };
+
+            const handleClearHistory = () => {
+                setSearchHistory([]);
+            };
+
+            const handleHistoryClick = (term) => {
+                setSearchTerm(term);
+                handleSearch(term);
+            };
+
+            const handlePageChange = (page) => {
+                setCurrentPage(page);
+            };
+
+            const handleLoadMore = () => {
+                const nextPage = currentPage + 1;
+                const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+                if (nextPage <= totalPages) {
+                    setCurrentPage(nextPage);
+                }
+            };
+
+            const handleDocumentClick = (doc) => {
+                setModalDocument(doc);
+            };
+
+            const currentResults = searchResults.slice(0, currentPage * itemsPerPage);
+            const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+            const hasMore = currentPage < totalPages;
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <Header />
+                    
+                    <SearchArea
+                        searchTerm={searchTerm}
+                        onSearchTermChange={setSearchTerm}
+                        onSearch={handleSearch}
+                        searchHistory={searchHistory}
+                        onClearHistory={handleClearHistory}
+                        onHistoryClick={handleHistoryClick}
+                    />
+
+                    <div className="max-w-7xl mx-auto flex">
+                        <Sidebar
+                            selectedCategory={selectedCategory}
+                            onCategoryChange={setSelectedCategory}
+                            selectedTags={selectedTags}
+                            onTagsChange={setSelectedTags}
+                            dateRange={dateRange}
+                            onDateRangeChange={setDateRange}
+                        />
+
+                        <ResultsArea
+                            results={currentResults}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            onLoadMore={handleLoadMore}
+                            hasMore={hasMore}
+                            isLoading={isLoading}
+                        />
+
+                        <RecommendationArea onDocumentClick={handleDocumentClick} />
+                    </div>
+
+                    <Footer />
+
+                    <Modal
+                        isOpen={modalDocument !== null}
+                        onClose={() => setModalDocument(null)}
+                        title={modalDocument?.title || ''}
+                    >
+                        {modalDocument && (
+                            <div>
+                                <img 
+                                    src={mockData.documents.find(doc => doc.id === modalDocument.id)?.image} 
+                                    alt={modalDocument.title}
+                                    className="w-full h-48 object-cover rounded-lg mb-4"
+                                />
+                                <p className="text-gray-700 mb-4">{modalDocument.description}</p>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm text-gray-500">
+                                        <i className="fas fa-eye mr-1"></i>
+                                        {modalDocument.views} 次浏览
+                                    </span>
+                                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                        <i className="fas fa-external-link-alt mr-2"></i>
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </Modal>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

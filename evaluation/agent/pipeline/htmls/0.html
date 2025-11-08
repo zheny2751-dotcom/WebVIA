@@ -1,0 +1,301 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晨间水杯打卡</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function WaterTracker() {
+            const [userName, setUserName] = useState('');
+            const [isStarted, setIsStarted] = useState(false);
+            const [cupCapacity, setCupCapacity] = useState(300);
+            const [todayWater, setTodayWater] = useState(0);
+            const [waterInput, setWaterInput] = useState('');
+            const [showHistory, setShowHistory] = useState(false);
+            const [history, setHistory] = useState([
+                { date: '2024-01-15', amount: 1200 },
+                { date: '2024-01-14', amount: 800 },
+                { date: '2024-01-13', amount: 1500 },
+                { date: '2024-01-12', amount: 600 },
+                { date: '2024-01-11', amount: 900 },
+                { date: '2024-01-10', amount: 750 },
+                { date: '2024-01-09', amount: 1100 },
+            ]);
+
+            const handleStart = () => {
+                if (userName.trim()) {
+                    setIsStarted(true);
+                }
+            };
+
+            const handleAddWater = () => {
+                const amount = parseInt(waterInput);
+                if (amount > 0) {
+                    setTodayWater(prev => prev + amount);
+                    setWaterInput('');
+                }
+            };
+
+            const handleDeleteHistory = (index) => {
+                setHistory(prev => prev.filter((_, i) => i !== index));
+            };
+
+            const progress = Math.min((todayWater / cupCapacity) * 100, 100);
+            const isGoalReached = todayWater >= cupCapacity;
+            const cupsCompleted = Math.floor(todayWater / cupCapacity);
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50">
+                    <nav className="bg-white shadow-lg border-b-2 border-teal-100 sticky top-0 z-40">
+                        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                                <img src="https://picsum.photos/id/1043/40/40" alt="Logo" className="w-10 h-10 rounded-full" />
+                                <h1 className="text-2xl font-bold text-teal-700">晨间水杯打卡</h1>
+                            </div>
+                            <button 
+                                onClick={() => setShowHistory(true)}
+                                className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+                            >
+                                <i className="fas fa-history mr-2"></i>查看历史
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-4xl mx-auto p-6 space-y-8">
+                        <div className="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                            <div className="text-center">
+                                <img src="https://picsum.photos/id/326/200/150" alt="Morning water" className="w-48 h-32 mx-auto rounded-lg mb-4 object-cover shadow-md" />
+                                {!isStarted ? (
+                                    <div className="space-y-4">
+                                        <h2 className="text-xl text-gray-600">开始您的健康水分之旅</h2>
+                                        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                                            <input
+                                                type="text"
+                                                placeholder="请输入您的名称"
+                                                value={userName}
+                                                onChange={(e) => setUserName(e.target.value)}
+                                                className="px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors w-full sm:w-auto"
+                                            />
+                                            <button
+                                                onClick={handleStart}
+                                                className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+                                            >
+                                                开始打卡
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        <h2 className="text-2xl font-bold text-teal-700">早安，{userName}！</h2>
+                                        <p className="text-gray-600">开始今天的水杯打卡吧</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {isStarted && (
+                            <>
+                                <div className="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-coffee mr-2 text-teal-600"></i>选择水杯容量
+                                    </h3>
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                                        <img src="https://picsum.photos/id/1031/100/120" alt="Water cup" className="w-24 h-28 object-cover rounded-lg shadow-md" />
+                                        <div className="flex-1 w-full">
+                                            <select
+                                                value={cupCapacity}
+                                                onChange={(e) => setCupCapacity(parseInt(e.target.value))}
+                                                className="w-full px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors"
+                                            >
+                                                <option value={200}>200ml 小杯</option>
+                                                <option value={300}>300ml 中杯</option>
+                                                <option value={500}>500ml 大杯</option>
+                                            </select>
+                                            <p className="text-sm text-gray-500 mt-2">当前杯子容量：{cupCapacity}ml</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-tint mr-2 text-blue-600"></i>今日喝水打卡
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div className="flex flex-col sm:flex-row gap-3">
+                                            <input
+                                                type="number"
+                                                placeholder="每次喝水量 ml"
+                                                value={waterInput}
+                                                onChange={(e) => setWaterInput(e.target.value)}
+                                                className="flex-1 px-4 py-2 border-2 border-teal-200 rounded-lg focus:border-teal-500 focus:outline-none transition-colors"
+                                                min="1"
+                                            />
+                                            <button
+                                                onClick={handleAddWater}
+                                                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+                                            >
+                                                <i className="fas fa-plus mr-2"></i>添加喝水量
+                                            </button>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 bg-gradient-to-r from-blue-50 to-teal-50 p-4 rounded-lg">
+                                            <img src="https://picsum.photos/id/1574/80/100" alt="Water glass" className="w-20 h-24 object-cover rounded-lg shadow-sm" />
+                                            <div className="flex-1">
+                                                <div className="text-sm text-gray-600 mb-2 font-medium">完成的水杯数: {cupsCompleted}</div>
+                                                <div className="flex space-x-1 flex-wrap">
+                                                    {[...Array(Math.max(1, cupsCompleted + 1))].map((_, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className={`w-8 h-10 border-2 rounded transition-all duration-300 ${
+                                                                index < cupsCompleted 
+                                                                    ? 'bg-teal-400 border-teal-500 shadow-sm' 
+                                                                    : 'bg-gray-100 border-gray-300'
+                                                            }`}
+                                                        ></div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-chart-line mr-2 text-green-600"></i>统计进度
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between flex-wrap gap-2">
+                                            <span className="text-gray-700 font-medium">今日累计喝水：{todayWater} ml / {cupCapacity} ml ({progress.toFixed(1)}%)</span>
+                                            {isGoalReached && (
+                                                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+                                                    <i className="fas fa-check mr-1"></i>已达标
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="w-full bg-gray-200 rounded-full h-4 shadow-inner">
+                                            <div
+                                                className={`h-4 rounded-full transition-all duration-500 shadow-sm ${
+                                                    isGoalReached ? 'bg-gradient-to-r from-green-400 to-green-500' : 'bg-gradient-to-r from-blue-400 to-blue-500'
+                                                }`}
+                                                style={{ width: `${Math.min(progress, 100)}%` }}
+                                            ></div>
+                                        </div>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm">
+                                                <div className="text-2xl font-bold text-blue-600">{todayWater}</div>
+                                                <div className="text-sm text-gray-600">今日总量(ml)</div>
+                                            </div>
+                                            <div className="bg-teal-50 p-4 rounded-lg border border-teal-100 shadow-sm">
+                                                <div className="text-2xl font-bold text-teal-600">{cupsCompleted}</div>
+                                                <div className="text-sm text-gray-600">完成杯数</div>
+                                            </div>
+                                            <div className="bg-green-50 p-4 rounded-lg border border-green-100 shadow-sm">
+                                                <div className="text-2xl font-bold text-green-600">{progress.toFixed(1)}%</div>
+                                                <div className="text-sm text-gray-600">完成度</div>
+                                            </div>
+                                            <div className="bg-purple-50 p-4 rounded-lg border border-purple-100 shadow-sm">
+                                                <div className="text-2xl font-bold text-purple-600">{Math.max(0, cupCapacity - todayWater)}</div>
+                                                <div className="text-sm text-gray-600">还需(ml)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-lightbulb mr-2 text-yellow-500"></i>健康小贴士
+                                    </h3>
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
+                                            <img src="https://picsum.photos/id/1565/60/60" alt="Health tip" className="w-15 h-15 rounded-full object-cover" />
+                                            <div>
+                                                <p className="text-sm text-gray-700">早晨喝水有助于启动新陈代谢</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-teal-50 to-teal-100 rounded-lg">
+                                            <img src="https://picsum.photos/id/1122/60/60" alt="Health tip" className="w-15 h-15 rounded-full object-cover" />
+                                            <div>
+                                                <p className="text-sm text-gray-700">建议每天饮水1500-2000ml</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    {showHistory && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-96 overflow-hidden">
+                                <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-4 flex items-center justify-between">
+                                    <h3 className="text-lg font-semibold">
+                                        <i className="fas fa-history mr-2"></i>喝水历史记录
+                                    </h3>
+                                    <button
+                                        onClick={() => setShowHistory(false)}
+                                        className="text-white hover:text-gray-200 transition-colors p-1 rounded"
+                                    >
+                                        <i className="fas fa-times text-xl"></i>
+                                    </button>
+                                </div>
+                                <div className="p-4 overflow-y-auto max-h-80">
+                                    {history.length > 0 ? (
+                                        <div className="space-y-3">
+                                            {history.map((record, index) => (
+                                                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors">
+                                                    <div className="flex items-center space-x-3">
+                                                        <i className="fas fa-calendar text-teal-500"></i>
+                                                        <div>
+                                                            <div className="font-semibold text-gray-800">{record.date}</div>
+                                                            <div className="text-sm text-gray-600 flex items-center">
+                                                                <i className="fas fa-tint mr-1 text-blue-500"></i>
+                                                                {record.amount} ml
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => handleDeleteHistory(index)}
+                                                        className="text-red-500 hover:text-red-700 transition-colors p-2 rounded hover:bg-red-50"
+                                                    >
+                                                        <i className="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-8 text-gray-500">
+                                            <i className="fas fa-glass-water text-4xl mb-4 text-gray-300"></i>
+                                            <p>暂无历史记录</p>
+                                            <p className="text-sm mt-2">开始记录您的喝水历程吧！</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="p-4 bg-gray-50 border-t">
+                                    <button
+                                        onClick={() => setShowHistory(false)}
+                                        className="w-full bg-teal-500 hover:bg-teal-600 text-white py-2 rounded-lg transition-colors shadow-md"
+                                    >
+                                        关闭
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<WaterTracker />, document.getElementById('root'));
+    </script>
+</body>
+</html>

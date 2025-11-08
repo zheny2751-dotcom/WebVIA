@@ -1,0 +1,458 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我要抢沙发神评竞速榜</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .slide-in { animation: slideIn 0.5s ease-out; }
+    .fade-in { animation: fadeIn 0.3s ease-in; }
+    .bounce-in { animation: bounceIn 0.6s ease-out; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const App = () => {
+      const [currentTab, setCurrentTab] = useState('today');
+      const [comments, setComments] = useState([]);
+      const [newComment, setNewComment] = useState('');
+      const [selectedCategory, setSelectedCategory] = useState('段子笑话');
+      const [searchTerm, setSearchTerm] = useState('');
+      const [likeFilter, setLikeFilter] = useState('all');
+      const [showLoginModal, setShowLoginModal] = useState(false);
+      const [showRegisterModal, setShowRegisterModal] = useState(false);
+      const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+      const [registerForm, setRegisterForm] = useState({ username: '', email: '', password: '' });
+
+      const initialComments = {
+        today: [
+          { id: 1, username: '段子手小王', content: '今天的天气就像我的心情，阴转多云再转晴！', likes: 156, category: '段子笑话', time: '2分钟前' },
+          { id: 2, username: '八卦达人', content: '听说隔壁老王又换工作了，这是今年第三次了', likes: 89, category: '八卦热点', time: '5分钟前' },
+          { id: 3, username: '生活小能手', content: '早餐吃了妈妈做的煎蛋，瞬间满血复活！', likes: 234, category: '生活碎语', time: '8分钟前' },
+          { id: 4, username: '幽默大师', content: '上班如上坟，下班如出狱，这就是社畜的真实写照', likes: 345, category: '段子笑话', time: '12分钟前' },
+          { id: 5, username: '热点追踪者', content: '最新消息：某明星又出绯闻了，粉丝们炸锅了', likes: 78, category: '八卦热点', time: '15分钟前' }
+        ],
+        yesterday: [
+          { id: 6, username: '昨日之星', content: '昨天的阳光特别温暖，就像初恋的感觉', likes: 267, category: '生活碎语', time: '昨天 18:30' },
+          { id: 7, username: '段子王', content: '为什么程序员喜欢黑夜？因为白天bug太多！', likes: 189, category: '段子笑话', time: '昨天 16:20' },
+          { id: 8, username: '吃瓜群众', content: '昨天那个热搜简直太精彩了，吃瓜不停', likes: 145, category: '八卦热点', time: '昨天 14:15' }
+        ],
+        week: [
+          { id: 9, username: '本周MVP', content: '这周最大的收获就是学会了做西红柿鸡蛋', likes: 456, category: '生活碎语', time: '3天前' },
+          { id: 10, username: '段子收割机', content: '生活就像编程，不是在debug就是在去debug的路上', likes: 389, category: '段子笑话', time: '2天前' },
+          { id: 11, username: '热点搬运工', content: '本周最火的话题非XX事件莫属了', likes: 278, category: '八卦热点', time: '4天前' }
+        ]
+      };
+
+      useEffect(() => {
+        setComments(initialComments[currentTab]);
+      }, [currentTab]);
+
+      const filteredComments = comments
+        .filter(comment => 
+          comment.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          comment.username.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .filter(comment => {
+          if (likeFilter === 'all') return true;
+          if (likeFilter === '0-10') return comment.likes <= 10;
+          if (likeFilter === '11-50') return comment.likes >= 11 && comment.likes <= 50;
+          if (likeFilter === '51+') return comment.likes >= 51;
+          return true;
+        })
+        .sort((a, b) => b.likes - a.likes);
+
+      const handleSubmitComment = () => {
+        if (!newComment.trim()) return;
+        
+        const newId = Math.max(...comments.map(c => c.id)) + 1;
+        const newCommentObj = {
+          id: newId,
+          username: '匿名用户' + Math.floor(Math.random() * 1000),
+          content: newComment,
+          likes: Math.floor(Math.random() * 50),
+          category: selectedCategory,
+          time: '刚刚'
+        };
+
+        setComments(prev => [newCommentObj, ...prev]);
+        setNewComment('');
+      };
+
+      const handleClearComment = () => {
+        setNewComment('');
+        setSelectedCategory('段子笑话');
+      };
+
+      const handleTabChange = (tab) => {
+        setCurrentTab(tab);
+      };
+
+      const handleLogin = () => {
+        alert(`登录成功！欢迎 ${loginForm.username}`);
+        setShowLoginModal(false);
+        setLoginForm({ username: '', password: '' });
+      };
+
+      const handleRegister = () => {
+        alert(`注册成功！欢迎新用户 ${registerForm.username}`);
+        setShowRegisterModal(false);
+        setRegisterForm({ username: '', email: '', password: '' });
+      };
+
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+          <nav className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center h-16">
+                <div className="flex items-center">
+                  <img src="https://picsum.photos/id/1/40/40" alt="Logo" className="h-10 w-10 rounded-full mr-3 border-2 border-white"/>
+                  <span className="text-white font-bold text-lg">沙发榜</span>
+                </div>
+                
+                <h1 className="text-2xl font-bold text-white text-center flex-1">
+                  🏆 我要抢沙发神评竞速榜 🏆
+                </h1>
+                
+                <div className="flex space-x-3">
+                  <button 
+                    onClick={() => setShowLoginModal(true)}
+                    className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+                  >
+                    登录
+                  </button>
+                  <button 
+                    onClick={() => setShowRegisterModal(true)}
+                    className="bg-yellow-400 text-blue-800 px-4 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
+                  >
+                    注册
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              <div className="lg:col-span-3 space-y-6">
+                <div className="bg-white rounded-2xl shadow-xl p-6 bounce-in">
+                  <div className="flex space-x-4 mb-6">
+                    {[
+                      { key: 'today', label: '今日榜单', icon: '🔥' },
+                      { key: 'yesterday', label: '昨日榜单', icon: '⭐' },
+                      { key: 'week', label: '本周榜单', icon: '👑' }
+                    ].map(tab => (
+                      <button
+                        key={tab.key}
+                        onClick={() => handleTabChange(tab.key)}
+                        className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
+                          currentTab === tab.key
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {tab.icon} {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="overflow-hidden rounded-xl border border-gray-200">
+                    <table className="w-full">
+                      <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                        <tr>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">排名</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">用户</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">神评预览</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">点赞</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">时间</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {filteredComments.map((comment, index) => (
+                          <tr key={comment.id} className="hover:bg-blue-50 transition-colors duration-300 slide-in">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-white ${
+                                index === 0 ? 'bg-yellow-500' : index === 1 ? 'bg-gray-400' : index === 2 ? 'bg-orange-400' : 'bg-blue-500'
+                              }`}>
+                                {index + 1}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <img 
+                                  src={`https://picsum.photos/id/${20 + comment.id}/32/32`} 
+                                  alt="Avatar" 
+                                  className="h-8 w-8 rounded-full mr-3"
+                                />
+                                <span className="font-medium text-gray-900">{comment.username}</span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="text-sm text-gray-900 max-w-md truncate">{comment.content}</div>
+                              <div className="text-xs text-gray-500 mt-1">#{comment.category}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <i className="fas fa-heart text-red-500 mr-1"></i>
+                                <span className="text-sm font-semibold text-gray-900">{comment.likes}</span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {comment.time}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-xl p-6 fade-in">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i className="fas fa-rocket text-blue-500 mr-2"></i>
+                    发表神评，抢占沙发！
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="输入你的神评，一战成沙发王！"
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                        rows="3"
+                      />
+                    </div>
+                    
+                    <div className="flex space-x-4">
+                      <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="flex-1 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="段子笑话">🤣 段子笑话</option>
+                        <option value="八卦热点">🔥 八卦热点</option>
+                        <option value="生活碎语">💭 生活碎语</option>
+                      </select>
+                    </div>
+                    
+                    <div className="flex space-x-4">
+                      <button
+                        onClick={handleSubmitComment}
+                        className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                      >
+                        🚀 抢沙发
+                      </button>
+                      <button
+                        onClick={handleClearComment}
+                        className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all duration-300"
+                      >
+                        🔄 重置评论
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-white rounded-2xl shadow-xl p-6 slide-in">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <i className="fas fa-filter text-purple-500 mr-2"></i>
+                    筛选神评
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">🔍 搜索关键词</label>
+                      <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="搜索用户名或评论内容..."
+                        className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">❤️ 点赞数筛选</label>
+                      <select
+                        value={likeFilter}
+                        onChange={(e) => setLikeFilter(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      >
+                        <option value="all">全部</option>
+                        <option value="0-10">0-10 赞</option>
+                        <option value="11-50">11-50 赞</option>
+                        <option value="51+">51+ 赞</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-xl p-6 fade-in">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">📊 今日数据</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                      <span className="text-sm text-gray-600">总评论数</span>
+                      <span className="font-bold text-blue-600">{comments.length}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                      <span className="text-sm text-gray-600">总点赞数</span>
+                      <span className="font-bold text-purple-600">{comments.reduce((sum, c) => sum + c.likes, 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-pink-50 rounded-lg">
+                      <span className="text-sm text-gray-600">平均点赞</span>
+                      <span className="font-bold text-pink-600">
+                        {comments.length ? Math.round(comments.reduce((sum, c) => sum + c.likes, 0) / comments.length) : 0}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-xl p-6 slide-in">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">🏆 排行榜规则</h3>
+                  <div className="text-sm text-gray-600 space-y-2">
+                    <p>• 按点赞数排序，实时更新</p>
+                    <p>• 每日0点重置榜单</p>
+                    <p>• 原创内容优先推荐</p>
+                    <p>• 违规内容将被移除</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer className="bg-gray-800 text-white py-8 mt-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="mb-4 md:mb-0">
+                  <p className="text-sm">&copy; 2024 沙发神评榜. 保留所有权利.</p>
+                  <p className="text-xs text-gray-400 mt-1">让每个评论都成为经典</p>
+                </div>
+                
+                <div className="flex space-x-6">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
+                    <i className="fab fa-weibo text-xl"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-300">
+                    <i className="fab fa-weixin text-xl"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                    <i className="fab fa-qq text-xl"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+          {showLoginModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 bounce-in">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">登录账户</h2>
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="用户名"
+                    value={loginForm.username}
+                    onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <input
+                    type="password"
+                    placeholder="密码"
+                    value={loginForm.password}
+                    onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={handleLogin}
+                      className="flex-1 bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors duration-300"
+                    >
+                      登录
+                    </button>
+                    <button
+                      onClick={() => setShowLoginModal(false)}
+                      className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-colors duration-300"
+                    >
+                      取消
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {showRegisterModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 bounce-in">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">注册新账户</h2>
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="用户名"
+                    value={registerForm.username}
+                    onChange={(e) => setRegisterForm({...registerForm, username: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <input
+                    type="email"
+                    placeholder="邮箱"
+                    value={registerForm.email}
+                    onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <input
+                    type="password"
+                    placeholder="密码"
+                    value={registerForm.password}
+                    onChange={(e) => setRegisterForm({...registerForm, password: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={handleRegister}
+                      className="flex-1 bg-purple-500 text-white py-3 rounded-xl font-semibold hover:bg-purple-600 transition-colors duration-300"
+                    >
+                      注册
+                    </button>
+                    <button
+                      onClick={() => setShowRegisterModal(false)}
+                      className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-colors duration-300"
+                    >
+                      取消
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区管理</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const CommunityApp = () => {
+            const [activeTab, setActiveTab] = useState('announcements');
+            const [announcements, setAnnouncements] = useState([
+                { id: 1, title: '社区升级通知', content: '为了提供更好的服务体验，我们将在本周末进行系统升级...', date: '2024-01-15', time: '10:30' },
+                { id: 2, title: '新功能上线', content: '新增资源分享功能，大家可以上传和下载各类学习资料...', date: '2024-01-12', time: '14:20' },
+                { id: 3, title: '社区活动预告', content: '本月将举办线上技术分享会，欢迎大家踊跃参与...', date: '2024-01-10', time: '09:15' }
+            ]);
+            const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+            const [announcementForm, setAnnouncementForm] = useState({ title: '', content: '' });
+
+            const [members, setMembers] = useState([
+                { id: 1, name: '张三', role: '管理员', status: '在线', avatar: 'https://picsum.photos/id/1/40/40' },
+                { id: 2, name: '李四', role: '版主', status: '离线', avatar: 'https://picsum.photos/id/2/40/40' },
+                { id: 3, name: '王五', role: '用户', status: '在线', avatar: 'https://picsum.photos/id/3/40/40' },
+                { id: 4, name: '赵六', role: '用户', status: '禁用', avatar: 'https://picsum.photos/id/4/40/40' },
+                { id: 5, name: '钱七', role: '用户', status: '在线', avatar: 'https://picsum.photos/id/5/40/40' }
+            ]);
+            const [memberSearchTerm, setMemberSearchTerm] = useState('');
+            const [memberStatusFilter, setMemberStatusFilter] = useState('全部');
+
+            const [selectedDate, setSelectedDate] = useState(null);
+            const [showActivityModal, setShowActivityModal] = useState(false);
+            const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+            const [myRegistrations, setMyRegistrations] = useState([]);
+            const [registrationForm, setRegistrationForm] = useState({ name: '', contact: '' });
+
+            const [resourceCategory, setResourceCategory] = useState('文档');
+            const [resources, setResources] = useState({
+                '文档': [
+                    { id: 1, title: '社区管理手册', description: '详细介绍社区管理规则和流程', image: 'https://picsum.photos/id/24/200/150' },
+                    { id: 2, title: '用户操作指南', description: '帮助新用户快速上手使用', image: 'https://picsum.photos/id/25/200/150' }
+                ],
+                '视频': [
+                    { id: 3, title: '社区介绍视频', description: '了解我们的社区文化和价值观', image: 'https://picsum.photos/id/26/200/150' },
+                    { id: 4, title: '功能演示教程', description: '各项功能的详细使用教程', image: 'https://picsum.photos/id/27/200/150' }
+                ],
+                '图片': [
+                    { id: 5, title: '活动精彩瞬间', description: '记录社区活动的美好时光', image: 'https://picsum.photos/id/28/200/150' },
+                    { id: 6, title: '社区环境展示', description: '展示我们温馨的社区环境', image: 'https://picsum.photos/id/29/200/150' }
+                ],
+                '其他': [
+                    { id: 7, title: '社区徽标素材', description: '可用于各种场合的社区标识', image: 'https://picsum.photos/id/30/200/150' },
+                    { id: 8, title: '模板文件包', description: '常用的文档和表格模板', image: 'https://picsum.photos/id/31/200/150' }
+                ]
+            });
+            const [downloadProgress, setDownloadProgress] = useState({});
+
+            const [feedbacks, setFeedbacks] = useState([
+                { id: 1, content: '希望能增加更多的互动功能', contact: 'user@example.com', priority: '中', date: '2024-01-14' },
+                { id: 2, content: '页面加载速度有待提升', contact: 'feedback@example.com', priority: '高', date: '2024-01-13' }
+            ]);
+            const [feedbackForm, setFeedbackForm] = useState({ content: '', contact: '', priority: '中' });
+
+            const [subscriptionEmail, setSubscriptionEmail] = useState('');
+            const [isSubscribed, setIsSubscribed] = useState(false);
+
+            const activities = {
+                '2024-01-20': { title: '技术分享会', time: '14:00-16:00', location: '在线会议室', description: '分享最新的技术趋势和实践经验' },
+                '2024-01-25': { title: '社区聚餐', time: '18:00-20:00', location: '社区餐厅', description: '增进成员之间的感情交流' },
+                '2024-02-01': { title: '新年庆祝活动', time: '10:00-12:00', location: '社区大厅', description: '庆祝新年，共度美好时光' }
+            };
+
+            const filteredMembers = members.filter(member => {
+                const matchesSearch = member.name.toLowerCase().includes(memberSearchTerm.toLowerCase()) || 
+                                    member.id.toString().includes(memberSearchTerm);
+                const matchesStatus = memberStatusFilter === '全部' || member.status === memberStatusFilter;
+                return matchesSearch && matchesStatus;
+            });
+
+            const handleAnnouncementSubmit = (e) => {
+                e.preventDefault();
+                if (announcementForm.title && announcementForm.content) {
+                    const newAnnouncement = {
+                        id: announcements.length + 1,
+                        title: announcementForm.title,
+                        content: announcementForm.content,
+                        date: new Date().toISOString().split('T')[0],
+                        time: new Date().toTimeString().split(' ')[0].slice(0, 5)
+                    };
+                    setAnnouncements([newAnnouncement, ...announcements]);
+                    setAnnouncementForm({ title: '', content: '' });
+                    setShowAnnouncementModal(false);
+                }
+            };
+
+            const toggleMemberStatus = (memberId) => {
+                setMembers(members.map(member => {
+                    if (member.id === memberId) {
+                        const newStatus = member.status === '禁用' ? '在线' : '禁用';
+                        return { ...member, status: newStatus };
+                    }
+                    return member;
+                }));
+            };
+
+            const handleActivityRegistration = (e) => {
+                e.preventDefault();
+                if (registrationForm.name && registrationForm.contact && selectedDate) {
+                    const activity = activities[selectedDate];
+                    const newRegistration = {
+                        id: myRegistrations.length + 1,
+                        activity: activity.title,
+                        date: selectedDate,
+                        name: registrationForm.name,
+                        contact: registrationForm.contact
+                    };
+                    setMyRegistrations([...myRegistrations, newRegistration]);
+                    setRegistrationForm({ name: '', contact: '' });
+                    setShowRegistrationModal(false);
+                    setShowActivityModal(false);
+                }
+            };
+
+            const handleDownload = (resourceId, title) => {
+                setDownloadProgress({ ...downloadProgress, [resourceId]: 0 });
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    setDownloadProgress(prev => ({ ...prev, [resourceId]: progress }));
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            setDownloadProgress(prev => {
+                                const newProgress = { ...prev };
+                                delete newProgress[resourceId];
+                                return newProgress;
+                            });
+                        }, 1000);
+                    }
+                }, 100);
+            };
+
+            const handleFeedbackSubmit = (e) => {
+                e.preventDefault();
+                if (feedbackForm.content && feedbackForm.contact) {
+                    const newFeedback = {
+                        id: feedbacks.length + 1,
+                        content: feedbackForm.content,
+                        contact: feedbackForm.contact,
+                        priority: feedbackForm.priority,
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    setFeedbacks([newFeedback, ...feedbacks]);
+                    setFeedbackForm({ content: '', contact: '', priority: '中' });
+                }
+            };
+
+            const handleSubscription = (e) => {
+                e.preventDefault();
+                if (subscriptionEmail) {
+                    setIsSubscribed(true);
+                }
+            };
+
+            const generateCalendar = () => {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDayOfWeek = firstDay.getDay();
+
+                const calendar = [];
+                let day = 1;
+
+                for (let week = 0; week < 6; week++) {
+                    const weekDays = [];
+                    for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+                        if (week === 0 && dayOfWeek < startingDayOfWeek) {
+                            weekDays.push(null);
+                        } else if (day > daysInMonth) {
+                            weekDays.push(null);
+                        } else {
+                            weekDays.push(day);
+                            day++;
+                        }
+                    }
+                    calendar.push(weekDays);
+                    if (day > daysInMonth) break;
+                }
+
+                return calendar;
+            };
+
+            const renderAnnouncementsTab = () => (
+                <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-2xl font-bold text-gray-800">社区公告</h2>
+                        <button
+                            onClick={() => setShowAnnouncementModal(true)}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            <i className="fas fa-plus mr-2"></i>发布公告
+                        </button>
+                    </div>
+
+                    <div className="grid gap-4">
+                        {announcements.map(announcement => (
+                            <div key={announcement.id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-800">{announcement.title}</h3>
+                                    <span className="text-sm text-gray-500">{announcement.date} {announcement.time}</span>
+                                </div>
+                                <p className="text-gray-600 leading-relaxed">{announcement.content}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {showAnnouncementModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                                <h3 className="text-lg font-semibold mb-4">发布新公告</h3>
+                                <form onSubmit={handleAnnouncementSubmit}>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">公告标题</label>
+                                        <input
+                                            type="text"
+                                            value={announcementForm.title}
+                                            onChange={(e) => setAnnouncementForm({...announcementForm, title: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">公告内容</label>
+                                        <textarea
+                                            value={announcementForm.content}
+                                            onChange={(e) => setAnnouncementForm({...announcementForm, content: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            rows="4"
+                                            required
+                                        ></textarea>
+                                    </div>
+                                    <div className="flex justify-end space-x-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowAnnouncementModal(false)}
+                                            className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                                        >
+                                            取消
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                                        >
+                                            发布
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderMembersTab = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800">成员管理</h2>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex-1">
+                            <input
+                                type="text"
+                                placeholder="搜索成员姓名或ID..."
+                                value={memberSearchTerm}
+                                onChange={(e) => setMemberSearchTerm(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <select
+                                value={memberStatusFilter}
+                                onChange={(e) => setMemberStatusFilter(e.target.value)}
+                                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="全部">全部状态</option>
+                                <option value="在线">在线</option>
+                                <option value="离线">离线</option>
+                                <option value="禁用">禁用</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成员</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">角色</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {filteredMembers.map(member => (
+                                    <tr key={member.id} className="hover:bg-gray-50">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex items-center">
+                                                <img className="h-10 w-10 rounded-full" src={member.avatar} alt="" />
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-medium text-gray-900">{member.name}</div>
+                                                    <div className="text-sm text-gray-500">ID: {member.id}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{member.role}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                                member.status === '在线' ? 'bg-green-100 text-green-800' :
+                                                member.status === '离线' ? 'bg-gray-100 text-gray-800' :
+                                                'bg-red-100 text-red-800'
+                                            }`}>
+                                                {member.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button
+                                                onClick={() => toggleMemberStatus(member.id)}
+                                                className={`px-3 py-1 rounded text-white ${
+                                                    member.status === '禁用' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'
+                                                }`}
+                                            >
+                                                {member.status === '禁用' ? '启用' : '禁用'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+
+            const renderActivitiesTab = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800">活动报名</h2>
+                    
+                    <div className="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">活动日历</h3>
+                            <div className="bg-white rounded-lg shadow-md p-4">
+                                <div className="grid grid-cols-7 gap-1 mb-4">
+                                    {['日', '一', '二', '三', '四', '五', '六'].map(day => (
+                                        <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">{day}</div>
+                                    ))}
+                                </div>
+                                <div className="grid grid-cols-7 gap-1">
+                                    {generateCalendar().map((week, weekIndex) => 
+                                        week.map((day, dayIndex) => {
+                                            const dateStr = day ? `2024-01-${day.toString().padStart(2, '0')}` : null;
+                                            const hasActivity = dateStr && activities[dateStr];
+                                            const isToday = day === new Date().getDate();
+                                            
+                                            return (
+                                                <div
+                                                    key={`${weekIndex}-${dayIndex}`}
+                                                    className={`h-10 flex items-center justify-center text-sm cursor-pointer rounded ${
+                                                        !day ? '' :
+                                                        isToday ? 'bg-blue-500 text-white' :
+                                                        hasActivity ? 'bg-green-100 text-green-800 font-semibold hover:bg-green-200' :
+                                                        'hover:bg-gray-100'
+                                                    }`}
+                                                    onClick={() => {
+                                                        if (hasActivity) {
+                                                            setSelectedDate(dateStr);
+                                                            setShowActivityModal(true);
+                                                        }
+                                                    }}
+                                                >
+                                                    {day}
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">我的报名</h3>
+                            <div className="bg-white rounded-lg shadow-md p-4">
+                                {myRegistrations.length === 0 ? (
+                                    <p className="text-gray-500 text-center py-8">暂无报名记录，点击日历上的活动进行报名</p>
+                                ) : (
+                                    <div className="space-y-3">
+                                        {myRegistrations.map(registration => (
+                                            <div key={registration.id} className="border border-gray-200 rounded-lg p-3">
+                                                <div className="font-medium text-gray-800">{registration.activity}</div>
+                                                <div className="text-sm text-gray-600">日期: {registration.date}</div>
+                                                <div className="text-sm text-gray-600">报名人: {registration.name}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {showActivityModal && selectedDate && activities[selectedDate] && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                                <h3 className="text-lg font-semibold mb-4">活动详情</h3>
+                                <div className="space-y-3 mb-6">
+                                    <div><strong>活动名称:</strong> {activities[selectedDate].title}</div>
+                                    <div><strong>时间:</strong> {selectedDate} {activities[selectedDate].time}</div>
+                                    <div><strong>地点:</strong> {activities[selectedDate].location}</div>
+                                    <div><strong>简介:</strong> {activities[selectedDate].description}</div>
+                                </div>
+                                <div className="flex justify-end space-x-3">
+                                    <button
+                                        onClick={() => setShowActivityModal(false)}
+                                        className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                                    >
+                                        取消
+                                    </button>
+                                    <button
+                                        onClick={() => setShowRegistrationModal(true)}
+                                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                    >
+                                        立即报名
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {showRegistrationModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                                <h3 className="text-lg font-semibold mb-4">活动报名</h3>
+                                <form onSubmit={handleActivityRegistration}>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">姓名</label>
+                                        <input
+                                            type="text"
+                                            value={registrationForm.name}
+                                            onChange={(e) => setRegistrationForm({...registrationForm, name: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">联系方式</label>
+                                        <input
+                                            type="text"
+                                            value={registrationForm.contact}
+                                            onChange={(e) => setRegistrationForm({...registrationForm, contact: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex justify-end space-x-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowRegistrationModal(false)}
+                                            className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                                        >
+                                            取消
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        >
+                                            确认报名
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderResourcesTab = () => (
+                <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-2xl font-bold text-gray-800">资源库</h2>
+                        <select
+                            value={resourceCategory}
+                            onChange={(e) => setResourceCategory(e.target.value)}
+                            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="文档">文档</option>
+                            <option value="视频">视频</option>
+                            <option value="图片">图片</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {resources[resourceCategory].map(resource => (
+                            <div key={resource.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                <img src={resource.image} alt={resource.title} className="w-full h-48 object-cover" />
+                                <div className="p-4">
+                                    <h3 className="font-semibold text-gray-800 mb-2">{resource.title}</h3>
+                                    <p className="text-gray-600 text-sm mb-4">{resource.description}</p>
+                                    <button
+                                        onClick={() => handleDownload(resource.id, resource.title)}
+                                        disabled={downloadProgress[resource.id] !== undefined}
+                                        className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white py-2 px-4 rounded-lg transition-colors"
+                                    >
+                                        {downloadProgress[resource.id] !== undefined ? (
+                                            <div className="flex items-center justify-center">
+                                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                                下载中... {downloadProgress[resource.id]}%
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <i className="fas fa-download mr-2"></i>下载
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderFeedbackTab = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800">意见反馈</h2>
+                    
+                    <div className="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">提交反馈</h3>
+                            <div className="bg-white rounded-lg shadow-md p-6">
+                                <form onSubmit={handleFeedbackSubmit}>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">意见内容</label>
+                                        <textarea
+                                            value={feedbackForm.content}
+                                            onChange={(e) => setFeedbackForm({...feedbackForm, content: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            rows="4"
+                                            placeholder="请详细描述您的意见或建议..."
+                                            required
+                                        ></textarea>
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">联系方式</label>
+                                        <input
+                                            type="text"
+                                            value={feedbackForm.contact}
+                                            onChange={(e) => setFeedbackForm({...feedbackForm, contact: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            placeholder="邮箱或电话"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">优先级</label>
+                                        <select
+                                            value={feedbackForm.priority}
+                                            onChange={(e) => setFeedbackForm({...feedbackForm, priority: e.target.value})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            <option value="低">低</option>
+                                            <option value="中">中</option>
+                                            <option value="高">高</option>
+                                        </select>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                                    >
+                                        提交反馈
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">反馈记录</h3>
+                            <div className="bg-white rounded-lg shadow-md p-6">
+                                {feedbacks.length === 0 ? (
+                                    <p className="text-gray-500 text-center py-8">暂无反馈记录</p>
+                                ) : (
+                                    <div className="space-y-4">
+                                        {feedbacks.map(feedback => (
+                                            <div key={feedback.id} className="border border-gray-200 rounded-lg p-4">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                                                        feedback.priority === '高' ? 'bg-red-100 text-red-800' :
+                                                        feedback.priority === '中' ? 'bg-yellow-100 text-yellow-800' :
+                                                        'bg-green-100 text-green-800'
+                                                    }`}>
+                                                        {feedback.priority}优先级
+                                                    </span>
+                                                    <span className="text-sm text-gray-500">{feedback.date}</span>
+                                                </div>
+                                                <p className="text-gray-700 mb-2">{feedback.content}</p>
+                                                <p className="text-sm text-gray-500">联系方式: {feedback.contact}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderSubscriptionTab = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800">订阅通讯</h2>
+                    
+                    <div className="max-w-md mx-auto">
+                        <div className="bg-white rounded-lg shadow-md p-6 text-center">
+                            <div className="mb-6">
+                                <i className="fas fa-envelope text-4xl text-blue-500 mb-4"></i>
+                                <h3 className="text-lg font-semibold text-gray-800 mb-2">订阅社区通讯</h3>
+                                <p className="text-gray-600">及时获取社区最新动态和活动信息</p>
+                            </div>
+                            
+                            {isSubscribed ? (
+                                <div className="text-green-600">
+                                    <i className="fas fa-check-circle text-2xl mb-2"></i>
+                                    <p className="font-semibold">订阅成功！</p>
+                                    <p className="text-sm text-gray-600 mt-2">感谢您的订阅，我们会定期向您发送社区动态</p>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubscription}>
+                                    <div className="mb-4">
+                                        <input
+                                            type="email"
+                                            value={subscriptionEmail}
+                                            onChange={(e) => setSubscriptionEmail(e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            placeholder="请输入您的邮箱地址"
+                                            required
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                                    >
+                                        订阅通讯
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const tabs = [
+                { id: 'announcements', label: '社区公告', icon: 'fas fa-bullhorn' },
+                { id: 'members', label: '成员管理', icon: 'fas fa-users' },
+                { id: 'activities', label: '活动报名', icon: 'fas fa-calendar-alt' },
+                { id: 'resources', label: '资源库', icon: 'fas fa-folder-open' },
+                { id: 'feedback', label: '意见反馈', icon: 'fas fa-comments' },
+                { id: 'subscription', label: '订阅通讯', icon: 'fas fa-envelope' }
+            ];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+                    <div className="bg-white shadow-sm border-b">
+                        <div className="container mx-auto px-4">
+                            <div className="flex items-center justify-between py-4">
+                                <div className="flex items-center space-x-3">
+                                    <img src="https://picsum.photos/id/40/40/40" alt="社区Logo" className="w-10 h-10 rounded-full" />
+                                    <h1 className="text-xl font-bold text-gray-800">社区管理平台</h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <span className="text-sm text-gray-600">欢迎回来，管理员</span>
+                                    <img src="https://picsum.photos/id/41/32/32" alt="用户头像" className="w-8 h-8 rounded-full" />
+                                </div>
+                            </div>
+                            
+                            <nav className="flex space-x-1 overflow-x-auto">
+                                {tabs.map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`flex items-center space-x-2 px-4 py-3 rounded-t-lg font-medium text-sm whitespace-nowrap transition-colors ${
+                                            activeTab === tab.id
+                                                ? 'bg-blue-500 text-white'
+                                                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                                        }`}
+                                    >
+                                        <i className={tab.icon}></i>
+                                        <span>{tab.label}</span>
+                                    </button>
+                                ))}
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div className="container mx-auto px-4 py-8">
+                        {activeTab === 'announcements' && renderAnnouncementsTab()}
+                        {activeTab === 'members' && renderMembersTab()}
+                        {activeTab === 'activities' && renderActivitiesTab()}
+                        {activeTab === 'resources' && renderResourcesTab()}
+                        {activeTab === 'feedback' && renderFeedbackTab()}
+                        {activeTab === 'subscription' && renderSubscriptionTab()}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<CommunityApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

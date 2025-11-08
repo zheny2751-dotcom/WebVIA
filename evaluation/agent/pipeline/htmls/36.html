@@ -1,0 +1,611 @@
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日历事件管理</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const CalendarApp = () => {
+      const [currentDate, setCurrentDate] = useState(new Date());
+      const [selectedDate, setSelectedDate] = useState(null);
+      const [events, setEvents] = useState([
+        {
+          id: 1,
+          title: "团队会议",
+          date: "2024-01-15",
+          startTime: "09:00",
+          endTime: "10:30",
+          category: "会议",
+          description: "每周团队同步会议，讨论项目进展",
+          location: "会议室A"
+        },
+        {
+          id: 2,
+          title: "小明生日",
+          date: "2024-01-20",
+          startTime: "18:00",
+          endTime: "22:00",
+          category: "生日",
+          description: "为小明准备生日派对",
+          location: "餐厅"
+        },
+        {
+          id: 3,
+          title: "项目评审",
+          date: "2024-01-25",
+          startTime: "14:00",
+          endTime: "16:00",
+          category: "会议",
+          description: "季度项目成果评审会议",
+          location: "大会议室"
+        }
+      ]);
+      const [filteredEvents, setFilteredEvents] = useState(events);
+      const [categoryFilter, setCategoryFilter] = useState("all");
+      const [searchKeyword, setSearchKeyword] = useState("");
+      const [showModal, setShowModal] = useState(false);
+      const [modalType, setModalType] = useState("view");
+      const [currentEvent, setCurrentEvent] = useState(null);
+      const [formData, setFormData] = useState({
+        title: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+        category: "会议",
+        description: "",
+        location: ""
+      });
+      const [message, setMessage] = useState({ type: "", text: "" });
+
+      const modalRef = useRef(null);
+      const dragRef = useRef({ isDragging: false, startX: 0, startY: 0 });
+
+      const categories = ["会议", "生日", "提醒", "其他"];
+      const categoryColors = {
+        "会议": "bg-blue-500",
+        "生日": "bg-pink-500", 
+        "提醒": "bg-yellow-500",
+        "其他": "bg-gray-500"
+      };
+
+      useEffect(() => {
+        filterEvents();
+      }, [events, categoryFilter, searchKeyword, selectedDate]);
+
+      const filterEvents = () => {
+        let filtered = events;
+
+        if (categoryFilter !== "all") {
+          filtered = filtered.filter(event => event.category === categoryFilter);
+        }
+
+        if (searchKeyword) {
+          filtered = filtered.filter(event => 
+            event.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+            event.description.toLowerCase().includes(searchKeyword.toLowerCase())
+          );
+        }
+
+        if (selectedDate) {
+          filtered = filtered.filter(event => event.date === selectedDate);
+        }
+
+        setFilteredEvents(filtered);
+      };
+
+      const getDaysInMonth = (date) => {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const startDate = new Date(firstDay);
+        startDate.setDate(startDate.getDate() - firstDay.getDay());
+        
+        const days = [];
+        for (let i = 0; i < 42; i++) {
+          const day = new Date(startDate);
+          day.setDate(startDate.getDate() + i);
+          days.push(day);
+        }
+        return days;
+      };
+
+      const formatDate = (date) => {
+        return date.toISOString().split('T')[0];
+      };
+
+      const getEventCountForDate = (date) => {
+        const dateStr = formatDate(date);
+        return events.filter(event => event.date === dateStr).length;
+      };
+
+      const nextMonth = () => {
+        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+        setSelectedDate(null);
+      };
+
+      const prevMonth = () => {
+        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+        setSelectedDate(null);
+      };
+
+      const handleDateClick = (date) => {
+        const dateStr = formatDate(date);
+        setSelectedDate(dateStr);
+      };
+
+      const openModal = (type, event = null) => {
+        setModalType(type);
+        setCurrentEvent(event);
+        if (type === "add") {
+          setFormData({
+            title: "",
+            date: selectedDate || formatDate(new Date()),
+            startTime: "",
+            endTime: "",
+            category: "会议",
+            description: "",
+            location: ""
+          });
+        } else if (type === "edit" && event) {
+          setFormData({ ...event });
+        }
+        setShowModal(true);
+      };
+
+      const closeModal = () => {
+        setShowModal(false);
+        setCurrentEvent(null);
+        setMessage({ type: "", text: "" });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if (!formData.title || !formData.date || !formData.startTime || !formData.endTime) {
+          setMessage({ type: "error", text: "请填写必要字段" });
+          return;
+        }
+
+        if (formData.startTime >= formData.endTime) {
+          setMessage({ type: "error", text: "结束时间必须晚于开始时间" });
+          return;
+        }
+
+        if (modalType === "add") {
+          const newEvent = {
+            ...formData,
+            id: Date.now()
+          };
+          setEvents([...events, newEvent]);
+          setMessage({ type: "success", text: "事件添加成功" });
+        } else if (modalType === "edit") {
+          setEvents(events.map(event => 
+            event.id === currentEvent.id ? { ...formData, id: currentEvent.id } : event
+          ));
+          setMessage({ type: "success", text: "事件更新成功" });
+        }
+
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      };
+
+      const deleteEvent = () => {
+        setEvents(events.filter(event => event.id !== currentEvent.id));
+        setMessage({ type: "success", text: "事件删除成功" });
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      };
+
+      const handleMouseDown = (e) => {
+        if (modalRef.current && modalRef.current.contains(e.target)) {
+          dragRef.current = {
+            isDragging: true,
+            startX: e.clientX - modalRef.current.offsetLeft,
+            startY: e.clientY - modalRef.current.offsetTop
+          };
+        }
+      };
+
+      const handleMouseMove = (e) => {
+        if (dragRef.current.isDragging && modalRef.current) {
+          modalRef.current.style.left = `${e.clientX - dragRef.current.startX}px`;
+          modalRef.current.style.top = `${e.clientY - dragRef.current.startY}px`;
+        }
+      };
+
+      const handleMouseUp = () => {
+        dragRef.current.isDragging = false;
+      };
+
+      useEffect(() => {
+        if (showModal) {
+          document.addEventListener('mousemove', handleMouseMove);
+          document.addEventListener('mouseup', handleMouseUp);
+          return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+          };
+        }
+      }, [showModal]);
+
+      const days = getDaysInMonth(currentDate);
+      const currentMonth = currentDate.getMonth();
+
+      return (
+        <div className="min-h-screen bg-gray-50">
+          <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 w-full z-10">
+            <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <i className="fas fa-calendar-alt text-blue-600 text-2xl"></i>
+                <h1 className="text-2xl font-bold text-gray-800">日历事件管理</h1>
+              </div>
+              <div className="text-lg font-semibold text-gray-600">
+                {currentDate.getFullYear()}年 {currentDate.getMonth() + 1}月
+              </div>
+            </div>
+          </header>
+
+          <main className="pt-20 max-w-7xl mx-auto px-4 py-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-semibold text-gray-800">月历视图</h2>
+                    <div className="flex space-x-2">
+                      <button 
+                        onClick={prevMonth}
+                        className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                      >
+                        <i className="fas fa-chevron-left"></i>
+                      </button>
+                      <button 
+                        onClick={nextMonth}
+                        className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                      >
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1 mb-2">
+                    {['日', '一', '二', '三', '四', '五', '六'].map(day => (
+                      <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1">
+                    {days.map((day, index) => {
+                      const isCurrentMonth = day.getMonth() === currentMonth;
+                      const isWeekend = day.getDay() === 0 || day.getDay() === 6;
+                      const isToday = formatDate(day) === formatDate(new Date());
+                      const isSelected = selectedDate === formatDate(day);
+                      const eventCount = getEventCountForDate(day);
+                      
+                      return (
+                        <div
+                          key={index}
+                          className={`
+                            p-2 text-center cursor-pointer rounded-md transition-all relative
+                            ${isCurrentMonth ? 'text-gray-900' : 'text-gray-300'}
+                            ${isWeekend && isCurrentMonth ? 'bg-red-50' : ''}
+                            ${isToday ? 'bg-blue-100 border-2 border-blue-500' : ''}
+                            ${isSelected ? 'bg-blue-500 text-white' : ''}
+                            ${!isSelected && isCurrentMonth ? 'hover:bg-gray-100' : ''}
+                          `}
+                          onClick={() => handleDateClick(day)}
+                        >
+                          <span className="text-sm">{day.getDate()}</span>
+                          {eventCount > 0 && (
+                            <div className="absolute bottom-1 right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                              {eventCount}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">筛选与搜索</h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">按类别筛选</label>
+                      <select 
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="all">全部类别</option>
+                        {categories.map(cat => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">关键字搜索</label>
+                      <input
+                        type="text"
+                        value={searchKeyword}
+                        onChange={(e) => setSearchKeyword(e.target.value)}
+                        placeholder="搜索事件名称或描述..."
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => openModal("add")}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                    >
+                      <i className="fas fa-plus mr-2"></i>
+                      添加新事件
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800">事件列表</h3>
+                    {selectedDate && (
+                      <button
+                        onClick={() => setSelectedDate(null)}
+                        className="text-sm text-blue-600 hover:text-blue-800"
+                      >
+                        清除日期筛选
+                      </button>
+                    )}
+                  </div>
+
+                  {filteredEvents.length === 0 ? (
+                    <div className="text-center py-8">
+                      <img 
+                        src="https://picsum.photos/id/20/150/150" 
+                        alt="无事件" 
+                        className="mx-auto mb-4 rounded-lg opacity-50"
+                      />
+                      <p className="text-gray-500">暂无事件</p>
+                      <p className="text-sm text-gray-400">点击上方按钮添加新事件</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                      {filteredEvents
+                        .sort((a, b) => new Date(a.date + ' ' + a.startTime) - new Date(b.date + ' ' + b.startTime))
+                        .map(event => (
+                          <div key={event.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start mb-2">
+                              <h4 className="font-medium text-gray-900">{event.title}</h4>
+                              <span className={`px-2 py-1 text-xs text-white rounded-full ${categoryColors[event.category]}`}>
+                                {event.category}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">
+                              <i className="fas fa-calendar mr-1"></i>
+                              {event.date} {event.startTime} - {event.endTime}
+                            </p>
+                            <button
+                              onClick={() => openModal("view", event)}
+                              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                            >
+                              查看详情 <i className="fas fa-arrow-right ml-1"></i>
+                            </button>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </main>
+
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div 
+                ref={modalRef}
+                className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 relative"
+                onMouseDown={handleMouseDown}
+              >
+                <div className="flex justify-between items-center p-6 border-b border-gray-200 cursor-move">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {modalType === "view" ? "事件详情" : modalType === "add" ? "添加事件" : "编辑事件"}
+                  </h3>
+                  <button
+                    onClick={closeModal}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+
+                <div className="p-6">
+                  {message.text && (
+                    <div className={`mb-4 p-3 rounded-md ${message.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                      {message.text}
+                    </div>
+                  )}
+
+                  {modalType === "view" && currentEvent && (
+                    <div className="space-y-4">
+                      <div>
+                        <img 
+                          src="https://picsum.photos/id/30/300/150" 
+                          alt="事件图片" 
+                          className="w-full rounded-lg mb-4"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">事件名称</label>
+                        <p className="text-gray-900">{currentEvent.title}</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">日期</label>
+                          <p className="text-gray-900">{currentEvent.date}</p>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">时间</label>
+                          <p className="text-gray-900">{currentEvent.startTime} - {currentEvent.endTime}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">类别</label>
+                        <span className={`inline-block px-2 py-1 text-xs text-white rounded-full ${categoryColors[currentEvent.category]}`}>
+                          {currentEvent.category}
+                        </span>
+                      </div>
+                      {currentEvent.location && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">地点</label>
+                          <p className="text-gray-900">{currentEvent.location}</p>
+                        </div>
+                      )}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">描述</label>
+                        <p className="text-gray-900">{currentEvent.description}</p>
+                      </div>
+                      <div className="flex space-x-2 pt-4">
+                        <button
+                          onClick={() => openModal("edit", currentEvent)}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                        >
+                          <i className="fas fa-edit mr-2"></i>
+                          编辑
+                        </button>
+                        <button
+                          onClick={deleteEvent}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                        >
+                          <i className="fas fa-trash mr-2"></i>
+                          删除
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {(modalType === "add" || modalType === "edit") && (
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">事件名称 *</label>
+                        <input
+                          type="text"
+                          value={formData.title}
+                          onChange={(e) => setFormData({...formData, title: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">日期 *</label>
+                        <input
+                          type="date"
+                          value={formData.date}
+                          onChange={(e) => setFormData({...formData, date: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          required
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">开始时间 *</label>
+                          <input
+                            type="time"
+                            value={formData.startTime}
+                            onChange={(e) => setFormData({...formData, startTime: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">结束时间 *</label>
+                          <input
+                            type="time"
+                            value={formData.endTime}
+                            onChange={(e) => setFormData({...formData, endTime: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">类别</label>
+                        <select
+                          value={formData.category}
+                          onChange={(e) => setFormData({...formData, category: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          {categories.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">地点</label>
+                        <input
+                          type="text"
+                          value={formData.location}
+                          onChange={(e) => setFormData({...formData, location: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">描述</label>
+                        <textarea
+                          value={formData.description}
+                          onChange={(e) => setFormData({...formData, description: e.target.value})}
+                          rows="3"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+
+                      <div className="flex space-x-2 pt-4">
+                        <button
+                          type="button"
+                          onClick={closeModal}
+                          className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors"
+                        >
+                          取消
+                        </button>
+                        <button
+                          type="submit"
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                        >
+                          {modalType === "add" ? "添加" : "保存"}
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<CalendarApp />, document.getElementById('root'));
+  </script>
+</body>
+</html>

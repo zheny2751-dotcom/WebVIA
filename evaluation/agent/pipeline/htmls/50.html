@@ -1,0 +1,557 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心愿公益 - 传递爱心，点亮希望</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [currentSlide, setCurrentSlide] = useState(0);
+            const [activeNav, setActiveNav] = useState('home');
+            const [showDonationModal, setShowDonationModal] = useState(false);
+            const [donationAmount, setDonationAmount] = useState('');
+            const [paymentMethod, setPaymentMethod] = useState('wechat');
+            const [expandedProject, setExpandedProject] = useState(null);
+            const [volunteerForm, setVolunteerForm] = useState({
+                name: '', phone: '', email: '', activityType: 'environmental'
+            });
+            const [messages, setMessages] = useState([
+                { id: 1, name: '张明', content: '很高兴能参与到环保活动中，为地球贡献一份力量！', likes: 12, timestamp: '2024-01-15' },
+                { id: 2, name: '李华', content: '通过助学项目帮助山区孩子，看到他们的笑容就是最大的回报。', likes: 8, timestamp: '2024-01-14' },
+                { id: 3, name: '王芳', content: '每一次捐赠都是爱心的传递，希望能帮助更多需要帮助的人。', likes: 15, timestamp: '2024-01-13' }
+            ]);
+            const [newMessage, setNewMessage] = useState('');
+            const [statistics, setStatistics] = useState({
+                donors: 2847,
+                funds: 1258000,
+                volunteers: 896
+            });
+
+            const bannerSlides = [
+                {
+                    image: 'https://picsum.photos/id/1/1200/500',
+                    title: '守护绿水青山',
+                    subtitle: '携手共建美丽家园'
+                },
+                {
+                    image: 'https://picsum.photos/id/2/1200/500',
+                    title: '点亮求学之路',
+                    subtitle: '让每个孩子都有读书的机会'
+                },
+                {
+                    image: 'https://picsum.photos/id/3/1200/500',
+                    title: '关爱老人健康',
+                    subtitle: '温暖夕阳，关爱永远'
+                }
+            ];
+
+            const projects = [
+                {
+                    id: 1,
+                    name: '绿色地球计划',
+                    description: '通过植树造林、垃圾清理等活动保护环境',
+                    image: 'https://picsum.photos/id/10/400/250',
+                    progress: 75,
+                    target: 500000,
+                    raised: 375000,
+                    detail: '绿色地球计划致力于通过植树造林、海洋垃圾清理、野生动物保护等多项环保活动，守护我们共同的地球家园。项目已在全国20个城市开展，累计种植树木50000棵，清理垃圾200吨，保护濒危动物栖息地1000公顷。'
+                },
+                {
+                    id: 2,
+                    name: '山区助学工程',
+                    description: '为贫困山区儿童提供教育资源和学习用品',
+                    image: 'https://picsum.photos/id/11/400/250',
+                    progress: 60,
+                    target: 800000,
+                    raised: 480000,
+                    detail: '山区助学工程专注于改善偏远山区的教育条件，为孩子们提供图书、文具、电脑等学习用品，同时资助优秀贫困学生完成学业。项目已帮助3000名山区儿童重返校园，建设希望小学15所，培训乡村教师500名。'
+                },
+                {
+                    id: 3,
+                    name: '温暖夕阳行动',
+                    description: '关爱独居老人，提供生活照料和精神慰藉',
+                    image: 'https://picsum.photos/id/12/400/250',
+                    progress: 85,
+                    target: 300000,
+                    raised: 255000,
+                    detail: '温暖夕阳行动关注城市和农村的独居老人，为他们提供定期探访、生活照料、医疗陪护等服务。志愿者团队每周为老人送去温暖，陪伴聊天，帮助解决生活困难。项目已服务老人2000余位，建立社区养老服务点50个。'
+                }
+            ];
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+                }, 4000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const handleDonation = () => {
+                if (!donationAmount || donationAmount <= 0) {
+                    alert('请输入有效的捐赠金额');
+                    return;
+                }
+                setShowDonationModal(true);
+            };
+
+            const confirmDonation = () => {
+                setStatistics(prev => ({
+                    ...prev,
+                    donors: prev.donors + 1,
+                    funds: prev.funds + parseInt(donationAmount)
+                }));
+                setShowDonationModal(false);
+                setDonationAmount('');
+                alert('捐赠成功！感谢您的爱心奉献！');
+            };
+
+            const handleVolunteerSubmit = () => {
+                if (!volunteerForm.name || !volunteerForm.phone || !volunteerForm.email) {
+                    alert('请填写完整的报名信息');
+                    return;
+                }
+                
+                const newVolunteerMessage = {
+                    id: messages.length + 1,
+                    name: volunteerForm.name,
+                    content: `我报名参加${getActivityTypeName(volunteerForm.activityType)}活动，希望能为公益事业贡献自己的力量！`,
+                    likes: 0,
+                    timestamp: new Date().toISOString().split('T')[0]
+                };
+                
+                setMessages(prev => [newVolunteerMessage, ...prev]);
+                setStatistics(prev => ({ ...prev, volunteers: prev.volunteers + 1 }));
+                setVolunteerForm({ name: '', phone: '', email: '', activityType: 'environmental' });
+                alert('报名成功！我们会尽快与您联系！');
+            };
+
+            const getActivityTypeName = (type) => {
+                const types = {
+                    environmental: '环保',
+                    education: '助学',
+                    medical: '医疗',
+                    elderly: '养老'
+                };
+                return types[type] || '环保';
+            };
+
+            const getPaymentMethodName = (method) => {
+                const methods = {
+                    wechat: '微信支付',
+                    alipay: '支付宝',
+                    credit: '信用卡'
+                };
+                return methods[method] || '微信支付';
+            };
+
+            const likeMessage = (id) => {
+                setMessages(prev => prev.map(msg => 
+                    msg.id === id ? { ...msg, likes: msg.likes + 1 } : msg
+                ));
+            };
+
+            const addMessage = () => {
+                if (!newMessage.trim()) return;
+                
+                const message = {
+                    id: messages.length + 1,
+                    name: '匿名用户',
+                    content: newMessage,
+                    likes: 0,
+                    timestamp: new Date().toISOString().split('T')[0]
+                };
+                
+                setMessages(prev => [message, ...prev]);
+                setNewMessage('');
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <header className="bg-white shadow-lg sticky top-0 z-50">
+                        <div className="container mx-auto px-4">
+                            <div className="flex items-center justify-between h-16">
+                                <div className="flex items-center space-x-2">
+                                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                        <i className="fas fa-heart text-white text-lg"></i>
+                                    </div>
+                                    <span className="text-xl font-bold text-green-700">心愿公益</span>
+                                </div>
+                                <nav className="hidden md:flex space-x-8">
+                                    {[
+                                        { key: 'home', label: '首页', icon: 'fas fa-home' },
+                                        { key: 'projects', label: '项目介绍', icon: 'fas fa-list' },
+                                        { key: 'donate', label: '捐赠', icon: 'fas fa-donate' },
+                                        { key: 'volunteer', label: '报名', icon: 'fas fa-users' },
+                                        { key: 'messages', label: '留言', icon: 'fas fa-comments' }
+                                    ].map(item => (
+                                        <button
+                                            key={item.key}
+                                            onClick={() => setActiveNav(item.key)}
+                                            className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors ${
+                                                activeNav === item.key
+                                                    ? 'bg-green-100 text-green-700'
+                                                    : 'text-gray-600 hover:text-green-600'
+                                            }`}
+                                        >
+                                            <i className={item.icon}></i>
+                                            <span>{item.label}</span>
+                                        </button>
+                                    ))}
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="relative h-96 overflow-hidden">
+                        {bannerSlides.map((slide, index) => (
+                            <div
+                                key={index}
+                                className={`absolute inset-0 transition-transform duration-1000 ${
+                                    index === currentSlide ? 'transform translate-x-0' : 'transform translate-x-full'
+                                }`}
+                                style={{
+                                    backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${slide.image})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center'
+                                }}
+                            >
+                                <div className="container mx-auto px-4 h-full flex items-center">
+                                    <div className="text-white max-w-2xl">
+                                        <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h1>
+                                        <p className="text-xl md:text-2xl">{slide.subtitle}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                            {bannerSlides.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`w-3 h-3 rounded-full ${
+                                        index === currentSlide ? 'bg-white' : 'bg-white/50'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    <section className="py-16 bg-white">
+                        <div className="container mx-auto px-4">
+                            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">实时公益统计</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-xl text-center">
+                                    <i className="fas fa-users text-4xl mb-4"></i>
+                                    <h3 className="text-2xl font-bold mb-2">爱心捐赠人数</h3>
+                                    <p className="text-4xl font-bold">{statistics.donors.toLocaleString()}</p>
+                                    <p className="text-blue-100 mt-2">人次</p>
+                                </div>
+                                <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-8 rounded-xl text-center">
+                                    <i className="fas fa-yen-sign text-4xl mb-4"></i>
+                                    <h3 className="text-2xl font-bold mb-2">累计募集资金</h3>
+                                    <p className="text-4xl font-bold">¥{(statistics.funds / 10000).toFixed(1)}万</p>
+                                    <p className="text-green-100 mt-2">元</p>
+                                </div>
+                                <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-8 rounded-xl text-center">
+                                    <i className="fas fa-hands-helping text-4xl mb-4"></i>
+                                    <h3 className="text-2xl font-bold mb-2">志愿者人数</h3>
+                                    <p className="text-4xl font-bold">{statistics.volunteers.toLocaleString()}</p>
+                                    <p className="text-purple-100 mt-2">人</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="py-16 bg-gray-50">
+                        <div className="container mx-auto px-4">
+                            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">公益项目介绍</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {projects.map(project => (
+                                    <div key={project.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src={project.image} alt={project.name} className="w-full h-48 object-cover" />
+                                        <div className="p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">{project.name}</h3>
+                                            <p className="text-gray-600 mb-4">{project.description}</p>
+                                            <div className="mb-4">
+                                                <div className="flex justify-between text-sm text-gray-600 mb-2">
+                                                    <span>筹款进度</span>
+                                                    <span>{project.progress}%</span>
+                                                </div>
+                                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                                    <div
+                                                        className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                                                        style={{ width: `${project.progress}%` }}
+                                                    ></div>
+                                                </div>
+                                                <div className="flex justify-between text-sm text-gray-600 mt-2">
+                                                    <span>已筹集: ¥{project.raised.toLocaleString()}</span>
+                                                    <span>目标: ¥{project.target.toLocaleString()}</span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
+                                                className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                                            >
+                                                {expandedProject === project.id ? '收起详情' : '了解详情'}
+                                            </button>
+                                            {expandedProject === project.id && (
+                                                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                                    <p className="text-gray-700 text-sm leading-relaxed">{project.detail}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="py-16 bg-white">
+                        <div className="container mx-auto px-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                <div>
+                                    <h2 className="text-3xl font-bold text-gray-800 mb-8">爱心捐赠</h2>
+                                    <div className="bg-gray-50 p-8 rounded-xl">
+                                        <div className="mb-6">
+                                            <label className="block text-gray-700 font-semibold mb-2">捐赠金额 (元)</label>
+                                            <input
+                                                type="number"
+                                                value={donationAmount}
+                                                onChange={(e) => setDonationAmount(e.target.value)}
+                                                placeholder="请输入捐赠金额"
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                            />
+                                        </div>
+                                        <div className="mb-6">
+                                            <label className="block text-gray-700 font-semibold mb-2">支付方式</label>
+                                            <select
+                                                value={paymentMethod}
+                                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                            >
+                                                <option value="wechat">微信支付</option>
+                                                <option value="alipay">支付宝</option>
+                                                <option value="credit">信用卡</option>
+                                            </select>
+                                        </div>
+                                        <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                                            <p className="text-blue-700 font-medium">
+                                                <i className="fas fa-info-circle mr-2"></i>
+                                                当前选择支付方式：{getPaymentMethodName(paymentMethod)}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={handleDonation}
+                                            className="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+                                        >
+                                            确认捐赠
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h2 className="text-3xl font-bold text-gray-800 mb-8">志愿者报名</h2>
+                                    <div className="bg-gray-50 p-8 rounded-xl">
+                                        <div className="grid grid-cols-1 gap-4 mb-6">
+                                            <div>
+                                                <label className="block text-gray-700 font-semibold mb-2">姓名</label>
+                                                <input
+                                                    type="text"
+                                                    value={volunteerForm.name}
+                                                    onChange={(e) => setVolunteerForm({...volunteerForm, name: e.target.value})}
+                                                    placeholder="请输入您的姓名"
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-gray-700 font-semibold mb-2">电话</label>
+                                                <input
+                                                    type="tel"
+                                                    value={volunteerForm.phone}
+                                                    onChange={(e) => setVolunteerForm({...volunteerForm, phone: e.target.value})}
+                                                    placeholder="请输入您的电话号码"
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-gray-700 font-semibold mb-2">邮箱</label>
+                                                <input
+                                                    type="email"
+                                                    value={volunteerForm.email}
+                                                    onChange={(e) => setVolunteerForm({...volunteerForm, email: e.target.value})}
+                                                    placeholder="请输入您的邮箱地址"
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-gray-700 font-semibold mb-2">活动类型</label>
+                                                <select
+                                                    value={volunteerForm.activityType}
+                                                    onChange={(e) => setVolunteerForm({...volunteerForm, activityType: e.target.value})}
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                                >
+                                                    <option value="environmental">环保活动</option>
+                                                    <option value="education">助学活动</option>
+                                                    <option value="medical">医疗救助</option>
+                                                    <option value="elderly">养老关爱</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={handleVolunteerSubmit}
+                                            className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+                                        >
+                                            提交报名
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="py-16 bg-gray-50">
+                        <div className="container mx-auto px-4">
+                            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">爱心留言板</h2>
+                            <div className="max-w-4xl mx-auto">
+                                <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4">发表您的公益感言</h3>
+                                    <textarea
+                                        value={newMessage}
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        placeholder="分享您的公益心得，传递正能量..."
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                                        rows="3"
+                                    ></textarea>
+                                    <div className="flex justify-end mt-4">
+                                        <button
+                                            onClick={addMessage}
+                                            className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                                        >
+                                            发表留言
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="space-y-6">
+                                    {messages.map(message => (
+                                        <div key={message.id} className="bg-white p-6 rounded-xl shadow-lg">
+                                            <div className="flex items-start justify-between">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center space-x-3 mb-3">
+                                                        <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                                                            <i className="fas fa-user text-gray-600"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="font-semibold text-gray-800">{message.name}</h4>
+                                                            <p className="text-sm text-gray-500">{message.timestamp}</p>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-gray-700 leading-relaxed">{message.content}</p>
+                                                </div>
+                                                <button
+                                                    onClick={() => likeMessage(message.id)}
+                                                    className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors ml-4"
+                                                >
+                                                    <i className="fas fa-heart"></i>
+                                                    <span>{message.likes}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {showDonationModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white p-8 rounded-xl max-w-md w-full mx-4">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-4">确认捐赠</h3>
+                                <div className="mb-6">
+                                    <p className="text-gray-600 mb-2">捐赠金额：<span className="font-bold text-green-600">¥{donationAmount}</span></p>
+                                    <p className="text-gray-600">支付方式：<span className="font-bold">{getPaymentMethodName(paymentMethod)}</span></p>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button
+                                        onClick={() => setShowDonationModal(false)}
+                                        className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+                                    >
+                                        取消
+                                    </button>
+                                    <button
+                                        onClick={confirmDonation}
+                                        className="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                                    >
+                                        确认
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className="bg-gray-800 text-white py-12">
+                        <div className="container mx-auto px-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                                <div>
+                                    <div className="flex items-center space-x-2 mb-4">
+                                        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                            <i className="fas fa-heart text-white"></i>
+                                        </div>
+                                        <span className="text-lg font-bold">心愿公益</span>
+                                    </div>
+                                    <p className="text-gray-300">传递爱心，点亮希望。让我们一起为建设更美好的世界而努力。</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold mb-4">快速链接</h4>
+                                    <ul className="space-y-2 text-gray-300">
+                                        <li><a href="#" className="hover:text-white">关于我们</a></li>
+                                        <li><a href="#" className="hover:text-white">项目介绍</a></li>
+                                        <li><a href="#" className="hover:text-white">财务公开</a></li>
+                                        <li><a href="#" className="hover:text-white">联系我们</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold mb-4">联系信息</h4>
+                                    <ul className="space-y-2 text-gray-300">
+                                        <li><i className="fas fa-phone mr-2"></i>400-123-4567</li>
+                                        <li><i className="fas fa-envelope mr-2"></i>info@xingyuan.org</li>
+                                        <li><i className="fas fa-map-marker-alt mr-2"></i>北京市朝阳区公益大厦</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold mb-4">关注我们</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700">
+                                            <i className="fab fa-weibo"></i>
+                                        </a>
+                                        <a href="#" className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700">
+                                            <i className="fab fa-wechat"></i>
+                                        </a>
+                                        <a href="#" className="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center hover:bg-blue-900">
+                                            <i className="fab fa-facebook"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                                <p>&copy; 2024 心愿公益. 保留所有权利. | 京ICP备12345678号</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

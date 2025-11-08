@@ -1,0 +1,547 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星球社群</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @keyframes stars {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-2000px) rotate(360deg); }
+        }
+        .stars {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: stars 10s linear infinite;
+        }
+        .star-field {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [showPlanetModal, setShowPlanetModal] = useState(false);
+            const [selectedPlanet, setSelectedPlanet] = useState('');
+            const [currentNews, setCurrentNews] = useState(0);
+            const [voteResults, setVoteResults] = useState({ mercury: 0, venus: 0, earth: 0, mars: 0 });
+            const [selectedVote, setSelectedVote] = useState('');
+            const [chatMessages, setChatMessages] = useState([]);
+            const [chatInput, setChatInput] = useState('');
+            const [username, setUsername] = useState('');
+            const [email, setEmail] = useState('');
+            const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+            const [socialLinks, setSocialLinks] = useState('');
+            const [randomPlanet, setRandomPlanet] = useState(null);
+            const chatRef = useRef(null);
+            
+            const planets = {
+                mercury: {
+                    name: '水星',
+                    image: 'https://picsum.photos/id/1015/400/300',
+                    diameter: '4,879 km',
+                    distance: '0.39 AU',
+                    suitability: '不适宜',
+                    description: '水星是太阳系中最小的行星，也是最靠近太阳的行星。表面温度极高，昼夜温差巨大。'
+                },
+                venus: {
+                    name: '金星',
+                    image: 'https://picsum.photos/id/1018/400/300',
+                    diameter: '12,104 km',
+                    distance: '0.72 AU',
+                    suitability: '不适宜',
+                    description: '金星被称为地球的"姊妹星"，但其表面被厚厚的大气层覆盖，温度极高。'
+                },
+                earth: {
+                    name: '地球',
+                    image: 'https://picsum.photos/id/1020/400/300',
+                    diameter: '12,756 km',
+                    distance: '1.0 AU',
+                    suitability: '完全适宜',
+                    description: '地球是我们的家园，拥有丰富的水资源和多样的生命形式。'
+                },
+                mars: {
+                    name: '火星',
+                    image: 'https://picsum.photos/id/1025/400/300',
+                    diameter: '6,792 km',
+                    distance: '1.52 AU',
+                    suitability: '部分适宜',
+                    description: '火星被称为"红色星球"，是人类最有可能移居的第二个星球。'
+                },
+                jupiter: {
+                    name: '木星',
+                    image: 'https://picsum.photos/id/1030/400/300',
+                    diameter: '142,984 km',
+                    distance: '5.2 AU',
+                    suitability: '不适宜',
+                    description: '木星是太阳系中最大的行星，拥有众多卫星和壮观的大红斑。'
+                },
+                saturn: {
+                    name: '土星',
+                    image: 'https://picsum.photos/id/1035/400/300',
+                    diameter: '120,536 km',
+                    distance: '9.5 AU',
+                    suitability: '不适宜',
+                    description: '土星以其美丽的光环而闻名，是太阳系中密度最低的行星。'
+                },
+                pandora: {
+                    name: '潘多拉星',
+                    image: 'https://picsum.photos/id/1040/400/300',
+                    diameter: '11,447 km',
+                    distance: '4.37光年',
+                    suitability: '高度适宜',
+                    description: '阿凡达电影中的神秘星球，拥有发光的植物和独特的生态系统。'
+                },
+                kepler: {
+                    name: '开普勒-452b',
+                    image: 'https://picsum.photos/id/1045/400/300',
+                    diameter: '约18,000 km',
+                    distance: '1,400光年',
+                    suitability: '可能适宜',
+                    description: '被称为"地球2.0"的系外行星，位于宜居带内，可能存在液态水。'
+                }
+            };
+            
+            const newsItems = [
+                { title: '火星基地建设计划启动', content: '人类首个火星永久基地即将开工建设，预计2030年完工。' },
+                { title: '木星卫星发现生命迹象', content: '科学家在木星卫星欧罗巴的冰层下发现了可能存在微生物的证据。' },
+                { title: '星际旅行技术重大突破', content: '新型推进系统可将星际旅行时间缩短至原来的十分之一。' }
+            ];
+            
+            const randomPlanets = [
+                { name: '阿尔法星', description: '一个充满神秘能量的蓝色星球，表面覆盖着发光的水晶森林。' },
+                { name: '贝塔行星', description: '拥有双重重力场的奇特世界，居民可以在空中自由飞翔。' },
+                { name: '伽马世界', description: '时间流逝缓慢的梦幻星球，一天相当于地球的一年。' },
+                { name: '德尔塔星域', description: '由纯能量构成的虚拟星球，意识可以直接与星球融合。' }
+            ];
+            
+            useEffect(() => {
+                const stars = document.createElement('div');
+                stars.className = 'star-field fixed inset-0 pointer-events-none z-0';
+                for (let i = 0; i < 100; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'stars';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 10 + 's';
+                    star.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                    stars.appendChild(star);
+                }
+                document.body.appendChild(stars);
+                
+                return () => {
+                    if (document.body.contains(stars)) {
+                        document.body.removeChild(stars);
+                    }
+                };
+            }, []);
+            
+            useEffect(() => {
+                if (chatRef.current) {
+                    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+                }
+            }, [chatMessages]);
+            
+            const handlePlanetExplore = () => {
+                const planet = randomPlanets[Math.floor(Math.random() * randomPlanets.length)];
+                setRandomPlanet(planet);
+                setShowPlanetModal(true);
+            };
+            
+            const handleNewsNavigation = (direction) => {
+                if (direction === 'next') {
+                    setCurrentNews((prev) => (prev + 1) % newsItems.length);
+                } else {
+                    setCurrentNews((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+                }
+            };
+            
+            const handleVote = () => {
+                if (selectedVote) {
+                    setVoteResults(prev => ({
+                        ...prev,
+                        [selectedVote]: prev[selectedVote] + 1
+                    }));
+                    setSelectedVote('');
+                }
+            };
+            
+            const handleSendMessage = () => {
+                if (chatInput.trim()) {
+                    setChatMessages(prev => [...prev, {
+                        id: Date.now(),
+                        text: chatInput,
+                        timestamp: new Date().toLocaleTimeString()
+                    }]);
+                    setChatInput('');
+                }
+            };
+            
+            const handleRegister = () => {
+                if (username && email) {
+                    setShowSuccessMsg(true);
+                    setTimeout(() => setShowSuccessMsg(false), 2000);
+                    setUsername('');
+                    setEmail('');
+                }
+            };
+            
+            const handleSocialClick = (platform) => {
+                setSocialLinks(`正在跳转到 ${platform}...`);
+                setTimeout(() => setSocialLinks(''), 3000);
+            };
+            
+            const maxVotes = Math.max(...Object.values(voteResults));
+            
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 text-white relative">
+                    {showSuccessMsg && (
+                        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+                            注册成功！
+                        </div>
+                    )}
+                    
+                    <nav className="bg-black bg-opacity-30 backdrop-blur-md border-b border-purple-500/30 sticky top-0 z-40">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center space-x-2">
+                                    <i className="fas fa-globe text-purple-400 text-2xl"></i>
+                                    <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                                        星球社群
+                                    </span>
+                                </div>
+                                <div className="flex space-x-4">
+                                    {[
+                                        { key: 'home', label: '首页' },
+                                        { key: 'explore', label: '探索' },
+                                        { key: 'community', label: '社区' }
+                                    ].map((tab) => (
+                                        <button
+                                            key={tab.key}
+                                            onClick={() => setActiveTab(tab.key)}
+                                            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                                                activeTab === tab.key
+                                                    ? 'bg-purple-600 text-white shadow-lg' 
+                                                    : 'text-purple-300 hover:text-white hover:bg-purple-700/50'
+                                            }`}
+                                        >
+                                            {tab.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+                        {activeTab === 'home' && (
+                            <div className="space-y-12">
+                                <section className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-r from-purple-800 to-blue-800 flex items-center justify-center">
+                                    <div className="text-center z-10">
+                                        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
+                                            探索无限宇宙
+                                        </h1>
+                                        <button
+                                            onClick={handlePlanetExplore}
+                                            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                                        >
+                                            <i className="fas fa-rocket mr-2"></i>
+                                            星球漫游
+                                        </button>
+                                    </div>
+                                </section>
+                                
+                                <section className="bg-black/20 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30">
+                                    <h2 className="text-3xl font-bold mb-6 text-center">最新动态</h2>
+                                    <div className="flex items-center justify-between">
+                                        <button
+                                            onClick={() => handleNewsNavigation('prev')}
+                                            className="bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+                                        >
+                                            <i className="fas fa-chevron-left"></i>
+                                        </button>
+                                        <div className="flex-1 mx-8 text-center">
+                                            <h3 className="text-xl font-semibold mb-2">{newsItems[currentNews].title}</h3>
+                                            <p className="text-purple-200">{newsItems[currentNews].content}</p>
+                                        </div>
+                                        <button
+                                            onClick={() => handleNewsNavigation('next')}
+                                            className="bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors"
+                                        >
+                                            <i className="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </section>
+                                
+                                <section className="bg-black/20 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30">
+                                    <h2 className="text-3xl font-bold mb-6 text-center">社区投票</h2>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div>
+                                            <h3 className="text-xl mb-4">你最想移居的星球？</h3>
+                                            <div className="space-y-3">
+                                                {Object.entries(planets).slice(0, 4).map(([key, planet]) => (
+                                                    <label key={key} className="flex items-center space-x-3 cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="vote"
+                                                            value={key}
+                                                            checked={selectedVote === key}
+                                                            onChange={(e) => setSelectedVote(e.target.value)}
+                                                            className="text-purple-600"
+                                                        />
+                                                        <span>{planet.name}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                            <button
+                                                onClick={handleVote}
+                                                disabled={!selectedVote}
+                                                className={`mt-4 px-6 py-2 rounded-lg transition-all duration-300 ${
+                                                    selectedVote 
+                                                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500' 
+                                                        : 'bg-gray-600 cursor-not-allowed'
+                                                }`}
+                                            >
+                                                投票
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl mb-4">投票结果</h3>
+                                            <div className="space-y-3">
+                                                {Object.entries(voteResults).map(([key, votes]) => (
+                                                    <div key={key} className="flex items-center space-x-3">
+                                                        <span className="w-16 text-sm">{planets[key].name}</span>
+                                                        <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">
+                                                            <div
+                                                                className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500"
+                                                                style={{ width: maxVotes > 0 ? `${(votes / maxVotes) * 100}%` : '0%' }}
+                                                            ></div>
+                                                        </div>
+                                                        <span className="w-8 text-sm">{votes}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        )}
+                        
+                        {activeTab === 'explore' && (
+                            <div className="space-y-8">
+                                <section className="bg-black/20 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30">
+                                    <h2 className="text-3xl font-bold mb-6 text-center">行星探索</h2>
+                                    <div className="grid lg:grid-cols-2 gap-8">
+                                        <div>
+                                            <label className="block text-lg font-medium mb-4">选择星球</label>
+                                            <select
+                                                value={selectedPlanet}
+                                                onChange={(e) => setSelectedPlanet(e.target.value)}
+                                                className="w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none"
+                                            >
+                                                <option value="">请选择一个星球</option>
+                                                {Object.entries(planets).map(([key, planet]) => (
+                                                    <option key={key} value={key}>{planet.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            {selectedPlanet && planets[selectedPlanet] && (
+                                                <div className="space-y-4">
+                                                    <img
+                                                        src={planets[selectedPlanet].image}
+                                                        alt={planets[selectedPlanet].name}
+                                                        className="w-full h-48 object-cover rounded-lg"
+                                                    />
+                                                    <div className="grid grid-cols-2 gap-4 text-sm">
+                                                        <div>
+                                                            <span className="text-purple-300">直径：</span>
+                                                            <span>{planets[selectedPlanet].diameter}</span>
+                                                        </div>
+                                                        <div>
+                                                            <span className="text-purple-300">距离：</span>
+                                                            <span>{planets[selectedPlanet].distance}</span>
+                                                        </div>
+                                                        <div className="col-span-2">
+                                                            <span className="text-purple-300">适宜度：</span>
+                                                            <span className={
+                                                                planets[selectedPlanet].suitability === '完全适宜' ? 'text-green-400' :
+                                                                planets[selectedPlanet].suitability === '部分适宜' ? 'text-yellow-400' :
+                                                                planets[selectedPlanet].suitability === '可能适宜' ? 'text-blue-400' :
+                                                                planets[selectedPlanet].suitability === '高度适宜' ? 'text-purple-400' : 'text-red-400'
+                                                            }>
+                                                                {planets[selectedPlanet].suitability}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-purple-200">{planets[selectedPlanet].description}</p>
+                                                </div>
+                                            )}
+                                            {!selectedPlanet && (
+                                                <div className="text-center text-purple-300 py-16">
+                                                    <i className="fas fa-planet-ringed text-6xl mb-4 opacity-50"></i>
+                                                    <p>选择一个星球开始探索</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        )}
+                        
+                        {activeTab === 'community' && (
+                            <div className="space-y-8">
+                                <div className="grid lg:grid-cols-2 gap-8">
+                                    <section className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
+                                        <h2 className="text-2xl font-bold mb-6">实时聊天</h2>
+                                        <div 
+                                            ref={chatRef}
+                                            className="h-64 bg-gray-900/50 rounded-lg p-4 mb-4 overflow-y-auto"
+                                        >
+                                            {chatMessages.length === 0 ? (
+                                                <div className="text-center text-purple-300 py-16">
+                                                    <i className="fas fa-comments text-4xl mb-4 opacity-50"></i>
+                                                    <p>暂无消息，开始聊天吧！</p>
+                                                </div>
+                                            ) : (
+                                                chatMessages.map((msg) => (
+                                                    <div key={msg.id} className="mb-3 p-3 bg-purple-800/30 rounded-lg border-l-4 border-purple-500">
+                                                        <p className="mb-1">{msg.text}</p>
+                                                        <small className="text-purple-300">{msg.timestamp}</small>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <input
+                                                type="text"
+                                                value={chatInput}
+                                                onChange={(e) => setChatInput(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                                placeholder="输入消息..."
+                                                className="flex-1 bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-2 text-white focus:border-purple-400 focus:outline-none"
+                                            />
+                                            <button
+                                                onClick={handleSendMessage}
+                                                disabled={!chatInput.trim()}
+                                                className={`px-6 py-2 rounded-lg transition-colors ${
+                                                    chatInput.trim() 
+                                                        ? 'bg-purple-600 hover:bg-purple-500' 
+                                                        : 'bg-gray-600 cursor-not-allowed'
+                                                }`}
+                                            >
+                                                发送
+                                            </button>
+                                        </div>
+                                    </section>
+                                    
+                                    <section className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
+                                        <h2 className="text-2xl font-bold mb-6">加入社群</h2>
+                                        <div className="space-y-4">
+                                            <input
+                                                type="text"
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                placeholder="用户名"
+                                                className="w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none"
+                                            />
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                placeholder="邮箱地址"
+                                                className="w-full bg-gray-800 border border-purple-500/50 rounded-lg px-4 py-3 text-white focus:border-purple-400 focus:outline-none"
+                                            />
+                                            <button
+                                                onClick={handleRegister}
+                                                disabled={!username || !email}
+                                                className={`w-full py-3 rounded-lg transition-all duration-300 font-semibold ${
+                                                    username && email 
+                                                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500' 
+                                                        : 'bg-gray-600 cursor-not-allowed'
+                                                }`}
+                                            >
+                                                注册加入
+                                            </button>
+                                        </div>
+                                        <div className="mt-6 text-center text-purple-300 text-sm">
+                                            <p>成为星球社群的一员，探索宇宙奥秘</p>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                    
+                    <footer className="bg-black/30 backdrop-blur-md border-t border-purple-500/30 py-8 relative z-10">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center">
+                                <h3 className="text-xl font-bold mb-4">关注我们</h3>
+                                <div className="flex justify-center space-x-6 mb-4">
+                                    {[
+                                        { platform: 'Twitter', icon: 'fab fa-twitter' },
+                                        { platform: 'Instagram', icon: 'fab fa-instagram' },
+                                        { platform: '官网', icon: 'fas fa-globe' }
+                                    ].map((social) => (
+                                        <button
+                                            key={social.platform}
+                                            onClick={() => handleSocialClick(social.platform)}
+                                            className="bg-purple-600 hover:bg-purple-500 p-3 rounded-full transition-colors transform hover:scale-110"
+                                        >
+                                            <i className={social.icon}></i>
+                                        </button>
+                                    ))}
+                                </div>
+                                {socialLinks && (
+                                    <div className="bg-purple-800/30 rounded-lg p-3 mb-4">
+                                        <p className="text-purple-300">{socialLinks}</p>
+                                    </div>
+                                )}
+                                <p className="text-purple-400 text-sm">© 2024 星球社群. 探索无限可能.</p>
+                            </div>
+                        </div>
+                    </footer>
+                    
+                    {showPlanetModal && (
+                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                            <div className="bg-gray-900 rounded-2xl p-8 max-w-md mx-4 border border-purple-500/50 shadow-2xl">
+                                <div className="text-center">
+                                    <i className="fas fa-rocket text-purple-400 text-4xl mb-4"></i>
+                                    <h3 className="text-2xl font-bold mb-4">星球漫游发现</h3>
+                                    {randomPlanet && (
+                                        <div>
+                                            <h4 className="text-xl font-semibold text-purple-300 mb-3">{randomPlanet.name}</h4>
+                                            <p className="text-purple-200 mb-6">{randomPlanet.description}</p>
+                                        </div>
+                                    )}
+                                    <button
+                                        onClick={() => setShowPlanetModal(false)}
+                                        className="w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-lg transition-colors"
+                                    >
+                                        返回探索
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

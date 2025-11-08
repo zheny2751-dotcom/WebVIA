@@ -1,0 +1,551 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顾客点评系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const StarRating = ({ rating, size = "text-lg" }) => {
+            return (
+                <div className={`flex ${size} text-yellow-400`}>
+                    {[1, 2, 3, 4, 5].map(star => (
+                        <i 
+                            key={star}
+                            className={star <= rating ? "fas fa-star" : "far fa-star"}
+                        />
+                    ))}
+                </div>
+            );
+        };
+        
+        const App = () => {
+            const [reviews, setReviews] = useState([
+                {
+                    id: 1,
+                    name: "张小明",
+                    rating: 5,
+                    comment: "服务非常好，产品质量很棒，强烈推荐！客服态度很好，解决问题很及时。",
+                    time: "2024-01-15 14:30",
+                    likes: 12,
+                    replies: [
+                        { id: 1, content: "感谢您的好评！我们会继续努力提供更好的服务。", time: "2024-01-15 15:00" }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "李美丽",
+                    rating: 4,
+                    comment: "整体不错，就是价格稍微高了一点，但是质量确实很好，性价比还可以接受。",
+                    time: "2024-01-14 16:45",
+                    likes: 8,
+                    replies: []
+                },
+                {
+                    id: 3,
+                    name: "王大力",
+                    rating: 5,
+                    comment: "超出期待！客服很耐心，解决问题很及时，产品质量也很不错。",
+                    time: "2024-01-13 10:20",
+                    likes: 15,
+                    replies: []
+                },
+                {
+                    id: 4,
+                    name: "陈小花",
+                    rating: 3,
+                    comment: "一般般吧，还有改进的空间，希望能够在细节方面做得更好。",
+                    time: "2024-01-12 09:15",
+                    likes: 3,
+                    replies: []
+                },
+                {
+                    id: 5,
+                    name: "刘大海",
+                    rating: 4,
+                    comment: "值得购买，性价比很高，下次还会再来，推荐给朋友们。",
+                    time: "2024-01-11 18:30",
+                    likes: 6,
+                    replies: []
+                },
+                {
+                    id: 6,
+                    name: "赵小红",
+                    rating: 5,
+                    comment: "非常满意，物流快，包装好，产品符合预期，五星好评！",
+                    time: "2024-01-10 20:15",
+                    likes: 9,
+                    replies: []
+                },
+                {
+                    id: 7,
+                    name: "孙大明",
+                    rating: 2,
+                    comment: "有些失望，与描述不太符合，希望能够改进。",
+                    time: "2024-01-09 14:45",
+                    likes: 1,
+                    replies: []
+                }
+            ]);
+            
+            const [formData, setFormData] = useState({
+                name: "",
+                rating: 5,
+                comment: ""
+            });
+            
+            const [filterRating, setFilterRating] = useState("all");
+            const [sortBy, setSortBy] = useState("newest");
+            const [showReplyInput, setShowReplyInput] = useState({});
+            const [replyTexts, setReplyTexts] = useState({});
+            const [displayCount, setDisplayCount] = useState(5);
+            
+            const calculateOverview = () => {
+                const total = reviews.length;
+                const avgRating = reviews.reduce((sum, review) => sum + review.rating, 0) / total;
+                const distribution = [1, 2, 3, 4, 5].map(star => ({
+                    star,
+                    count: reviews.filter(review => review.rating === star).length,
+                    percentage: (reviews.filter(review => review.rating === star).length / total) * 100
+                }));
+                
+                return { total, avgRating: avgRating.toFixed(1), distribution };
+            };
+            
+            const getFilteredAndSortedReviews = () => {
+                let filtered = [...reviews];
+                
+                if (filterRating !== "all") {
+                    filtered = filtered.filter(review => review.rating === parseInt(filterRating));
+                }
+                
+                if (sortBy === "newest") {
+                    filtered = filtered.sort((a, b) => new Date(b.time) - new Date(a.time));
+                } else if (sortBy === "popular") {
+                    filtered = filtered.sort((a, b) => b.likes - a.likes);
+                }
+                
+                return filtered.slice(0, displayCount);
+            };
+            
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (!formData.name.trim() || !formData.comment.trim()) {
+                    return;
+                }
+                
+                const newReview = {
+                    id: Date.now(),
+                    name: formData.name,
+                    rating: parseInt(formData.rating),
+                    comment: formData.comment,
+                    time: new Date().toLocaleString("zh-CN", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }).replace(/\//g, "-"),
+                    likes: 0,
+                    replies: []
+                };
+                
+                setReviews([newReview, ...reviews]);
+                setFormData({ name: "", rating: 5, comment: "" });
+            };
+            
+            const handleLike = (reviewId) => {
+                setReviews(reviews.map(review =>
+                    review.id === reviewId
+                        ? { ...review, likes: review.likes + 1 }
+                        : review
+                ));
+            };
+            
+            const toggleReplyInput = (reviewId) => {
+                setShowReplyInput(prev => ({
+                    ...prev,
+                    [reviewId]: !prev[reviewId]
+                }));
+            };
+            
+            const handleReply = (reviewId) => {
+                const replyText = replyTexts[reviewId];
+                if (!replyText?.trim()) return;
+                
+                const newReply = {
+                    id: Date.now(),
+                    content: replyText,
+                    time: new Date().toLocaleString("zh-CN", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }).replace(/\//g, "-")
+                };
+                
+                setReviews(reviews.map(review =>
+                    review.id === reviewId
+                        ? { ...review, replies: [...review.replies, newReply] }
+                        : review
+                ));
+                
+                setReplyTexts(prev => ({ ...prev, [reviewId]: "" }));
+                setShowReplyInput(prev => ({ ...prev, [reviewId]: false }));
+            };
+            
+            const loadMore = () => {
+                setDisplayCount(prev => prev + 5);
+            };
+            
+            const overview = calculateOverview();
+            const filteredReviews = getFilteredAndSortedReviews();
+            const allFilteredReviews = (() => {
+                let filtered = [...reviews];
+                if (filterRating !== "all") {
+                    filtered = filtered.filter(review => review.rating === parseInt(filterRating));
+                }
+                return filtered;
+            })();
+            
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <header className="bg-white shadow-sm border-b">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img 
+                                        src="https://picsum.photos/id/1/40/40" 
+                                        alt="Logo" 
+                                        className="h-8 w-8 rounded-full mr-3"
+                                    />
+                                    <span className="text-xl font-bold text-blue-600">点评系统</span>
+                                </div>
+                                <nav className="hidden md:flex space-x-8">
+                                    <a href="#" className="text-blue-600 hover:text-blue-800 px-3 py-2 text-sm font-medium border-b-2 border-blue-600">首页</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">点评</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">关于</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">联系</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-1 space-y-6">
+                                <section className="bg-white rounded-lg shadow-md p-6">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-chart-bar text-blue-600 mr-2"></i>
+                                        点评概览
+                                    </h2>
+                                    
+                                    <div className="text-center mb-6">
+                                        <div className="text-4xl font-bold text-blue-600 mb-2">{overview.avgRating}</div>
+                                        <StarRating rating={Math.round(overview.avgRating)} size="text-2xl" />
+                                        <div className="text-gray-600 mt-2">基于 {overview.total} 条点评</div>
+                                    </div>
+                                    
+                                    <div className="space-y-3">
+                                        {overview.distribution.reverse().map(item => (
+                                            <div key={item.star} className="flex items-center">
+                                                <span className="text-sm font-medium w-8">{item.star}星</span>
+                                                <div className="flex-1 mx-3 bg-gray-200 rounded-full h-2.5">
+                                                    <div 
+                                                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-2.5 rounded-full transition-all duration-500 ease-out"
+                                                        style={{ width: `${item.percentage}%` }}
+                                                    ></div>
+                                                </div>
+                                                <span className="text-sm text-gray-600 w-8 text-right">{item.count}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                                
+                                <section className="bg-white rounded-lg shadow-md p-6">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-edit text-blue-600 mr-2"></i>
+                                        发布点评
+                                    </h2>
+                                    
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                                            <input
+                                                type="text"
+                                                placeholder="请输入您的姓名"
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">评分</label>
+                                            <select
+                                                value={formData.rating}
+                                                onChange={(e) => setFormData({...formData, rating: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                {[5, 4, 3, 2, 1].map(rating => (
+                                                    <option key={rating} value={rating}>
+                                                        {rating}星 - {["", "非常不满意", "不满意", "一般", "满意", "非常满意"][rating]}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">评论内容</label>
+                                            <textarea
+                                                placeholder="请分享您的使用体验..."
+                                                value={formData.comment}
+                                                onChange={(e) => setFormData({...formData, comment: e.target.value})}
+                                                rows="4"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            发布点评
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                            
+                            <div className="lg:col-span-2 space-y-6">
+                                <section className="bg-white rounded-lg shadow-md p-6">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-filter text-blue-600 mr-2"></i>
+                                        筛选与排序
+                                    </h2>
+                                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                        <div className="flex items-center space-x-4">
+                                            <label className="text-sm font-medium text-gray-700">评分筛选：</label>
+                                            <select
+                                                value={filterRating}
+                                                onChange={(e) => {
+                                                    setFilterRating(e.target.value);
+                                                    setDisplayCount(5);
+                                                }}
+                                                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="all">全部评分</option>
+                                                <option value="5">5星好评</option>
+                                                <option value="4">4星好评</option>
+                                                <option value="3">3星中评</option>
+                                                <option value="2">2星差评</option>
+                                                <option value="1">1星差评</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div className="flex items-center space-x-2">
+                                            <label className="text-sm font-medium text-gray-700">排序方式：</label>
+                                            <button
+                                                onClick={() => setSortBy("newest")}
+                                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                                                    sortBy === "newest" 
+                                                        ? "bg-blue-600 text-white shadow-md" 
+                                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                }`}
+                                            >
+                                                <i className="fas fa-clock mr-1"></i>
+                                                最新
+                                            </button>
+                                            <button
+                                                onClick={() => setSortBy("popular")}
+                                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                                                    sortBy === "popular" 
+                                                        ? "bg-blue-600 text-white shadow-md" 
+                                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                }`}
+                                            >
+                                                <i className="fas fa-fire mr-1"></i>
+                                                最热
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                                <section className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
+                                            <i className="fas fa-comments text-blue-600 mr-2"></i>
+                                            用户点评 ({allFilteredReviews.length})
+                                        </h2>
+                                    </div>
+                                    
+                                    {filteredReviews.length === 0 ? (
+                                        <div className="bg-white rounded-lg shadow-md p-12 text-center">
+                                            <img 
+                                                src="https://picsum.photos/id/200/200/150" 
+                                                alt="暂无点评" 
+                                                className="mx-auto mb-4 rounded-lg opacity-60"
+                                            />
+                                            <h3 className="text-lg font-medium text-gray-600 mb-2">暂无符合条件的点评</h3>
+                                            <p className="text-gray-500">请尝试调整筛选条件或成为第一个评论的用户</p>
+                                        </div>
+                                    ) : (
+                                        filteredReviews.map(review => (
+                                            <article key={review.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div className="flex items-center space-x-3">
+                                                        <img 
+                                                            src={`https://picsum.photos/id/${50 + review.id}/48/48`} 
+                                                            alt={review.name} 
+                                                            className="w-12 h-12 rounded-full border-2 border-gray-200"
+                                                        />
+                                                        <div>
+                                                            <h3 className="font-semibold text-gray-800">{review.name}</h3>
+                                                            <div className="flex items-center space-x-2 mt-1">
+                                                                <StarRating rating={review.rating} />
+                                                                <span className="text-sm text-gray-500">
+                                                                    <i className="far fa-clock mr-1"></i>
+                                                                    {review.time}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <p className="text-gray-700 mb-4 leading-relaxed bg-gray-50 p-4 rounded-lg border-l-4 border-blue-200">
+                                                    {review.comment}
+                                                </p>
+                                                
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center space-x-4">
+                                                        <button
+                                                            onClick={() => handleLike(review.id)}
+                                                            className="flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+                                                        >
+                                                            <i className="far fa-thumbs-up"></i>
+                                                            <span className="text-sm font-medium">{review.likes}</span>
+                                                        </button>
+                                                        
+                                                        <button
+                                                            onClick={() => toggleReplyInput(review.id)}
+                                                            className="flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors duration-200 px-3 py-1 rounded-full hover:bg-blue-50"
+                                                        >
+                                                            <i className="far fa-comment"></i>
+                                                            <span className="text-sm font-medium">回复</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                                {showReplyInput[review.id] && (
+                                                    <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                                                        <div className="flex space-x-3">
+                                                            <img 
+                                                                src="https://picsum.photos/id/91/32/32" 
+                                                                alt="管理员" 
+                                                                className="w-8 h-8 rounded-full"
+                                                            />
+                                                            <div className="flex-1">
+                                                                <input
+                                                                    type="text"
+                                                                    placeholder="写下您的回复..."
+                                                                    value={replyTexts[review.id] || ""}
+                                                                    onChange={(e) => setReplyTexts(prev => ({
+                                                                        ...prev,
+                                                                        [review.id]: e.target.value
+                                                                    }))}
+                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                    onKeyDown={(e) => {
+                                                                        if (e.key === 'Enter') {
+                                                                            handleReply(review.id);
+                                                                        }
+                                                                    }}
+                                                                />
+                                                                <div className="flex justify-end mt-2">
+                                                                    <button
+                                                                        onClick={() => handleReply(review.id)}
+                                                                        className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors duration-200"
+                                                                    >
+                                                                        <i className="fas fa-paper-plane mr-1"></i>
+                                                                        发送
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {review.replies.length > 0 && (
+                                                    <div className="mt-4 space-y-3">
+                                                        {review.replies.map(reply => (
+                                                            <div key={reply.id} className="ml-8 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                                                                <div className="flex items-center justify-between mb-2">
+                                                                    <div className="flex items-center space-x-2">
+                                                                        <img 
+                                                                            src="https://picsum.photos/id/91/24/24" 
+                                                                            alt="商家" 
+                                                                            className="w-6 h-6 rounded-full"
+                                                                        />
+                                                                        <span className="text-sm font-semibold text-blue-600">商家回复</span>
+                                                                    </div>
+                                                                    <span className="text-xs text-gray-500">{reply.time}</span>
+                                                                </div>
+                                                                <p className="text-sm text-gray-700">{reply.content}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </article>
+                                        ))
+                                    )}
+                                    
+                                    {filteredReviews.length > 0 && displayCount < allFilteredReviews.length && (
+                                        <div className="text-center py-6">
+                                            <button
+                                                onClick={loadMore}
+                                                className="px-8 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-700 font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+                                            >
+                                                <i className="fas fa-chevron-down mr-2"></i>
+                                                加载更多点评 ({allFilteredReviews.length - displayCount} 条剩余)
+                                            </button>
+                                        </div>
+                                    )}
+                                </section>
+                            </div>
+                        </div>
+                    </main>
+                    
+                    <footer className="bg-white border-t mt-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                            <div className="text-center">
+                                <div className="flex items-center justify-center mb-4">
+                                    <img 
+                                        src="https://picsum.photos/id/1/32/32" 
+                                        alt="Logo" 
+                                        className="h-8 w-8 rounded-full mr-2"
+                                    />
+                                    <span className="text-lg font-semibold text-blue-600">点评系统</span>
+                                </div>
+                                <p className="text-gray-500 text-sm">&copy; 2024 顾客点评系统. 致力于为用户提供真实可信的点评平台.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+        
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

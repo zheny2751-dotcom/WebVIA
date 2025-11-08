@@ -1,0 +1,516 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能任务管理系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function TaskManager() {
+            const [tasks, setTasks] = useState([
+                {
+                    id: 1,
+                    title: "完成项目报告",
+                    description: "整理Q4季度的项目进展和成果",
+                    priority: "high",
+                    category: "工作",
+                    status: "pending",
+                    dueDate: "2024-01-15",
+                    createdAt: "2024-01-01"
+                },
+                {
+                    id: 2,
+                    title: "学习React新特性",
+                    description: "深入了解React 18的并发特性和Suspense",
+                    priority: "medium",
+                    category: "学习",
+                    status: "in-progress",
+                    dueDate: "2024-01-20",
+                    createdAt: "2024-01-02"
+                },
+                {
+                    id: 3,
+                    title: "健身计划",
+                    description: "每周三次健身房训练",
+                    priority: "low",
+                    category: "健康",
+                    status: "completed",
+                    dueDate: "2024-01-10",
+                    createdAt: "2023-12-28"
+                }
+            ]);
+
+            const [showAddModal, setShowAddModal] = useState(false);
+            const [showEditModal, setShowEditModal] = useState(false);
+            const [currentTask, setCurrentTask] = useState(null);
+            const [searchTerm, setSearchTerm] = useState("");
+            const [filterCategory, setFilterCategory] = useState("all");
+            const [filterStatus, setFilterStatus] = useState("all");
+            const [newTask, setNewTask] = useState({
+                title: "",
+                description: "",
+                priority: "medium",
+                category: "工作",
+                dueDate: ""
+            });
+
+            const categories = ["工作", "学习", "健康", "生活", "娱乐"];
+            const priorities = [
+                { value: "high", label: "高优先级", color: "text-red-600" },
+                { value: "medium", label: "中优先级", color: "text-yellow-600" },
+                { value: "low", label: "低优先级", color: "text-green-600" }
+            ];
+
+            const filteredTasks = tasks.filter(task => {
+                const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    task.description.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesCategory = filterCategory === "all" || task.category === filterCategory;
+                const matchesStatus = filterStatus === "all" || task.status === filterStatus;
+                return matchesSearch && matchesCategory && matchesStatus;
+            });
+
+            const getStatusColor = (status) => {
+                switch(status) {
+                    case "completed": return "bg-green-100 text-green-800";
+                    case "in-progress": return "bg-blue-100 text-blue-800";
+                    case "pending": return "bg-gray-100 text-gray-800";
+                    default: return "bg-gray-100 text-gray-800";
+                }
+            };
+
+            const getPriorityColor = (priority) => {
+                switch(priority) {
+                    case "high": return "border-l-red-500";
+                    case "medium": return "border-l-yellow-500";
+                    case "low": return "border-l-green-500";
+                    default: return "border-l-gray-500";
+                }
+            };
+
+            const handleAddTask = () => {
+                if (newTask.title.trim()) {
+                    const task = {
+                        id: Date.now(),
+                        ...newTask,
+                        status: "pending",
+                        createdAt: new Date().toISOString().split('T')[0]
+                    };
+                    setTasks([task, ...tasks]);
+                    setNewTask({
+                        title: "",
+                        description: "",
+                        priority: "medium",
+                        category: "工作",
+                        dueDate: ""
+                    });
+                    setShowAddModal(false);
+                }
+            };
+
+            const handleEditTask = () => {
+                setTasks(tasks.map(task => 
+                    task.id === currentTask.id ? currentTask : task
+                ));
+                setShowEditModal(false);
+                setCurrentTask(null);
+            };
+
+            const deleteTask = (id) => {
+                setTasks(tasks.filter(task => task.id !== id));
+            };
+
+            const toggleTaskStatus = (id) => {
+                setTasks(tasks.map(task => {
+                    if (task.id === id) {
+                        let newStatus;
+                        switch(task.status) {
+                            case "pending": newStatus = "in-progress"; break;
+                            case "in-progress": newStatus = "completed"; break;
+                            case "completed": newStatus = "pending"; break;
+                            default: newStatus = "pending";
+                        }
+                        return { ...task, status: newStatus };
+                    }
+                    return task;
+                }));
+            };
+
+            const openEditModal = (task) => {
+                setCurrentTask({ ...task });
+                setShowEditModal(true);
+            };
+
+            const getTaskStats = () => {
+                const total = tasks.length;
+                const completed = tasks.filter(t => t.status === "completed").length;
+                const inProgress = tasks.filter(t => t.status === "in-progress").length;
+                const pending = tasks.filter(t => t.status === "pending").length;
+                return { total, completed, inProgress, pending };
+            };
+
+            const stats = getTaskStats();
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <nav className="bg-white shadow-sm border-b border-gray-200">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <i className="fas fa-tasks text-blue-600 text-2xl mr-3"></i>
+                                    <h1 className="text-xl font-semibold text-gray-900">智能任务管理</h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <button 
+                                        onClick={() => setShowAddModal(true)}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                    >
+                                        <i className="fas fa-plus"></i>
+                                        <span>新建任务</span>
+                                    </button>
+                                    <div className="flex items-center space-x-2">
+                                        <img src="https://picsum.photos/id/1005/32/32" className="w-8 h-8 rounded-full" alt="用户头像" />
+                                        <span className="text-sm text-gray-700">管理员</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            <div className="lg:col-span-1">
+                                <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-4">统计概览</h3>
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-gray-600">总任务数</span>
+                                            <span className="text-2xl font-bold text-gray-900">{stats.total}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-gray-600">已完成</span>
+                                            <span className="text-xl font-semibold text-green-600">{stats.completed}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-gray-600">进行中</span>
+                                            <span className="text-xl font-semibold text-blue-600">{stats.inProgress}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-gray-600">待开始</span>
+                                            <span className="text-xl font-semibold text-gray-600">{stats.pending}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-sm p-6">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-4">快速筛选</h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">分类</label>
+                                            <select 
+                                                value={filterCategory} 
+                                                onChange={(e) => setFilterCategory(e.target.value)}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="all">全部分类</option>
+                                                {categories.map(cat => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">状态</label>
+                                            <select 
+                                                value={filterStatus} 
+                                                onChange={(e) => setFilterStatus(e.target.value)}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="all">全部状态</option>
+                                                <option value="pending">待开始</option>
+                                                <option value="in-progress">进行中</option>
+                                                <option value="completed">已完成</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-3">
+                                <div className="bg-white rounded-xl shadow-sm">
+                                    <div className="p-6 border-b border-gray-200">
+                                        <div className="flex flex-col sm:flex-row gap-4">
+                                            <div className="flex-1">
+                                                <div className="relative">
+                                                    <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="搜索任务标题或描述..."
+                                                        value={searchTerm}
+                                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-6">
+                                        {filteredTasks.length === 0 ? (
+                                            <div className="text-center py-12">
+                                                <img src="https://picsum.photos/id/1015/200/200" className="w-32 h-32 mx-auto mb-4 rounded-full opacity-50" alt="空状态图片" />
+                                                <h3 className="text-lg font-medium text-gray-900 mb-2">暂无任务</h3>
+                                                <p className="text-gray-500 mb-4">
+                                                    {searchTerm || filterCategory !== "all" || filterStatus !== "all" 
+                                                        ? "没有找到匹配的任务，试试调整搜索条件" 
+                                                        : "开始创建您的第一个任务吧！"}
+                                                </p>
+                                                <button 
+                                                    onClick={() => setShowAddModal(true)}
+                                                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                                >
+                                                    创建任务
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="space-y-4">
+                                                {filteredTasks.map(task => (
+                                                    <div key={task.id} className={`bg-gray-50 rounded-lg p-4 border-l-4 ${getPriorityColor(task.priority)} hover:shadow-md transition-shadow`}>
+                                                        <div className="flex items-start justify-between">
+                                                            <div className="flex-1">
+                                                                <div className="flex items-center space-x-3 mb-2">
+                                                                    <h4 className="text-lg font-medium text-gray-900">{task.title}</h4>
+                                                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(task.status)}`}>
+                                                                        {task.status === "completed" ? "已完成" : 
+                                                                         task.status === "in-progress" ? "进行中" : "待开始"}
+                                                                    </span>
+                                                                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                                                                        {task.category}
+                                                                    </span>
+                                                                </div>
+                                                                <p className="text-gray-600 mb-3">{task.description}</p>
+                                                                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                                                    <span><i className="fas fa-calendar-alt mr-1"></i>截止: {task.dueDate}</span>
+                                                                    <span><i className="fas fa-clock mr-1"></i>创建: {task.createdAt}</span>
+                                                                    <span className={priorities.find(p => p.value === task.priority)?.color}>
+                                                                        <i className="fas fa-flag mr-1"></i>
+                                                                        {priorities.find(p => p.value === task.priority)?.label}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2 ml-4">
+                                                                <button 
+                                                                    onClick={() => toggleTaskStatus(task.id)}
+                                                                    className="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200 transition-colors"
+                                                                    title="切换状态"
+                                                                >
+                                                                    <i className="fas fa-check"></i>
+                                                                </button>
+                                                                <button 
+                                                                    onClick={() => openEditModal(task)}
+                                                                    className="bg-blue-100 text-blue-700 p-2 rounded-lg hover:bg-blue-200 transition-colors"
+                                                                    title="编辑任务"
+                                                                >
+                                                                    <i className="fas fa-edit"></i>
+                                                                </button>
+                                                                <button 
+                                                                    onClick={() => deleteTask(task.id)}
+                                                                    className="bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200 transition-colors"
+                                                                    title="删除任务"
+                                                                >
+                                                                    <i className="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {showAddModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">新建任务</h3>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">任务标题</label>
+                                        <input
+                                            type="text"
+                                            value={newTask.title}
+                                            onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="输入任务标题"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">任务描述</label>
+                                        <textarea
+                                            value={newTask.description}
+                                            onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows="3"
+                                            placeholder="输入任务描述"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">优先级</label>
+                                            <select
+                                                value={newTask.priority}
+                                                onChange={(e) => setNewTask({...newTask, priority: e.target.value})}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                {priorities.map(p => (
+                                                    <option key={p.value} value={p.value}>{p.label}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">分类</label>
+                                            <select
+                                                value={newTask.category}
+                                                onChange={(e) => setNewTask({...newTask, category: e.target.value})}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                {categories.map(cat => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">截止日期</label>
+                                        <input
+                                            type="date"
+                                            value={newTask.dueDate}
+                                            onChange={(e) => setNewTask({...newTask, dueDate: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex justify-end space-x-3 mt-6">
+                                    <button 
+                                        onClick={() => setShowAddModal(false)}
+                                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        取消
+                                    </button>
+                                    <button 
+                                        onClick={handleAddTask}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                    >
+                                        创建任务
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {showEditModal && currentTask && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">编辑任务</h3>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">任务标题</label>
+                                        <input
+                                            type="text"
+                                            value={currentTask.title}
+                                            onChange={(e) => setCurrentTask({...currentTask, title: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">任务描述</label>
+                                        <textarea
+                                            value={currentTask.description}
+                                            onChange={(e) => setCurrentTask({...currentTask, description: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            rows="3"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">优先级</label>
+                                            <select
+                                                value={currentTask.priority}
+                                                onChange={(e) => setCurrentTask({...currentTask, priority: e.target.value})}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                {priorities.map(p => (
+                                                    <option key={p.value} value={p.value}>{p.label}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">分类</label>
+                                            <select
+                                                value={currentTask.category}
+                                                onChange={(e) => setCurrentTask({...currentTask, category: e.target.value})}
+                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                {categories.map(cat => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">状态</label>
+                                        <select
+                                            value={currentTask.status}
+                                            onChange={(e) => setCurrentTask({...currentTask, status: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        >
+                                            <option value="pending">待开始</option>
+                                            <option value="in-progress">进行中</option>
+                                            <option value="completed">已完成</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">截止日期</label>
+                                        <input
+                                            type="date"
+                                            value={currentTask.dueDate}
+                                            onChange={(e) => setCurrentTask({...currentTask, dueDate: e.target.value})}
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex justify-end space-x-3 mt-6">
+                                    <button 
+                                        onClick={() => setShowEditModal(false)}
+                                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        取消
+                                    </button>
+                                    <button 
+                                        onClick={handleEditTask}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                    >
+                                        保存修改
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TaskManager />, document.getElementById('root'));
+    </script>
+</body>
+</html>

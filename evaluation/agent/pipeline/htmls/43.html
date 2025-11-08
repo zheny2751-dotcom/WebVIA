@@ -1,0 +1,411 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见问题中心 - FAQ</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        const FAQApp = () => {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('全部');
+            const [expandedItems, setExpandedItems] = useState({});
+            const [visibleCount, setVisibleCount] = useState(5);
+            const [feedbackText, setFeedbackText] = useState('');
+            const [rating, setRating] = useState(0);
+            const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+            const [isLoading, setIsLoading] = useState(false);
+
+            const allFAQs = [
+                {
+                    id: 1,
+                    category: '账号',
+                    question: '如何重置我的密码？',
+                    answer: '您可以在登录页面点击"忘记密码"链接，输入您的邮箱地址，我们会发送重置密码的链接到您的邮箱。请检查您的邮箱（包括垃圾邮件文件夹）并按照邮件中的说明操作。'
+                },
+                {
+                    id: 2,
+                    category: '支付',
+                    question: '支持哪些付款方式？',
+                    answer: '我们支持多种付款方式：信用卡（Visa、MasterCard、银联）、支付宝、微信支付、PayPal。所有支付均采用SSL加密技术，确保您的支付信息安全。'
+                },
+                {
+                    id: 3,
+                    category: '技术',
+                    question: '网页加载很慢，怎么办？',
+                    answer: '请尝试以下解决方案：1）刷新页面或清除浏览器缓存；2）检查网络连接是否稳定；3）关闭其他占用带宽的应用程序；4）尝试使用不同的浏览器。如果问题持续存在，请联系技术支持。'
+                },
+                {
+                    id: 4,
+                    category: '账号',
+                    question: '如何更改我的个人信息？',
+                    answer: '登录后进入"个人设置"页面，您可以修改姓名、邮箱、电话号码等基本信息。修改邮箱需要验证新邮箱地址，修改手机号需要短信验证。所有更改会实时保存。'
+                },
+                {
+                    id: 5,
+                    category: '其他',
+                    question: '如何联系客服？',
+                    answer: '您可以通过以下方式联系我们：1）在线客服：工作日9:00-18:00；2）客服邮箱：support@example.com；3）客服热线：400-123-4567；4）提交工单：在帮助中心提交您的问题。'
+                },
+                {
+                    id: 6,
+                    category: '支付',
+                    question: '订单支付失败怎么办？',
+                    answer: '支付失败可能由以下原因造成：银行卡余额不足、网络连接问题、银行风控限制等。建议您检查账户余额，确认网络连接正常，或尝试使用其他支付方式。如仍有问题，请联系客服。'
+                },
+                {
+                    id: 7,
+                    category: '技术',
+                    question: '为什么无法上传文件？',
+                    answer: '请检查：1）文件大小是否超过限制（最大10MB）；2）文件格式是否支持（支持jpg、png、pdf、doc等）；3）浏览器是否支持文件上传功能；4）网络连接是否稳定。建议使用Chrome或Firefox浏览器。'
+                },
+                {
+                    id: 8,
+                    category: '账号',
+                    question: '账号被锁定了怎么办？',
+                    answer: '账号锁定通常是由于多次登录失败或安全检测触发。您可以：1）等待30分钟后重试；2）通过邮箱重置密码；3）联系客服申请解锁。为了账号安全，我们建议您使用强密码并定期更改。'
+                },
+                {
+                    id: 9,
+                    category: '其他',
+                    question: '如何删除我的账号？',
+                    answer: '如需删除账号，请联系客服并提供身份验证信息。账号删除后将无法恢复，所有数据将被永久清除。删除前请确保已备份重要数据，并取消所有订阅服务。'
+                },
+                {
+                    id: 10,
+                    category: '技术',
+                    question: '移动端APP闪退怎么办？',
+                    answer: '请尝试：1）重启APP；2）检查APP版本是否为最新；3）重启手机；4）清除APP缓存；5）卸载并重新安装APP。如果问题依然存在，请将手机型号和系统版本告知客服。'
+                }
+            ];
+
+            const categories = ['全部', '账号', '支付', '技术', '其他'];
+
+            const filteredFAQs = useMemo(() => {
+                return allFAQs.filter(faq => {
+                    const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                        faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+                    const matchesCategory = selectedCategory === '全部' || faq.category === selectedCategory;
+                    return matchesSearch && matchesCategory;
+                });
+            }, [searchTerm, selectedCategory]);
+
+            const visibleFAQs = filteredFAQs.slice(0, visibleCount);
+
+            const toggleExpanded = (id) => {
+                setExpandedItems(prev => ({
+                    ...prev,
+                    [id]: !prev[id]
+                }));
+            };
+
+            const loadMore = () => {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setVisibleCount(prev => prev + 5);
+                    setIsLoading(false);
+                }, 1000);
+            };
+
+            const handleSubmitFeedback = () => {
+                if (!feedbackText.trim()) {
+                    return;
+                }
+                setShowSuccessMessage(true);
+                setFeedbackText('');
+                setRating(0);
+                setTimeout(() => {
+                    setShowSuccessMessage(false);
+                }, 3000);
+            };
+
+            const highlightText = (text, term) => {
+                if (!term) return text;
+                const regex = new RegExp(`(${term})`, 'gi');
+                return text.split(regex).map((part, index) => 
+                    regex.test(part) ? 
+                        <span key={index} className="bg-yellow-200 font-semibold">{part}</span> : 
+                        part
+                );
+            };
+
+            const StarRating = ({ rating, onRatingChange }) => {
+                return (
+                    <div className="flex space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                                key={star}
+                                onClick={() => onRatingChange(star)}
+                                className={`text-2xl transition-colors ${
+                                    star <= rating ? 'text-yellow-400' : 'text-gray-300'
+                                } hover:text-yellow-400`}
+                            >
+                                <i className="fas fa-star"></i>
+                            </button>
+                        ))}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <nav className="bg-white shadow-md">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img src="https://picsum.photos/id/1/40/40" alt="Logo" className="h-10 w-10 rounded-lg mr-3" />
+                                    <span className="text-xl font-bold text-blue-600">HelpCenter</span>
+                                </div>
+                                <div className="hidden md:flex space-x-8">
+                                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">首页</a>
+                                    <a href="#" className="text-blue-600 font-semibold">常见问题</a>
+                                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">联系我们</a>
+                                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">帮助文档</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-6xl mx-auto px-4 py-8">
+                        <div className="text-center mb-12">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4">常见问题中心</h1>
+                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                                在这里找到您需要的答案，我们整理了最常见的问题和解决方案
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            <div className="lg:col-span-3">
+                                <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                                    <div className="flex flex-col md:flex-row gap-4">
+                                        <div className="flex-1">
+                                            <div className="relative">
+                                                <input
+                                                    type="text"
+                                                    placeholder="搜索问题或关键词..."
+                                                    value={searchTerm}
+                                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                                />
+                                                <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                            </div>
+                                        </div>
+                                        <div className="md:w-48">
+                                            <select
+                                                value={selectedCategory}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                            >
+                                                {categories.map(category => (
+                                                    <option key={category} value={category}>{category}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    {visibleFAQs.length === 0 ? (
+                                        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                                            <i className="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                                            <h3 className="text-lg font-semibold text-gray-600 mb-2">未找到相关问题</h3>
+                                            <p className="text-gray-500">请尝试使用其他关键词或选择不同的分类</p>
+                                        </div>
+                                    ) : (
+                                        visibleFAQs.map((faq) => (
+                                            <div key={faq.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                                <div className="p-6">
+                                                    <div className="flex justify-between items-start">
+                                                        <div className="flex-1">
+                                                            <div className="flex items-center mb-2">
+                                                                <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mr-2">
+                                                                    {faq.category}
+                                                                </span>
+                                                            </div>
+                                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                                                                {highlightText(faq.question, searchTerm)}
+                                                            </h3>
+                                                            {expandedItems[faq.id] && (
+                                                                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                                                    <p className="text-gray-700 leading-relaxed">
+                                                                        {highlightText(faq.answer, searchTerm)}
+                                                                    </p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <button
+                                                            onClick={() => toggleExpanded(faq.id)}
+                                                            className="ml-4 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                                        >
+                                                            {expandedItems[faq.id] ? '收起' : '展开'}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+
+                                    {visibleCount < filteredFAQs.length && (
+                                        <div className="text-center py-6">
+                                            <button
+                                                onClick={loadMore}
+                                                disabled={isLoading}
+                                                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                {isLoading ? (
+                                                    <>
+                                                        <i className="fas fa-spinner fa-spin mr-2"></i>
+                                                        加载中...
+                                                    </>
+                                                ) : (
+                                                    '加载更多'
+                                                )}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                                        <i className="fas fa-comment-dots mr-2 text-blue-600"></i>
+                                        问题反馈
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                描述您的问题或建议
+                                            </label>
+                                            <textarea
+                                                value={feedbackText}
+                                                onChange={(e) => setFeedbackText(e.target.value)}
+                                                placeholder="请详细描述您遇到的问题..."
+                                                rows="4"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                满意度评分
+                                            </label>
+                                            <StarRating rating={rating} onRatingChange={setRating} />
+                                        </div>
+
+                                        <button
+                                            onClick={handleSubmitFeedback}
+                                            disabled={!feedbackText.trim()}
+                                            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交反馈
+                                        </button>
+
+                                        {showSuccessMessage && (
+                                            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                                                <i className="fas fa-check-circle mr-2"></i>
+                                                反馈提交成功！我们会尽快处理您的问题。
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                                        <i className="fas fa-headset mr-2 text-blue-600"></i>
+                                        联系客服
+                                    </h3>
+                                    <div className="space-y-3 text-sm">
+                                        <div className="flex items-center">
+                                            <i className="fas fa-clock text-gray-400 mr-2"></i>
+                                            <span>工作时间：周一至周五 9:00-18:00</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <i className="fas fa-phone text-gray-400 mr-2"></i>
+                                            <span>客服热线：400-123-4567</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <i className="fas fa-envelope text-gray-400 mr-2"></i>
+                                            <span>邮箱：support@example.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                                        <i className="fas fa-link mr-2 text-blue-600"></i>
+                                        相关资源
+                                    </h3>
+                                    <div className="space-y-3">
+                                        <a
+                                            href="https://example.com/user-guide"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            <i className="fas fa-book mr-2"></i>
+                                            <span>用户操作指南</span>
+                                            <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                        <a
+                                            href="https://example.com/api-docs"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            <i className="fas fa-code mr-2"></i>
+                                            <span>开发者文档</span>
+                                            <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                        <a
+                                            href="https://example.com/video-tutorials"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            <i className="fas fa-play-circle mr-2"></i>
+                                            <span>视频教程</span>
+                                            <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                        <a
+                                            href="https://example.com/community"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            <i className="fas fa-users mr-2"></i>
+                                            <span>用户社区</span>
+                                            <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="max-w-6xl mx-auto px-4 text-center">
+                            <div className="flex items-center justify-center mb-4">
+                                <img src="https://picsum.photos/id/2/32/32" alt="Footer Logo" className="h-8 w-8 rounded mr-2" />
+                                <span className="text-lg font-semibold">HelpCenter</span>
+                            </div>
+                            <p className="text-gray-400">© 2024 HelpCenter. 保留所有权利。</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<FAQApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

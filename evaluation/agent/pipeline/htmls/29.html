@@ -1,0 +1,630 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能学科选择指导系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const [currentSection, setCurrentSection] = React.useState('intro');
+            const [showQuestionnaire, setShowQuestionnaire] = React.useState(false);
+            const [userInfo, setUserInfo] = React.useState({
+                name: '',
+                grade: '',
+                mathScore: '',
+                chineseScore: '',
+                englishScore: '',
+                scienceScore: '',
+                interests: [],
+                preference: ''
+            });
+            const [recommendations, setRecommendations] = React.useState([]);
+            const [selectedSubject, setSelectedSubject] = React.useState(null);
+            const [chartData, setChartData] = React.useState(null);
+
+            const subjects = {
+                '理科综合': {
+                    icon: '🧪',
+                    color: 'bg-blue-500',
+                    description: '物理、化学、生物组合，适合逻辑思维强、喜欢实验的学生',
+                    employment: '工程师、医生、研究员、技术专家',
+                    universities: '清华大学、北京理工大学、华中科技大学',
+                    difficulty: '★★★★☆',
+                    prospects: '就业前景广阔，特别是在科技和医疗领域'
+                },
+                '文科综合': {
+                    icon: '📚',
+                    color: 'bg-green-500',
+                    description: '政治、历史、地理组合，适合文字表达能力强的学生',
+                    employment: '律师、教师、公务员、记者、外交官',
+                    universities: '北京大学、人民大学、复旦大学',
+                    difficulty: '★★★☆☆',
+                    prospects: '在教育、法律、媒体等领域有稳定发展'
+                },
+                '新高考组合': {
+                    icon: '🎯',
+                    color: 'bg-purple-500',
+                    description: '物理+化学+地理等新兴组合，平衡理性与感性思维',
+                    employment: '数据分析师、环境工程师、地理信息专家',
+                    universities: '上海交通大学、浙江大学、南京大学',
+                    difficulty: '★★★☆☆',
+                    prospects: '适应新时代需求，跨学科发展前景好'
+                },
+                '艺术特色': {
+                    icon: '🎨',
+                    color: 'bg-pink-500',
+                    description: '结合艺术特长的学科组合，培养创新思维',
+                    employment: '设计师、艺术家、创意总监、文化策划',
+                    universities: '中央美术学院、中国传媒大学、北京电影学院',
+                    difficulty: '★★★★☆',
+                    prospects: '文创产业蓬勃发展，个人发展空间大'
+                },
+                '技术导向': {
+                    icon: '💻',
+                    color: 'bg-indigo-500',
+                    description: '数学+物理+信息技术，适合逻辑思维强的学生',
+                    employment: '软件工程师、数据科学家、AI研究员',
+                    universities: '清华大学、北京航空航天大学、电子科技大学',
+                    difficulty: '★★★★★',
+                    prospects: '科技行业高薪职位，发展前景广阔'
+                }
+            };
+
+            const interestOptions = [
+                '编程', '绘画', '运动', '文学', '实验', '音乐', 
+                '数学', '历史', '地理', '物理', '化学', '生物'
+            ];
+
+            const startAssessment = () => {
+                setShowQuestionnaire(true);
+                setCurrentSection('questionnaire');
+            };
+
+            const submitQuestionnaire = () => {
+                if (!userInfo.name || !userInfo.grade) {
+                    return;
+                }
+
+                const scores = [
+                    parseInt(userInfo.mathScore) || 0,
+                    parseInt(userInfo.chineseScore) || 0,
+                    parseInt(userInfo.englishScore) || 0,
+                    parseInt(userInfo.scienceScore) || 0
+                ];
+
+                const avgScore = scores.reduce((a, b) => a + b, 0) / 4;
+                const strongMath = parseInt(userInfo.mathScore) > 120;
+                const strongChinese = parseInt(userInfo.chineseScore) > 120;
+                const hasArtInterest = userInfo.interests.some(i => ['绘画', '音乐', '文学'].includes(i));
+                const hasTechInterest = userInfo.interests.some(i => ['编程', '数学', '物理'].includes(i));
+
+                let recs = [];
+                
+                if (strongMath && hasTechInterest) {
+                    recs.push({
+                        subject: '技术导向',
+                        match: 95,
+                        reason: '数学成绩优秀，对技术领域兴趣浓厚'
+                    });
+                }
+
+                if (avgScore > 100) {
+                    recs.push({
+                        subject: '理科综合',
+                        match: strongMath ? 90 : 75,
+                        reason: '理科基础扎实，适合深入学习理工科'
+                    });
+                }
+
+                if (strongChinese || hasArtInterest) {
+                    recs.push({
+                        subject: hasArtInterest ? '艺术特色' : '文科综合',
+                        match: 85,
+                        reason: hasArtInterest ? '有艺术天赋，适合创意发展' : '文科基础好，适合人文社科'
+                    });
+                }
+
+                if (userInfo.preference === '均衡型') {
+                    recs.push({
+                        subject: '新高考组合',
+                        match: 80,
+                        reason: '均衡发展，适合跨学科学习'
+                    });
+                }
+
+                setRecommendations(recs.length > 0 ? recs : [{
+                    subject: '新高考组合',
+                    match: 70,
+                    reason: '建议均衡发展，探索多个领域'
+                }]);
+
+                setChartData({
+                    math: parseInt(userInfo.mathScore) || 0,
+                    chinese: parseInt(userInfo.chineseScore) || 0,
+                    english: parseInt(userInfo.englishScore) || 0,
+                    science: parseInt(userInfo.scienceScore) || 0
+                });
+
+                setCurrentSection('results');
+            };
+
+            const handleInterestChange = (interest) => {
+                const newInterests = userInfo.interests.includes(interest)
+                    ? userInfo.interests.filter(i => i !== interest)
+                    : [...userInfo.interests, interest];
+                setUserInfo({...userInfo, interests: newInterests});
+            };
+
+            const ScoreChart = ({ data }) => {
+                if (!data) return null;
+
+                const maxScore = 150;
+                const subjects = ['数学', '语文', '英语', '科学'];
+                const scores = [data.math, data.chinese, data.english, data.science];
+                const colors = ['bg-red-400', 'bg-blue-400', 'bg-green-400', 'bg-yellow-400'];
+
+                return (
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-800">成绩分析图表</h3>
+                        <div className="space-y-4">
+                            {subjects.map((subject, index) => (
+                                <div key={subject} className="flex items-center space-x-3">
+                                    <div className="w-16 text-sm font-medium text-gray-600">{subject}</div>
+                                    <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
+                                        <div 
+                                            className={`${colors[index]} h-6 rounded-full flex items-center justify-end pr-2 transition-all duration-500`}
+                                            style={{ width: `${(scores[index] / maxScore) * 100}%` }}
+                                        >
+                                            <span className="text-white text-xs font-medium">{scores[index]}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <nav className="bg-white shadow-lg sticky top-0 z-50">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center space-x-3">
+                                    <i className="fas fa-graduation-cap text-2xl text-indigo-600"></i>
+                                    <span className="text-xl font-bold text-gray-800">智能学科选择系统</span>
+                                </div>
+                                <div className="flex space-x-6">
+                                    <button 
+                                        onClick={() => setCurrentSection('intro')}
+                                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                            currentSection === 'intro' ? 'bg-indigo-100 text-indigo-700' : 'text-gray-600 hover:text-indigo-600'
+                                        }`}
+                                    >
+                                        首页
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('questionnaire')}
+                                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                            currentSection === 'questionnaire' ? 'bg-indigo-100 text-indigo-700' : 'text-gray-600 hover:text-indigo-600'
+                                        }`}
+                                    >
+                                        评估问卷
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('results')}
+                                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                            currentSection === 'results' ? 'bg-indigo-100 text-indigo-700' : 'text-gray-600 hover:text-indigo-600'
+                                        }`}
+                                    >
+                                        推荐结果
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {currentSection === 'intro' && (
+                            <div className="mb-12">
+                                <div className="relative bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl overflow-hidden">
+                                    <img 
+                                        src="https://picsum.photos/id/180/1200/400" 
+                                        alt="教育背景"
+                                        className="w-full h-64 object-cover opacity-20"
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="text-center text-white px-6">
+                                            <h1 className="text-4xl md:text-5xl font-bold mb-4">智能学科选择指导</h1>
+                                            <p className="text-xl md:text-2xl mb-8 opacity-90">基于个人兴趣和能力，为您推荐最适合的学科组合</p>
+                                            <button 
+                                                onClick={startAssessment}
+                                                className="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+                                            >
+                                                <i className="fas fa-play mr-2"></i>
+                                                开始评估
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid md:grid-cols-3 gap-8 mt-12">
+                                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                                        <img 
+                                            src="https://picsum.photos/id/249/300/200" 
+                                            alt="个性化分析"
+                                            className="w-full h-40 object-cover rounded-lg mb-4"
+                                        />
+                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">个性化分析</h3>
+                                        <p className="text-gray-600">基于您的成绩、兴趣和特长，提供量身定制的学科建议</p>
+                                    </div>
+                                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                                        <img 
+                                            src="https://picsum.photos/id/219/300/200" 
+                                            alt="专业指导"
+                                            className="w-full h-40 object-cover rounded-lg mb-4"
+                                        />
+                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">专业指导</h3>
+                                        <p className="text-gray-600">详细的职业规划建议，帮助您了解各学科的就业前景</p>
+                                    </div>
+                                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                                        <img 
+                                            src="https://picsum.photos/id/267/300/200" 
+                                            alt="数据支持"
+                                            className="w-full h-40 object-cover rounded-lg mb-4"
+                                        />
+                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">数据支持</h3>
+                                        <p className="text-gray-600">基于大数据分析，提供科学准确的学科匹配度评估</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentSection === 'questionnaire' && (
+                            <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                                <div className="text-center mb-8">
+                                    <h2 className="text-3xl font-bold text-gray-800 mb-4">学科适应性评估</h2>
+                                    <p className="text-gray-600">请如实填写以下信息，我们将为您生成个性化的学科推荐</p>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="space-y-6">
+                                        <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">基本信息</h3>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">姓名</label>
+                                            <input 
+                                                type="text"
+                                                value={userInfo.name}
+                                                onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                placeholder="请输入您的姓名"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">当前年级</label>
+                                            <select 
+                                                value={userInfo.grade}
+                                                onChange={(e) => setUserInfo({...userInfo, grade: e.target.value})}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                            >
+                                                <option value="">请选择年级</option>
+                                                <option value="初一">初一</option>
+                                                <option value="初二">初二</option>
+                                                <option value="初三">初三</option>
+                                                <option value="高一">高一</option>
+                                                <option value="高二">高二</option>
+                                                <option value="高三">高三</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">学习偏好</label>
+                                            <select 
+                                                value={userInfo.preference}
+                                                onChange={(e) => setUserInfo({...userInfo, preference: e.target.value})}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                            >
+                                                <option value="">请选择学习偏好</option>
+                                                <option value="偏理科">偏理科</option>
+                                                <option value="偏文科">偏文科</option>
+                                                <option value="均衡型">均衡型</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">学科成绩 (0-150分)</h3>
+                                        
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">数学</label>
+                                                <input 
+                                                    type="number"
+                                                    min="0"
+                                                    max="150"
+                                                    value={userInfo.mathScore}
+                                                    onChange={(e) => {
+                                                        setUserInfo({...userInfo, mathScore: e.target.value});
+                                                        if (chartData) {
+                                                            setChartData({...chartData, math: parseInt(e.target.value) || 0});
+                                                        }
+                                                    }}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    placeholder="数学成绩"
+                                                />
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">语文</label>
+                                                <input 
+                                                    type="number"
+                                                    min="0"
+                                                    max="150"
+                                                    value={userInfo.chineseScore}
+                                                    onChange={(e) => {
+                                                        setUserInfo({...userInfo, chineseScore: e.target.value});
+                                                        if (chartData) {
+                                                            setChartData({...chartData, chinese: parseInt(e.target.value) || 0});
+                                                        }
+                                                    }}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    placeholder="语文成绩"
+                                                />
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">英语</label>
+                                                <input 
+                                                    type="number"
+                                                    min="0"
+                                                    max="150"
+                                                    value={userInfo.englishScore}
+                                                    onChange={(e) => {
+                                                        setUserInfo({...userInfo, englishScore: e.target.value});
+                                                        if (chartData) {
+                                                            setChartData({...chartData, english: parseInt(e.target.value) || 0});
+                                                        }
+                                                    }}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    placeholder="英语成绩"
+                                                />
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">科学</label>
+                                                <input 
+                                                    type="number"
+                                                    min="0"
+                                                    max="150"
+                                                    value={userInfo.scienceScore}
+                                                    onChange={(e) => {
+                                                        setUserInfo({...userInfo, scienceScore: e.target.value});
+                                                        if (chartData) {
+                                                            setChartData({...chartData, science: parseInt(e.target.value) || 0});
+                                                        }
+                                                    }}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    placeholder="科学成绩"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-4">兴趣爱好 (可多选)</h3>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        {interestOptions.map(interest => (
+                                            <button
+                                                key={interest}
+                                                onClick={() => handleInterestChange(interest)}
+                                                className={`px-4 py-2 rounded-lg border-2 transition-all ${
+                                                    userInfo.interests.includes(interest)
+                                                        ? 'bg-indigo-100 border-indigo-500 text-indigo-700'
+                                                        : 'bg-white border-gray-300 text-gray-700 hover:border-indigo-300'
+                                                }`}
+                                            >
+                                                {interest}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="text-center mt-8">
+                                    <button 
+                                        onClick={submitQuestionnaire}
+                                        className="bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors shadow-lg"
+                                    >
+                                        <i className="fas fa-chart-line mr-2"></i>
+                                        提交问卷，生成推荐
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentSection === 'results' && recommendations.length > 0 && (
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                                        {userInfo.name ? `${userInfo.name}的评估结果` : '评估结果'}
+                                    </h2>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-700 mb-3">基本信息</h3>
+                                            <div className="space-y-2 text-gray-600">
+                                                <p><span className="font-medium">年级：</span>{userInfo.grade}</p>
+                                                <p><span className="font-medium">学习偏好：</span>{userInfo.preference}</p>
+                                                <p><span className="font-medium">兴趣爱好：</span>{userInfo.interests.join(', ') || '未选择'}</p>
+                                            </div>
+                                        </div>
+                                        <ScoreChart data={chartData} />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6">为您推荐的学科组合</h2>
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {recommendations.map((rec, index) => (
+                                            <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                                                <div className={`${subjects[rec.subject].color} text-white p-4`}>
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex items-center space-x-2">
+                                                            <span className="text-2xl">{subjects[rec.subject].icon}</span>
+                                                            <h3 className="text-lg font-semibold">{rec.subject}</h3>
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <div className="text-sm opacity-90">匹配度</div>
+                                                            <div className="text-2xl font-bold">{rec.match}%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="p-4">
+                                                    <p className="text-gray-600 mb-4">{rec.reason}</p>
+                                                    <button 
+                                                        onClick={() => setSelectedSubject(rec.subject)}
+                                                        className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+                                                    >
+                                                        <i className="fas fa-info-circle mr-2"></i>
+                                                        查看详情
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {selectedSubject && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                                <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                                    <div className={`${subjects[selectedSubject].color} text-white p-6 rounded-t-2xl`}>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center space-x-3">
+                                                <span className="text-3xl">{subjects[selectedSubject].icon}</span>
+                                                <h2 className="text-2xl font-bold">{selectedSubject}</h2>
+                                            </div>
+                                            <button 
+                                                onClick={() => setSelectedSubject(null)}
+                                                className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
+                                            >
+                                                <i className="fas fa-times text-xl"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="p-6 space-y-6">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">专业描述</h3>
+                                            <p className="text-gray-600">{subjects[selectedSubject].description}</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">就业方向</h3>
+                                            <p className="text-gray-600">{subjects[selectedSubject].employment}</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">推荐院校</h3>
+                                            <p className="text-gray-600">{subjects[selectedSubject].universities}</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">学习难度</h3>
+                                            <p className="text-gray-600">{subjects[selectedSubject].difficulty}</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">发展前景</h3>
+                                            <p className="text-gray-600">{subjects[selectedSubject].prospects}</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-800 mb-3">查看其他学科</h3>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                {Object.keys(subjects).filter(s => s !== selectedSubject).map(subject => (
+                                                    <button
+                                                        key={subject}
+                                                        onClick={() => setSelectedSubject(subject)}
+                                                        className={`${subjects[subject].color} text-white p-3 rounded-lg hover:opacity-90 transition-opacity flex items-center space-x-2`}
+                                                    >
+                                                        <span>{subjects[subject].icon}</span>
+                                                        <span className="text-sm">{subject}</span>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentSection === 'results' && recommendations.length === 0 && (
+                            <div className="text-center py-16">
+                                <img 
+                                    src="https://picsum.photos/id/395/400/300" 
+                                    alt="暂无结果"
+                                    className="w-64 h-48 mx-auto object-cover rounded-lg mb-6 opacity-60"
+                                />
+                                <h3 className="text-xl font-semibold text-gray-600 mb-4">还没有评估结果</h3>
+                                <p className="text-gray-500 mb-6">请先完成评估问卷，我们将为您生成个性化的学科推荐</p>
+                                <button 
+                                    onClick={() => setCurrentSection('questionnaire')}
+                                    className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+                                >
+                                    开始评估
+                                </button>
+                            </div>
+                        )}
+                    </main>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-4">关于我们</h3>
+                                    <p className="text-gray-300">专注于为学生提供科学、个性化的学科选择指导，帮助每个学生找到最适合的发展道路。</p>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-4">联系方式</h3>
+                                    <div className="space-y-2 text-gray-300">
+                                        <p><i className="fas fa-phone mr-2"></i>400-123-4567</p>
+                                        <p><i className="fas fa-envelope mr-2"></i>contact@subjectguide.com</p>
+                                        <p><i className="fas fa-map-marker-alt mr-2"></i>北京市朝阳区教育科技园</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-4">服务支持</h3>
+                                    <div className="space-y-2 text-gray-300">
+                                        <p>在线咨询：周一至周五 9:00-18:00</p>
+                                        <p>技术支持：24小时在线</p>
+                                        <div className="flex space-x-4 mt-4">
+                                            <i className="fab fa-weixin text-xl hover:text-green-400 cursor-pointer"></i>
+                                            <i className="fab fa-qq text-xl hover:text-blue-400 cursor-pointer"></i>
+                                            <i className="fab fa-weibo text-xl hover:text-red-400 cursor-pointer"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                                <p>&copy; 2024 智能学科选择系统. 保留所有权利.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

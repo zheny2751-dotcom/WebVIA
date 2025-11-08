@@ -1,0 +1,579 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员注册</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function RegistrationApp() {
+            const [currentStep, setCurrentStep] = useState(1);
+            const [showPassword, setShowPassword] = useState(false);
+            const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+            const [countdown, setCountdown] = useState(0);
+            const [showModal, setShowModal] = useState(false);
+            const [registrationComplete, setRegistrationComplete] = useState(false);
+            
+            const [formData, setFormData] = useState({
+                username: '',
+                password: '',
+                confirmPassword: '',
+                email: '',
+                phone: '',
+                verificationCode: '',
+                memberLevel: 'normal',
+                gender: '',
+                interests: [],
+                agreeTerms: false
+            });
+            
+            const [errors, setErrors] = useState({});
+            
+            useEffect(() => {
+                if (countdown > 0) {
+                    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+                    return () => clearTimeout(timer);
+                }
+            }, [countdown]);
+            
+            const handleInputChange = (field, value) => {
+                setFormData(prev => ({
+                    ...prev,
+                    [field]: value
+                }));
+                
+                if (errors[field]) {
+                    setErrors(prev => ({
+                        ...prev,
+                        [field]: ''
+                    }));
+                }
+            };
+            
+            const validateStep = (step) => {
+                const newErrors = {};
+                
+                if (step === 1) {
+                    if (!formData.username.trim()) {
+                        newErrors.username = '用户名不能为空';
+                    } else if (formData.username.length < 3) {
+                        newErrors.username = '用户名至少3个字符';
+                    }
+                    
+                    if (!formData.password) {
+                        newErrors.password = '密码不能为空';
+                    } else if (formData.password.length < 6) {
+                        newErrors.password = '密码至少6个字符';
+                    }
+                    
+                    if (!formData.confirmPassword) {
+                        newErrors.confirmPassword = '请确认密码';
+                    } else if (formData.password !== formData.confirmPassword) {
+                        newErrors.confirmPassword = '两次密码输入不一致';
+                    }
+                }
+                
+                if (step === 2) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!formData.email) {
+                        newErrors.email = '邮箱不能为空';
+                    } else if (!emailRegex.test(formData.email)) {
+                        newErrors.email = '邮箱格式不正确';
+                    }
+                    
+                    const phoneRegex = /^1[3-9]\d{9}$/;
+                    if (!formData.phone) {
+                        newErrors.phone = '手机号不能为空';
+                    } else if (!phoneRegex.test(formData.phone)) {
+                        newErrors.phone = '手机号格式不正确';
+                    }
+                }
+                
+                if (step === 3) {
+                    if (!formData.gender) {
+                        newErrors.gender = '请选择性别';
+                    }
+                    
+                    if (formData.interests.length === 0) {
+                        newErrors.interests = '请至少选择一个兴趣爱好';
+                    }
+                    
+                    if (!formData.agreeTerms) {
+                        newErrors.agreeTerms = '请同意注册协议';
+                    }
+                }
+                
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+            
+            const handleNext = () => {
+                if (validateStep(currentStep)) {
+                    setCurrentStep(prev => prev + 1);
+                }
+            };
+            
+            const handlePrev = () => {
+                setCurrentStep(prev => prev - 1);
+            };
+            
+            const handleSendCode = () => {
+                if (formData.phone && /^1[3-9]\d{9}$/.test(formData.phone)) {
+                    setCountdown(60);
+                } else {
+                    setErrors(prev => ({
+                        ...prev,
+                        phone: '请输入正确的手机号'
+                    }));
+                }
+            };
+            
+            const handleInterestChange = (interest) => {
+                setFormData(prev => ({
+                    ...prev,
+                    interests: prev.interests.includes(interest)
+                        ? prev.interests.filter(i => i !== interest)
+                        : [...prev.interests, interest]
+                }));
+            };
+            
+            const handleSubmit = () => {
+                if (validateStep(3)) {
+                    setRegistrationComplete(true);
+                    setTimeout(() => {
+                        setRegistrationComplete(false);
+                    }, 5000);
+                }
+            };
+            
+            const renderStep1 = () => (
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            用户名 *
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.username}
+                            onChange={(e) => handleInputChange('username', e.target.value)}
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                errors.username ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                            placeholder="请输入用户名"
+                        />
+                        {errors.username && (
+                            <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            密码 *
+                        </label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={formData.password}
+                                onChange={(e) => handleInputChange('password', e.target.value)}
+                                className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                    errors.password ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                                placeholder="请输入密码"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                                <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                            </button>
+                        </div>
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            确认密码 *
+                        </label>
+                        <div className="relative">
+                            <input
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                value={formData.confirmPassword}
+                                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                                className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                    errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                                placeholder="请再次输入密码"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                                <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                            </button>
+                        </div>
+                        {errors.confirmPassword && (
+                            <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                        )}
+                    </div>
+                </div>
+            );
+            
+            const renderStep2 = () => (
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            电子邮箱 *
+                        </label>
+                        <input
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                errors.email ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                            placeholder="请输入邮箱地址"
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            手机号码 *
+                        </label>
+                        <input
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => handleInputChange('phone', e.target.value)}
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                errors.phone ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                            placeholder="请输入手机号码"
+                        />
+                        {errors.phone && (
+                            <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            验证码
+                        </label>
+                        <div className="flex space-x-3">
+                            <input
+                                type="text"
+                                value={formData.verificationCode}
+                                onChange={(e) => handleInputChange('verificationCode', e.target.value)}
+                                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="请输入验证码"
+                            />
+                            <button
+                                type="button"
+                                onClick={handleSendCode}
+                                disabled={countdown > 0}
+                                className={`px-6 py-3 rounded-lg font-medium ${
+                                    countdown > 0
+                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                                }`}
+                            >
+                                {countdown > 0 ? `${countdown}s` : '发送验证码'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+            
+            const renderStep3 = () => (
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            会员等级
+                        </label>
+                        <select
+                            value={formData.memberLevel}
+                            onChange={(e) => handleInputChange('memberLevel', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                            <option value="normal">普通会员</option>
+                            <option value="gold">黄金会员</option>
+                            <option value="platinum">铂金会员</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            性别 *
+                        </label>
+                        <div className="flex space-x-6">
+                            {['male', 'female', 'other'].map((gender) => (
+                                <label key={gender} className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        value={gender}
+                                        checked={formData.gender === gender}
+                                        onChange={(e) => handleInputChange('gender', e.target.value)}
+                                        className="mr-2 text-blue-600 focus:ring-blue-500"
+                                    />
+                                    <span className="text-gray-700">
+                                        {gender === 'male' ? '男' : gender === 'female' ? '女' : '其他'}
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+                        {errors.gender && (
+                            <p className="text-red-500 text-sm mt-1">{errors.gender}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            兴趣爱好 *
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                            {['音乐', '运动', '阅读', '旅行', '摄影', '烹饪'].map((interest) => (
+                                <label key={interest} className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.interests.includes(interest)}
+                                        onChange={() => handleInterestChange(interest)}
+                                        className="mr-2 text-blue-600 focus:ring-blue-500"
+                                    />
+                                    <span className="text-gray-700">{interest}</span>
+                                </label>
+                            ))}
+                        </div>
+                        {errors.interests && (
+                            <p className="text-red-500 text-sm mt-1">{errors.interests}</p>
+                        )}
+                    </div>
+                    
+                    <div>
+                        <label className="flex items-center">
+                            <input
+                                type="checkbox"
+                                checked={formData.agreeTerms}
+                                onChange={(e) => handleInputChange('agreeTerms', e.target.checked)}
+                                className={`mr-2 text-blue-600 focus:ring-blue-500 ${
+                                    errors.agreeTerms ? 'border-red-500' : ''
+                                }`}
+                            />
+                            <span className="text-gray-700">
+                                我同意
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(true)}
+                                    className="text-blue-600 hover:text-blue-800 underline mx-1"
+                                >
+                                    用户注册协议
+                                </button>
+                                和隐私政策
+                            </span>
+                        </label>
+                        {errors.agreeTerms && (
+                            <p className="text-red-500 text-sm mt-1">{errors.agreeTerms}</p>
+                        )}
+                    </div>
+                </div>
+            );
+            
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <header className="bg-white shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img
+                                        src="https://picsum.photos/id/1/40/40"
+                                        alt="Logo"
+                                        className="h-8 w-8 rounded-full mr-3"
+                                    />
+                                    <h1 className="text-xl font-bold text-gray-900">MemberHub</h1>
+                                </div>
+                                <nav className="hidden md:flex space-x-8">
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">首页</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">服务</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">关于我们</a>
+                                    <a href="#" className="text-blue-600 font-medium">注册</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">登录</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <main className="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                        <div className="bg-white rounded-lg shadow-lg p-8">
+                            <div className="mb-8">
+                                <div className="flex items-center justify-between mb-4">
+                                    {[1, 2, 3].map((step) => (
+                                        <div
+                                            key={step}
+                                            className={`flex items-center ${
+                                                step < 3 ? 'flex-1' : ''
+                                            }`}
+                                        >
+                                            <div
+                                                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                                                    currentStep >= step
+                                                        ? 'bg-blue-600 text-white'
+                                                        : 'bg-gray-200 text-gray-600'
+                                                }`}
+                                            >
+                                                {step}
+                                            </div>
+                                            {step < 3 && (
+                                                <div
+                                                    className={`flex-1 h-1 mx-4 ${
+                                                        currentStep > step ? 'bg-blue-600' : 'bg-gray-200'
+                                                    }`}
+                                                />
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-between text-sm text-gray-600">
+                                    <span>账户信息</span>
+                                    <span>联系方式</span>
+                                    <span>个人偏好</span>
+                                </div>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                    {currentStep === 1 && '创建账户'}
+                                    {currentStep === 2 && '验证信息'}
+                                    {currentStep === 3 && '完善资料'}
+                                </h2>
+                                
+                                {currentStep === 1 && renderStep1()}
+                                {currentStep === 2 && renderStep2()}
+                                {currentStep === 3 && renderStep3()}
+                            </div>
+                            
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={handlePrev}
+                                    disabled={currentStep === 1}
+                                    className={`px-6 py-3 rounded-lg font-medium ${
+                                        currentStep === 1
+                                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                    }`}
+                                >
+                                    上一步
+                                </button>
+                                
+                                {currentStep < 3 ? (
+                                    <button
+                                        onClick={handleNext}
+                                        className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                    >
+                                        下一步
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={handleSubmit}
+                                        className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+                                    >
+                                        提交注册
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        
+                        <div className="mt-8 bg-blue-50 rounded-lg p-6">
+                            <h3 className="text-lg font-semibold text-blue-900 mb-4">会员权益</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="text-center">
+                                    <img
+                                        src="https://picsum.photos/id/10/60/60"
+                                        alt="普通会员"
+                                        className="w-12 h-12 mx-auto mb-2 rounded-full"
+                                    />
+                                    <h4 className="font-medium text-gray-900">普通会员</h4>
+                                    <p className="text-sm text-gray-600">基础服务权益</p>
+                                </div>
+                                <div className="text-center">
+                                    <img
+                                        src="https://picsum.photos/id/20/60/60"
+                                        alt="黄金会员"
+                                        className="w-12 h-12 mx-auto mb-2 rounded-full"
+                                    />
+                                    <h4 className="font-medium text-gray-900">黄金会员</h4>
+                                    <p className="text-sm text-gray-600">优先客服支持</p>
+                                </div>
+                                <div className="text-center">
+                                    <img
+                                        src="https://picsum.photos/id/30/60/60"
+                                        alt="铂金会员"
+                                        className="w-12 h-12 mx-auto mb-2 rounded-full"
+                                    />
+                                    <h4 className="font-medium text-gray-900">铂金会员</h4>
+                                    <p className="text-sm text-gray-600">专属定制服务</p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    
+                    {showModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg p-6 max-w-2xl max-h-96 overflow-y-auto">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-lg font-semibold">用户注册协议</h3>
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="text-gray-500 hover:text-gray-700"
+                                    >
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div className="text-sm text-gray-600 space-y-4">
+                                    <p>1. 用户在注册时必须提供真实、准确、完整的个人资料。</p>
+                                    <p>2. 用户有义务保护自己的账户安全，不得将账户信息泄露给他人。</p>
+                                    <p>3. 用户承诺遵守国家相关法律法规，不得利用本平台进行违法活动。</p>
+                                    <p>4. 平台有权根据相关法律法规对用户信息进行必要的核实和处理。</p>
+                                    <p>5. 本协议的解释权归本平台所有，如有争议，以本平台最终解释为准。</p>
+                                </div>
+                                <div className="mt-6 flex justify-end">
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                                    >
+                                        我已阅读
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {registrationComplete && (
+                        <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg">
+                            <div className="flex items-center">
+                                <i className="fas fa-check-circle mr-2"></i>
+                                注册成功！欢迎加入 MemberHub
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<RegistrationApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

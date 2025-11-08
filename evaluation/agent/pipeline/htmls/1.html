@@ -1,0 +1,487 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味邻居图谱投票</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [searchTerm, setSearchTerm] = useState('');
+            const [filterRole, setFilterRole] = useState('all');
+            const [showRanking, setShowRanking] = useState(false);
+            const [feedbacks, setFeedbacks] = useState([]);
+            const [feedbackText, setFeedbackText] = useState('');
+            const [showStats, setShowStats] = useState(false);
+            const [selectedStatsRole, setSelectedStatsRole] = useState('');
+            
+            const [neighbors, setNeighbors] = useState([
+                {
+                    id: 1,
+                    name: '张大妈',
+                    role: '业主',
+                    description: '热心的广场舞队长，总是笑容满面',
+                    avatar: 'https://picsum.photos/id/1005/200/200',
+                    votes: 15
+                },
+                {
+                    id: 2,
+                    name: '李小明',
+                    role: '学生',
+                    description: '计算机专业大学生，喜欢帮邻居修电脑',
+                    avatar: 'https://picsum.photos/id/1027/200/200',
+                    votes: 8
+                },
+                {
+                    id: 3,
+                    name: '王师傅',
+                    role: '物业',
+                    description: '24小时待命的维修高手，技术过硬',
+                    avatar: 'https://picsum.photos/id/1074/200/200',
+                    votes: 12
+                },
+                {
+                    id: 4,
+                    name: '刘阿姨',
+                    role: '退休人员',
+                    description: '小区花园的园艺师，种花养草样样精通',
+                    avatar: 'https://picsum.photos/id/1081/200/200',
+                    votes: 20
+                },
+                {
+                    id: 5,
+                    name: '陈老板',
+                    role: '商家',
+                    description: '楼下便利店老板，24小时营业便民服务',
+                    avatar: 'https://picsum.photos/id/1006/200/200',
+                    votes: 6
+                },
+                {
+                    id: 6,
+                    name: '小美',
+                    role: '租户',
+                    description: '新搬来的白领，热爱烘焙分享美食',
+                    avatar: 'https://picsum.photos/id/1012/200/200',
+                    votes: 18
+                }
+            ]);
+
+            const roles = ['all', '业主', '学生', '物业', '退休人员', '商家', '租户'];
+
+            const handleVote = (neighborId) => {
+                setNeighbors(prev => prev.map(neighbor => 
+                    neighbor.id === neighborId 
+                        ? { ...neighbor, votes: neighbor.votes + 1 }
+                        : neighbor
+                ));
+            };
+
+            const handleSearch = () => {
+                // Search functionality is handled by filteredNeighbors
+            };
+
+            const handleFilter = () => {
+                // Filter functionality is handled by filteredNeighbors
+            };
+
+            const filteredNeighbors = neighbors.filter(neighbor => {
+                const matchesSearch = neighbor.name.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesFilter = filterRole === 'all' || neighbor.role === filterRole;
+                return matchesSearch && matchesFilter;
+            });
+
+            const handleShowRanking = () => {
+                setShowRanking(!showRanking);
+            };
+
+            const topNeighbors = [...neighbors]
+                .sort((a, b) => b.votes - a.votes)
+                .slice(0, 3);
+
+            const handleSubmitFeedback = () => {
+                if (feedbackText.trim()) {
+                    setFeedbacks(prev => [...prev, {
+                        id: Date.now(),
+                        text: feedbackText,
+                        timestamp: new Date().toLocaleString()
+                    }]);
+                    setFeedbackText('');
+                }
+            };
+
+            const handleGenerateStats = () => {
+                if (selectedStatsRole) {
+                    setShowStats(true);
+                }
+            };
+
+            const getStatsData = () => {
+                const roleNeighbors = neighbors.filter(n => n.role === selectedStatsRole);
+                const totalVotes = roleNeighbors.reduce((sum, n) => sum + n.votes, 0);
+                const allVotes = neighbors.reduce((sum, n) => sum + n.votes, 0);
+                return {
+                    roleVotes: totalVotes,
+                    percentage: allVotes > 0 ? ((totalVotes / allVotes) * 100).toFixed(1) : 0
+                };
+            };
+
+            const renderHome = () => (
+                <div className="space-y-8">
+                    <div className="bg-gradient-to-r from-pink-100 to-purple-100 p-8 rounded-2xl">
+                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h2 className="text-3xl font-bold text-purple-800 mb-4">
+                                    <i className="fas fa-home mr-3"></i>
+                                    阳光社区简介
+                                </h2>
+                                <p className="text-gray-700 leading-relaxed text-lg">
+                                    欢迎来到阳光社区！这里有着温馨的邻里关系和浓厚的人情味。
+                                    我们的社区汇聚了各行各业的优秀邻居，从热心的退休阿姨到专业的物业师傅，
+                                    从勤奋的学生到贴心的商家。每个人都用自己的方式为社区贡献着温暖与活力。
+                                    快来为你最喜欢的邻居投票吧！
+                                </p>
+                            </div>
+                            <div className="text-center">
+                                <img 
+                                    src="https://picsum.photos/id/1036/400/300" 
+                                    alt="社区示意图" 
+                                    className="rounded-xl shadow-lg w-full"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-yellow-200">
+                        <h3 className="text-2xl font-bold text-yellow-600 mb-4">
+                            <i className="fas fa-search mr-2"></i>
+                            寻找邻居
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="block text-sm font-medium text-gray-700">按姓名搜索</label>
+                                <div className="flex gap-2">
+                                    <input
+                                        type="text"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        placeholder="输入邻居姓名..."
+                                        className="flex-1 p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none"
+                                    />
+                                    <button
+                                        onClick={handleSearch}
+                                        className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+                                    >
+                                        搜索
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="block text-sm font-medium text-gray-700">按角色筛选</label>
+                                <div className="flex gap-2">
+                                    <select
+                                        value={filterRole}
+                                        onChange={(e) => setFilterRole(e.target.value)}
+                                        className="flex-1 p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none"
+                                    >
+                                        {roles.map(role => (
+                                            <option key={role} value={role}>
+                                                {role === 'all' ? '全部角色' : role}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <button
+                                        onClick={handleFilter}
+                                        className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+                                    >
+                                        筛选
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl">
+                        <h3 className="text-2xl font-bold text-indigo-700 mb-6">
+                            <i className="fas fa-users mr-2"></i>
+                            邻居投票区
+                        </h3>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredNeighbors.map(neighbor => (
+                                <div key={neighbor.id} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border-2 border-indigo-200">
+                                    <div className="text-center mb-4">
+                                        <img 
+                                            src={neighbor.avatar} 
+                                            alt={neighbor.name}
+                                            className="w-20 h-20 rounded-full mx-auto mb-3 border-4 border-indigo-300"
+                                        />
+                                        <h4 className="text-xl font-bold text-gray-800">{neighbor.name}</h4>
+                                        <span className="inline-block bg-indigo-100 text-indigo-800 text-sm px-3 py-1 rounded-full mt-1">
+                                            {neighbor.role}
+                                        </span>
+                                    </div>
+                                    <p className="text-gray-600 text-sm mb-4 text-center">{neighbor.description}</p>
+                                    <div className="text-center">
+                                        <div className="text-2xl font-bold text-indigo-600 mb-2">
+                                            <i className="fas fa-heart mr-1"></i>
+                                            {neighbor.votes} 票
+                                        </div>
+                                        <button
+                                            onClick={() => handleVote(neighbor.id)}
+                                            className="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 px-4 rounded-lg hover:from-pink-600 hover:to-red-600 transition-all transform hover:scale-105"
+                                        >
+                                            <i className="fas fa-thumbs-up mr-2"></i>
+                                            投票支持
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderVoting = () => (
+                <div className="space-y-8">
+                    <div className="bg-gradient-to-r from-green-100 to-teal-100 p-6 rounded-2xl">
+                        <h3 className="text-2xl font-bold text-teal-700 mb-4">
+                            <i className="fas fa-trophy mr-2"></i>
+                            投票排行榜
+                        </h3>
+                        <div className="text-center mb-6">
+                            <button
+                                onClick={handleShowRanking}
+                                className="bg-teal-500 text-white px-8 py-3 rounded-lg hover:bg-teal-600 transition-colors text-lg font-semibold"
+                            >
+                                {showRanking ? '隐藏排行榜' : '查看投票排行榜'}
+                            </button>
+                        </div>
+                        
+                        {showRanking && (
+                            <div className="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 className="text-xl font-bold text-center mb-6 text-gray-800">
+                                    🏆 人气邻居前三名 🏆
+                                </h4>
+                                <div className="space-y-4">
+                                    {topNeighbors.map((neighbor, index) => (
+                                        <div key={neighbor.id} className={`flex items-center p-4 rounded-lg ${
+                                            index === 0 ? 'bg-yellow-100 border-yellow-400' :
+                                            index === 1 ? 'bg-gray-100 border-gray-400' :
+                                            'bg-orange-100 border-orange-400'
+                                        } border-2`}>
+                                            <div className="text-3xl mr-4">
+                                                {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
+                                            </div>
+                                            <img 
+                                                src={neighbor.avatar} 
+                                                alt={neighbor.name}
+                                                className="w-12 h-12 rounded-full mr-4"
+                                            />
+                                            <div className="flex-1">
+                                                <div className="font-bold text-lg">{neighbor.name}</div>
+                                                <div className="text-sm text-gray-600">{neighbor.role}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-2xl font-bold text-teal-600">{neighbor.votes}</div>
+                                                <div className="text-sm text-gray-500">票数</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+
+            const renderStats = () => (
+                <div className="space-y-8">
+                    <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-6 rounded-2xl">
+                        <h3 className="text-2xl font-bold text-purple-700 mb-4">
+                            <i className="fas fa-chart-pie mr-2"></i>
+                            社区统计分析
+                        </h3>
+                        <div className="bg-white p-6 rounded-xl shadow-lg">
+                            <div className="grid md:grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">选择角色</label>
+                                    <select
+                                        value={selectedStatsRole}
+                                        onChange={(e) => setSelectedStatsRole(e.target.value)}
+                                        className="w-full p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none"
+                                    >
+                                        <option value="">请选择角色</option>
+                                        {roles.slice(1).map(role => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="flex items-end">
+                                    <button
+                                        onClick={handleGenerateStats}
+                                        disabled={!selectedStatsRole}
+                                        className="w-full bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors disabled:bg-gray-400"
+                                    >
+                                        生成统计图
+                                    </button>
+                                </div>
+                            </div>
+
+                            {showStats && selectedStatsRole && (
+                                <div className="mt-6 p-6 bg-purple-50 rounded-lg">
+                                    <h4 className="text-lg font-bold text-center mb-4">
+                                        {selectedStatsRole}角色统计结果
+                                    </h4>
+                                    <div className="text-center">
+                                        <div className="inline-block">
+                                            <div className="w-48 h-48 mx-auto mb-4 relative">
+                                                <div className="w-full h-full rounded-full border-8 border-purple-200 flex items-center justify-center bg-gradient-to-br from-purple-400 to-pink-400 text-white">
+                                                    <div className="text-center">
+                                                        <div className="text-3xl font-bold">{getStatsData().percentage}%</div>
+                                                        <div className="text-sm">占总票数比例</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="text-lg">
+                                                <span className="font-semibold">{selectedStatsRole}</span> 
+                                                角色共获得 
+                                                <span className="font-bold text-purple-600 text-xl mx-1">
+                                                    {getStatsData().roleVotes}
+                                                </span> 
+                                                票
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderFeedback = () => (
+                <div className="space-y-8">
+                    <div className="bg-gradient-to-r from-orange-100 to-red-100 p-6 rounded-2xl">
+                        <h3 className="text-2xl font-bold text-orange-700 mb-4">
+                            <i className="fas fa-comments mr-2"></i>
+                            用户反馈
+                        </h3>
+                        <div className="bg-white p-6 rounded-xl shadow-lg">
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    请分享您的意见或建议
+                                </label>
+                                <textarea
+                                    value={feedbackText}
+                                    onChange={(e) => setFeedbackText(e.target.value)}
+                                    placeholder="在这里输入您的反馈..."
+                                    rows="4"
+                                    className="w-full p-3 border-2 border-orange-300 rounded-lg focus:border-orange-500 focus:outline-none resize-none"
+                                />
+                            </div>
+                            <button
+                                onClick={handleSubmitFeedback}
+                                disabled={!feedbackText.trim()}
+                                className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors disabled:bg-gray-400"
+                            >
+                                <i className="fas fa-paper-plane mr-2"></i>
+                                提交反馈
+                            </button>
+                        </div>
+
+                        {feedbacks.length > 0 && (
+                            <div className="mt-6 bg-white p-6 rounded-xl shadow-lg">
+                                <h4 className="text-lg font-bold mb-4">反馈列表</h4>
+                                <div className="space-y-3 max-h-96 overflow-y-auto">
+                                    {feedbacks.map(feedback => (
+                                        <div key={feedback.id} className="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-400">
+                                            <p className="text-gray-800">{feedback.text}</p>
+                                            <p className="text-sm text-gray-500 mt-2">{feedback.timestamp}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50">
+                    <nav className="bg-white shadow-lg border-b-4 border-yellow-400">
+                        <div className="container mx-auto px-4 py-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                        <i className="fas fa-home text-white text-xl"></i>
+                                    </div>
+                                    <h1 className="text-2xl font-bold text-gray-800">趣味邻居图谱</h1>
+                                </div>
+                                <div className="flex space-x-2">
+                                    {[
+                                        { id: 'home', label: '主页', icon: 'fas fa-home' },
+                                        { id: 'voting', label: '投票', icon: 'fas fa-vote-yea' },
+                                        { id: 'stats', label: '统计', icon: 'fas fa-chart-bar' },
+                                        { id: 'feedback', label: '反馈', icon: 'fas fa-comment-dots' }
+                                    ].map(tab => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveTab(tab.id)}
+                                            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                                                activeTab === tab.id
+                                                    ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-lg'
+                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                            }`}
+                                        >
+                                            <i className={`${tab.icon} mr-2`}></i>
+                                            {tab.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <main className="container mx-auto px-4 py-8">
+                        {activeTab === 'home' && renderHome()}
+                        {activeTab === 'voting' && renderVoting()}
+                        {activeTab === 'stats' && renderStats()}
+                        {activeTab === 'feedback' && renderFeedback()}
+                    </main>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="container mx-auto px-4 text-center">
+                            <div className="mb-4">
+                                <h3 className="text-xl font-bold mb-2">
+                                    <i className="fas fa-heart mr-2 text-red-400"></i>
+                                    阳光社区邻居投票系统
+                                </h3>
+                                <p className="text-gray-300">让邻里关系更温暖，让社区生活更美好</p>
+                            </div>
+                            <div className="border-t border-gray-600 pt-4">
+                                <p className="text-sm text-gray-400">
+                                    © 2024 阳光社区. 保留所有权利. | 联系邮箱: 
+                                    <a href="mailto:community@sunshine.com" className="text-yellow-400 hover:text-yellow-300 ml-1">
+                                        community@sunshine.com
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

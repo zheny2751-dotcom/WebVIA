@@ -1,0 +1,562 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兴趣调查</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function InterestSurvey() {
+            const [personalInfo, setPersonalInfo] = useState({
+                name: '',
+                age: '',
+                gender: ''
+            });
+            
+            const [selectedCategory, setSelectedCategory] = useState('');
+            const [selectedSubInterests, setSelectedSubInterests] = useState([]);
+            const [customInterests, setCustomInterests] = useState([]);
+            const [description, setDescription] = useState('');
+            const [recommendations, setRecommendations] = useState([]);
+            const [surveyResult, setSurveyResult] = useState(null);
+            const [errors, setErrors] = useState({});
+            
+            const interestCategories = {
+                '运动': ['篮球', '游泳', '跑步', '足球', '羽毛球', '健身'],
+                '艺术': ['绘画', '摄影', '雕塑', '书法', '手工艺', '设计'],
+                '科技': ['编程', '人工智能', '机器人', '数据分析', '网络安全', '游戏开发'],
+                '美食': ['烹饪', '烘焙', '品酒', '咖啡', '茶艺', '美食摄影'],
+                '旅行': ['徒步', '自驾游', '摄影旅行', '文化探索', '极限运动', '度假休闲'],
+                '音乐': ['钢琴', '吉他', '声乐', '作曲', '音乐制作', '乐队演出']
+            };
+            
+            const recommendationData = {
+                '运动': [
+                    { title: '城市马拉松训练营', desc: '专业教练指导，提升跑步技巧', link: '#' },
+                    { title: '健身房会员优惠', desc: '全年健身计划，专业器械训练', link: '#' },
+                    { title: '户外运动俱乐部', desc: '结识运动伙伴，探索自然风光', link: '#' }
+                ],
+                '艺术': [
+                    { title: '艺术创作工作坊', desc: '专业导师指导，提升创作技巧', link: '#' },
+                    { title: '画廊艺术展览', desc: '欣赏大师作品，拓展艺术视野', link: '#' },
+                    { title: '艺术家社区', desc: '与同好交流，分享创作心得', link: '#' }
+                ],
+                '科技': [
+                    { title: '编程训练营', desc: '从零基础到专业开发者', link: '#' },
+                    { title: '科技创新大赛', desc: '展示技术实力，赢取丰厚奖品', link: '#' },
+                    { title: '技术交流会', desc: '行业专家分享，拓展技术视野', link: '#' }
+                ],
+                '美食': [
+                    { title: '烹饪技能课程', desc: '学习各国料理，提升厨艺水平', link: '#' },
+                    { title: '美食品鉴活动', desc: '品尝精品美食，结识美食爱好者', link: '#' },
+                    { title: '料理大赛', desc: '展示烹饪技巧，赢取专业认证', link: '#' }
+                ],
+                '旅行': [
+                    { title: '旅行摄影团', desc: '专业摄影师带队，拍摄绝美风景', link: '#' },
+                    { title: '文化探索之旅', desc: '深度体验当地文化，丰富人生阅历', link: '#' },
+                    { title: '户外探险俱乐部', desc: '挑战极限，探索未知领域', link: '#' }
+                ],
+                '音乐': [
+                    { title: '音乐制作课程', desc: '学习专业音乐制作技巧', link: '#' },
+                    { title: '乐队招募平台', desc: '寻找音乐伙伴，组建自己的乐队', link: '#' },
+                    { title: '音乐节演出机会', desc: '登台表演，展示音乐才华', link: '#' }
+                ]
+            };
+            
+            const validateForm = () => {
+                const newErrors = {};
+                
+                if (!personalInfo.name.trim()) {
+                    newErrors.name = '姓名为必填项';
+                }
+                
+                if (!personalInfo.age) {
+                    newErrors.age = '年龄为必填项';
+                } else if (personalInfo.age < 1 || personalInfo.age > 120) {
+                    newErrors.age = '年龄必须在1-120之间';
+                }
+                
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+            
+            const handlePersonalInfoChange = (field, value) => {
+                setPersonalInfo(prev => ({
+                    ...prev,
+                    [field]: value
+                }));
+                
+                if (errors[field]) {
+                    setErrors(prev => ({
+                        ...prev,
+                        [field]: ''
+                    }));
+                }
+            };
+            
+            const handleCategoryChange = (category) => {
+                setSelectedCategory(category);
+                setSelectedSubInterests([]);
+            };
+            
+            const handleSubInterestChange = (interest, checked) => {
+                if (checked) {
+                    setSelectedSubInterests(prev => [...prev, interest]);
+                } else {
+                    setSelectedSubInterests(prev => prev.filter(item => item !== interest));
+                }
+            };
+            
+            const addCustomInterest = () => {
+                setCustomInterests(prev => [...prev, '']);
+            };
+            
+            const updateCustomInterest = (index, value) => {
+                setCustomInterests(prev => {
+                    const newInterests = [...prev];
+                    newInterests[index] = value;
+                    return newInterests;
+                });
+            };
+            
+            const removeCustomInterest = (index) => {
+                setCustomInterests(prev => prev.filter((_, i) => i !== index));
+            };
+            
+            const clearDescription = () => {
+                setDescription('');
+            };
+            
+            const generateRecommendations = () => {
+                const totalInterests = selectedSubInterests.length + customInterests.filter(item => item.trim()).length;
+                
+                if (totalInterests < 2) {
+                    setErrors({...errors, recommendation: '请至少选择两个兴趣分类及子项以便生成推荐'});
+                    setTimeout(() => {
+                        setErrors(prev => ({...prev, recommendation: ''}));
+                    }, 3000);
+                    return;
+                }
+                
+                if (selectedCategory && recommendationData[selectedCategory]) {
+                    setRecommendations(recommendationData[selectedCategory]);
+                } else {
+                    setRecommendations([
+                        { title: '个性化推荐活动', desc: '根据您的兴趣量身定制', link: '#' },
+                        { title: '兴趣爱好社区', desc: '寻找志同道合的朋友', link: '#' },
+                        { title: '技能提升课程', desc: '专业指导，快速进步', link: '#' }
+                    ]);
+                }
+            };
+            
+            const submitSurvey = () => {
+                if (!validateForm()) {
+                    return;
+                }
+                
+                const result = {
+                    personalInfo,
+                    selectedCategory,
+                    selectedSubInterests,
+                    customInterests: customInterests.filter(item => item.trim()),
+                    description,
+                    recommendations
+                };
+                
+                setSurveyResult(result);
+                
+                setTimeout(() => {
+                    document.getElementById('survey-result')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            };
+            
+            const resetForm = () => {
+                setPersonalInfo({ name: '', age: '', gender: '' });
+                setSelectedCategory('');
+                setSelectedSubInterests([]);
+                setCustomInterests([]);
+                setDescription('');
+                setRecommendations([]);
+                setSurveyResult(null);
+                setErrors({});
+            };
+            
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-teal-50">
+                    <header className="bg-white shadow-lg">
+                        <div className="max-w-4xl mx-auto px-6 py-8 text-center">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                                <i className="fas fa-heart text-pink-500 mr-3"></i>
+                                兴趣调查
+                            </h1>
+                            <p className="text-lg text-gray-600">
+                                请告诉我们你的兴趣爱好，帮助我们为你推荐更多内容
+                            </p>
+                        </div>
+                    </header>
+                    
+                    <main className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                <i className="fas fa-user text-blue-500 mr-3"></i>
+                                个人信息
+                            </h2>
+                            
+                            <div className="grid md:grid-cols-3 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        姓名 <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={personalInfo.name}
+                                        onChange={(e) => handlePersonalInfoChange('name', e.target.value)}
+                                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                            errors.name ? 'border-red-500' : 'border-gray-300'
+                                        }`}
+                                        placeholder="请输入您的姓名"
+                                    />
+                                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        年龄 <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="120"
+                                        value={personalInfo.age}
+                                        onChange={(e) => handlePersonalInfoChange('age', parseInt(e.target.value) || '')}
+                                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                            errors.age ? 'border-red-500' : 'border-gray-300'
+                                        }`}
+                                        placeholder="请输入年龄"
+                                    />
+                                    {errors.age && <p className="text-red-500 text-sm mt-1">{errors.age}</p>}
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        性别
+                                    </label>
+                                    <select
+                                        value={personalInfo.gender}
+                                        onChange={(e) => handlePersonalInfoChange('gender', e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="">请选择性别</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                        <option value="保密">保密</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                <i className="fas fa-heart text-pink-500 mr-3"></i>
+                                兴趣分类与子项
+                            </h2>
+                            
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        主要兴趣分类
+                                    </label>
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={(e) => handleCategoryChange(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="">请选择兴趣分类</option>
+                                        {Object.keys(interestCategories).map(category => (
+                                            <option key={category} value={category}>{category}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                {selectedCategory && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-3">
+                                            子分类选择（可多选）
+                                        </label>
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                            {interestCategories[selectedCategory].map(interest => (
+                                                <label key={interest} className="flex items-center space-x-2 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedSubInterests.includes(interest)}
+                                                        onChange={(e) => handleSubInterestChange(interest, e.target.checked)}
+                                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                    <span className="text-sm text-gray-700">{interest}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                <div>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <label className="block text-sm font-medium text-gray-700">
+                                            自定义兴趣
+                                        </label>
+                                        <button
+                                            onClick={addCustomInterest}
+                                            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm"
+                                        >
+                                            <i className="fas fa-plus mr-2"></i>
+                                            添加自定义兴趣
+                                        </button>
+                                    </div>
+                                    
+                                    {customInterests.map((interest, index) => (
+                                        <div key={index} className="flex items-center space-x-3 mb-3">
+                                            <input
+                                                type="text"
+                                                value={interest}
+                                                onChange={(e) => updateCustomInterest(index, e.target.value)}
+                                                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="请输入自定义兴趣"
+                                            />
+                                            <button
+                                                onClick={() => removeCustomInterest(index)}
+                                                className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+                                            >
+                                                <i className="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                <i className="fas fa-edit text-purple-500 mr-3"></i>
+                                深入描述
+                            </h2>
+                            
+                            <div>
+                                <div className="flex items-center justify-between mb-3">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        请简单描述你最喜欢的兴趣及原因
+                                    </label>
+                                    <button
+                                        onClick={clearDescription}
+                                        className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 text-sm"
+                                    >
+                                        <i className="fas fa-eraser mr-2"></i>
+                                        清空描述
+                                    </button>
+                                </div>
+                                <textarea
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    rows="5"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="请详细描述您最喜欢的兴趣爱好，以及它们给您带来的乐趣和收获..."
+                                />
+                            </div>
+                        </section>
+                        
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                <i className="fas fa-lightbulb text-yellow-500 mr-3"></i>
+                                智能推荐
+                            </h2>
+                            
+                            <div className="text-center mb-6">
+                                <button
+                                    onClick={generateRecommendations}
+                                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg hover:from-blue-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                                >
+                                    <i className="fas fa-magic mr-2"></i>
+                                    生成推荐
+                                </button>
+                                {errors.recommendation && (
+                                    <p className="text-red-500 text-sm mt-2">{errors.recommendation}</p>
+                                )}
+                            </div>
+                            
+                            {recommendations.length > 0 && (
+                                <div className="grid md:grid-cols-3 gap-6">
+                                    {recommendations.map((rec, index) => (
+                                        <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-200">
+                                            <img
+                                                src={`https://picsum.photos/id/${100 + index}/300/200`}
+                                                alt="推荐图片"
+                                                className="w-full h-32 object-cover rounded-lg mb-3"
+                                            />
+                                            <h3 className="font-semibold text-gray-800 mb-2">{rec.title}</h3>
+                                            <p className="text-gray-600 text-sm mb-3">{rec.desc}</p>
+                                            <button className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                                                了解更多
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+                        
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                <i className="fas fa-check-circle text-green-500 mr-3"></i>
+                                提交与重置
+                            </h2>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <button
+                                    onClick={submitSurvey}
+                                    className="px-8 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                                >
+                                    <i className="fas fa-paper-plane mr-2"></i>
+                                    提交调查
+                                </button>
+                                
+                                <button
+                                    onClick={resetForm}
+                                    className="px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                                >
+                                    <i className="fas fa-redo mr-2"></i>
+                                    重置表单
+                                </button>
+                            </div>
+                        </section>
+                        
+                        {surveyResult && (
+                            <section id="survey-result" className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg shadow-lg p-6">
+                                <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                                    <i className="fas fa-chart-bar text-indigo-500 mr-3"></i>
+                                    调查结果汇总
+                                </h2>
+                                
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="bg-white rounded-lg p-4 shadow-md">
+                                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <i className="fas fa-user-circle text-blue-500 mr-2"></i>
+                                            个人信息
+                                        </h3>
+                                        <div className="space-y-2 text-sm">
+                                            <p><span className="font-medium">姓名：</span>{surveyResult.personalInfo.name}</p>
+                                            <p><span className="font-medium">年龄：</span>{surveyResult.personalInfo.age}岁</p>
+                                            <p><span className="font-medium">性别：</span>{surveyResult.personalInfo.gender || '未选择'}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-white rounded-lg p-4 shadow-md">
+                                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <i className="fas fa-heart text-pink-500 mr-2"></i>
+                                            兴趣爱好
+                                        </h3>
+                                        <div className="space-y-2 text-sm">
+                                            <p><span className="font-medium">主分类：</span>{surveyResult.selectedCategory || '未选择'}</p>
+                                            <p><span className="font-medium">子分类：</span>
+                                                {surveyResult.selectedSubInterests.length > 0 
+                                                    ? surveyResult.selectedSubInterests.join('、') 
+                                                    : '未选择'}
+                                            </p>
+                                            <p><span className="font-medium">自定义：</span>
+                                                {surveyResult.customInterests.length > 0 
+                                                    ? surveyResult.customInterests.join('、') 
+                                                    : '无'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-white rounded-lg p-4 shadow-md md:col-span-2">
+                                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <i className="fas fa-comment text-green-500 mr-2"></i>
+                                            兴趣描述
+                                        </h3>
+                                        <p className="text-sm text-gray-700">
+                                            {surveyResult.description || '未填写描述'}
+                                        </p>
+                                    </div>
+                                    
+                                    {surveyResult.recommendations.length > 0 && (
+                                        <div className="bg-white rounded-lg p-4 shadow-md md:col-span-2">
+                                            <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
+                                                <i className="fas fa-star text-yellow-500 mr-2"></i>
+                                                推荐内容
+                                            </h3>
+                                            <div className="grid md:grid-cols-3 gap-4">
+                                                {surveyResult.recommendations.map((rec, index) => (
+                                                    <div key={index} className="border border-gray-200 rounded-lg p-3">
+                                                        <h4 className="font-medium text-sm mb-1">{rec.title}</h4>
+                                                        <p className="text-xs text-gray-600">{rec.desc}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        )}
+                    </main>
+                    
+                    <button
+                        onClick={scrollToTop}
+                        className="fixed bottom-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center z-50"
+                    >
+                        <i className="fas fa-arrow-up"></i>
+                    </button>
+                    
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="max-w-4xl mx-auto px-6 text-center">
+                            <div className="mb-4">
+                                <img
+                                    src="https://picsum.photos/id/1/60/60"
+                                    alt="网站Logo"
+                                    className="w-12 h-12 rounded-full mx-auto mb-2"
+                                />
+                                <h3 className="text-lg font-semibold">兴趣调查平台</h3>
+                            </div>
+                            <p className="text-gray-400 mb-4">
+                                发现你的兴趣，连接你的世界
+                            </p>
+                            <div className="flex justify-center space-x-6 mb-4">
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+                                    <i className="fab fa-facebook text-xl"></i>
+                                </a>
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+                                    <i className="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+                                    <i className="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+                                    <i className="fab fa-linkedin text-xl"></i>
+                                </a>
+                            </div>
+                            <div className="border-t border-gray-700 pt-4">
+                                <p className="text-sm text-gray-400">
+                                    © 2024 兴趣调查平台. 保留所有权利. | 联系我们：interest@survey.com | 电话：400-123-4567
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<InterestSurvey />, document.getElementById('root'));
+    </script>
+</body>
+</html>

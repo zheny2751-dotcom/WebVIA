@@ -1,0 +1,352 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交聊天</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const initialFriends = [
+            { id: 1, name: '小明', avatar: 'https://picsum.photos/id/1/40/40', status: 'online', lastMessage: '晚上一起吃饭吗？' },
+            { id: 2, name: '小红', avatar: 'https://picsum.photos/id/2/40/40', status: 'online', lastMessage: '好的，没问题' },
+            { id: 3, name: '小李', avatar: 'https://picsum.photos/id/3/40/40', status: 'busy', lastMessage: '明天见' },
+            { id: 4, name: '小王', avatar: 'https://picsum.photos/id/4/40/40', status: 'away', lastMessage: '收到了' },
+            { id: 5, name: '小张', avatar: 'https://picsum.photos/id/5/40/40', status: 'online', lastMessage: '😊' },
+        ];
+
+        const initialMessages = {
+            1: [
+                { id: 1, sender: '小明', content: '你好！今天天气不错呢', time: '10:30', isMe: false },
+                { id: 2, sender: '我', content: '是的，很适合出去走走', time: '10:32', isMe: true },
+                { id: 3, sender: '小明', content: '晚上一起吃饭吗？', time: '10:35', isMe: false },
+            ],
+            2: [
+                { id: 1, sender: '小红', content: '周末有什么计划吗？', time: '09:15', isMe: false },
+                { id: 2, sender: '我', content: '想去看电影，你呢？', time: '09:18', isMe: true },
+                { id: 3, sender: '小红', content: '好的，没问题', time: '09:20', isMe: false },
+            ],
+            3: [
+                { id: 1, sender: '我', content: '明天的会议准备好了吗？', time: '14:20', isMe: true },
+                { id: 2, sender: '小李', content: '明天见', time: '14:25', isMe: false },
+            ],
+            4: [
+                { id: 1, sender: '小王', content: '文件已经发给你了', time: '16:10', isMe: false },
+                { id: 2, sender: '我', content: '谢谢！', time: '16:12', isMe: true },
+                { id: 3, sender: '小王', content: '收到了', time: '16:15', isMe: false },
+            ],
+            5: [
+                { id: 1, sender: '小张', content: '新项目进展怎么样？', time: '11:30', isMe: false },
+                { id: 2, sender: '我', content: '很顺利，预计下周完成', time: '11:35', isMe: true },
+                { id: 3, sender: '小张', content: '😊', time: '11:40', isMe: false },
+            ],
+        };
+
+        const emojis = ['😊', '😂', '❤️', '👍', '😭', '😡', '🤔', '🎉', '👋', '🔥'];
+
+        const App = () => {
+            const [darkMode, setDarkMode] = useState(false);
+            const [friends, setFriends] = useState(initialFriends);
+            const [selectedFriend, setSelectedFriend] = useState(1);
+            const [messages, setMessages] = useState(initialMessages);
+            const [newMessage, setNewMessage] = useState('');
+            const [searchTerm, setSearchTerm] = useState('');
+            const [userStatus, setUserStatus] = useState('online');
+            const [showAddFriend, setShowAddFriend] = useState(false);
+            const [newFriendId, setNewFriendId] = useState('');
+            const [showStatusModal, setShowStatusModal] = useState(false);
+
+            const filteredFriends = friends.filter(friend =>
+                friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            const sendMessage = () => {
+                if (newMessage.trim() && selectedFriend) {
+                    const message = {
+                        id: Date.now(),
+                        sender: '我',
+                        content: newMessage,
+                        time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+                        isMe: true
+                    };
+                    
+                    setMessages(prev => ({
+                        ...prev,
+                        [selectedFriend]: [...(prev[selectedFriend] || []), message]
+                    }));
+                    setNewMessage('');
+                }
+            };
+
+            const addEmoji = (emoji) => {
+                setNewMessage(prev => prev + emoji);
+            };
+
+            const addFriend = () => {
+                if (newFriendId.trim()) {
+                    const newFriend = {
+                        id: Date.now(),
+                        name: newFriendId,
+                        avatar: `https://picsum.photos/id/${Math.floor(Math.random() * 100) + 10}/40/40`,
+                        status: 'pending',
+                        lastMessage: '好友请求已发送'
+                    };
+                    setFriends(prev => [...prev, newFriend]);
+                    setNewFriendId('');
+                    setShowAddFriend(false);
+                }
+            };
+
+            const changeStatus = (status) => {
+                setUserStatus(status);
+                setShowStatusModal(false);
+            };
+
+            const getStatusColor = (status) => {
+                switch (status) {
+                    case 'online': return 'bg-green-500';
+                    case 'busy': return 'bg-red-500';
+                    case 'away': return 'bg-yellow-500';
+                    case 'pending': return 'bg-gray-500';
+                    default: return 'bg-gray-500';
+                }
+            };
+
+            const getStatusText = (status) => {
+                switch (status) {
+                    case 'online': return '在线';
+                    case 'busy': return '忙碌';
+                    case 'away': return '离开';
+                    case 'pending': return '待确认';
+                    default: return '离线';
+                }
+            };
+
+            return (
+                <div className={`h-screen flex flex-col ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+                    <header className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b px-6 py-4 flex justify-between items-center`}>
+                        <div className="flex items-center space-x-4">
+                            <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                                <i className="fas fa-comments mr-2 text-blue-500"></i>
+                                聊天室
+                            </h1>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            <div className="relative">
+                                <button 
+                                    onClick={() => setShowStatusModal(!showStatusModal)}
+                                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-700'} hover:opacity-80`}
+                                >
+                                    <div className={`w-3 h-3 rounded-full ${getStatusColor(userStatus)}`}></div>
+                                    <span>{getStatusText(userStatus)}</span>
+                                    <i className="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                {showStatusModal && (
+                                    <div className={`absolute right-0 mt-2 w-32 ${darkMode ? 'bg-gray-700' : 'bg-white'} rounded-lg shadow-lg border ${darkMode ? 'border-gray-600' : 'border-gray-200'} z-10`}>
+                                        {['online', 'busy', 'away'].map(status => (
+                                            <button
+                                                key={status}
+                                                onClick={() => changeStatus(status)}
+                                                className={`w-full px-4 py-2 text-left hover:${darkMode ? 'bg-gray-600' : 'bg-gray-50'} flex items-center space-x-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}
+                                            >
+                                                <div className={`w-3 h-3 rounded-full ${getStatusColor(status)}`}></div>
+                                                <span>{getStatusText(status)}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <button
+                                onClick={() => setDarkMode(!darkMode)}
+                                className={`p-2 rounded-lg ${darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-100 text-gray-600'} hover:opacity-80`}
+                            >
+                                <i className={`fas fa-${darkMode ? 'sun' : 'moon'}`}></i>
+                            </button>
+                            <img 
+                                src="https://picsum.photos/id/64/32/32" 
+                                alt="用户头像" 
+                                className="w-8 h-8 rounded-full"
+                            />
+                        </div>
+                    </header>
+
+                    <div className="flex-1 flex overflow-hidden">
+                        <aside className={`w-80 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r flex flex-col`}>
+                            <div className="p-4 space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <h2 className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>好友列表</h2>
+                                    <button
+                                        onClick={() => setShowAddFriend(!showAddFriend)}
+                                        className="text-blue-500 hover:text-blue-600"
+                                    >
+                                        <i className="fas fa-user-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                {showAddFriend && (
+                                    <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} space-y-2`}>
+                                        <input
+                                            type="text"
+                                            placeholder="输入好友ID"
+                                            value={newFriendId}
+                                            onChange={(e) => setNewFriendId(e.target.value)}
+                                            className={`w-full px-3 py-2 rounded-lg border ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                                        />
+                                        <div className="flex space-x-2">
+                                            <button
+                                                onClick={addFriend}
+                                                className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
+                                            >
+                                                确认
+                                            </button>
+                                            <button
+                                                onClick={() => setShowAddFriend(false)}
+                                                className={`flex-1 ${darkMode ? 'bg-gray-600 text-white' : 'bg-gray-200 text-gray-700'} px-3 py-2 rounded-lg hover:opacity-80`}
+                                            >
+                                                取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="搜索好友..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className={`w-full pl-10 pr-4 py-2 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-gray-50 border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                                    />
+                                    <i className={`fas fa-search absolute left-3 top-3 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}></i>
+                                </div>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto">
+                                {filteredFriends.map(friend => (
+                                    <button
+                                        key={friend.id}
+                                        onClick={() => setSelectedFriend(friend.id)}
+                                        className={`w-full p-4 flex items-center space-x-3 hover:${darkMode ? 'bg-gray-700' : 'bg-gray-50'} ${selectedFriend === friend.id ? (darkMode ? 'bg-gray-700' : 'bg-blue-50') : ''}`}
+                                    >
+                                        <div className="relative">
+                                            <img 
+                                                src={friend.avatar} 
+                                                alt={friend.name} 
+                                                className="w-12 h-12 rounded-full"
+                                            />
+                                            <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 ${darkMode ? 'border-gray-800' : 'border-white'} ${getStatusColor(friend.status)}`}></div>
+                                        </div>
+                                        <div className="flex-1 text-left">
+                                            <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{friend.name}</div>
+                                            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'} truncate`}>{friend.lastMessage}</div>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </aside>
+
+                        <main className="flex-1 flex flex-col">
+                            {selectedFriend ? (
+                                <>
+                                    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b px-6 py-4`}>
+                                        <div className="flex items-center space-x-3">
+                                            <img 
+                                                src={friends.find(f => f.id === selectedFriend)?.avatar} 
+                                                alt="" 
+                                                className="w-10 h-10 rounded-full"
+                                            />
+                                            <div>
+                                                <h3 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                                                    {friends.find(f => f.id === selectedFriend)?.name}
+                                                </h3>
+                                                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                                                    {getStatusText(friends.find(f => f.id === selectedFriend)?.status)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={`flex-1 overflow-y-auto p-6 space-y-4 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+                                        {(messages[selectedFriend] || []).map(message => (
+                                            <div key={message.id} className={`flex ${message.isMe ? 'justify-end' : 'justify-start'}`}>
+                                                <div className={`flex ${message.isMe ? 'flex-row-reverse' : 'flex-row'} items-end space-x-2 max-w-xs lg:max-w-md`}>
+                                                    <img 
+                                                        src={message.isMe ? "https://picsum.photos/id/64/32/32" : friends.find(f => f.id === selectedFriend)?.avatar} 
+                                                        alt="" 
+                                                        className="w-8 h-8 rounded-full"
+                                                    />
+                                                    <div className={`px-4 py-2 rounded-lg ${message.isMe ? 'bg-blue-500 text-white' : (darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900')}`}>
+                                                        <p>{message.content}</p>
+                                                        <p className={`text-xs mt-1 ${message.isMe ? 'text-blue-100' : (darkMode ? 'text-gray-400' : 'text-gray-500')}`}>
+                                                            {message.time}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {(!messages[selectedFriend] || messages[selectedFriend].length === 0) && (
+                                            <div className={`text-center ${darkMode ? 'text-gray-400' : 'text-gray-500'} py-8`}>
+                                                <i className="fas fa-comments text-4xl mb-4 opacity-50"></i>
+                                                <p>开始聊点什么吧～</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-t p-4`}>
+                                        <div className="flex items-center space-x-3">
+                                            <div className="relative">
+                                                <select 
+                                                    onChange={(e) => addEmoji(e.target.value)}
+                                                    value=""
+                                                    className={`px-3 py-2 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-gray-50 border-gray-300'} focus:outline-none`}
+                                                >
+                                                    <option value="">😊</option>
+                                                    {emojis.map(emoji => (
+                                                        <option key={emoji} value={emoji}>{emoji}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={newMessage}
+                                                onChange={(e) => setNewMessage(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                                placeholder="输入消息..."
+                                                className={`flex-1 px-4 py-2 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-gray-50 border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                                            />
+                                            <button
+                                                onClick={sendMessage}
+                                                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                发送
+                                            </button>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className={`flex-1 flex items-center justify-center ${darkMode ? 'bg-gray-900 text-gray-400' : 'bg-gray-50 text-gray-500'}`}>
+                                    <div className="text-center">
+                                        <i className="fas fa-comments text-6xl mb-6 opacity-50"></i>
+                                        <h3 className="text-xl font-medium mb-2">选择一个好友开始聊天</h3>
+                                        <p>从左侧好友列表中选择一个好友，开始愉快的聊天吧！</p>
+                                    </div>
+                                </div>
+                            )}
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

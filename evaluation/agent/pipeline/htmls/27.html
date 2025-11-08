@@ -1,0 +1,474 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术期刊在线</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [selectedArticle, setSelectedArticle] = useState(null);
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [selectedYear, setSelectedYear] = useState('2024');
+            const [selectedCategory, setSelectedCategory] = useState('计算机科学');
+            const [comments, setComments] = useState([
+                { id: 1, author: '李明', content: '这篇文章很有见地，对我的研究很有帮助。', time: '2024-01-15 14:30' },
+                { id: 2, author: '张华', content: '期待看到更多这类研究成果。', time: '2024-01-15 16:20' }
+            ]);
+            const [newComment, setNewComment] = useState('');
+            const [subscribeEmail, setSubscribeEmail] = useState('');
+            const [subscribeStatus, setSubscribeStatus] = useState('');
+            const [isFullTextOpen, setIsFullTextOpen] = useState(false);
+
+            const journalData = {
+                '2024': {
+                    '计算机科学': {
+                        cover: 'https://picsum.photos/id/326/400/500',
+                        title: '计算机科学与技术期刊',
+                        date: '2024年第1期',
+                        articles: [
+                            { id: 1, title: '人工智能在医疗诊断中的应用研究', author: '王教授', abstract: '本文探讨了深度学习算法在医疗影像诊断中的最新进展，通过分析大量临床数据...', fullText: '人工智能技术，特别是深度学习，已经在医疗领域展现出巨大潜力。本研究通过收集10000例医疗影像数据，训练了一个高精度的诊断模型。实验结果表明，该模型在肺部疾病检测方面达到了95%的准确率，显著超过了传统的诊断方法。未来，我们计划进一步优化算法，扩大应用范围，为临床医生提供更可靠的辅助诊断工具。' },
+                            { id: 2, title: '区块链技术在供应链管理中的创新应用', author: '李博士', abstract: '供应链透明度一直是企业面临的挑战，本研究提出了基于区块链的解决方案...', fullText: '供应链管理的复杂性和不透明性一直困扰着现代企业。区块链技术以其去中心化、不可篡改的特性，为解决这一问题提供了新思路。本研究设计并实现了一个基于以太坊的供应链追溯系统，实现了从原材料采购到最终消费者的全程可追溯。通过智能合约自动执行交易规则，大大提高了效率和可信度。' },
+                            { id: 3, title: '量子计算在密码学中的挑战与机遇', author: '陈院士', abstract: '量子计算的发展对传统密码学构成了威胁，同时也带来了新的机遇...', fullText: '量子计算技术的快速发展正在改变密码学的格局。传统的RSA加密算法在量子计算机面前变得脆弱，这促使我们必须开发抗量子密码算法。本文分析了后量子密码学的发展现状，介绍了格密码、编码密码等新兴方向，并提出了过渡期的安全策略建议。' }
+                        ]
+                    },
+                    '生物医学': {
+                        cover: 'https://picsum.photos/id/530/400/500',
+                        title: '生物医学研究期刊',
+                        date: '2024年第1期',
+                        articles: [
+                            { id: 4, title: '基因编辑技术CRISPR的最新进展', author: '赵教授', abstract: 'CRISPR技术在治疗遗传疾病方面取得了重大突破...', fullText: 'CRISPR-Cas9基因编辑技术革命性地改变了生物医学研究。本研究团队成功利用CRISPR技术治疗了一例罕见的遗传性疾病，为基因治疗开辟了新道路。我们优化了递送系统，提高了编辑精度，并建立了完善的安全评估体系。' },
+                            { id: 5, title: '癌症免疫治疗的新靶点发现', author: '孙博士', abstract: '通过大规模筛选，我们发现了一个新的免疫治疗靶点...', fullText: '癌症免疫治疗是当前肿瘤学的热点领域。本研究通过单细胞测序技术，在肿瘤微环境中发现了一个新的免疫抑制分子。针对该分子开发的抗体药物在小鼠模型中显示出显著的抗肿瘤效果，为癌症患者带来了新的治疗希望。' }
+                        ]
+                    }
+                },
+                '2023': {
+                    '计算机科学': {
+                        cover: 'https://picsum.photos/id/180/400/500',
+                        title: '计算机科学与技术期刊',
+                        date: '2023年第12期',
+                        articles: [
+                            { id: 6, title: '大数据分析在智慧城市中的应用', author: '刘教授', abstract: '智慧城市建设离不开大数据技术的支撑...', fullText: '智慧城市是未来城市发展的重要方向。本研究构建了一个多维度的城市数据分析平台，整合了交通、环境、能源等各类数据，通过机器学习算法实现了城市运行状态的实时监测和预测，为城市管理决策提供了科学依据。' },
+                            { id: 7, title: '边缘计算架构设计与优化', author: '周博士', abstract: '随着物联网设备的普及，边缘计算成为了重要的计算范式...', fullText: '边缘计算将计算资源部署在网络边缘，大大降低了延迟，提高了系统响应速度。本文提出了一种新的边缘计算架构，通过动态资源调度和智能缓存策略，实现了计算资源的最优配置。实验结果表明，该架构在处理实时任务方面具有显著优势。' }
+                        ]
+                    }
+                }
+            };
+
+            const authors = [
+                { 
+                    name: '王教授', 
+                    avatar: 'https://picsum.photos/id/91/100/100', 
+                    bio: '计算机科学与技术教授，专注于人工智能与机器学习研究，发表论文100余篇。',
+                    affiliation: '清华大学计算机系'
+                },
+                { 
+                    name: '李博士', 
+                    avatar: 'https://picsum.photos/id/64/100/100', 
+                    bio: '区块链技术专家，IEEE高级会员，在分布式系统领域有深入研究。',
+                    affiliation: '北京大学信息学院'
+                },
+                { 
+                    name: '陈院士', 
+                    avatar: 'https://picsum.photos/id/177/100/100', 
+                    bio: '中国科学院院士，量子计算领域权威专家，国际知名学者。',
+                    affiliation: '中科院量子信息实验室'
+                }
+            ];
+
+            const currentJournal = journalData[selectedYear][selectedCategory];
+            const filteredArticles = currentJournal.articles.filter(article => 
+                article.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                article.author.toLowerCase().includes(searchKeyword.toLowerCase())
+            );
+
+            const handleArticleClick = (article) => {
+                setSelectedArticle(article);
+                setIsFullTextOpen(false);
+            };
+
+            const handleSearch = () => {
+                // Search functionality is handled by filteredArticles
+            };
+
+            const handleCommentSubmit = () => {
+                if (newComment.trim()) {
+                    const comment = {
+                        id: comments.length + 1,
+                        author: '当前用户',
+                        content: newComment,
+                        time: new Date().toLocaleString('zh-CN')
+                    };
+                    setComments([...comments, comment]);
+                    setNewComment('');
+                }
+            };
+
+            const handleSubscribe = () => {
+                if (subscribeEmail.trim() && subscribeEmail.includes('@')) {
+                    setSubscribeStatus('订阅成功！我们会将最新期刊发送到您的邮箱。');
+                    setSubscribeEmail('');
+                } else {
+                    setSubscribeStatus('请输入有效的邮箱地址。');
+                }
+            };
+
+            const handleReadFullText = () => {
+                setIsFullTextOpen(!isFullTextOpen);
+            };
+
+            useEffect(() => {
+                if (currentJournal.articles.length > 0) {
+                    setSelectedArticle(currentJournal.articles[0]);
+                }
+            }, [selectedYear, selectedCategory]);
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    {/* 顶部导航栏 */}
+                    <nav className="bg-blue-900 text-white shadow-lg">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between h-16">
+                                <div className="flex items-center">
+                                    <i className="fas fa-book-open text-2xl mr-3"></i>
+                                    <span className="font-bold text-xl">学术期刊在线</span>
+                                </div>
+                                <div className="flex items-center space-x-8">
+                                    <a href="#" className="hover:text-blue-200 transition-colors">首页</a>
+                                    <a href="#" className="hover:text-blue-200 transition-colors">当前期刊</a>
+                                    <a href="#" className="hover:text-blue-200 transition-colors">往期目录</a>
+                                    <a href="#" className="hover:text-blue-200 transition-colors">关于我们</a>
+                                    <button className="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors">
+                                        登录/注册
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            {/* 左侧栏 */}
+                            <div className="lg:col-span-1 space-y-6">
+                                {/* 期刊筛选区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-filter mr-2 text-blue-600"></i>
+                                        期刊筛选
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">年份</label>
+                                            <select 
+                                                value={selectedYear}
+                                                onChange={(e) => setSelectedYear(e.target.value)}
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="2024">2024年</option>
+                                                <option value="2023">2023年</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">类别</label>
+                                            <select 
+                                                value={selectedCategory}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="计算机科学">计算机科学</option>
+                                                <option value="生物医学">生物医学</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 搜索检索区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-search mr-2 text-blue-600"></i>
+                                        搜索文章
+                                    </h3>
+                                    <div className="space-y-3">
+                                        <input
+                                            type="text"
+                                            placeholder="输入关键词搜索..."
+                                            value={searchKeyword}
+                                            onChange={(e) => setSearchKeyword(e.target.value)}
+                                            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                        <button 
+                                            onClick={handleSearch}
+                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-search mr-2"></i>
+                                            搜索
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* 作者/编辑介绍区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-users mr-2 text-blue-600"></i>
+                                        作者介绍
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {authors.map((author, index) => (
+                                            <div key={index} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                                                <img 
+                                                    src={author.avatar} 
+                                                    alt={author.name}
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+                                                <div className="flex-1">
+                                                    <h4 className="font-medium text-gray-800">{author.name}</h4>
+                                                    <p className="text-xs text-blue-600 mb-1">{author.affiliation}</p>
+                                                    <p className="text-sm text-gray-600 leading-tight">{author.bio}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 中间栏 */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {/* 当前期刊展示区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+                                        <img 
+                                            src={currentJournal.cover}
+                                            alt="期刊封面"
+                                            className="w-32 h-40 object-cover rounded-lg shadow-md"
+                                        />
+                                        <div className="flex-1 text-center md:text-left">
+                                            <h1 className="text-2xl font-bold text-gray-800 mb-2">{currentJournal.title}</h1>
+                                            <p className="text-lg text-blue-600 mb-4">{currentJournal.date}</p>
+                                            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                                                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">学术期刊</span>
+                                                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">同行评议</span>
+                                                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">开放获取</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 目录列表区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-list mr-2 text-blue-600"></i>
+                                        本期目录
+                                        <span className="ml-2 text-sm text-gray-500">({filteredArticles.length}篇文章)</span>
+                                    </h2>
+                                    {filteredArticles.length === 0 ? (
+                                        <p className="text-gray-500 text-center py-8">没有找到匹配的文章，请尝试其他关键词。</p>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            {filteredArticles.map((article, index) => (
+                                                <div 
+                                                    key={article.id}
+                                                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                                                        selectedArticle?.id === article.id 
+                                                            ? 'border-blue-500 bg-blue-50' 
+                                                            : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                                                    }`}
+                                                    onClick={() => handleArticleClick(article)}
+                                                >
+                                                    <div className="flex items-start justify-between">
+                                                        <div className="flex-1">
+                                                            <h3 className="font-medium text-gray-800 mb-1">
+                                                                {index + 1}. {article.title}
+                                                            </h3>
+                                                            <p className="text-sm text-gray-600">作者：{article.author}</p>
+                                                        </div>
+                                                        <i className="fas fa-chevron-right text-gray-400 mt-1"></i>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* 右侧栏 */}
+                            <div className="lg:col-span-1 space-y-6">
+                                {/* 文章预览区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-eye mr-2 text-blue-600"></i>
+                                        文章预览
+                                    </h3>
+                                    {selectedArticle ? (
+                                        <div className="space-y-4">
+                                            <h4 className="font-medium text-gray-800 leading-tight">{selectedArticle.title}</h4>
+                                            <p className="text-sm text-blue-600">作者：{selectedArticle.author}</p>
+                                            <div className="text-sm text-gray-600 leading-relaxed">
+                                                <p className="mb-3">{selectedArticle.abstract}</p>
+                                                {isFullTextOpen && (
+                                                    <div className="border-t pt-3 mt-3">
+                                                        <h5 className="font-medium mb-2">全文内容：</h5>
+                                                        <p className="leading-relaxed">{selectedArticle.fullText}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <button 
+                                                onClick={handleReadFullText}
+                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+                                            >
+                                                <i className={`fas ${isFullTextOpen ? 'fa-compress' : 'fa-expand'} mr-2`}></i>
+                                                {isFullTextOpen ? '收起全文' : '阅读全文'}
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-500 text-center py-8">请从左侧目录中选择一篇文章</p>
+                                    )}
+                                </div>
+
+                                {/* 用户评论区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-comments mr-2 text-blue-600"></i>
+                                        读者评论
+                                    </h3>
+                                    
+                                    {/* 评论输入 */}
+                                    <div className="mb-4 space-y-3">
+                                        <textarea
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            placeholder="发表您的观点..."
+                                            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                            rows="3"
+                                        />
+                                        <button 
+                                            onClick={handleCommentSubmit}
+                                            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            发表评论
+                                        </button>
+                                    </div>
+
+                                    {/* 评论列表 */}
+                                    <div className="space-y-3 max-h-64 overflow-y-auto">
+                                        {comments.map((comment) => (
+                                            <div key={comment.id} className="p-3 bg-gray-50 rounded-lg">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <span className="font-medium text-sm text-gray-800">{comment.author}</span>
+                                                    <span className="text-xs text-gray-500">{comment.time}</span>
+                                                </div>
+                                                <p className="text-sm text-gray-600 leading-relaxed">{comment.content}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* 订阅/下载区 */}
+                                <div className="bg-white rounded-lg shadow-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-download mr-2 text-blue-600"></i>
+                                        订阅与下载
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors flex items-center justify-center">
+                                            <i className="fas fa-file-pdf mr-2"></i>
+                                            下载电子版 PDF
+                                        </button>
+                                        
+                                        <div className="border-t pt-4">
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">邮箱订阅</label>
+                                            <div className="space-y-3">
+                                                <input
+                                                    type="email"
+                                                    placeholder="输入您的邮箱地址"
+                                                    value={subscribeEmail}
+                                                    onChange={(e) => setSubscribeEmail(e.target.value)}
+                                                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                />
+                                                <button 
+                                                    onClick={handleSubscribe}
+                                                    className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
+                                                >
+                                                    <i className="fas fa-bell mr-2"></i>
+                                                    订阅更新
+                                                </button>
+                                            </div>
+                                            {subscribeStatus && (
+                                                <div className={`mt-3 p-3 rounded-md text-sm ${
+                                                    subscribeStatus.includes('成功') 
+                                                        ? 'bg-green-100 text-green-800' 
+                                                        : 'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {subscribeStatus}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 底部信息区 */}
+                    <footer className="bg-gray-800 text-white mt-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">关于我们</h4>
+                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                        学术期刊在线是一个专业的学术文献发布平台，致力于为全球学者提供高质量的学术交流空间。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">社交媒体</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-weibo text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-wechat text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-linkedin text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                                            <i className="fab fa-twitter text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-semibold mb-4">联系我们</h4>
+                                    <div className="space-y-2 text-sm text-gray-300">
+                                        <p><i className="fas fa-envelope mr-2"></i>journal@academic.com</p>
+                                        <p><i className="fas fa-phone mr-2"></i>+86 010-12345678</p>
+                                        <p><i className="fas fa-map-marker-alt mr-2"></i>北京市海淀区学院路</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-6 text-center">
+                                <p className="text-gray-400 text-sm">
+                                    © 2024 学术期刊在线. 保留所有权利. | 
+                                    <a href="#" className="hover:text-white transition-colors ml-1">隐私政策</a> | 
+                                    <a href="#" className="hover:text-white transition-colors ml-1">使用条款</a>
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

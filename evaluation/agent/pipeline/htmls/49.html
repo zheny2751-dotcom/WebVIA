@@ -1,0 +1,747 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竞赛排行榜</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const App = () => {
+            const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+            const [selectedCompetition, setSelectedCompetition] = useState('全国数学竞赛');
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [rankings, setRankings] = useState([]);
+            const [selectedPlayer, setSelectedPlayer] = useState(null);
+            const [showPlayerDetail, setShowPlayerDetail] = useState(false);
+
+            useEffect(() => {
+                setRankings([
+                    { id: 1, name: '张三', team: '清华大学', score: 98, competition: '全国数学竞赛' },
+                    { id: 2, name: '李四', team: '北京大学', score: 95, competition: '全国数学竞赛' },
+                    { id: 3, name: '王五', team: '复旦大学', score: 92, competition: '全国数学竞赛' },
+                    { id: 4, name: '赵六', team: '上海交大', score: 88, competition: '国际程序设计大赛' },
+                    { id: 5, name: '钱七', team: '中科大', score: 85, competition: '物理奥林匹克' },
+                ]);
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <Header />
+                    <div className="flex">
+                        <Sidebar 
+                            collapsed={sidebarCollapsed} 
+                            onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+                            setSelectedCompetition={setSelectedCompetition}
+                        />
+                        <MainContent 
+                            sidebarCollapsed={sidebarCollapsed}
+                            selectedCompetition={selectedCompetition}
+                            setSelectedCompetition={setSelectedCompetition}
+                            searchKeyword={searchKeyword}
+                            setSearchKeyword={setSearchKeyword}
+                            rankings={rankings}
+                            setRankings={setRankings}
+                            selectedPlayer={selectedPlayer}
+                            setSelectedPlayer={setSelectedPlayer}
+                            showPlayerDetail={showPlayerDetail}
+                            setShowPlayerDetail={setShowPlayerDetail}
+                        />
+                    </div>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const Header = () => {
+            return (
+                <header className="bg-blue-600 text-white shadow-lg fixed w-full top-0 z-50">
+                    <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                            <i className="fas fa-trophy text-2xl text-yellow-400"></i>
+                            <h1 className="text-xl font-bold">竞赛排行榜</h1>
+                        </div>
+                        <nav className="hidden md:flex space-x-6">
+                            <a href="#" className="hover:text-blue-200 transition-colors">首页</a>
+                            <a href="#" className="hover:text-blue-200 transition-colors">排行榜</a>
+                            <a href="#" className="hover:text-blue-200 transition-colors">我的成绩</a>
+                            <a href="#" className="hover:text-blue-200 transition-colors">关于我们</a>
+                        </nav>
+                        <div className="md:hidden">
+                            <i className="fas fa-bars text-xl"></i>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const Sidebar = ({ collapsed, onToggle, setSelectedCompetition }) => {
+            const categories = [
+                { name: '学术类', icon: 'fas fa-book', competitions: ['全国数学竞赛', '物理奥林匹克', '化学竞赛'] },
+                { name: '体育类', icon: 'fas fa-running', competitions: ['田径锦标赛', '游泳比赛', '篮球联赛'] },
+                { name: '编程类', icon: 'fas fa-code', competitions: ['国际程序设计大赛', 'ACM竞赛', '算法挑战赛'] },
+                { name: '艺术类', icon: 'fas fa-palette', competitions: ['绘画比赛', '音乐大赛', '舞蹈表演'] }
+            ];
+
+            const [expandedCategory, setExpandedCategory] = useState(null);
+
+            return (
+                <aside className={`bg-white shadow-lg mt-16 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} fixed h-full z-40`}>
+                    <div className="p-4">
+                        <button 
+                            onClick={onToggle}
+                            className="w-full flex items-center justify-center bg-blue-100 hover:bg-blue-200 text-blue-600 p-2 rounded-lg transition-colors"
+                        >
+                            <i className={`fas ${collapsed ? 'fa-chevron-right' : 'fa-chevron-left'}`}></i>
+                        </button>
+                    </div>
+                    
+                    {!collapsed && (
+                        <div className="px-4 pb-4">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">比赛分类</h3>
+                            {categories.map((category, index) => (
+                                <div key={index} className="mb-2">
+                                    <button 
+                                        onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                                    >
+                                        <div className="flex items-center space-x-3">
+                                            <i className={`${category.icon} text-blue-500`}></i>
+                                            <span className="text-gray-700">{category.name}</span>
+                                        </div>
+                                        <i className={`fas fa-chevron-${expandedCategory === index ? 'up' : 'down'} text-gray-400`}></i>
+                                    </button>
+                                    {expandedCategory === index && (
+                                        <div className="mt-2 ml-4 space-y-1">
+                                            {category.competitions.map((comp, compIndex) => (
+                                                <button 
+                                                    key={compIndex}
+                                                    onClick={() => setSelectedCompetition(comp)}
+                                                    className="block w-full text-left p-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                >
+                                                    {comp}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </aside>
+            );
+        };
+
+        const MainContent = ({ 
+            sidebarCollapsed, 
+            selectedCompetition, 
+            setSelectedCompetition,
+            searchKeyword,
+            setSearchKeyword,
+            rankings,
+            setRankings,
+            selectedPlayer,
+            setSelectedPlayer,
+            showPlayerDetail,
+            setShowPlayerDetail
+        }) => {
+            return (
+                <main className={`flex-1 mt-16 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'} p-6 space-y-6`}>
+                    <RankingModule 
+                        selectedCompetition={selectedCompetition}
+                        setSelectedCompetition={setSelectedCompetition}
+                        searchKeyword={searchKeyword}
+                        setSearchKeyword={setSearchKeyword}
+                        rankings={rankings}
+                        setRankings={setRankings}
+                        selectedPlayer={selectedPlayer}
+                        setSelectedPlayer={setSelectedPlayer}
+                        showPlayerDetail={showPlayerDetail}
+                        setShowPlayerDetail={setShowPlayerDetail}
+                    />
+                    <TrendModule />
+                    <SubmitModule rankings={rankings} setRankings={setRankings} />
+                    <MyScoresModule />
+                </main>
+            );
+        };
+
+        const RankingModule = ({ 
+            selectedCompetition, 
+            setSelectedCompetition,
+            searchKeyword,
+            setSearchKeyword,
+            rankings,
+            setRankings,
+            selectedPlayer,
+            setSelectedPlayer,
+            showPlayerDetail,
+            setShowPlayerDetail
+        }) => {
+            const [filteredRankings, setFilteredRankings] = useState([]);
+            const [loadMoreCount, setLoadMoreCount] = useState(0);
+
+            const competitions = ['全国数学竞赛', '国际程序设计大赛', '物理奥林匹克', '化学竞赛'];
+
+            useEffect(() => {
+                let filtered = rankings.filter(player => 
+                    player.competition === selectedCompetition &&
+                    player.name.toLowerCase().includes(searchKeyword.toLowerCase())
+                );
+                filtered.sort((a, b) => b.score - a.score);
+                setFilteredRankings(filtered);
+            }, [rankings, selectedCompetition, searchKeyword]);
+
+            const handleSearch = () => {
+                console.log('搜索执行');
+            };
+
+            const handleViewDetail = (player) => {
+                setSelectedPlayer(player);
+                setShowPlayerDetail(true);
+            };
+
+            const handleLoadMore = () => {
+                const moreData = [
+                    { id: rankings.length + loadMoreCount + 1, name: `选手${rankings.length + loadMoreCount + 1}`, team: `学校${rankings.length + loadMoreCount + 1}`, score: 85 - loadMoreCount, competition: selectedCompetition },
+                    { id: rankings.length + loadMoreCount + 2, name: `选手${rankings.length + loadMoreCount + 2}`, team: `学校${rankings.length + loadMoreCount + 2}`, score: 84 - loadMoreCount, competition: selectedCompetition },
+                ];
+                setRankings([...rankings, ...moreData]);
+                setLoadMoreCount(loadMoreCount + 2);
+            };
+
+            return (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i className="fas fa-list-ol text-blue-500 mr-3"></i>
+                        当前排行榜
+                    </h2>
+                    
+                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                        <select 
+                            value={selectedCompetition}
+                            onChange={(e) => setSelectedCompetition(e.target.value)}
+                            className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                            {competitions.map(comp => (
+                                <option key={comp} value={comp}>{comp}</option>
+                            ))}
+                        </select>
+                        
+                        <input 
+                            type="text"
+                            placeholder="输入选手姓名..."
+                            value={searchKeyword}
+                            onChange={(e) => setSearchKeyword(e.target.value)}
+                            className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1"
+                        />
+                        
+                        <button 
+                            onClick={handleSearch}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                            <i className="fas fa-search"></i>
+                            <span>查询</span>
+                        </button>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50">
+                                    <th className="border border-gray-200 px-4 py-3 text-left text-gray-600">排名</th>
+                                    <th className="border border-gray-200 px-4 py-3 text-left text-gray-600">选手姓名</th>
+                                    <th className="border border-gray-200 px-4 py-3 text-left text-gray-600">所属团队/学校</th>
+                                    <th className="border border-gray-200 px-4 py-3 text-left text-gray-600">得分</th>
+                                    <th className="border border-gray-200 px-4 py-3 text-left text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredRankings.length > 0 ? filteredRankings.map((player, index) => (
+                                    <tr key={player.id} className="hover:bg-gray-50">
+                                        <td className="border border-gray-200 px-4 py-3">
+                                            <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold ${
+                                                index === 0 ? 'bg-yellow-500' : index === 1 ? 'bg-gray-400' : index === 2 ? 'bg-orange-500' : 'bg-blue-500'
+                                            }`}>
+                                                {index + 1}
+                                            </span>
+                                        </td>
+                                        <td className="border border-gray-200 px-4 py-3 font-medium">{player.name}</td>
+                                        <td className="border border-gray-200 px-4 py-3">{player.team}</td>
+                                        <td className="border border-gray-200 px-4 py-3 font-bold text-blue-600">{player.score}</td>
+                                        <td className="border border-gray-200 px-4 py-3">
+                                            <button 
+                                                onClick={() => handleViewDetail(player)}
+                                                className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors text-sm"
+                                            >
+                                                查看详情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )) : (
+                                    <tr>
+                                        <td colSpan="5" className="border border-gray-200 px-4 py-8 text-center text-gray-500">
+                                            <i className="fas fa-inbox text-4xl mb-4"></i>
+                                            <p>暂无符合条件的排行数据</p>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="mt-6 text-center">
+                        <button 
+                            onClick={handleLoadMore}
+                            className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+                        >
+                            加载更多
+                        </button>
+                    </div>
+
+                    {showPlayerDetail && selectedPlayer && (
+                        <PlayerDetailModal 
+                            player={selectedPlayer}
+                            onClose={() => setShowPlayerDetail(false)}
+                        />
+                    )}
+                </div>
+            );
+        };
+
+        const PlayerDetailModal = ({ player, onClose }) => {
+            return (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-xl font-bold">选手详情</h3>
+                            <button 
+                                onClick={onClose}
+                                className="text-gray-500 hover:text-gray-700"
+                            >
+                                <i className="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div className="text-center mb-4">
+                            <img 
+                                src="https://picsum.photos/id/64/100/100" 
+                                alt="选手头像"
+                                className="w-24 h-24 rounded-full mx-auto mb-3"
+                            />
+                            <h4 className="text-lg font-semibold">{player.name}</h4>
+                            <p className="text-gray-600">{player.team}</p>
+                        </div>
+                        
+                        <div className="space-y-3">
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">当前得分:</span>
+                                <span className="font-bold text-blue-600">{player.score}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">参赛项目:</span>
+                                <span>{player.competition}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">历史最高分:</span>
+                                <span className="font-bold text-green-600">{player.score + 5}</span>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-6">
+                            <h5 className="font-semibold mb-2">成绩趋势</h5>
+                            <div className="bg-gray-100 p-4 rounded">
+                                <p className="text-sm text-gray-600">历年成绩呈上升趋势，表现优异。</p>
+                                <img src="https://picsum.photos/id/180/250/150" alt="成绩趋势图" className="w-full mt-2 rounded" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const TrendModule = () => {
+            const [startDate, setStartDate] = useState('');
+            const [endDate, setEndDate] = useState('');
+            const [chartDrawn, setChartDrawn] = useState(false);
+            const canvasRef = useRef(null);
+
+            const drawChart = () => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(50, 250);
+                ctx.lineTo(450, 250);
+                ctx.moveTo(50, 50);
+                ctx.lineTo(50, 250);
+                ctx.stroke();
+                
+                const data = [
+                    {name: '张三', scores: [90, 85, 92, 88, 95], color: '#3B82F6'},
+                    {name: '李四', scores: [85, 88, 90, 85, 92], color: '#EF4444'},
+                    {name: '王五', scores: [80, 82, 85, 90, 88], color: '#10B981'},
+                    {name: '赵六', scores: [78, 80, 83, 85, 87], color: '#F59E0B'},
+                    {name: '钱七', scores: [75, 78, 80, 82, 85], color: '#8B5CF6'}
+                ];
+                
+                data.forEach((player, index) => {
+                    ctx.strokeStyle = player.color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    
+                    player.scores.forEach((score, i) => {
+                        const x = 70 + i * 80;
+                        const y = 250 - (score * 2);
+                        
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                        
+                        ctx.fillStyle = player.color;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = player.color;
+                    ctx.fillRect(460, 60 + index * 25, 10, 10);
+                    ctx.fillStyle = '#333';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(player.name, 480, 70 + index * 25);
+                });
+
+                ctx.fillStyle = '#666';
+                ctx.font = '10px Arial';
+                for (let i = 0; i < 5; i++) {
+                    ctx.fillText(`第${i+1}周`, 60 + i * 80, 270);
+                }
+
+                setChartDrawn(true);
+            };
+
+            return (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i className="fas fa-chart-line text-orange-500 mr-3"></i>
+                        历史排名趋势
+                    </h2>
+                    
+                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                        <div className="flex items-center space-x-2">
+                            <label className="text-gray-600">开始日期:</label>
+                            <input 
+                                type="date"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                                className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            />
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                            <label className="text-gray-600">结束日期:</label>
+                            <input 
+                                type="date"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                                className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            />
+                        </div>
+                        
+                        <button 
+                            onClick={drawChart}
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                            <i className="fas fa-refresh"></i>
+                            <span>刷新图表</span>
+                        </button>
+                    </div>
+                    
+                    <div className="bg-gray-50 rounded-lg p-4">
+                        {!chartDrawn ? (
+                            <div className="text-center py-16 text-gray-500">
+                                <i className="fas fa-chart-line text-4xl mb-4"></i>
+                                <p>请选择日期范围并点击"刷新图表"查看趋势</p>
+                            </div>
+                        ) : (
+                            <canvas 
+                                ref={canvasRef}
+                                width={600}
+                                height={300}
+                                className="w-full h-auto border border-gray-200 rounded bg-white"
+                            ></canvas>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const SubmitModule = ({ rankings, setRankings }) => {
+            const [playerName, setPlayerName] = useState('');
+            const [teamName, setTeamName] = useState('');
+            const [competition, setCompetition] = useState('全国数学竞赛');
+            const [score, setScore] = useState('');
+            const [submitMessage, setSubmitMessage] = useState('');
+
+            const competitions = ['全国数学竞赛', '国际程序设计大赛', '物理奥林匹克', '化学竞赛'];
+
+            const handleSubmit = () => {
+                if (!playerName || !teamName || !score) {
+                    setSubmitMessage('请填写完整信息！');
+                    setTimeout(() => setSubmitMessage(''), 3000);
+                    return;
+                }
+
+                if (score < 0 || score > 100) {
+                    setSubmitMessage('得分必须在0-100之间！');
+                    setTimeout(() => setSubmitMessage(''), 3000);
+                    return;
+                }
+
+                const newRanking = {
+                    id: Date.now(),
+                    name: playerName,
+                    team: teamName,
+                    score: parseInt(score),
+                    competition: competition
+                };
+
+                setRankings([...rankings, newRanking]);
+                setSubmitMessage('成绩提交成功！');
+                
+                setPlayerName('');
+                setTeamName('');
+                setScore('');
+                
+                setTimeout(() => setSubmitMessage(''), 3000);
+            };
+
+            return (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i className="fas fa-plus-circle text-green-500 mr-3"></i>
+                        提交成绩
+                    </h2>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label className="block text-gray-600 mb-2">选手姓名 *</label>
+                            <input 
+                                type="text"
+                                value={playerName}
+                                onChange={(e) => setPlayerName(e.target.value)}
+                                placeholder="请输入选手姓名"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label className="block text-gray-600 mb-2">团队/学校名称 *</label>
+                            <input 
+                                type="text"
+                                value={teamName}
+                                onChange={(e) => setTeamName(e.target.value)}
+                                placeholder="请输入团队或学校名称"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label className="block text-gray-600 mb-2">比赛项目</label>
+                            <select 
+                                value={competition}
+                                onChange={(e) => setCompetition(e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                                {competitions.map(comp => (
+                                    <option key={comp} value={comp}>{comp}</option>
+                                ))}
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label className="block text-gray-600 mb-2">成绩得分 (0-100) *</label>
+                            <input 
+                                type="number"
+                                value={score}
+                                onChange={(e) => setScore(e.target.value)}
+                                placeholder="请输入成绩得分"
+                                min="0"
+                                max="100"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            />
+                        </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                        <button 
+                            onClick={handleSubmit}
+                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                            <i className="fas fa-paper-plane"></i>
+                            <span>提交</span>
+                        </button>
+                        
+                        {submitMessage && (
+                            <div className={`px-4 py-2 rounded-lg ${submitMessage.includes('成功') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                                {submitMessage}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const MyScoresModule = () => {
+            const [username, setUsername] = useState('');
+            const [userScores, setUserScores] = useState([]);
+            const [showScores, setShowScores] = useState(false);
+
+            const handleViewScores = () => {
+                if (!username.trim()) {
+                    return;
+                }
+
+                const mockScores = [
+                    { competition: '全国数学竞赛', score: 95, date: '2024-01-15', rank: 2 },
+                    { competition: '物理奥林匹克', score: 88, date: '2023-11-20', rank: 5 },
+                    { competition: '化学竞赛', score: 92, date: '2023-09-10', rank: 3 },
+                    { competition: '国际程序设计大赛', score: 86, date: '2023-07-05', rank: 8 },
+                ];
+                
+                setUserScores(mockScores);
+                setShowScores(true);
+            };
+
+            return (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i className="fas fa-user-graduate text-purple-500 mr-3"></i>
+                        我的成绩
+                    </h2>
+                    
+                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                        <input 
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="请输入用户名"
+                            className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        />
+                        
+                        <button 
+                            onClick={handleViewScores}
+                            className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                            <i className="fas fa-search"></i>
+                            <span>查看</span>
+                        </button>
+                    </div>
+                    
+                    {showScores && userScores.length > 0 && (
+                        <div className="space-y-4">
+                            <div className="flex items-center space-x-3 mb-4">
+                                <img src="https://picsum.photos/id/91/50/50" alt="用户头像" className="w-12 h-12 rounded-full" />
+                                <h3 className="text-lg font-semibold text-gray-700">{username} 的历史成绩</h3>
+                            </div>
+                            <div className="grid gap-4">
+                                {userScores.map((score, index) => (
+                                    <div key={index} className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 flex justify-between items-center">
+                                        <div>
+                                            <h4 className="font-semibold text-purple-700">{score.competition}</h4>
+                                            <p className="text-gray-600 text-sm">{score.date}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-2xl font-bold text-purple-600">{score.score}</div>
+                                            <div className="text-sm text-gray-600">第 {score.rank} 名</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {!showScores && (
+                        <div className="text-center py-8">
+                            <i className="fas fa-user-circle text-4xl text-gray-400 mb-4"></i>
+                            <p className="text-gray-600">请输入用户名查看个人成绩记录</p>
+                        </div>
+                    )}
+                    
+                    {showScores && userScores.length === 0 && (
+                        <div className="text-center py-8">
+                            <i className="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
+                            <p className="text-gray-600">暂无成绩记录</p>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Footer = () => {
+            return (
+                <footer className="bg-gray-800 text-white py-8 mt-12">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <h3 className="text-lg font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-phone mr-2"></i>
+                                    联系我们
+                                </h3>
+                                <p className="text-gray-300 mb-2">邮箱: contact@ranking.com</p>
+                                <p className="text-gray-300 mb-2">电话: 400-123-4567</p>
+                                <p className="text-gray-300">地址: 北京市海淀区中关村大街1号</p>
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-link mr-2"></i>
+                                    友情链接
+                                </h3>
+                                <div className="space-y-2">
+                                    <a href="#" className="block text-gray-300 hover:text-white transition-colors">教育部</a>
+                                    <a href="#" className="block text-gray-300 hover:text-white transition-colors">中国科协</a>
+                                    <a href="#" className="block text-gray-300 hover:text-white transition-colors">国际奥委会</a>
+                                    <a href="#" className="block text-gray-300 hover:text-white transition-colors">全国竞赛委员会</a>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold mb-4 flex items-center">
+                                    <i className="fas fa-share-alt mr-2"></i>
+                                    关注我们
+                                </h3>
+                                <div className="flex space-x-4 mb-4">
+                                    <i className="fab fa-weibo text-2xl hover:text-blue-400 cursor-pointer transition-colors"></i>
+                                    <i className="fab fa-weixin text-2xl hover:text-green-400 cursor-pointer transition-colors"></i>
+                                    <i className="fab fa-qq text-2xl hover:text-blue-500 cursor-pointer transition-colors"></i>
+                                </div>
+                                <img src="https://picsum.photos/id/123/150/150" alt="二维码" className="w-24 h-24 rounded" />
+                            </div>
+                        </div>
+                        <div className="border-t border-gray-700 mt-8 pt-4 text-center">
+                            <p className="text-gray-400">© 2024 竞赛排行榜. All rights reserved. | 京ICP备12345678号</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

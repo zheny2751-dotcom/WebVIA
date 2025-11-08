@@ -1,0 +1,457 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物业缴费系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const PropertyPaymentSystem = () => {
+            const [currentUser, setCurrentUser] = useState(null);
+            const [searchHouseNo, setSearchHouseNo] = useState('');
+            const [totalDebt, setTotalDebt] = useState(0);
+            const [currentBills, setCurrentBills] = useState([]);
+            const [recentBills, setRecentBills] = useState([]);
+            const [paymentMethod, setPaymentMethod] = useState('wechat');
+            const [paymentAmount, setPaymentAmount] = useState('');
+            const [showPaymentConfirm, setShowPaymentConfirm] = useState(false);
+            const [paymentSuccess, setPaymentSuccess] = useState(false);
+            const [exportStartDate, setExportStartDate] = useState('');
+            const [exportEndDate, setExportEndDate] = useState('');
+            const [exportSuccess, setExportSuccess] = useState(false);
+            const [customerMessage, setCustomerMessage] = useState('');
+            const [messageSuccess, setMessageSuccess] = useState(false);
+
+            const mockUsers = {
+                '001': {
+                    houseNo: '001',
+                    name: '张三',
+                    totalDebt: 1250.00,
+                    currentBills: [
+                        { type: '物业费', amount: 350.00, dueDate: '2024-01-31' },
+                        { type: '水费', amount: 120.50, dueDate: '2024-01-31' },
+                        { type: '电费', amount: 180.30, dueDate: '2024-01-31' },
+                        { type: '停车费', amount: 200.00, dueDate: '2024-01-31' }
+                    ],
+                    recentBills: [
+                        { period: '2023年12月', total: 890.00, status: '已缴费', date: '2023-12-15' },
+                        { period: '2023年11月', total: 750.00, status: '已缴费', date: '2023-11-10' },
+                        { period: '2023年10月', total: 820.00, status: '已缴费', date: '2023-10-08' }
+                    ]
+                },
+                '002': {
+                    houseNo: '002',
+                    name: '李四',
+                    totalDebt: 980.50,
+                    currentBills: [
+                        { type: '物业费', amount: 350.00, dueDate: '2024-01-31' },
+                        { type: '水费', amount: 95.20, dueDate: '2024-01-31' },
+                        { type: '电费', amount: 135.30, dueDate: '2024-01-31' },
+                        { type: '燃气费', amount: 400.00, dueDate: '2024-01-31' }
+                    ],
+                    recentBills: [
+                        { period: '2023年12月', total: 720.00, status: '已缴费', date: '2023-12-20' },
+                        { period: '2023年11月', total: 650.00, status: '已缴费', date: '2023-11-15' },
+                        { period: '2023年10月', total: 780.00, status: '已缴费', date: '2023-10-12' }
+                    ]
+                }
+            };
+
+            const handleSearch = () => {
+                const user = mockUsers[searchHouseNo];
+                if (user) {
+                    setCurrentUser(user);
+                    setTotalDebt(user.totalDebt);
+                    setCurrentBills(user.currentBills);
+                    setRecentBills(user.recentBills);
+                } else {
+                    setCurrentUser(null);
+                    setTotalDebt(0);
+                    setCurrentBills([]);
+                    setRecentBills([]);
+                }
+            };
+
+            const handlePayment = () => {
+                if (!paymentAmount || parseFloat(paymentAmount) <= 0) {
+                    return;
+                }
+                setShowPaymentConfirm(true);
+            };
+
+            const confirmPayment = () => {
+                const amount = parseFloat(paymentAmount);
+                setTotalDebt(prev => Math.max(0, prev - amount));
+                setShowPaymentConfirm(false);
+                setPaymentSuccess(true);
+                setPaymentAmount('');
+                
+                setTimeout(() => {
+                    setPaymentSuccess(false);
+                }, 3000);
+            };
+
+            const handleExport = () => {
+                if (exportStartDate && exportEndDate) {
+                    setExportSuccess(true);
+                    setTimeout(() => {
+                        setExportSuccess(false);
+                    }, 3000);
+                }
+            };
+
+            const handleMessageSubmit = () => {
+                if (customerMessage.trim()) {
+                    setMessageSuccess(true);
+                    setCustomerMessage('');
+                    setTimeout(() => {
+                        setMessageSuccess(false);
+                    }, 3000);
+                }
+            };
+
+            useEffect(() => {
+                const defaultUser = mockUsers['001'];
+                setCurrentUser(defaultUser);
+                setTotalDebt(defaultUser.totalDebt);
+                setCurrentBills(defaultUser.currentBills);
+                setRecentBills(defaultUser.recentBills);
+                setSearchHouseNo('001');
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <header className="bg-white shadow-lg border-b-4 border-blue-600">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between h-16">
+                                <div className="flex items-center space-x-4">
+                                    <img src="https://picsum.photos/id/1027/48/48" alt="物业Logo" className="h-12 w-12 rounded-lg shadow-md" />
+                                    <div>
+                                        <h1 className="text-2xl font-bold text-blue-900">智慧物业缴费系统</h1>
+                                        <p className="text-sm text-blue-600">便民服务 · 智能管理</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <i className="fas fa-user-circle text-2xl text-blue-600"></i>
+                                    <span className="text-blue-900 font-medium">{currentUser ? currentUser.name : '请查询户号'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2 space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-search text-blue-600 mr-3"></i>
+                                        账单查询
+                                    </h2>
+                                    <div className="flex space-x-4">
+                                        <input
+                                            type="text"
+                                            placeholder="请输入户号（如：001、002）"
+                                            className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                                            value={searchHouseNo}
+                                            onChange={(e) => setSearchHouseNo(e.target.value)}
+                                        />
+                                        <button
+                                            onClick={handleSearch}
+                                            className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md"
+                                        >
+                                            <i className="fas fa-search mr-2"></i>查询
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-file-invoice-dollar text-red-600 mr-3"></i>
+                                        费用概览
+                                    </h2>
+                                    
+                                    <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-lg p-6 text-white mb-6">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-red-100 text-sm">当前总欠费</p>
+                                                <p className="text-3xl font-bold">¥{totalDebt.toFixed(2)}</p>
+                                            </div>
+                                            <i className="fas fa-exclamation-triangle text-4xl text-red-200"></i>
+                                        </div>
+                                    </div>
+
+                                    {currentUser && (
+                                        <>
+                                            <div className="mb-6">
+                                                <h3 className="text-lg font-medium text-gray-700 mb-4">当期账单明细</h3>
+                                                <div className="bg-gray-50 rounded-lg overflow-hidden">
+                                                    <table className="w-full">
+                                                        <thead className="bg-gray-100">
+                                                            <tr>
+                                                                <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">费用类型</th>
+                                                                <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">金额</th>
+                                                                <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">截止日期</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {currentBills.map((bill, index) => (
+                                                                <tr key={index} className="border-t border-gray-200">
+                                                                    <td className="px-4 py-3 text-sm text-gray-800">{bill.type}</td>
+                                                                    <td className="px-4 py-3 text-sm font-medium text-red-600">¥{bill.amount.toFixed(2)}</td>
+                                                                    <td className="px-4 py-3 text-sm text-gray-600">{bill.dueDate}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-medium text-gray-700 mb-4">最近三期账单</h3>
+                                                <div className="space-y-3">
+                                                    {recentBills.map((bill, index) => (
+                                                        <div key={index} className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
+                                                            <div>
+                                                                <p className="font-medium text-gray-800">{bill.period}</p>
+                                                                <p className="text-sm text-gray-600">缴费日期：{bill.date}</p>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <p className="font-medium text-gray-800">¥{bill.total.toFixed(2)}</p>
+                                                                <span className="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">{bill.status}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    
+                                    {!currentUser && (
+                                        <div className="text-center py-12">
+                                            <i className="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                                            <p className="text-gray-500">请输入户号查询账单信息</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-credit-card text-green-600 mr-3"></i>
+                                        在线支付
+                                    </h2>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">支付方式</label>
+                                            <select
+                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none"
+                                                value={paymentMethod}
+                                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                            >
+                                                <option value="wechat">微信支付</option>
+                                                <option value="alipay">支付宝</option>
+                                                <option value="bankcard">银行卡支付</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">支付金额</label>
+                                            <input
+                                                type="number"
+                                                placeholder="请输入支付金额"
+                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none"
+                                                value={paymentAmount}
+                                                onChange={(e) => setPaymentAmount(e.target.value)}
+                                                step="0.01"
+                                                min="0"
+                                            />
+                                        </div>
+                                        
+                                        <button
+                                            onClick={handlePayment}
+                                            className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-md"
+                                            disabled={!paymentAmount || parseFloat(paymentAmount) <= 0}
+                                        >
+                                            <i className="fas fa-mobile-alt mr-2"></i>立即支付
+                                        </button>
+                                    </div>
+                                    
+                                    {paymentSuccess && (
+                                        <div className="mt-4 p-4 bg-green-100 border border-green-400 rounded-lg">
+                                            <div className="flex items-center">
+                                                <i className="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span className="text-green-800 font-medium">支付成功！</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-download text-purple-600 mr-3"></i>
+                                        账单导出
+                                    </h2>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">开始日期</label>
+                                            <input
+                                                type="date"
+                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
+                                                value={exportStartDate}
+                                                onChange={(e) => setExportStartDate(e.target.value)}
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">结束日期</label>
+                                            <input
+                                                type="date"
+                                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
+                                                value={exportEndDate}
+                                                onChange={(e) => setExportEndDate(e.target.value)}
+                                            />
+                                        </div>
+                                        
+                                        <button
+                                            onClick={handleExport}
+                                            className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-md"
+                                            disabled={!exportStartDate || !exportEndDate}
+                                        >
+                                            <i className="fas fa-file-pdf mr-2"></i>导出PDF账单
+                                        </button>
+                                    </div>
+                                    
+                                    {exportSuccess && (
+                                        <div className="mt-4 p-4 bg-purple-100 border border-purple-400 rounded-lg">
+                                            <div className="flex items-center">
+                                                <i className="fas fa-check-circle text-purple-600 mr-2"></i>
+                                                <span className="text-purple-800 font-medium">导出成功！</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-comments text-yellow-600 mr-3"></i>
+                                        客服留言
+                                    </h2>
+                                    
+                                    <div className="space-y-4">
+                                        <textarea
+                                            placeholder="请输入您的问题或建议..."
+                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-yellow-500 focus:outline-none resize-none"
+                                            rows="4"
+                                            value={customerMessage}
+                                            onChange={(e) => setCustomerMessage(e.target.value)}
+                                        ></textarea>
+                                        
+                                        <button
+                                            onClick={handleMessageSubmit}
+                                            className="w-full py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors font-medium shadow-md"
+                                            disabled={!customerMessage.trim()}
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>提交留言
+                                        </button>
+                                    </div>
+                                    
+                                    {messageSuccess && (
+                                        <div className="mt-4 p-4 bg-yellow-100 border border-yellow-400 rounded-lg">
+                                            <div className="flex items-center">
+                                                <i className="fas fa-check-circle text-yellow-600 mr-2"></i>
+                                                <span className="text-yellow-800 font-medium">留言提交成功！</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <footer className="bg-gray-800 text-white mt-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                            <div className="flex flex-col md:flex-row items-center justify-between">
+                                <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                                    <img src="https://picsum.photos/id/1027/32/32" alt="物业Logo" className="h-8 w-8 rounded" />
+                                    <div>
+                                        <p className="text-lg font-medium">智慧物业缴费系统</p>
+                                        <p className="text-sm text-gray-400">© 2024 版权所有</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-6">
+                                    <div className="text-center">
+                                        <i className="fas fa-phone text-blue-400 mb-1"></i>
+                                        <p className="text-sm">客服热线</p>
+                                        <p className="font-medium">400-888-0000</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <i className="fas fa-clock text-green-400 mb-1"></i>
+                                        <p className="text-sm">服务时间</p>
+                                        <p className="font-medium">9:00-18:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+
+                    {showPaymentConfirm && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl">
+                                <div className="text-center mb-6">
+                                    <i className="fas fa-credit-card text-4xl text-blue-600 mb-4"></i>
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">确认支付</h3>
+                                    <p className="text-gray-600">请确认您的支付信息</p>
+                                </div>
+                                
+                                <div className="space-y-3 mb-6">
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600">支付方式：</span>
+                                        <span className="font-medium">
+                                            {paymentMethod === 'wechat' && '微信支付'}
+                                            {paymentMethod === 'alipay' && '支付宝'}
+                                            {paymentMethod === 'bankcard' && '银行卡支付'}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600">支付金额：</span>
+                                        <span className="font-bold text-lg text-red-600">¥{parseFloat(paymentAmount || 0).toFixed(2)}</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex space-x-3">
+                                    <button
+                                        onClick={() => setShowPaymentConfirm(false)}
+                                        className="flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                                    >
+                                        取消
+                                    </button>
+                                    <button
+                                        onClick={confirmPayment}
+                                        className="flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    >
+                                        确认支付
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<PropertyPaymentSystem />, document.getElementById('root'));
+    </script>
+</body>
+</html>

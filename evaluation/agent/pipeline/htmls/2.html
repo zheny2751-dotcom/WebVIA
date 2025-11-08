@@ -1,0 +1,477 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>毕业季云上寄语</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .cloud-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .cloud-float:nth-child(2) {
+            animation-delay: -2s;
+        }
+        
+        .cloud-float:nth-child(3) {
+            animation-delay: -4s;
+        }
+        
+        .message-card {
+            transition: all 0.3s ease;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .pink-theme { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .blue-theme { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .green-theme { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .yellow-theme { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function App() {
+            const [messages, setMessages] = useState([
+                {
+                    id: 1,
+                    text: "愿我们都能在各自的道路上发光发热，青春不散场！",
+                    author: "小明",
+                    class: "计算机1班",
+                    likes: 15,
+                    liked: false,
+                    timestamp: new Date().toLocaleString()
+                },
+                {
+                    id: 2,
+                    text: "感谢这三年的美好时光，愿友谊长存，未来可期！",
+                    author: "小红",
+                    class: "软件2班",
+                    likes: 23,
+                    liked: false,
+                    timestamp: new Date().toLocaleString()
+                },
+                {
+                    id: 3,
+                    text: "毕业不是结束，而是另一个开始。加油，同学们！",
+                    author: "小李",
+                    class: "计算机1班",
+                    likes: 18,
+                    liked: false,
+                    timestamp: new Date().toLocaleString()
+                }
+            ]);
+            
+            const [newMessage, setNewMessage] = useState('');
+            const [selectedClass, setSelectedClass] = useState('全部');
+            const [fontStyle, setFontStyle] = useState('normal');
+            const [bgTheme, setBgTheme] = useState('blue-theme');
+            const [cloudAnimation, setCloudAnimation] = useState(true);
+            const [featuredMessage, setFeaturedMessage] = useState(null);
+            const [shareLink, setShareLink] = useState('');
+            const [showShareModal, setShowShareModal] = useState(false);
+            
+            const classes = ['全部', '计算机1班', '软件2班', '网络3班', '数据4班'];
+            const fontStyles = [
+                { value: 'normal', label: '默认字体' },
+                { value: 'serif', label: '优雅宋体' },
+                { value: 'mono', label: '等宽字体' },
+                { value: 'cursive', label: '手写体' }
+            ];
+            const themes = [
+                { value: 'blue-theme', label: '天空蓝' },
+                { value: 'pink-theme', label: '樱花粉' },
+                { value: 'green-theme', label: '薄荷绿' },
+                { value: 'yellow-theme', label: '阳光黄' }
+            ];
+            
+            const handleSubmitMessage = () => {
+                if (!newMessage.trim()) return;
+                
+                const randomClass = classes[Math.floor(Math.random() * (classes.length - 1)) + 1];
+                const newMsg = {
+                    id: Date.now(),
+                    text: newMessage,
+                    author: '匿名同学',
+                    class: randomClass,
+                    likes: 0,
+                    liked: false,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                setMessages([newMsg, ...messages]);
+                setNewMessage('');
+            };
+            
+            const handleLike = (id) => {
+                setMessages(messages.map(msg => 
+                    msg.id === id 
+                        ? { ...msg, likes: msg.liked ? msg.likes - 1 : msg.likes + 1, liked: !msg.liked }
+                        : msg
+                ));
+            };
+            
+            const handleRandomFeature = () => {
+                const availableMessages = filteredMessages.length > 0 ? filteredMessages : messages;
+                if (availableMessages.length > 0) {
+                    const randomMsg = availableMessages[Math.floor(Math.random() * availableMessages.length)];
+                    setFeaturedMessage(randomMsg);
+                }
+            };
+            
+            const handleExport = () => {
+                alert('截图功能已触发，正在生成图片...');
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.download = '毕业寄语墙.png';
+                    link.href = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+                    link.click();
+                }, 1000);
+            };
+            
+            const handleGenerateShareLink = () => {
+                const link = `https://graduation-messages.com/share/${Date.now()}`;
+                setShareLink(link);
+                setShowShareModal(true);
+            };
+            
+            const copyShareLink = () => {
+                navigator.clipboard.writeText(shareLink);
+                alert('分享链接已复制到剪贴板！');
+            };
+            
+            const filteredMessages = selectedClass === '全部' 
+                ? messages 
+                : messages.filter(msg => msg.class === selectedClass);
+            
+            const getFontClass = () => {
+                switch(fontStyle) {
+                    case 'serif': return 'font-serif';
+                    case 'mono': return 'font-mono';
+                    case 'cursive': return 'font-cursive';
+                    default: return 'font-sans';
+                }
+            };
+            
+            return (
+                <div className={`min-h-screen ${bgTheme} ${getFontClass()}`}>
+                    <header className="bg-white/90 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+                        <div className="container mx-auto px-4 py-4">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <h1 className="text-3xl font-bold text-gray-800">毕业季云上寄语</h1>
+                                    <p className="text-gray-600 mt-1">记录青春足迹，传递美好祝愿</p>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                        <i className="fas fa-home mr-2"></i>返回首页
+                                    </button>
+                                    <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                                        <i className="fas fa-envelope mr-2"></i>联系我们
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <section className="relative py-20 overflow-hidden">
+                        <div className="absolute inset-0">
+                            <img 
+                                src="https://picsum.photos/id/96/1920/800" 
+                                alt="校园背景" 
+                                className="w-full h-full object-cover opacity-20"
+                            />
+                        </div>
+                        <div className={`absolute inset-0 ${cloudAnimation ? 'cloud-float' : ''}`}>
+                            <div className="absolute top-10 left-10 w-20 h-12 bg-white/30 rounded-full"></div>
+                            <div className="absolute top-20 right-20 w-16 h-10 bg-white/40 rounded-full"></div>
+                            <div className="absolute bottom-20 left-1/4 w-24 h-14 bg-white/25 rounded-full"></div>
+                        </div>
+                        <div className="relative container mx-auto px-4 text-center">
+                            <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">
+                                青春不散场，友谊永绵长
+                            </h2>
+                            <p className="text-xl text-white/90 drop-shadow">
+                                在这个特殊的时刻，让我们一起记录下最珍贵的回忆
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2">
+                                {featuredMessage && (
+                                    <div className="bg-gradient-to-r from-yellow-100 to-pink-100 rounded-xl p-6 mb-8 border-l-4 border-yellow-400">
+                                        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                                            <i className="fas fa-star text-yellow-500 mr-2"></i>
+                                            置顶寄语
+                                        </h3>
+                                        <div className="bg-white rounded-lg p-4">
+                                            <p className="text-gray-700 text-lg leading-relaxed">{featuredMessage.text}</p>
+                                            <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+                                                <span>{featuredMessage.author} · {featuredMessage.class}</span>
+                                                <span>{featuredMessage.timestamp}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-2xl font-bold text-gray-800">寄语墙</h3>
+                                        <button 
+                                            onClick={handleRandomFeature}
+                                            className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+                                        >
+                                            <i className="fas fa-random mr-2"></i>随机置顶
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="space-y-4 max-h-96 overflow-y-auto">
+                                        {filteredMessages.map(message => (
+                                            <div key={message.id} className="message-card bg-white rounded-lg p-4 shadow-md">
+                                                <p className="text-gray-700 leading-relaxed mb-3">{message.text}</p>
+                                                <div className="flex justify-between items-center">
+                                                    <div className="flex items-center space-x-3 text-sm text-gray-500">
+                                                        <span className="flex items-center">
+                                                            <i className="fas fa-user mr-1"></i>
+                                                            {message.author}
+                                                        </span>
+                                                        <span className="flex items-center">
+                                                            <i className="fas fa-graduation-cap mr-1"></i>
+                                                            {message.class}
+                                                        </span>
+                                                        <span className="flex items-center">
+                                                            <i className="fas fa-clock mr-1"></i>
+                                                            {message.timestamp}
+                                                        </span>
+                                                    </div>
+                                                    <button 
+                                                        onClick={() => handleLike(message.id)}
+                                                        className={`flex items-center space-x-1 px-3 py-1 rounded-full transition-colors ${
+                                                            message.liked 
+                                                                ? 'bg-red-100 text-red-600' 
+                                                                : 'bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500'
+                                                        }`}
+                                                    >
+                                                        <i className={`fas fa-heart ${message.liked ? 'text-red-500' : ''}`}></i>
+                                                        <span>{message.likes}</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">发表寄语</h3>
+                                    <div className="space-y-4">
+                                        <textarea
+                                            value={newMessage}
+                                            onChange={(e) => setNewMessage(e.target.value)}
+                                            placeholder="请输入毕业寄语..."
+                                            className="w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        />
+                                        
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <select 
+                                                value={fontStyle}
+                                                onChange={(e) => setFontStyle(e.target.value)}
+                                                className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                {fontStyles.map(style => (
+                                                    <option key={style.value} value={style.value}>
+                                                        {style.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            
+                                            <select 
+                                                value={bgTheme}
+                                                onChange={(e) => setBgTheme(e.target.value)}
+                                                className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            >
+                                                {themes.map(theme => (
+                                                    <option key={theme.value} value={theme.value}>
+                                                        {theme.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        <button 
+                                            onClick={handleSubmitMessage}
+                                            className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交寄语
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">班级互动</h3>
+                                    <div className="space-y-3">
+                                        <select 
+                                            value={selectedClass}
+                                            onChange={(e) => setSelectedClass(e.target.value)}
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            {classes.map(cls => (
+                                                <option key={cls} value={cls}>{cls}</option>
+                                            ))}
+                                        </select>
+                                        <button 
+                                            onClick={() => setSelectedClass('全部')}
+                                            className="w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                                        >
+                                            <i className="fas fa-globe mr-2"></i>
+                                            全校总览
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">云朵设置</h3>
+                                    <div className="space-y-3">
+                                        <button 
+                                            onClick={() => setBgTheme(themes[Math.floor(Math.random() * themes.length)].value)}
+                                            className="w-full py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+                                        >
+                                            <i className="fas fa-cloud mr-2"></i>
+                                            随机云图
+                                        </button>
+                                        <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer">
+                                            <span className="text-gray-700">自动云动</span>
+                                            <input 
+                                                type="checkbox" 
+                                                checked={cloudAnimation}
+                                                onChange={(e) => setCloudAnimation(e.target.checked)}
+                                                className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">导出分享</h3>
+                                    <div className="space-y-3">
+                                        <button 
+                                            onClick={handleExport}
+                                            className="w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                                        >
+                                            <i className="fas fa-download mr-2"></i>
+                                            导出为图片
+                                        </button>
+                                        <button 
+                                            onClick={handleGenerateShareLink}
+                                            className="w-full py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+                                        >
+                                            <i className="fas fa-share mr-2"></i>
+                                            生成分享链接
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {showShareModal && (
+                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+                                <h3 className="text-xl font-bold mb-4">分享链接</h3>
+                                <div className="flex space-x-2">
+                                    <input 
+                                        type="text" 
+                                        value={shareLink} 
+                                        readOnly
+                                        className="flex-1 p-2 border border-gray-300 rounded-lg bg-gray-50"
+                                    />
+                                    <button 
+                                        onClick={copyShareLink}
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                                    >
+                                        复制
+                                    </button>
+                                </div>
+                                <button 
+                                    onClick={() => setShowShareModal(false)}
+                                    className="w-full mt-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                                >
+                                    关闭
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="container mx-auto px-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div>
+                                    <h4 className="text-lg font-bold mb-4">联系我们</h4>
+                                    <div className="space-y-2">
+                                        <p><i className="fas fa-envelope mr-2"></i>graduation@school.edu.cn</p>
+                                        <p><i className="fas fa-phone mr-2"></i>400-123-4567</p>
+                                        <p><i className="fas fa-map-marker-alt mr-2"></i>北京市朝阳区学院路1号</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-bold mb-4">快速链接</h4>
+                                    <div className="space-y-2">
+                                        <a href="#" className="block hover:text-blue-400 transition-colors">学校官网</a>
+                                        <a href="#" className="block hover:text-blue-400 transition-colors">校友会</a>
+                                        <a href="#" className="block hover:text-blue-400 transition-colors">就业指导</a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-bold mb-4">关注我们</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-2xl hover:text-blue-400 transition-colors">
+                                            <i className="fab fa-weixin"></i>
+                                        </a>
+                                        <a href="#" className="text-2xl hover:text-blue-400 transition-colors">
+                                            <i className="fab fa-weibo"></i>
+                                        </a>
+                                        <a href="#" className="text-2xl hover:text-blue-400 transition-colors">
+                                            <i className="fab fa-qq"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-4 text-center">
+                                <p>&copy; 2024 毕业季云上寄语平台 版权所有 | 京ICP备12345678号</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

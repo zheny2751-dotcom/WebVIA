@@ -1,0 +1,658 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务预约系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function App() {
+            const [currentStep, setCurrentStep] = useState(1);
+            const [selectedService, setSelectedService] = useState('');
+            const [selectedDate, setSelectedDate] = useState('');
+            const [selectedTime, setSelectedTime] = useState('');
+            const [userInfo, setUserInfo] = useState({
+                name: '',
+                phone: '',
+                email: '',
+                gender: '',
+                preference: ''
+            });
+            const [reservationStatus, setReservationStatus] = useState('');
+            const [showConfirmModal, setShowConfirmModal] = useState(false);
+            const [availableTimes, setAvailableTimes] = useState([]);
+            const [errors, setErrors] = useState({});
+            
+            const services = [
+                { id: 'healthcare', name: '医疗保健', description: '专业医疗服务' },
+                { id: 'beauty', name: '美容护理', description: '专业美容护理服务' },
+                { id: 'fitness', name: '健身训练', description: '个人健身指导' },
+                { id: 'education', name: '教育培训', description: '专业技能培训' },
+                { id: 'consulting', name: '咨询服务', description: '专业咨询顾问' }
+            ];
+            
+            useEffect(() => {
+                if (selectedService && selectedDate) {
+                    generateAvailableTimes();
+                }
+            }, [selectedService, selectedDate]);
+            
+            const generateAvailableTimes = () => {
+                const times = [];
+                const serviceTimeSlots = {
+                    healthcare: ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
+                    beauty: ['10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+                    fitness: ['06:00', '07:00', '08:00', '18:00', '19:00', '20:00'],
+                    education: ['09:00', '10:00', '14:00', '15:00', '16:00', '19:00', '20:00'],
+                    consulting: ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00']
+                };
+                
+                const slots = serviceTimeSlots[selectedService] || [];
+                setAvailableTimes(slots);
+            };
+            
+            const handleServiceChange = (e) => {
+                setSelectedService(e.target.value);
+                setSelectedTime('');
+                setCurrentStep(2);
+            };
+            
+            const handleDateChange = (e) => {
+                setSelectedDate(e.target.value);
+                setSelectedTime('');
+                setCurrentStep(3);
+            };
+            
+            const handleTimeSelect = (time) => {
+                setSelectedTime(time);
+                setCurrentStep(4);
+            };
+            
+            const handleUserInfoChange = (field, value) => {
+                setUserInfo(prev => ({
+                    ...prev,
+                    [field]: value
+                }));
+                
+                if (errors[field]) {
+                    setErrors(prev => ({
+                        ...prev,
+                        [field]: ''
+                    }));
+                }
+            };
+            
+            const validateForm = () => {
+                const newErrors = {};
+                
+                if (!userInfo.name.trim()) {
+                    newErrors.name = '请输入姓名';
+                }
+                
+                if (!userInfo.phone.trim()) {
+                    newErrors.phone = '请输入手机号';
+                } else if (!/^1[3-9]\d{9}$/.test(userInfo.phone)) {
+                    newErrors.phone = '请输入正确的手机号';
+                }
+                
+                if (!userInfo.email.trim()) {
+                    newErrors.email = '请输入邮箱';
+                } else if (!/\S+@\S+\.\S+/.test(userInfo.email)) {
+                    newErrors.email = '请输入正确的邮箱格式';
+                }
+                
+                if (!userInfo.gender) {
+                    newErrors.gender = '请选择性别';
+                }
+                
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+            
+            const handleConfirmReservation = () => {
+                if (validateForm()) {
+                    setShowConfirmModal(true);
+                    setCurrentStep(5);
+                }
+            };
+            
+            const handleSubmitReservation = () => {
+                setReservationStatus('success');
+                setShowConfirmModal(false);
+                setCurrentStep(6);
+            };
+            
+            const handleEditReservation = () => {
+                setShowConfirmModal(false);
+                setCurrentStep(4);
+            };
+            
+            const handleCancelReservation = () => {
+                setSelectedService('');
+                setSelectedDate('');
+                setSelectedTime('');
+                setUserInfo({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    gender: '',
+                    preference: ''
+                });
+                setReservationStatus('');
+                setShowConfirmModal(false);
+                setCurrentStep(1);
+                setErrors({});
+            };
+            
+            const getStepStatus = (step) => {
+                if (step < currentStep) return 'completed';
+                if (step === currentStep) return 'current';
+                return 'upcoming';
+            };
+            
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <header className="bg-white shadow-sm border-b">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between h-16">
+                                <div className="flex items-center">
+                                    <img src="https://picsum.photos/id/1/40/40" alt="Logo" className="h-10 w-10 rounded-lg" />
+                                    <h1 className="ml-3 text-xl font-bold text-gray-900">服务预约系统</h1>
+                                </div>
+                                <nav className="hidden md:flex space-x-8">
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">首页</a>
+                                    <a href="#" className="text-blue-600 font-medium">预约服务</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">我的预约</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-900">帮助中心</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div className="bg-white border-b">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                            <div className="flex items-center justify-between">
+                                {[
+                                    { step: 1, label: '选择服务' },
+                                    { step: 2, label: '选择日期' },
+                                    { step: 3, label: '选择时间' },
+                                    { step: 4, label: '填写信息' },
+                                    { step: 5, label: '确认预约' },
+                                    { step: 6, label: '预约完成' }
+                                ].map((item, index) => (
+                                    <div key={item.step} className="flex items-center">
+                                        <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                                            getStepStatus(item.step) === 'completed' 
+                                                ? 'bg-green-500 text-white' 
+                                                : getStepStatus(item.step) === 'current'
+                                                    ? 'bg-blue-500 text-white'
+                                                    : 'bg-gray-200 text-gray-600'
+                                        }`}>
+                                            {getStepStatus(item.step) === 'completed' ? <i className="fas fa-check"></i> : item.step}
+                                        </div>
+                                        <span className={`ml-2 text-sm ${
+                                            getStepStatus(item.step) === 'current' ? 'text-blue-600 font-medium' : 'text-gray-500'
+                                        }`}>
+                                            {item.label}
+                                        </span>
+                                        {index < 5 && <div className="w-8 h-0.5 bg-gray-200 mx-4"></div>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2 space-y-8">
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <div className="flex items-center mb-4">
+                                        <i className="fas fa-concierge-bell text-blue-500 text-xl mr-3"></i>
+                                        <h2 className="text-lg font-semibold text-gray-900">选择服务类型</h2>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {services.map(service => (
+                                            <div key={service.id} className="relative">
+                                                <input
+                                                    type="radio"
+                                                    id={service.id}
+                                                    name="service"
+                                                    value={service.id}
+                                                    checked={selectedService === service.id}
+                                                    onChange={handleServiceChange}
+                                                    className="sr-only"
+                                                />
+                                                <label
+                                                    htmlFor={service.id}
+                                                    className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                                                        selectedService === service.id
+                                                            ? 'border-blue-500 bg-blue-50'
+                                                            : 'border-gray-200 hover:border-gray-300'
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <h3 className="font-medium text-gray-900">{service.name}</h3>
+                                                            <p className="text-sm text-gray-500 mt-1">{service.description}</p>
+                                                        </div>
+                                                        <div className={`w-4 h-4 rounded-full border-2 ${
+                                                            selectedService === service.id
+                                                                ? 'border-blue-500 bg-blue-500'
+                                                                : 'border-gray-300'
+                                                        }`}>
+                                                            {selectedService === service.id && (
+                                                                <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                {selectedService && (
+                                    <div className="bg-white rounded-lg shadow-sm border p-6">
+                                        <div className="flex items-center mb-4">
+                                            <i className="fas fa-calendar-alt text-blue-500 text-xl mr-3"></i>
+                                            <h2 className="text-lg font-semibold text-gray-900">选择预约日期</h2>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                                            <div>
+                                                <input
+                                                    type="date"
+                                                    value={selectedDate}
+                                                    onChange={handleDateChange}
+                                                    min={new Date().toISOString().split('T')[0]}
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                />
+                                            </div>
+                                            <div className="text-sm text-gray-600">
+                                                <i className="fas fa-info-circle text-blue-500 mr-2"></i>
+                                                请选择未来7天内的日期
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {selectedDate && availableTimes.length > 0 && (
+                                    <div className="bg-white rounded-lg shadow-sm border p-6">
+                                        <div className="flex items-center mb-4">
+                                            <i className="fas fa-clock text-blue-500 text-xl mr-3"></i>
+                                            <h2 className="text-lg font-semibold text-gray-900">选择预约时间</h2>
+                                        </div>
+                                        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                                            {availableTimes.map(time => (
+                                                <button
+                                                    key={time}
+                                                    onClick={() => handleTimeSelect(time)}
+                                                    className={`px-4 py-3 text-sm font-medium rounded-lg border transition-all duration-200 ${
+                                                        selectedTime === time
+                                                            ? 'bg-blue-500 text-white border-blue-500 shadow-md'
+                                                            : 'bg-white text-gray-700 border-gray-300 hover:border-blue-500 hover:text-blue-500'
+                                                    }`}
+                                                >
+                                                    {time}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {selectedTime && (
+                                    <div className="bg-white rounded-lg shadow-sm border p-6">
+                                        <div className="flex items-center mb-4">
+                                            <i className="fas fa-user text-blue-500 text-xl mr-3"></i>
+                                            <h2 className="text-lg font-semibold text-gray-900">填写个人信息</h2>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                    姓名 <span className="text-red-500">*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={userInfo.name}
+                                                    onChange={(e) => handleUserInfoChange('name', e.target.value)}
+                                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                                        errors.name ? 'border-red-500' : 'border-gray-300'
+                                                    }`}
+                                                    placeholder="请输入您的姓名"
+                                                />
+                                                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                    手机号 <span className="text-red-500">*</span>
+                                                </label>
+                                                <input
+                                                    type="tel"
+                                                    value={userInfo.phone}
+                                                    onChange={(e) => handleUserInfoChange('phone', e.target.value)}
+                                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                                                    }`}
+                                                    placeholder="请输入您的手机号"
+                                                />
+                                                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                    邮箱 <span className="text-red-500">*</span>
+                                                </label>
+                                                <input
+                                                    type="email"
+                                                    value={userInfo.email}
+                                                    onChange={(e) => handleUserInfoChange('email', e.target.value)}
+                                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                                        errors.email ? 'border-red-500' : 'border-gray-300'
+                                                    }`}
+                                                    placeholder="请输入您的邮箱"
+                                                />
+                                                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                    性别 <span className="text-red-500">*</span>
+                                                </label>
+                                                <select
+                                                    value={userInfo.gender}
+                                                    onChange={(e) => handleUserInfoChange('gender', e.target.value)}
+                                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                                        errors.gender ? 'border-red-500' : 'border-gray-300'
+                                                    }`}
+                                                >
+                                                    <option value="">请选择性别</option>
+                                                    <option value="male">男</option>
+                                                    <option value="female">女</option>
+                                                    <option value="other">其他</option>
+                                                </select>
+                                                {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender}</p>}
+                                            </div>
+                                            
+                                            <div className="md:col-span-2">
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                    服务偏好
+                                                </label>
+                                                <select
+                                                    value={userInfo.preference}
+                                                    onChange={(e) => handleUserInfoChange('preference', e.target.value)}
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                >
+                                                    <option value="">请选择服务偏好</option>
+                                                    <option value="standard">标准服务</option>
+                                                    <option value="premium">高级服务</option>
+                                                    <option value="vip">VIP服务</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="mt-6">
+                                            <button
+                                                onClick={handleConfirmReservation}
+                                                className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-600 transition-colors duration-200"
+                                            >
+                                                <i className="fas fa-check mr-2"></i>
+                                                确认预约
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {reservationStatus === 'success' && (
+                                    <div className="bg-white rounded-lg shadow-sm border p-6">
+                                        <div className="text-center">
+                                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i className="fas fa-check text-green-500 text-2xl"></i>
+                                            </div>
+                                            <h2 className="text-xl font-semibold text-gray-900 mb-2">预约成功！</h2>
+                                            <p className="text-gray-600 mb-6">我们已收到您的预约申请，稍后会有专人与您联系确认。</p>
+                                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                                <button
+                                                    onClick={handleCancelReservation}
+                                                    className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200"
+                                                >
+                                                    <i className="fas fa-plus mr-2"></i>
+                                                    新建预约
+                                                </button>
+                                                <button
+                                                    onClick={() => setReservationStatus('')}
+                                                    className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200"
+                                                >
+                                                    <i className="fas fa-times mr-2"></i>
+                                                    取消预约
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">预约信息</h3>
+                                    <div className="space-y-3 text-sm">
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">服务类型:</span>
+                                            <span className="font-medium">
+                                                {selectedService ? services.find(s => s.id === selectedService)?.name : '未选择'}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">预约日期:</span>
+                                            <span className="font-medium">{selectedDate || '未选择'}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">预约时间:</span>
+                                            <span className="font-medium">{selectedTime || '未选择'}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">联系人:</span>
+                                            <span className="font-medium">{userInfo.name || '未填写'}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">联系电话:</span>
+                                            <span className="font-medium">{userInfo.phone || '未填写'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">温馨提示</h3>
+                                    <div className="space-y-3 text-sm text-gray-600">
+                                        <div className="flex items-start">
+                                            <i className="fas fa-info-circle text-blue-500 mr-2 mt-0.5"></i>
+                                            <span>请提前15分钟到达服务地点</span>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <i className="fas fa-phone text-blue-500 mr-2 mt-0.5"></i>
+                                            <span>如需改期请提前24小时联系客服</span>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <i className="fas fa-shield-alt text-blue-500 mr-2 mt-0.5"></i>
+                                            <span>我们承诺保护您的个人隐私信息</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">需要帮助？</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center">
+                                            <img src="https://picsum.photos/id/64/40/40" alt="客服" className="w-10 h-10 rounded-full mr-3" />
+                                            <div>
+                                                <p className="font-medium text-gray-900">在线客服</p>
+                                                <p className="text-sm text-gray-600">9:00-18:00在线</p>
+                                            </div>
+                                        </div>
+                                        <button className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200">
+                                            <i className="fab fa-weixin mr-2"></i>
+                                            联系客服
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {showConfirmModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-y-auto">
+                                <div className="p-6">
+                                    <div className="flex items-center mb-4">
+                                        <i className="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                        <h3 className="text-lg font-semibold text-gray-900">确认预约信息</h3>
+                                    </div>
+                                    
+                                    <div className="space-y-3 mb-6">
+                                        <div className="bg-gray-50 p-4 rounded-lg">
+                                            <h4 className="font-medium text-gray-900 mb-2">服务详情</h4>
+                                            <div className="grid grid-cols-2 gap-2 text-sm">
+                                                <div>
+                                                    <span className="text-gray-600">服务类型:</span>
+                                                    <p className="font-medium">{services.find(s => s.id === selectedService)?.name}</p>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-600">预约时间:</span>
+                                                    <p className="font-medium">{selectedDate} {selectedTime}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="bg-gray-50 p-4 rounded-lg">
+                                            <h4 className="font-medium text-gray-900 mb-2">联系信息</h4>
+                                            <div className="grid grid-cols-1 gap-2 text-sm">
+                                                <div>
+                                                    <span className="text-gray-600">姓名:</span>
+                                                    <span className="font-medium ml-2">{userInfo.name}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-600">电话:</span>
+                                                    <span className="font-medium ml-2">{userInfo.phone}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-600">邮箱:</span>
+                                                    <span className="font-medium ml-2">{userInfo.email}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-600">性别:</span>
+                                                    <span className="font-medium ml-2">
+                                                        {userInfo.gender === 'male' ? '男' : userInfo.gender === 'female' ? '女' : '其他'}
+                                                    </span>
+                                                </div>
+                                                {userInfo.preference && (
+                                                    <div>
+                                                        <span className="text-gray-600">服务偏好:</span>
+                                                        <span className="font-medium ml-2">
+                                                            {userInfo.preference === 'standard' ? '标准服务' : 
+                                                             userInfo.preference === 'premium' ? '高级服务' : 'VIP服务'}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <button
+                                            onClick={handleEditReservation}
+                                            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                                        >
+                                            <i className="fas fa-edit mr-2"></i>
+                                            编辑
+                                        </button>
+                                        <button
+                                            onClick={handleSubmitReservation}
+                                            className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交预约
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    <footer className="bg-gray-800 text-white mt-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                                <div>
+                                    <div className="flex items-center mb-4">
+                                        <img src="https://picsum.photos/id/1/32/32" alt="Logo" className="h-8 w-8 rounded-lg" />
+                                        <h3 className="ml-2 text-lg font-semibold">服务预约系统</h3>
+                                    </div>
+                                    <p className="text-gray-400 text-sm">
+                                        专业的服务预约平台，为您提供便捷、高效的预约体验。
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="font-semibold mb-4">快速链接</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li><a href="#" className="hover:text-white transition-colors">服务项目</a></li>
+                                        <li><a href="#" className="hover:text-white transition-colors">预约流程</a></li>
+                                        <li><a href="#" className="hover:text-white transition-colors">常见问题</a></li>
+                                        <li><a href="#" className="hover:text-white transition-colors">用户协议</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="font-semibold mb-4">联系我们</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li className="flex items-center">
+                                            <i className="fas fa-phone mr-2"></i>
+                                            400-123-4567
+                                        </li>
+                                        <li className="flex items-center">
+                                            <i className="fas fa-envelope mr-2"></i>
+                                            service@example.com
+                                        </li>
+                                        <li className="flex items-center">
+                                            <i className="fas fa-map-marker-alt mr-2"></i>
+                                            北京市朝阳区示例大厦
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="font-semibold mb-4">关注我们</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors">
+                                            <i className="fab fa-weixin text-sm"></i>
+                                        </a>
+                                        <a href="#" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors">
+                                            <i className="fab fa-weibo text-sm"></i>
+                                        </a>
+                                        <a href="#" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors">
+                                            <i className="fab fa-qq text-sm"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                                <p>&copy; 2024 服务预约系统. 保留所有权利.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

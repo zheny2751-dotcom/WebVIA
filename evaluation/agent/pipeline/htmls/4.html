@@ -1,0 +1,734 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各地书摊藏书在线赏书</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .book-theme {
+            background: linear-gradient(135deg, #FFF8DC 0%, #F5F5DC 100%);
+        }
+        .vintage-shadow {
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.25);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vintage-brown': '#8B4513',
+                        'vintage-light': '#D2B48C',
+                        'vintage-green': '#556B2F',
+                        'vintage-dark': '#2F4F4F',
+                        'book-bg': '#FFF8DC',
+                        'book-secondary': '#F5F5DC'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const BookstoreApp = () => {
+            const [books, setBooks] = useState([]);
+            const [filteredBooks, setFilteredBooks] = useState([]);
+            const [selectedRegion, setSelectedRegion] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('');
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [currentPage, setCurrentPage] = useState(1);
+            const [showDetail, setShowDetail] = useState(false);
+            const [selectedBook, setSelectedBook] = useState(null);
+            const [favorites, setFavorites] = useState([]);
+            const [showFavorites, setShowFavorites] = useState(false);
+            const [currentSlide, setCurrentSlide] = useState(0);
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const booksPerPage = 12;
+
+            const initialBooks = [
+                {
+                    id: 1,
+                    title: "红楼梦",
+                    author: "曹雪芹",
+                    category: "文学",
+                    region: "北京",
+                    cover: "https://picsum.photos/id/24/300/400",
+                    description: "中国古典四大名著之首，一部具有世界影响力的人情小说作品。",
+                    publisher: "人民文学出版社",
+                    year: "2018"
+                },
+                {
+                    id: 2,
+                    title: "史记",
+                    author: "司马迁",
+                    category: "历史",
+                    region: "西安",
+                    cover: "https://picsum.photos/id/159/300/400",
+                    description: "中国历史上第一部纪传体通史，被誉为史学双璧之一。",
+                    publisher: "中华书局",
+                    year: "2019"
+                },
+                {
+                    id: 3,
+                    title: "人工智能简史",
+                    author: "尼克·博斯特罗姆",
+                    category: "科技",
+                    region: "深圳",
+                    cover: "https://picsum.photos/id/180/300/400",
+                    description: "探讨人工智能发展历程及未来可能性的前沿科技读物。",
+                    publisher: "机械工业出版社",
+                    year: "2020"
+                },
+                {
+                    id: 4,
+                    title: "艺术的故事",
+                    author: "恩斯特·贡布里希",
+                    category: "艺术",
+                    region: "上海",
+                    cover: "https://picsum.photos/id/255/300/400",
+                    description: "世界艺术史经典教材，深入浅出地介绍西方艺术发展脉络。",
+                    publisher: "广西美术出版社",
+                    year: "2017"
+                },
+                {
+                    id: 5,
+                    title: "诗经",
+                    author: "孔子编",
+                    category: "文学",
+                    region: "济南",
+                    cover: "https://picsum.photos/id/124/300/400",
+                    description: "中国最早的诗歌总集，收录西周初年至春秋中叶的诗歌。",
+                    publisher: "中华书局",
+                    year: "2016"
+                },
+                {
+                    id: 6,
+                    title: "三国演义",
+                    author: "罗贯中",
+                    category: "历史",
+                    region: "成都",
+                    cover: "https://picsum.photos/id/367/300/400",
+                    description: "以三国时期为背景的历史演义小说，中国古典四大名著之一。",
+                    publisher: "人民文学出版社",
+                    year: "2018"
+                },
+                {
+                    id: 7,
+                    title: "量子物理史话",
+                    author: "上山浩",
+                    category: "科技",
+                    region: "杭州",
+                    cover: "https://picsum.photos/id/432/300/400",
+                    description: "用通俗易懂的语言讲述量子物理学的发展历程和基本概念。",
+                    publisher: "科学出版社",
+                    year: "2019"
+                },
+                {
+                    id: 8,
+                    title: "中国书法艺术",
+                    author: "启功",
+                    category: "艺术",
+                    region: "北京",
+                    cover: "https://picsum.photos/id/515/300/400",
+                    description: "著名书法家启功先生的书法艺术理论与实践总结。",
+                    publisher: "北京师范大学出版社",
+                    year: "2020"
+                },
+                {
+                    id: 9,
+                    title: "围城",
+                    author: "钱钟书",
+                    category: "文学",
+                    region: "南京",
+                    cover: "https://picsum.photos/id/678/300/400",
+                    description: "现代文学经典，以幽默讽刺的笔调描绘知识分子的生活困境。",
+                    publisher: "人民文学出版社",
+                    year: "2017"
+                },
+                {
+                    id: 10,
+                    title: "资治通鉴",
+                    author: "司马光",
+                    category: "历史",
+                    region: "洛阳",
+                    cover: "https://picsum.photos/id/789/300/400",
+                    description: "中国第一部编年体通史，涵盖战国至五代的历史。",
+                    publisher: "中华书局",
+                    year: "2018"
+                },
+                {
+                    id: 11,
+                    title: "计算机程序设计艺术",
+                    author: "高德纳",
+                    category: "科技",
+                    region: "深圳",
+                    cover: "https://picsum.photos/id/234/300/400",
+                    description: "计算机科学领域的经典著作，被誉为程序员的圣经。",
+                    publisher: "机械工业出版社",
+                    year: "2019"
+                },
+                {
+                    id: 12,
+                    title: "中国古代建筑史",
+                    author: "梁思成",
+                    category: "艺术",
+                    region: "天津",
+                    cover: "https://picsum.photos/id/345/300/400",
+                    description: "中国古代建筑艺术的权威研究著作。",
+                    publisher: "清华大学出版社",
+                    year: "2020"
+                },
+                {
+                    id: 13,
+                    title: "茶花女",
+                    author: "大仲马",
+                    category: "文学",
+                    region: "广州",
+                    cover: "https://picsum.photos/id/456/300/400",
+                    description: "法国浪漫主义文学的代表作品。",
+                    publisher: "译林出版社",
+                    year: "2018"
+                },
+                {
+                    id: 14,
+                    title: "明朝那些事儿",
+                    author: "当年明月",
+                    category: "历史",
+                    region: "武汉",
+                    cover: "https://picsum.photos/id/567/300/400",
+                    description: "用现代语言重新解读明朝历史的通俗读物。",
+                    publisher: "中国友谊出版公司",
+                    year: "2017"
+                },
+                {
+                    id: 15,
+                    title: "宇宙简史",
+                    author: "霍金",
+                    category: "科技",
+                    region: "长沙",
+                    cover: "https://picsum.photos/id/678/300/400",
+                    description: "著名物理学家霍金关于宇宙起源和演化的科普著作。",
+                    publisher: "湖南科学技术出版社",
+                    year: "2019"
+                }
+            ];
+
+            const bannerImages = [
+                {
+                    url: "https://picsum.photos/id/481/1200/400",
+                    title: "发现各地书摊的珍藏好书",
+                    subtitle: "在这里，每一本书都有它的故事"
+                },
+                {
+                    url: "https://picsum.photos/id/494/1200/400",
+                    title: "穿越时空的阅读之旅",
+                    subtitle: "品味文字的魅力，感受知识的力量"
+                },
+                {
+                    url: "https://picsum.photos/id/513/1200/400",
+                    title: "连接读者与书籍的桥梁",
+                    subtitle: "让每一次相遇都成为美好的回忆"
+                }
+            ];
+
+            const regions = ['北京', '上海', '广州', '深圳', '杭州', '南京', '西安', '成都', '武汉', '天津', '济南', '长沙', '洛阳'];
+            const categories = ['文学', '历史', '科技', '艺术'];
+
+            useEffect(() => {
+                setBooks(initialBooks);
+                setFilteredBooks(initialBooks);
+            }, []);
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    setCurrentSlide((prev) => (prev + 1) % bannerImages.length);
+                }, 5000);
+                return () => clearInterval(timer);
+            }, []);
+
+            useEffect(() => {
+                applyFilters();
+            }, [selectedRegion, selectedCategory, searchKeyword, books]);
+
+            const applyFilters = () => {
+                let filtered = [...books];
+
+                if (selectedRegion) {
+                    filtered = filtered.filter(book => book.region === selectedRegion);
+                }
+
+                if (selectedCategory) {
+                    filtered = filtered.filter(book => book.category === selectedCategory);
+                }
+
+                if (searchKeyword) {
+                    filtered = filtered.filter(book => 
+                        book.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                        book.author.toLowerCase().includes(searchKeyword.toLowerCase())
+                    );
+                }
+
+                setFilteredBooks(filtered);
+                setCurrentPage(1);
+            };
+
+            const handleSearch = () => {
+                applyFilters();
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            };
+
+            const resetFilters = () => {
+                setSelectedRegion('');
+                setSelectedCategory('');
+                setSearchKeyword('');
+                setFilteredBooks(books);
+                setCurrentPage(1);
+            };
+
+            const confirmRegionFilter = () => {
+                applyFilters();
+            };
+
+            const openBookDetail = (book) => {
+                setSelectedBook(book);
+                setShowDetail(true);
+            };
+
+            const closeBookDetail = () => {
+                setShowDetail(false);
+                setSelectedBook(null);
+            };
+
+            const toggleFavorite = (book) => {
+                const isFavorited = favorites.some(fav => fav.id === book.id);
+                if (isFavorited) {
+                    setFavorites(favorites.filter(fav => fav.id !== book.id));
+                } else {
+                    setFavorites([...favorites, book]);
+                }
+            };
+
+            const removeFavorite = (bookId) => {
+                setFavorites(favorites.filter(fav => fav.id !== bookId));
+            };
+
+            const getCurrentPageBooks = () => {
+                const startIndex = (currentPage - 1) * booksPerPage;
+                const endIndex = startIndex + booksPerPage;
+                return filteredBooks.slice(0, endIndex);
+            };
+
+            const loadMore = () => {
+                setCurrentPage(prev => prev + 1);
+            };
+
+            const hasMoreBooks = getCurrentPageBooks().length < filteredBooks.length;
+
+            return (
+                <div className="min-h-screen book-theme">
+                    <nav className="bg-vintage-brown shadow-lg vintage-shadow sticky top-0 z-40">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <div className="flex-shrink-0 flex items-center">
+                                        <i className="fas fa-book text-book-bg text-2xl mr-2"></i>
+                                        <span className="text-book-bg font-bold text-xl">书摊赏书</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="hidden md:block">
+                                    <div className="ml-10 flex items-baseline space-x-4">
+                                        <a href="#" className="text-book-bg hover:text-vintage-light px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                            首页
+                                        </a>
+                                        <a href="#" className="text-vintage-light hover:text-book-bg px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                            各地书摊
+                                        </a>
+                                        <button 
+                                            onClick={() => setShowFavorites(!showFavorites)}
+                                            className="text-vintage-light hover:text-book-bg px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+                                        >
+                                            我的收藏
+                                            <span className="ml-1 bg-vintage-green text-book-bg rounded-full px-2 py-1 text-xs">
+                                                {favorites.length}
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="md:hidden">
+                                    <button 
+                                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                        className="text-book-bg hover:text-vintage-light"
+                                    >
+                                        <i className="fas fa-bars text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {isMenuOpen && (
+                            <div className="md:hidden bg-vintage-brown border-t border-vintage-light">
+                                <div className="px-2 pt-2 pb-3 space-y-1">
+                                    <a href="#" className="text-book-bg block px-3 py-2 rounded-md text-base font-medium">首页</a>
+                                    <a href="#" className="text-vintage-light block px-3 py-2 rounded-md text-base font-medium">各地书摊</a>
+                                    <button 
+                                        onClick={() => setShowFavorites(!showFavorites)}
+                                        className="text-vintage-light block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                                    >
+                                        我的收藏 ({favorites.length})
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </nav>
+
+                    <div className="relative h-64 md:h-96 overflow-hidden">
+                        {bannerImages.map((image, index) => (
+                            <div 
+                                key={index}
+                                className={`absolute inset-0 transition-opacity duration-1000 ${
+                                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                                }`}
+                            >
+                                <img 
+                                    src={image.url} 
+                                    alt={image.title}
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                                    <div className="text-center text-white">
+                                        <h1 className="text-2xl md:text-4xl font-bold mb-2">{image.title}</h1>
+                                        <p className="text-sm md:text-lg text-gray-200">{image.subtitle}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                            {bannerImages.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`w-3 h-3 rounded-full transition-colors ${
+                                        index === currentSlide ? 'bg-white' : 'bg-white bg-opacity-50'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="mb-8 space-y-4">
+                            <div className="bg-white rounded-lg p-6 vintage-shadow">
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <label className="block text-vintage-brown font-medium mb-2">选择地区</label>
+                                        <select 
+                                            value={selectedRegion}
+                                            onChange={(e) => setSelectedRegion(e.target.value)}
+                                            className="w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+                                        >
+                                            <option value="">全部地区</option>
+                                            {regions.map(region => (
+                                                <option key={region} value={region}>{region}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-vintage-brown font-medium mb-2">搜索书籍</label>
+                                        <div className="flex">
+                                            <input 
+                                                type="text"
+                                                value={searchKeyword}
+                                                onChange={(e) => setSearchKeyword(e.target.value)}
+                                                onKeyPress={handleKeyPress}
+                                                placeholder="输入书名或作者"
+                                                className="flex-1 p-2 border border-vintage-light rounded-l-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+                                            />
+                                            <button 
+                                                onClick={handleSearch}
+                                                className="bg-vintage-green text-white px-4 py-2 rounded-r-md hover:bg-vintage-dark transition-colors"
+                                            >
+                                                <i className="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-vintage-brown font-medium mb-2">选择分类</label>
+                                        <select 
+                                            value={selectedCategory}
+                                            onChange={(e) => setSelectedCategory(e.target.value)}
+                                            className="w-full p-2 border border-vintage-light rounded-md focus:ring-2 focus:ring-vintage-green focus:border-transparent"
+                                        >
+                                            <option value="">全部分类</option>
+                                            {categories.map(category => (
+                                                <option key={category} value={category}>{category}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    
+                                    <div className="flex flex-col justify-end space-y-2">
+                                        <button 
+                                            onClick={confirmRegionFilter}
+                                            className="bg-vintage-brown text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+                                        >
+                                            确认筛选
+                                        </button>
+                                        <button 
+                                            onClick={resetFilters}
+                                            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors"
+                                        >
+                                            重置筛选
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {showFavorites && (
+                            <div className="mb-8">
+                                <div className="bg-white rounded-lg p-6 vintage-shadow">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h2 className="text-xl font-bold text-vintage-brown flex items-center">
+                                            <i className="fas fa-heart text-red-500 mr-2"></i>
+                                            我的收藏
+                                        </h2>
+                                        <button 
+                                            onClick={() => setShowFavorites(false)}
+                                            className="text-gray-500 hover:text-gray-700"
+                                        >
+                                            <i className="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    {favorites.length === 0 ? (
+                                        <p className="text-gray-500 text-center py-8">暂无收藏，快去添加吧！</p>
+                                    ) : (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {favorites.map(book => (
+                                                <div key={book.id} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg">
+                                                    <img 
+                                                        src={book.cover} 
+                                                        alt={book.title}
+                                                        className="w-12 h-16 object-cover rounded"
+                                                    />
+                                                    <div className="flex-1">
+                                                        <h3 className="font-medium text-vintage-brown">{book.title}</h3>
+                                                        <p className="text-sm text-gray-600">{book.author}</p>
+                                                    </div>
+                                                    <button 
+                                                        onClick={() => removeFavorite(book.id)}
+                                                        className="text-red-500 hover:text-red-700"
+                                                    >
+                                                        <i className="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="mb-8">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-2xl font-bold text-vintage-brown">
+                                    书籍展示 ({filteredBooks.length} 本)
+                                </h2>
+                            </div>
+                            
+                            {filteredBooks.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <i className="fas fa-book-open text-6xl text-gray-300 mb-4"></i>
+                                    <p className="text-gray-500 text-lg">暂无符合条件的书籍</p>
+                                    <p className="text-gray-400 mt-2">试试调整筛选条件或搜索关键词</p>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 fade-in">
+                                    {getCurrentPageBooks().map(book => (
+                                        <div key={book.id} className="bg-white rounded-lg vintage-shadow hover-lift overflow-hidden">
+                                            <div className="relative">
+                                                <img 
+                                                    src={book.cover} 
+                                                    alt={book.title}
+                                                    className="w-full h-64 object-cover"
+                                                />
+                                                <div className="absolute top-2 right-2">
+                                                    <span className="bg-vintage-green text-white px-2 py-1 rounded-full text-xs">
+                                                        {book.category}
+                                                    </span>
+                                                </div>
+                                                <div className="absolute bottom-2 left-2">
+                                                    <span className="bg-vintage-brown text-white px-2 py-1 rounded-full text-xs">
+                                                        {book.region}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="p-4">
+                                                <h3 className="font-bold text-vintage-brown text-lg mb-1 line-clamp-1">{book.title}</h3>
+                                                <p className="text-gray-600 text-sm mb-3">{book.author}</p>
+                                                <button 
+                                                    onClick={() => openBookDetail(book)}
+                                                    className="w-full bg-vintage-brown text-white py-2 rounded-md hover:bg-opacity-90 transition-colors"
+                                                >
+                                                    查看详情
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            
+                            {hasMoreBooks && (
+                                <div className="text-center mt-8">
+                                    <button 
+                                        onClick={loadMore}
+                                        className="bg-vintage-green text-white px-8 py-3 rounded-md hover:bg-vintage-dark transition-colors"
+                                    >
+                                        加载更多书籍
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {showDetail && selectedBook && (
+                        <div className="fixed inset-0 z-50 modal-backdrop bg-black bg-opacity-50 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-lg max-w-2xl w-full max-h-full overflow-y-auto">
+                                <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+                                    <h2 className="text-xl font-bold text-vintage-brown">书籍详情</h2>
+                                    <button 
+                                        onClick={closeBookDetail}
+                                        className="text-gray-500 hover:text-gray-700"
+                                    >
+                                        <i className="fas fa-times text-xl"></i>
+                                    </button>
+                                </div>
+                                <div className="p-6">
+                                    <div className="flex flex-col md:flex-row gap-6">
+                                        <div className="flex-shrink-0">
+                                            <img 
+                                                src={selectedBook.cover} 
+                                                alt={selectedBook.title}
+                                                className="w-64 h-80 object-cover rounded-lg vintage-shadow mx-auto md:mx-0"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h1 className="text-2xl font-bold text-vintage-brown mb-2">{selectedBook.title}</h1>
+                                            <p className="text-lg text-gray-700 mb-4">作者：{selectedBook.author}</p>
+                                            
+                                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                                <div>
+                                                    <span className="font-medium text-vintage-brown">分类：</span>
+                                                    <span className="bg-vintage-green text-white px-2 py-1 rounded-full text-sm ml-2">
+                                                        {selectedBook.category}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="font-medium text-vintage-brown">地区：</span>
+                                                    <span className="bg-vintage-brown text-white px-2 py-1 rounded-full text-sm ml-2">
+                                                        {selectedBook.region}
+                                                    </span>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <span className="font-medium text-vintage-brown">出版社：</span>
+                                                    <span className="text-gray-700 ml-2">{selectedBook.publisher}</span>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <span className="font-medium text-vintage-brown">出版年份：</span>
+                                                    <span className="text-gray-700 ml-2">{selectedBook.year}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="mb-6">
+                                                <h3 className="font-medium text-vintage-brown mb-2">内容简介：</h3>
+                                                <p className="text-gray-700 leading-relaxed">{selectedBook.description}</p>
+                                            </div>
+                                            
+                                            <button 
+                                                onClick={() => toggleFavorite(selectedBook)}
+                                                className={`w-full py-3 rounded-md transition-colors ${
+                                                    favorites.some(fav => fav.id === selectedBook.id)
+                                                        ? 'bg-red-500 hover:bg-red-600 text-white'
+                                                        : 'bg-vintage-green hover:bg-vintage-dark text-white'
+                                                }`}
+                                            >
+                                                <i className={`fas ${
+                                                    favorites.some(fav => fav.id === selectedBook.id) 
+                                                        ? 'fa-heart-broken' 
+                                                        : 'fa-heart'
+                                                } mr-2`}></i>
+                                                {favorites.some(fav => fav.id === selectedBook.id) ? '移除收藏' : '加入收藏'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className="bg-vintage-brown text-book-bg py-8 mt-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center">
+                                <div className="flex items-center justify-center mb-4">
+                                    <i className="fas fa-book text-2xl mr-2"></i>
+                                    <span className="text-xl font-bold">书摊赏书</span>
+                                </div>
+                                <p className="text-vintage-light mb-4">连接读者与书籍，发现阅读的无限可能</p>
+                                <div className="flex justify-center space-x-6">
+                                    <a href="#" className="hover:text-vintage-light transition-colors">
+                                        <i className="fab fa-weibo text-xl"></i>
+                                    </a>
+                                    <a href="#" className="hover:text-vintage-light transition-colors">
+                                        <i className="fab fa-weixin text-xl"></i>
+                                    </a>
+                                    <a href="#" className="hover:text-vintage-light transition-colors">
+                                        <i className="fab fa-qq text-xl"></i>
+                                    </a>
+                                </div>
+                                <p className="text-sm text-vintage-light mt-4">
+                                    © 2024 书摊赏书. 保留所有权利.
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<BookstoreApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

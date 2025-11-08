@@ -1,0 +1,525 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生互评系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const initialStudents = [
+                { id: 1, name: '张小明', avatar: 'https://picsum.photos/id/1/80/80', rating: 0, comment: '', evaluated: false, showDetail: false },
+                { id: 2, name: '李小红', avatar: 'https://picsum.photos/id/2/80/80', rating: 0, comment: '', evaluated: false, showDetail: false },
+                { id: 3, name: '王小华', avatar: 'https://picsum.photos/id/3/80/80', rating: 0, comment: '', evaluated: false, showDetail: false },
+                { id: 4, name: '陈小芳', avatar: 'https://picsum.photos/id/4/80/80', rating: 0, comment: '', evaluated: false, showDetail: false },
+                { id: 5, name: '刘小强', avatar: 'https://picsum.photos/id/5/80/80', rating: 0, comment: '', evaluated: false, showDetail: false },
+                { id: 6, name: '周小美', avatar: 'https://picsum.photos/id/6/80/80', rating: 0, comment: '', evaluated: false, showDetail: false }
+            ];
+
+            const [activeTab, setActiveTab] = useState('self');
+            const [selfEvaluation, setSelfEvaluation] = useState('');
+            const [selfRating, setSelfRating] = useState(0);
+            const [selfSubmitted, setSelfSubmitted] = useState(false);
+            const [students, setStudents] = useState(initialStudents);
+            const [filterScore, setFilterScore] = useState('all');
+            const [sortBy, setSortBy] = useState('name');
+            const [downloadStatus, setDownloadStatus] = useState('');
+
+            const totalStudents = students.length;
+            const evaluatedStudents = students.filter(s => s.evaluated).length;
+            const averageScore = evaluatedStudents > 0 
+                ? (students.filter(s => s.evaluated).reduce((sum, s) => sum + s.rating, 0) / evaluatedStudents).toFixed(1)
+                : 0;
+            const progress = Math.round((evaluatedStudents / totalStudents) * 100);
+
+            const handleSelfSubmit = () => {
+                if (!selfEvaluation.trim() || selfRating === 0) {
+                    alert('请填写完整的自评内容和评分！');
+                    return;
+                }
+                setSelfSubmitted(true);
+            };
+
+            const handlePeerSubmit = (studentId) => {
+                const student = students.find(s => s.id === studentId);
+                if (!student.comment.trim() || student.rating === 0) {
+                    alert('请填写完整的评价内容和评分！');
+                    return;
+                }
+                
+                setStudents(prev => prev.map(s => 
+                    s.id === studentId 
+                        ? { ...s, evaluated: true }
+                        : s
+                ));
+            };
+
+            const updateStudentRating = (studentId, rating) => {
+                setStudents(prev => prev.map(s => 
+                    s.id === studentId 
+                        ? { ...s, rating: parseInt(rating) }
+                        : s
+                ));
+            };
+
+            const updateStudentComment = (studentId, comment) => {
+                setStudents(prev => prev.map(s => 
+                    s.id === studentId 
+                        ? { ...s, comment }
+                        : s
+                ));
+            };
+
+            const toggleDetail = (studentId) => {
+                setStudents(prev => prev.map(s => 
+                    s.id === studentId 
+                        ? { ...s, showDetail: !s.showDetail }
+                        : s
+                ));
+            };
+
+            const getFilteredAndSortedStudents = () => {
+                let filtered = [...students];
+                
+                if (filterScore !== 'all') {
+                    const [min, max] = filterScore.split('-').map(Number);
+                    filtered = filtered.filter(s => s.evaluated && s.rating >= min && s.rating <= max);
+                }
+                
+                if (sortBy === 'name') {
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                } else if (sortBy === 'score') {
+                    filtered.sort((a, b) => b.rating - a.rating);
+                }
+                
+                return filtered;
+            };
+
+            const handleExport = () => {
+                setDownloadStatus('正在生成报告...');
+                setTimeout(() => {
+                    setDownloadStatus('报告已生成并下载到本地！');
+                    setTimeout(() => setDownloadStatus(''), 3000);
+                }, 2000);
+            };
+
+            const renderStars = (rating, onChange, disabled = false) => {
+                return (
+                    <div className="flex space-x-1">
+                        {[1, 2, 3, 4, 5].map(star => (
+                            <button
+                                key={star}
+                                type="button"
+                                disabled={disabled}
+                                onClick={() => !disabled && onChange(star)}
+                                className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-300'} ${!disabled ? 'hover:text-yellow-400 cursor-pointer' : 'cursor-default'}`}
+                            >
+                                <i className="fas fa-star"></i>
+                            </button>
+                        ))}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <nav className="bg-white shadow-lg border-b-4 border-blue-500">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img src="https://picsum.photos/id/10/40/40" alt="Logo" className="h-10 w-10 rounded-full mr-3" />
+                                    <span className="text-xl font-bold text-blue-800">学生互评系统</span>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button
+                                        onClick={() => setActiveTab('self')}
+                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                            activeTab === 'self' 
+                                                ? 'bg-blue-500 text-white' 
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                        }`}
+                                    >
+                                        自评模块
+                                    </button>
+                                    <button
+                                        onClick={() => setActiveTab('peer')}
+                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                            activeTab === 'peer' 
+                                                ? 'bg-blue-500 text-white' 
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                        }`}
+                                    >
+                                        互评模块
+                                    </button>
+                                    <button
+                                        onClick={() => setActiveTab('stats')}
+                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                            activeTab === 'stats' 
+                                                ? 'bg-blue-500 text-white' 
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                        }`}
+                                    >
+                                        统计报告
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border-l-4 border-blue-500">
+                            <h1 className="text-3xl font-bold text-gray-800 mb-2">课程项目互评系统</h1>
+                            <h2 className="text-xl text-blue-600 mb-4">基于React的前端开发项目评估</h2>
+                            <p className="text-gray-600 leading-relaxed">
+                                欢迎使用学生互评系统！本次评估旨在通过同伴互评的方式，提高学习效果和团队协作能力。
+                                请先完成自我评估，然后对其他同学的作品进行客观、公正的评价。
+                                评分标准：5星-优秀，4星-良好，3星-中等，2星-需改进，1星-不合格。
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-green-500">
+                                <div className="text-3xl font-bold text-green-600 mb-2">{totalStudents}</div>
+                                <div className="text-gray-600">总人数</div>
+                            </div>
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-blue-500">
+                                <div className="text-3xl font-bold text-blue-600 mb-2">{evaluatedStudents}</div>
+                                <div className="text-gray-600">已评人数</div>
+                            </div>
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-yellow-500">
+                                <div className="text-3xl font-bold text-yellow-600 mb-2">{averageScore}</div>
+                                <div className="text-gray-600">平均分数</div>
+                            </div>
+                            <div className="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-purple-500">
+                                <div className="text-3xl font-bold text-purple-600 mb-2">{progress}%</div>
+                                <div className="text-gray-600 mb-2">完成进度</div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div 
+                                        className="bg-purple-500 h-2 rounded-full transition-all duration-500"
+                                        style={{ width: `${progress}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {activeTab === 'self' && (
+                            <div className="bg-white rounded-xl shadow-lg p-8">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                    <i className="fas fa-user-edit text-blue-500 mr-3"></i>
+                                    自我评估
+                                </h3>
+                                
+                                {!selfSubmitted ? (
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                自评内容
+                                            </label>
+                                            <textarea
+                                                value={selfEvaluation}
+                                                onChange={(e) => setSelfEvaluation(e.target.value)}
+                                                className="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                                placeholder="请详细描述您在此次项目中的表现、收获和不足..."
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                自评分数
+                                            </label>
+                                            {renderStars(selfRating, setSelfRating)}
+                                        </div>
+                                        
+                                        <button
+                                            onClick={handleSelfSubmit}
+                                            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交自评
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                                        <div className="flex items-center mb-4">
+                                            <i className="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+                                            <span className="text-green-800 font-semibold">自评已提交成功！</span>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <div>
+                                                <span className="font-medium text-gray-700">评分：</span>
+                                                {renderStars(selfRating, () => {}, true)}
+                                            </div>
+                                            <div>
+                                                <span className="font-medium text-gray-700">内容：</span>
+                                                <p className="text-gray-600 mt-1">{selfEvaluation}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'peer' && (
+                            <div>
+                                <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                        <i className="fas fa-filter text-blue-500 mr-3"></i>
+                                        筛选与排序
+                                    </h3>
+                                    <div className="flex flex-wrap gap-4 items-end">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                按分数筛选
+                                            </label>
+                                            <select
+                                                value={filterScore}
+                                                onChange={(e) => setFilterScore(e.target.value)}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="all">全部分数</option>
+                                                <option value="5-5">5星</option>
+                                                <option value="4-4">4星</option>
+                                                <option value="3-3">3星</option>
+                                                <option value="2-2">2星</option>
+                                                <option value="1-1">1星</option>
+                                                <option value="4-5">4星以上</option>
+                                                <option value="3-5">3星以上</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                排序方式
+                                            </label>
+                                            <select
+                                                value={sortBy}
+                                                onChange={(e) => setSortBy(e.target.value)}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            >
+                                                <option value="name">按姓名排序</option>
+                                                <option value="score">按分数排序</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <button
+                                            onClick={() => {}}
+                                            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                                        >
+                                            <i className="fas fa-search mr-2"></i>
+                                            筛选/排序
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-8">
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-users text-blue-500 mr-3"></i>
+                                        同学互评
+                                    </h3>
+                                    
+                                    <div className="grid gap-6">
+                                        {getFilteredAndSortedStudents().map(student => (
+                                            <div key={student.id} className={`border rounded-xl p-6 transition-all ${
+                                                student.evaluated 
+                                                    ? 'border-green-200 bg-green-50' 
+                                                    : 'border-gray-200 bg-white hover:border-blue-300'
+                                            }`}>
+                                                <div className="flex items-start space-x-4">
+                                                    <img 
+                                                        src={student.avatar} 
+                                                        alt={student.name}
+                                                        className="w-16 h-16 rounded-full border-2 border-blue-200"
+                                                    />
+                                                    
+                                                    <div className="flex-1 space-y-4">
+                                                        <div className="flex items-center justify-between">
+                                                            <h4 className="text-lg font-semibold text-gray-800">{student.name}</h4>
+                                                            {student.evaluated && (
+                                                                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                                                    <i className="fas fa-check mr-1"></i>
+                                                                    已评价
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        
+                                                        {!student.evaluated ? (
+                                                            <div className="space-y-4">
+                                                                <div>
+                                                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                                        评分
+                                                                    </label>
+                                                                    {renderStars(student.rating, (rating) => updateStudentRating(student.id, rating))}
+                                                                </div>
+                                                                
+                                                                <div>
+                                                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                                        评价意见
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        value={student.comment}
+                                                                        onChange={(e) => updateStudentComment(student.id, e.target.value)}
+                                                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                        placeholder="请输入对该同学的评价意见..."
+                                                                    />
+                                                                </div>
+                                                                
+                                                                <button
+                                                                    onClick={() => handlePeerSubmit(student.id)}
+                                                                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                                                                >
+                                                                    <i className="fas fa-paper-plane mr-2"></i>
+                                                                    提交互评
+                                                                </button>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="space-y-3">
+                                                                <div>
+                                                                    <span className="text-sm font-medium text-gray-700">评分：</span>
+                                                                    {renderStars(student.rating, () => {}, true)}
+                                                                </div>
+                                                                <div className="flex items-center justify-between">
+                                                                    <div className="flex-1">
+                                                                        <span className="text-sm font-medium text-gray-700">评价：</span>
+                                                                        {student.showDetail ? (
+                                                                            <p className="text-gray-600 mt-1">{student.comment}</p>
+                                                                        ) : (
+                                                                            <span className="text-gray-600 ml-1">
+                                                                                {student.comment.length > 30 
+                                                                                    ? student.comment.substring(0, 30) + '...' 
+                                                                                    : student.comment
+                                                                                }
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                    {student.comment.length > 30 && (
+                                                                        <button
+                                                                            onClick={() => toggleDetail(student.id)}
+                                                                            className="text-blue-500 hover:text-blue-600 text-sm font-medium ml-4"
+                                                                        >
+                                                                            {student.showDetail ? '收起详情' : '查看详情'}
+                                                                        </button>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'stats' && (
+                            <div className="bg-white rounded-xl shadow-lg p-8">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                    <i className="fas fa-chart-bar text-blue-500 mr-3"></i>
+                                    统计报告
+                                </h3>
+                                
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                    <div className="space-y-6">
+                                        <div className="bg-blue-50 rounded-lg p-6">
+                                            <h4 className="text-lg font-semibold text-blue-800 mb-4">评估概况</h4>
+                                            <div className="space-y-2">
+                                                <div className="flex justify-between">
+                                                    <span>总参与人数：</span>
+                                                    <span className="font-semibold">{totalStudents} 人</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>已完成评估：</span>
+                                                    <span className="font-semibold">{evaluatedStudents} 人</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>完成率：</span>
+                                                    <span className="font-semibold">{progress}%</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>平均分：</span>
+                                                    <span className="font-semibold">{averageScore} 分</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="bg-green-50 rounded-lg p-6">
+                                            <h4 className="text-lg font-semibold text-green-800 mb-4">分数分布</h4>
+                                            <div className="space-y-2">
+                                                {[5, 4, 3, 2, 1].map(score => {
+                                                    const count = students.filter(s => s.evaluated && s.rating === score).length;
+                                                    const percentage = evaluatedStudents > 0 ? Math.round((count / evaluatedStudents) * 100) : 0;
+                                                    return (
+                                                        <div key={score} className="flex items-center space-x-3">
+                                                            <span className="w-8">{score}星</span>
+                                                            <div className="flex-1 bg-gray-200 rounded-full h-2">
+                                                                <div 
+                                                                    className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                                                                    style={{ width: `${percentage}%` }}
+                                                                ></div>
+                                                            </div>
+                                                            <span className="w-12 text-sm">{count}人</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div className="bg-purple-50 rounded-lg p-6">
+                                            <h4 className="text-lg font-semibold text-purple-800 mb-4">详细评价</h4>
+                                            <div className="space-y-4 max-h-80 overflow-y-auto">
+                                                {students.filter(s => s.evaluated).map(student => (
+                                                    <div key={student.id} className="bg-white rounded-lg p-4 border border-purple-200">
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <span className="font-medium">{student.name}</span>
+                                                            <div className="flex items-center space-x-1">
+                                                                {renderStars(student.rating, () => {}, true)}
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-sm text-gray-600">{student.comment}</p>
+                                                    </div>
+                                                ))}
+                                                {students.filter(s => s.evaluated).length === 0 && (
+                                                    <p className="text-gray-500 text-center py-8">暂无评价数据</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <button
+                                        onClick={handleExport}
+                                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+                                    >
+                                        <i className="fas fa-download mr-2"></i>
+                                        导出评估报告
+                                    </button>
+                                    {downloadStatus && (
+                                        <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-lg">
+                                            <i className="fas fa-info-circle mr-2"></i>
+                                            {downloadStatus}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

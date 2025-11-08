@@ -1,0 +1,464 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>远程办公工作台</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('首页');
+            const [tasks, setTasks] = useState({
+                todo: [
+                    { id: 1, title: '设计用户界面原型', priority: 'high' },
+                    { id: 2, title: '编写API文档', priority: 'medium' }
+                ],
+                inProgress: [
+                    { id: 3, title: '开发登录功能', priority: 'high' }
+                ],
+                completed: [
+                    { id: 4, title: '项目需求分析', priority: 'low' }
+                ]
+            });
+            
+            const [newTaskTitle, setNewTaskTitle] = useState('');
+            const [selectedRole, setSelectedRole] = useState('all');
+            const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+            const [messages, setMessages] = useState([
+                { id: 1, sender: '张三', content: '今天的会议推迟到下午3点', time: '09:30' },
+                { id: 2, sender: '李四', content: '新功能的原型图已经完成', time: '10:15' }
+            ]);
+            const [newMessage, setNewMessage] = useState('');
+            const [isDarkMode, setIsDarkMode] = useState(false);
+
+            const teamMembers = [
+                { id: 1, name: '张三', role: '开发', avatar: 'https://picsum.photos/id/1/100/100' },
+                { id: 2, name: '李四', role: '设计', avatar: 'https://picsum.photos/id/2/100/100' },
+                { id: 3, name: '王五', role: '产品', avatar: 'https://picsum.photos/id/3/100/100' },
+                { id: 4, name: '赵六', role: '测试', avatar: 'https://picsum.photos/id/4/100/100' },
+                { id: 5, name: '陈七', role: '开发', avatar: 'https://picsum.photos/id/5/100/100' }
+            ];
+
+            const events = {
+                '2024-01-01': ['元旦假期'],
+                '2024-01-15': ['项目评审会议', '团队建设活动'],
+                '2024-01-16': ['代码审查', 'UI设计讨论'],
+                [selectedDate]: ['今日站立会议', '产品需求评审']
+            };
+
+            const addTask = () => {
+                if (newTaskTitle.trim()) {
+                    const newTask = {
+                        id: Date.now(),
+                        title: newTaskTitle,
+                        priority: 'medium'
+                    };
+                    setTasks(prev => ({
+                        ...prev,
+                        todo: [...prev.todo, newTask]
+                    }));
+                    setNewTaskTitle('');
+                }
+            };
+
+            const moveTask = (taskId, fromColumn, toColumn) => {
+                setTasks(prev => {
+                    const task = prev[fromColumn].find(t => t.id === taskId);
+                    return {
+                        ...prev,
+                        [fromColumn]: prev[fromColumn].filter(t => t.id !== taskId),
+                        [toColumn]: [...prev[toColumn], task]
+                    };
+                });
+            };
+
+            const deleteTask = (taskId, column) => {
+                setTasks(prev => ({
+                    ...prev,
+                    [column]: prev[column].filter(t => t.id !== taskId)
+                }));
+            };
+
+            const sendMessage = () => {
+                if (newMessage.trim()) {
+                    const message = {
+                        id: Date.now(),
+                        sender: '我',
+                        content: newMessage,
+                        time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+                    };
+                    setMessages(prev => [...prev, message]);
+                    setNewMessage('');
+                }
+            };
+
+            const filteredMembers = selectedRole === 'all' 
+                ? teamMembers 
+                : teamMembers.filter(member => member.role === selectedRole);
+
+            const themeClass = isDarkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-50 text-gray-900';
+
+            return (
+                <div className={`min-h-screen ${themeClass}`}>
+                    <nav className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between h-16">
+                                <div className="flex items-center">
+                                    <div className="flex-shrink-0">
+                                        <i className="fas fa-laptop-house text-2xl text-blue-600"></i>
+                                        <span className="ml-2 text-xl font-bold">远程办公</span>
+                                    </div>
+                                    <div className="hidden md:block ml-10">
+                                        <div className="flex items-baseline space-x-4">
+                                            {['首页', '项目管理', '团队成员', '日程安排', '设置'].map(tab => (
+                                                <button
+                                                    key={tab}
+                                                    onClick={() => setActiveTab(tab)}
+                                                    className={`px-3 py-2 rounded-md text-sm font-medium ${
+                                                        activeTab === tab 
+                                                            ? 'bg-blue-600 text-white' 
+                                                            : `${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-500 hover:bg-gray-100'}`
+                                                    }`}
+                                                >
+                                                    {tab}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {activeTab === '首页' && (
+                        <div>
+                            <div className="relative bg-gradient-to-r from-blue-600 to-purple-700 h-64">
+                                <img 
+                                    src="https://picsum.photos/id/26/1200/400" 
+                                    alt="远程办公背景" 
+                                    className="w-full h-full object-cover opacity-30"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="text-center text-white">
+                                        <h1 className="text-4xl font-bold mb-4">欢迎来到远程办公工作台</h1>
+                                        <p className="text-xl">高效协作，随时随地办公</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="max-w-7xl mx-auto px-4 py-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                                        <h2 className="text-2xl font-bold mb-4">快速统计</h2>
+                                        <div className="grid grid-cols-3 gap-4">
+                                            <div className="text-center">
+                                                <div className="text-3xl font-bold text-blue-600">{tasks.todo.length}</div>
+                                                <div className="text-sm text-gray-500">待办任务</div>
+                                            </div>
+                                            <div className="text-center">
+                                                <div className="text-3xl font-bold text-yellow-600">{tasks.inProgress.length}</div>
+                                                <div className="text-sm text-gray-500">进行中</div>
+                                            </div>
+                                            <div className="text-center">
+                                                <div className="text-3xl font-bold text-green-600">{tasks.completed.length}</div>
+                                                <div className="text-sm text-gray-500">已完成</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                                        <h2 className="text-2xl font-bold mb-4">实时聊天</h2>
+                                        <div className="h-40 overflow-y-auto mb-4 space-y-2">
+                                            {messages.map(msg => (
+                                                <div key={msg.id} className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                                                    <div className="flex justify-between">
+                                                        <span className="font-semibold">{msg.sender}</span>
+                                                        <span className="text-xs text-gray-500">{msg.time}</span>
+                                                    </div>
+                                                    <div className="text-sm">{msg.content}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <input
+                                                type="text"
+                                                value={newMessage}
+                                                onChange={(e) => setNewMessage(e.target.value)}
+                                                placeholder="输入消息..."
+                                                className={`flex-1 px-3 py-2 border rounded-md ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'border-gray-300'}`}
+                                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                            />
+                                            <button
+                                                onClick={sendMessage}
+                                                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                                            >
+                                                发送
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === '项目管理' && (
+                        <div className="max-w-7xl mx-auto px-4 py-8">
+                            <h1 className="text-3xl font-bold mb-8">项目任务看板</h1>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[
+                                    { key: 'todo', title: '待办', color: 'blue' },
+                                    { key: 'inProgress', title: '进行中', color: 'yellow' },
+                                    { key: 'completed', title: '已完成', color: 'green' }
+                                ].map(column => (
+                                    <div key={column.key} className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-lg`}>
+                                        <h3 className={`text-lg font-semibold mb-4 text-${column.color}-600`}>
+                                            {column.title} ({tasks[column.key].length})
+                                        </h3>
+                                        <div className="space-y-3 mb-4">
+                                            {tasks[column.key].map(task => (
+                                                <div key={task.id} className={`p-3 rounded border-l-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} 
+                                                    ${task.priority === 'high' ? 'border-red-500' : 
+                                                      task.priority === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}>
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <div className="font-medium">{task.title}</div>
+                                                            <span className={`text-xs px-2 py-1 rounded mt-1 inline-block ${
+                                                                task.priority === 'high' ? 'bg-red-100 text-red-800' :
+                                                                task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                                                                'bg-green-100 text-green-800'
+                                                            }`}>
+                                                                {task.priority === 'high' ? '高优先级' : 
+                                                                 task.priority === 'medium' ? '中优先级' : '低优先级'}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex space-x-1">
+                                                            {column.key !== 'completed' && (
+                                                                <button
+                                                                    onClick={() => moveTask(task.id, column.key, 'completed')}
+                                                                    className="text-green-600 hover:text-green-800"
+                                                                    title="完成"
+                                                                >
+                                                                    <i className="fas fa-check"></i>
+                                                                </button>
+                                                            )}
+                                                            <button
+                                                                onClick={() => deleteTask(task.id, column.key)}
+                                                                className="text-red-600 hover:text-red-800"
+                                                                title="删除"
+                                                            >
+                                                                <i className="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        {column.key === 'todo' && (
+                                            <div className="space-y-2">
+                                                <input
+                                                    type="text"
+                                                    value={newTaskTitle}
+                                                    onChange={(e) => setNewTaskTitle(e.target.value)}
+                                                    placeholder="输入新任务..."
+                                                    className={`w-full px-3 py-2 border rounded-md ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'border-gray-300'}`}
+                                                    onKeyPress={(e) => e.key === 'Enter' && addTask()}
+                                                />
+                                                <button
+                                                    onClick={addTask}
+                                                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                                                >
+                                                    添加任务
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === '团队成员' && (
+                        <div className="max-w-7xl mx-auto px-4 py-8">
+                            <div className="flex justify-between items-center mb-8">
+                                <h1 className="text-3xl font-bold">团队成员</h1>
+                                <select
+                                    value={selectedRole}
+                                    onChange={(e) => setSelectedRole(e.target.value)}
+                                    className={`px-4 py-2 border rounded-md ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'border-gray-300'}`}
+                                >
+                                    <option value="all">所有角色</option>
+                                    <option value="开发">开发</option>
+                                    <option value="设计">设计</option>
+                                    <option value="产品">产品</option>
+                                    <option value="测试">测试</option>
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {filteredMembers.map(member => (
+                                    <div key={member.id} className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg text-center`}>
+                                        <img
+                                            src={member.avatar}
+                                            alt={member.name}
+                                            className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+                                        />
+                                        <h3 className="text-lg font-semibold mb-2">{member.name}</h3>
+                                        <span className={`px-3 py-1 rounded-full text-sm ${
+                                            member.role === '开发' ? 'bg-blue-100 text-blue-800' :
+                                            member.role === '设计' ? 'bg-purple-100 text-purple-800' :
+                                            member.role === '产品' ? 'bg-green-100 text-green-800' :
+                                            'bg-orange-100 text-orange-800'
+                                        }`}>
+                                            {member.role}
+                                        </span>
+                                        <div className="mt-4 flex justify-center space-x-2">
+                                            <button className="text-blue-600 hover:text-blue-800">
+                                                <i className="fas fa-envelope"></i>
+                                            </button>
+                                            <button className="text-green-600 hover:text-green-800">
+                                                <i className="fas fa-video"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {filteredMembers.length === 0 && (
+                                <div className="text-center py-12">
+                                    <i className="fas fa-users text-4xl text-gray-400 mb-4"></i>
+                                    <p className="text-gray-500">未找到该角色的成员</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === '日程安排' && (
+                        <div className="max-w-7xl mx-auto px-4 py-8">
+                            <h1 className="text-3xl font-bold mb-8">日程安排</h1>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                                    <h2 className="text-xl font-semibold mb-4">日历</h2>
+                                    <div className="mb-4">
+                                        <input
+                                            type="date"
+                                            value={selectedDate}
+                                            onChange={(e) => setSelectedDate(e.target.value)}
+                                            className={`px-3 py-2 border rounded-md ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'border-gray-300'}`}
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-7 gap-1 text-center text-sm">
+                                        {['日', '一', '二', '三', '四', '五', '六'].map(day => (
+                                            <div key={day} className="p-2 font-semibold text-gray-500">
+                                                {day}
+                                            </div>
+                                        ))}
+                                        {Array.from({ length: 35 }, (_, i) => {
+                                            const day = i - 5;
+                                            const isToday = day === new Date().getDate();
+                                            const isSelected = selectedDate === `2024-01-${day.toString().padStart(2, '0')}`;
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`p-2 cursor-pointer rounded ${
+                                                        day < 1 || day > 31 ? 'text-gray-300' :
+                                                        isToday ? 'bg-blue-600 text-white' :
+                                                        isSelected ? 'bg-blue-100 text-blue-800' :
+                                                        isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                                                    }`}
+                                                    onClick={() => day >= 1 && day <= 31 && setSelectedDate(`2024-01-${day.toString().padStart(2, '0')}`)}
+                                                >
+                                                    {day >= 1 && day <= 31 ? day : ''}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                                    <h2 className="text-xl font-semibold mb-4">
+                                        {selectedDate} 的事件
+                                    </h2>
+                                    <div className="space-y-3">
+                                        {(events[selectedDate] || []).map((event, index) => (
+                                            <div key={index} className={`p-3 rounded border-l-4 border-blue-500 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+                                                <div className="flex items-center">
+                                                    <i className="fas fa-calendar-check text-blue-600 mr-2"></i>
+                                                    <span>{event}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {(!events[selectedDate] || events[selectedDate].length === 0) && (
+                                            <div className="text-center py-8">
+                                                <i className="fas fa-calendar-times text-4xl text-gray-400 mb-4"></i>
+                                                <p className="text-gray-500">当天暂无安排</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === '设置' && (
+                        <div className="max-w-7xl mx-auto px-4 py-8">
+                            <h1 className="text-3xl font-bold mb-8">设置</h1>
+                            <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg max-w-md`}>
+                                <h2 className="text-xl font-semibold mb-4">外观设置</h2>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">主题模式</label>
+                                        <select
+                                            value={isDarkMode ? 'dark' : 'light'}
+                                            onChange={(e) => setIsDarkMode(e.target.value === 'dark')}
+                                            className={`w-full px-3 py-2 border rounded-md ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'border-gray-300'}`}
+                                        >
+                                            <option value="light">浅色模式</option>
+                                            <option value="dark">深色模式</option>
+                                        </select>
+                                    </div>
+                                    <div className="mt-6">
+                                        <h3 className="text-lg font-semibold mb-2">预览</h3>
+                                        <div className={`p-4 rounded border ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}`}>
+                                            <p>这是{isDarkMode ? '深色' : '浅色'}模式的预览效果</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} border-t mt-12`}>
+                        <div className="max-w-7xl mx-auto px-4 py-6">
+                            <div className="flex justify-between items-center">
+                                <div className="text-sm text-gray-500">
+                                    © 2024 远程办公工作台. 保留所有权利.
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button className="text-gray-400 hover:text-blue-600">
+                                        <i className="fab fa-twitter"></i>
+                                    </button>
+                                    <button className="text-gray-400 hover:text-blue-600">
+                                        <i className="fab fa-linkedin"></i>
+                                    </button>
+                                    <button className="text-gray-400 hover:text-blue-600">
+                                        <i className="fab fa-github"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付充值中心</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const PaymentRechargeApp = () => {
+            const [balance, setBalance] = useState(1268.50);
+            const [selectedAmount, setSelectedAmount] = useState(null);
+            const [customAmount, setCustomAmount] = useState('');
+            const [paymentMethod, setPaymentMethod] = useState('wechat');
+            const [showUserMenu, setShowUserMenu] = useState(false);
+            const [showPromoModal, setShowPromoModal] = useState(false);
+            const [showPaymentModal, setShowPaymentModal] = useState(false);
+            const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+            const [loading, setLoading] = useState(false);
+            const [paymentResult, setPaymentResult] = useState(null);
+            const [selectedInvoice, setSelectedInvoice] = useState(null);
+            const [queryStartDate, setQueryStartDate] = useState('');
+            const [queryEndDate, setQueryEndDate] = useState('');
+            const [rechargeRecords, setRechargeRecords] = useState([
+                { id: 1, date: '2024-01-15', amount: 100, method: '微信支付', status: '成功' },
+                { id: 2, date: '2024-01-14', amount: 200, method: '支付宝', status: '成功' },
+                { id: 3, date: '2024-01-13', amount: 50, method: '银行卡', status: '失败' },
+                { id: 4, date: '2024-01-12', amount: 500, method: '微信支付', status: '成功' },
+            ]);
+            const [filteredRecords, setFilteredRecords] = useState(rechargeRecords);
+
+            const presetAmounts = [50, 100, 200, 500];
+            
+            const paymentMethods = {
+                wechat: { name: '微信支付', icon: 'fab fa-weixin', color: 'text-green-500' },
+                alipay: { name: '支付宝', icon: 'fas fa-alipay', color: 'text-blue-500' },
+                bankcard: { name: '银行卡', icon: 'fas fa-credit-card', color: 'text-gray-600' }
+            };
+
+            const getPaymentAmount = () => {
+                if (customAmount && !selectedAmount) {
+                    return parseFloat(customAmount) || 0;
+                }
+                return selectedAmount || 0;
+            };
+
+            const isValidAmount = () => {
+                const amount = getPaymentAmount();
+                return amount >= 1 && amount <= 5000;
+            };
+
+            const handlePresetAmountClick = (amount) => {
+                setSelectedAmount(amount);
+                setCustomAmount('');
+            };
+
+            const handleCustomAmountChange = (e) => {
+                const value = e.target.value;
+                if (/^\d*\.?\d*$/.test(value)) {
+                    setCustomAmount(value);
+                    setSelectedAmount(null);
+                }
+            };
+
+            const handlePayment = async () => {
+                setLoading(true);
+                setTimeout(() => {
+                    const success = Math.random() > 0.2;
+                    setPaymentResult(success ? 'success' : 'failed');
+                    setLoading(false);
+                    if (success) {
+                        setBalance(prev => prev + getPaymentAmount());
+                        const newRecord = {
+                            id: Date.now(),
+                            date: new Date().toISOString().split('T')[0],
+                            amount: getPaymentAmount(),
+                            method: paymentMethods[paymentMethod].name,
+                            status: '成功'
+                        };
+                        setRechargeRecords(prev => [newRecord, ...prev]);
+                        setFilteredRecords(prev => [newRecord, ...prev]);
+                    }
+                }, 2000);
+            };
+
+            const handleQuery = () => {
+                let filtered = rechargeRecords;
+                if (queryStartDate) {
+                    filtered = filtered.filter(record => record.date >= queryStartDate);
+                }
+                if (queryEndDate) {
+                    filtered = filtered.filter(record => record.date <= queryEndDate);
+                }
+                setFilteredRecords(filtered);
+            };
+
+            const refreshBalance = () => {
+                setBalance(prev => prev + Math.random() * 10 - 5);
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <header className="bg-white shadow-lg">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img src="https://picsum.photos/id/1/40/40" alt="Logo" className="h-10 w-10 rounded-lg" />
+                                    <h1 className="ml-3 text-xl font-bold text-gray-900">支付充值</h1>
+                                </div>
+                                <div className="relative">
+                                    <button 
+                                        onClick={() => setShowUserMenu(!showUserMenu)}
+                                        className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+                                    >
+                                        <img src="https://picsum.photos/id/64/32/32" alt="Avatar" className="h-8 w-8 rounded-full" />
+                                        <span>张三</span>
+                                        <i className="fas fa-chevron-down text-sm"></i>
+                                    </button>
+                                    {showUserMenu && (
+                                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                <i className="fas fa-user mr-2"></i>个人中心
+                                            </a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                <i className="fas fa-sign-out-alt mr-2"></i>退出登录
+                                            </a>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="text-center mb-8">
+                            <div className="relative h-32 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center mb-6">
+                                <img src="https://picsum.photos/id/292/800/200" alt="Background" className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-20" />
+                                <div className="relative z-10 text-white">
+                                    <h2 className="text-3xl font-bold mb-2">充值中心</h2>
+                                    <p className="text-lg opacity-90">安全便捷的充值服务，多种支付方式任您选择</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2 space-y-6">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-semibold text-gray-900">账户余额</h3>
+                                        <button 
+                                            onClick={refreshBalance}
+                                            className="text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            <i className="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div className="text-3xl font-bold text-gray-900">
+                                        ¥{balance.toFixed(2)}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">选择充值金额</h3>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                                        {presetAmounts.map(amount => (
+                                            <button
+                                                key={amount}
+                                                onClick={() => handlePresetAmountClick(amount)}
+                                                className={`p-4 rounded-lg border-2 transition-all ${
+                                                    selectedAmount === amount 
+                                                        ? 'border-blue-500 bg-blue-50 text-blue-700' 
+                                                        : 'border-gray-200 hover:border-gray-300'
+                                                }`}
+                                            >
+                                                ¥{amount}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-gray-700">自定义金额</label>
+                                        <div className="relative">
+                                            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">¥</span>
+                                            <input
+                                                type="text"
+                                                value={customAmount}
+                                                onChange={handleCustomAmountChange}
+                                                placeholder="请输入金额 (1-5000元)"
+                                                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            />
+                                        </div>
+                                        {customAmount && !isValidAmount() && (
+                                            <p className="text-red-500 text-sm">金额必须在1-5000元之间</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">支付方式</h3>
+                                    <select
+                                        value={paymentMethod}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        {Object.entries(paymentMethods).map(([key, method]) => (
+                                            <option key={key} value={key}>{method.name}</option>
+                                        ))}
+                                    </select>
+                                    <div className="mt-4 p-4 bg-gray-50 rounded-lg flex items-center space-x-3">
+                                        <i className={`${paymentMethods[paymentMethod].icon} ${paymentMethods[paymentMethod].color} text-2xl`}></i>
+                                        <div>
+                                            <p className="font-medium">{paymentMethods[paymentMethod].name}</p>
+                                            <p className="text-sm text-gray-600">安全快捷，支持实时到账</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {(selectedAmount === 200 || (customAmount && parseFloat(customAmount) >= 200)) && (
+                                    <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-xl p-4">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h4 className="font-semibold">充值优惠活动</h4>
+                                                <p className="text-sm opacity-90">满200元送20元话费券</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => setShowPromoModal(true)}
+                                                className="bg-white text-orange-500 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+                                            >
+                                                查看详情
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">充值记录查询</h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">开始日期</label>
+                                            <input
+                                                type="date"
+                                                value={queryStartDate}
+                                                onChange={(e) => setQueryStartDate(e.target.value)}
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">结束日期</label>
+                                            <input
+                                                type="date"
+                                                value={queryEndDate}
+                                                onChange={(e) => setQueryEndDate(e.target.value)}
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                            />
+                                        </div>
+                                        <div className="flex items-end">
+                                            <button
+                                                onClick={handleQuery}
+                                                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                                            >
+                                                查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full text-sm text-left">
+                                            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                                <tr>
+                                                    <th className="px-4 py-3">日期</th>
+                                                    <th className="px-4 py-3">金额</th>
+                                                    <th className="px-4 py-3">支付方式</th>
+                                                    <th className="px-4 py-3">状态</th>
+                                                    <th className="px-4 py-3">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {filteredRecords.map(record => (
+                                                    <tr key={record.id} className="bg-white border-b hover:bg-gray-50">
+                                                        <td className="px-4 py-4">{record.date}</td>
+                                                        <td className="px-4 py-4">¥{record.amount}</td>
+                                                        <td className="px-4 py-4">{record.method}</td>
+                                                        <td className="px-4 py-4">
+                                                            <span className={`px-2 py-1 rounded-full text-xs ${
+                                                                record.status === '成功' 
+                                                                    ? 'bg-green-100 text-green-800'
+                                                                    : 'bg-red-100 text-red-800'
+                                                            }`}>
+                                                                {record.status}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-4 py-4">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setSelectedInvoice(record);
+                                                                    setShowInvoiceModal(true);
+                                                                }}
+                                                                className="text-blue-600 hover:text-blue-800"
+                                                            >
+                                                                查看发票
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-xl shadow-lg p-6 sticky top-4">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">支付信息</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">充值金额:</span>
+                                            <span className="font-semibold">¥{getPaymentAmount().toFixed(2)}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">支付方式:</span>
+                                            <span className="font-semibold">{paymentMethods[paymentMethod].name}</span>
+                                        </div>
+                                        <hr className="my-4" />
+                                        <div className="flex justify-between text-lg">
+                                            <span className="font-semibold">支付总额:</span>
+                                            <span className="font-bold text-blue-600">¥{getPaymentAmount().toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setShowPaymentModal(true)}
+                                        disabled={!isValidAmount() || getPaymentAmount() === 0}
+                                        className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                    >
+                                        立即充值
+                                    </button>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">充值说明</h3>
+                                    <ul className="space-y-2 text-sm text-gray-600">
+                                        <li className="flex items-start">
+                                            <i className="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                                            支持24小时在线充值
+                                        </li>
+                                        <li className="flex items-start">
+                                            <i className="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                                            到账时间：实时到账
+                                        </li>
+                                        <li className="flex items-start">
+                                            <i className="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                                            单次充值限额：1-5000元
+                                        </li>
+                                        <li className="flex items-start">
+                                            <i className="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                                            安全加密，资金有保障
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div>
+                                    <h4 className="font-semibold mb-4">帮助中心</h4>
+                                    <ul className="space-y-2 text-sm text-gray-300">
+                                        <li><a href="#" className="hover:text-white">充值指南</a></li>
+                                        <li><a href="#" className="hover:text-white">常见问题</a></li>
+                                        <li><a href="#" className="hover:text-white">安全保障</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold mb-4">客服联系</h4>
+                                    <ul className="space-y-2 text-sm text-gray-300">
+                                        <li><i className="fas fa-phone mr-2"></i>400-888-9999</li>
+                                        <li><i className="fas fa-envelope mr-2"></i>service@example.com</li>
+                                        <li><i className="fas fa-clock mr-2"></i>7×24小时在线服务</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold mb-4">关注我们</h4>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-gray-300 hover:text-white">
+                                            <i className="fab fa-weixin text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-300 hover:text-white">
+                                            <i className="fab fa-weibo text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-300 hover:text-white">
+                                            <i className="fab fa-qq text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 mt-8 pt-4 text-center text-sm text-gray-400">
+                                <p>&copy; 2024 支付充值中心. 保留所有权利.</p>
+                            </div>
+                        </div>
+                    </footer>
+
+                    {showPromoModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-xl max-w-md w-full p-6">
+                                <div className="text-center mb-6">
+                                    <img src="https://picsum.photos/id/102/200/120" alt="Promo" className="w-full h-24 object-cover rounded-lg mb-4" />
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">充值优惠活动</h3>
+                                    <p className="text-gray-600">满200元送20元话费券</p>
+                                </div>
+                                <div className="space-y-3 text-sm text-gray-700 mb-6">
+                                    <p><i className="fas fa-gift text-orange-500 mr-2"></i>活动时间：即日起至月底</p>
+                                    <p><i className="fas fa-star text-orange-500 mr-2"></i>活动内容：单次充值满200元即可获得20元话费券</p>
+                                    <p><i className="fas fa-clock text-orange-500 mr-2"></i>到账时间：充值成功后24小时内</p>
+                                    <p><i className="fas fa-info-circle text-orange-500 mr-2"></i>使用范围：可用于话费充值，有效期30天</p>
+                                </div>
+                                <div className="flex space-x-3">
+                                    <button
+                                        onClick={() => setShowPromoModal(false)}
+                                        className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+                                    >
+                                        关闭
+                                    </button>
+                                    <button
+                                        onClick={() => setShowPromoModal(false)}
+                                        className="flex-1 bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors"
+                                    >
+                                        立即领取
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {showPaymentModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-xl max-w-md w-full p-6">
+                                {!loading && !paymentResult && (
+                                    <>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">确认支付</h3>
+                                        <div className="space-y-4 mb-6">
+                                            <div className="bg-gray-50 p-4 rounded-lg">
+                                                <div className="flex justify-between mb-2">
+                                                    <span className="text-gray-600">当前余额:</span>
+                                                    <span className="font-semibold">¥{balance.toFixed(2)}</span>
+                                                </div>
+                                                <div className="flex justify-between mb-2">
+                                                    <span className="text-gray-600">充值金额:</span>
+                                                    <span className="font-semibold">¥{getPaymentAmount().toFixed(2)}</span>
+                                                </div>
+                                                <div className="flex justify-between mb-2">
+                                                    <span className="text-gray-600">支付方式:</span>
+                                                    <span className="font-semibold">{paymentMethods[paymentMethod].name}</span>
+                                                </div>
+                                                <hr className="my-2" />
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">充值后余额:</span>
+                                                    <span className="font-bold text-blue-600">¥{(balance + getPaymentAmount()).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex space-x-3">
+                                            <button
+                                                onClick={() => setShowPaymentModal(false)}
+                                                className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+                                            >
+                                                取消
+                                            </button>
+                                            <button
+                                                onClick={handlePayment}
+                                                className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                                            >
+                                                确认支付
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {loading && (
+                                    <div className="text-center py-8">
+                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2">处理中...</h3>
+                                        <p className="text-gray-600">请稍候，正在处理您的支付请求</p>
+                                    </div>
+                                )}
+
+                                {paymentResult && (
+                                    <div className="text-center py-8">
+                                        <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                                            paymentResult === 'success' ? 'bg-green-100' : 'bg-red-100'
+                                        }`}>
+                                            <i className={`fas text-2xl ${
+                                                paymentResult === 'success' 
+                                                    ? 'fa-check text-green-600' 
+                                                    : 'fa-times text-red-600'
+                                            }`}></i>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                            {paymentResult === 'success' ? '支付成功' : '支付失败'}
+                                        </h3>
+                                        <p className="text-gray-600 mb-6">
+                                            {paymentResult === 'success' 
+                                                ? `已成功充值¥${getPaymentAmount().toFixed(2)}到您的账户`
+                                                : '支付过程中出现问题，请重试或联系客服'
+                                            }
+                                        </p>
+                                        <button
+                                            onClick={() => {
+                                                setShowPaymentModal(false);
+                                                setPaymentResult(null);
+                                                setSelectedAmount(null);
+                                                setCustomAmount('');
+                                            }}
+                                            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                                        >
+                                            返回
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {showInvoiceModal && selectedInvoice && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-xl max-w-md w-full p-6">
+                                <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">发票详情</h3>
+                                <div className="space-y-4 mb-6">
+                                    <div className="bg-gray-50 p-4 rounded-lg">
+                                        <img src="https://picsum.photos/id/180/300/200" alt="Invoice QR" className="w-32 h-32 mx-auto mb-4 rounded" />
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">发票编号:</span>
+                                                <span className="font-semibold">INV{selectedInvoice.id}2024001</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">开票日期:</span>
+                                                <span className="font-semibold">{selectedInvoice.date}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">发票金额:</span>
+                                                <span className="font-semibold">¥{selectedInvoice.amount}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">发票类型:</span>
+                                                <span className="font-semibold">电子普通发票</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">开票企业:</span>
+                                                <span className="font-semibold">支付充值中心</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex space-x-3">
+                                    <button
+                                        onClick={() => setShowInvoiceModal(false)}
+                                        className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+                                    >
+                                        关闭
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            alert('发票下载功能已触发');
+                                            setShowInvoiceModal(false);
+                                        }}
+                                        className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                                    >
+                                        下载发票
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<PaymentRechargeApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

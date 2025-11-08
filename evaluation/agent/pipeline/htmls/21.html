@@ -1,0 +1,466 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分享链接</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const App = () => {
+            const [originalUrl, setOriginalUrl] = useState('');
+            const [shortUrl, setShortUrl] = useState('');
+            const [urlError, setUrlError] = useState('');
+            const [selectedDomain, setSelectedDomain] = useState('short.ly');
+            const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+            const [customText, setCustomText] = useState('');
+            const [theme, setTheme] = useState('default');
+            const [copySuccess, setCopySuccess] = useState(false);
+            const [isGenerated, setIsGenerated] = useState(false);
+            const [activeTab, setActiveTab] = useState('home');
+            const [expandedFaq, setExpandedFaq] = useState(null);
+            
+            const domains = [
+                'short.ly',
+                'go.to', 
+                'link.cc',
+                'tiny.url',
+                'bit.do'
+            ];
+            
+            const platforms = [
+                { id: 'wechat', name: '微信好友', icon: 'fab fa-weixin', color: 'text-green-500' },
+                { id: 'qq', name: 'QQ空间', icon: 'fab fa-qq', color: 'text-blue-500' },
+                { id: 'weibo', name: '微博', icon: 'fab fa-weibo', color: 'text-red-500' },
+                { id: 'facebook', name: 'Facebook', icon: 'fab fa-facebook', color: 'text-blue-600' },
+                { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter', color: 'text-blue-400' }
+            ];
+            
+            const themes = [
+                { id: 'default', name: '默认白', bg: 'bg-white', text: 'text-gray-800', accent: 'bg-blue-500' },
+                { id: 'dark', name: '深色黑', bg: 'bg-gray-900', text: 'text-white', accent: 'bg-purple-600' },
+                { id: 'sky', name: '天空蓝', bg: 'bg-sky-50', text: 'text-sky-900', accent: 'bg-sky-500' },
+                { id: 'orange', name: '橘子橙', bg: 'bg-orange-50', text: 'text-orange-900', accent: 'bg-orange-500' }
+            ];
+            
+            const faqData = [
+                {
+                    question: '什么是短链接？',
+                    answer: '短链接是将长URL压缩成更短、更易分享的链接形式，便于在社交媒体、短信等场景中使用。'
+                },
+                {
+                    question: '短链接是否永久有效？',
+                    answer: '我们的短链接默认永久有效，但建议定期检查链接状态，避免原始网址失效导致的问题。'
+                },
+                {
+                    question: '可以自定义短链接吗？',
+                    answer: '目前支持选择不同的域名前缀，未来会推出完全自定义短链接的功能。'
+                },
+                {
+                    question: '如何查看链接点击统计？',
+                    answer: '注册用户可以在个人面板查看每个短链接的点击次数、来源等详细统计信息。'
+                }
+            ];
+            
+            const currentTheme = themes.find(t => t.id === theme);
+            
+            const validateUrl = (url) => {
+                const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                return urlPattern.test(url);
+            };
+            
+            const handleUrlChange = (e) => {
+                const value = e.target.value;
+                setOriginalUrl(value);
+                
+                if (value && !validateUrl(value)) {
+                    setUrlError('请输入有效的URL地址');
+                } else {
+                    setUrlError('');
+                }
+            };
+            
+            const generateShortUrl = () => {
+                if (!originalUrl || urlError) return;
+                
+                const randomCode = Math.random().toString(36).substring(2, 8);
+                const newShortUrl = `https://${selectedDomain}/${randomCode}`;
+                setShortUrl(newShortUrl);
+                setIsGenerated(true);
+            };
+            
+            const handleDomainChange = (e) => {
+                const newDomain = e.target.value;
+                setSelectedDomain(newDomain);
+                
+                if (shortUrl) {
+                    const code = shortUrl.split('/').pop();
+                    setShortUrl(`https://${newDomain}/${code}`);
+                }
+            };
+            
+            const handlePlatformChange = (platformId) => {
+                setSelectedPlatforms(prev => 
+                    prev.includes(platformId) 
+                        ? prev.filter(id => id !== platformId)
+                        : [...prev, platformId]
+                );
+            };
+            
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(shortUrl).then(() => {
+                    setCopySuccess(true);
+                    setTimeout(() => setCopySuccess(false), 2000);
+                });
+            };
+            
+            const shareToPlatform = (platform) => {
+                alert(`正在分享到${platform.name}：
+${customText}
+${shortUrl}`);
+            };
+            
+            const toggleFaq = (index) => {
+                setExpandedFaq(expandedFaq === index ? null : index);
+            };
+            
+            return (
+                <div className={`min-h-screen transition-all duration-300 ${currentTheme.bg} ${currentTheme.text}`}>
+                    <nav className={`${currentTheme.accent} text-white shadow-lg`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <i className="fas fa-link text-2xl mr-3"></i>
+                                    <span className="text-xl font-bold">短链神器</span>
+                                </div>
+                                <div className="flex space-x-6">
+                                    <button 
+                                        onClick={() => setActiveTab('home')}
+                                        className={`px-3 py-2 rounded-md transition-colors ${activeTab === 'home' ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10'}`}
+                                    >
+                                        首页
+                                    </button>
+                                    <button 
+                                        onClick={() => setActiveTab('features')}
+                                        className={`px-3 py-2 rounded-md transition-colors ${activeTab === 'features' ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10'}`}
+                                    >
+                                        功能介绍
+                                    </button>
+                                    <button 
+                                        onClick={() => setActiveTab('contact')}
+                                        className={`px-3 py-2 rounded-md transition-colors ${activeTab === 'contact' ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10'}`}
+                                    >
+                                        联系我们
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {activeTab === 'home' && (
+                            <div className="space-y-8">
+                                <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                        <i className="fas fa-magic mr-3 text-blue-500"></i>
+                                        链接转换
+                                    </h2>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">原始链接</label>
+                                            <input
+                                                type="text"
+                                                value={originalUrl}
+                                                onChange={handleUrlChange}
+                                                placeholder="请输入要缩短的链接，如：https://www.example.com"
+                                                className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                                                    urlError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                                                }`}
+                                            />
+                                            {urlError && (
+                                                <p className="text-red-500 text-sm mt-2 flex items-center">
+                                                    <i className="fas fa-exclamation-circle mr-1"></i>
+                                                    {urlError}
+                                                </p>
+                                            )}
+                                        </div>
+                                        
+                                        <button
+                                            onClick={generateShortUrl}
+                                            disabled={!originalUrl || !!urlError}
+                                            className={`${currentTheme.accent} text-white px-6 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center`}
+                                        >
+                                            <i className={`fas ${isGenerated ? 'fa-redo' : 'fa-compress-alt'} mr-2`}></i>
+                                            {isGenerated ? '重新生成' : '生成短链接'}
+                                        </button>
+                                        
+                                        {shortUrl && (
+                                            <div className="bg-gray-50 rounded-lg p-4 border-2 border-dashed border-gray-300">
+                                                <label className="block text-sm font-medium mb-2">生成的短链接</label>
+                                                <div className="flex items-center space-x-3">
+                                                    <input
+                                                        type="text"
+                                                        value={shortUrl}
+                                                        readOnly
+                                                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-white"
+                                                    />
+                                                    <button
+                                                        onClick={copyToClipboard}
+                                                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
+                                                    >
+                                                        <i className="fas fa-copy mr-1"></i>
+                                                        复制
+                                                    </button>
+                                                </div>
+                                                {copySuccess && (
+                                                    <div className="text-green-600 text-sm mt-2 flex items-center">
+                                                        <i className="fas fa-check-circle mr-1"></i>
+                                                        已复制到剪贴板！
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+                                        <h3 className="text-xl font-bold mb-4 flex items-center">
+                                            <i className="fas fa-cog mr-3 text-purple-500"></i>
+                                            链接风格设置
+                                        </h3>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium mb-2">域名前缀</label>
+                                                <select
+                                                    value={selectedDomain}
+                                                    onChange={handleDomainChange}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                                >
+                                                    {domains.map(domain => (
+                                                        <option key={domain} value={domain}>{domain}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium mb-2">页面主题</label>
+                                                <select
+                                                    value={theme}
+                                                    onChange={(e) => setTheme(e.target.value)}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                                >
+                                                    {themes.map(t => (
+                                                        <option key={t.id} value={t.id}>{t.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+                                        <h3 className="text-xl font-bold mb-4 flex items-center">
+                                            <i className="fas fa-share-alt mr-3 text-green-500"></i>
+                                            分享平台
+                                        </h3>
+                                        <div className="space-y-3">
+                                            {platforms.map(platform => (
+                                                <label key={platform.id} className="flex items-center cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedPlatforms.includes(platform.id)}
+                                                        onChange={() => handlePlatformChange(platform.id)}
+                                                        className="mr-3"
+                                                    />
+                                                    <i className={`${platform.icon} ${platform.color} mr-2`}></i>
+                                                    <span>{platform.name}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold mb-4 flex items-center">
+                                        <i className="fas fa-edit mr-3 text-orange-500"></i>
+                                        分享文案定制
+                                    </h3>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">自定义文案</label>
+                                            <textarea
+                                                value={customText}
+                                                onChange={(e) => setCustomText(e.target.value)}
+                                                placeholder="输入分享时要附带的文字..."
+                                                rows="4"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">实时预览</label>
+                                            <div className="border border-gray-300 rounded-md p-3 bg-gray-50 min-h-[100px]">
+                                                {customText || shortUrl ? (
+                                                    <div className="space-y-2">
+                                                        {customText && <p className="text-gray-800">{customText}</p>}
+                                                        {shortUrl && (
+                                                            <p className="text-blue-600 font-mono text-sm bg-blue-50 px-2 py-1 rounded">
+                                                                {shortUrl}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <p className="text-gray-500 italic">预览区域 - 请输入文案或生成短链接</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {selectedPlatforms.length > 0 && shortUrl && (
+                                        <div className="mt-6">
+                                            <h4 className="text-lg font-medium mb-3">快速分享到</h4>
+                                            <div className="flex flex-wrap gap-3">
+                                                {platforms
+                                                    .filter(platform => selectedPlatforms.includes(platform.id))
+                                                    .map(platform => (
+                                                        <button
+                                                            key={platform.id}
+                                                            onClick={() => shareToPlatform(platform)}
+                                                            className="flex items-center px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
+                                                        >
+                                                            <i className={`${platform.icon} ${platform.color} mr-2`}></i>
+                                                            <span>{platform.name}</span>
+                                                        </button>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold mb-4 flex items-center">
+                                        <i className="fas fa-question-circle mr-3 text-indigo-500"></i>
+                                        常见问题
+                                    </h3>
+                                    <div className="space-y-3">
+                                        {faqData.map((faq, index) => (
+                                            <div key={index} className="border border-gray-200 rounded-lg">
+                                                <button
+                                                    onClick={() => toggleFaq(index)}
+                                                    className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <span className="font-medium">{faq.question}</span>
+                                                    <i className={`fas fa-chevron-${expandedFaq === index ? 'up' : 'down'} text-gray-400`}></i>
+                                                </button>
+                                                {expandedFaq === index && (
+                                                    <div className="px-4 pb-3 text-gray-600 border-t border-gray-200">
+                                                        <p className="pt-3">{faq.answer}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {activeTab === 'features' && (
+                            <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-8">
+                                <h2 className="text-3xl font-bold mb-8 text-center">功能介绍</h2>
+                                <div className="grid md:grid-cols-3 gap-8">
+                                    <div className="text-center">
+                                        <img src="https://picsum.photos/id/1/300/200" alt="快速生成" className="w-full h-40 object-cover rounded-lg mb-4" />
+                                        <h3 className="text-xl font-bold mb-3">快速生成</h3>
+                                        <p className="text-gray-600">一键将长链接转换为简洁易记的短链接，支持批量处理</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <img src="https://picsum.photos/id/2/300/200" alt="多平台分享" className="w-full h-40 object-cover rounded-lg mb-4" />
+                                        <h3 className="text-xl font-bold mb-3">多平台分享</h3>
+                                        <p className="text-gray-600">支持微信、QQ、微博等主流社交平台的一键分享功能</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <img src="https://picsum.photos/id/3/300/200" alt="数据统计" className="w-full h-40 object-cover rounded-lg mb-4" />
+                                        <h3 className="text-xl font-bold mb-3">数据统计</h3>
+                                        <p className="text-gray-600">详细的点击统计和访问分析，帮您了解链接传播效果</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {activeTab === 'contact' && (
+                            <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-8">
+                                <h2 className="text-3xl font-bold mb-8 text-center">联系我们</h2>
+                                <div className="max-w-2xl mx-auto">
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div>
+                                            <img src="https://picsum.photos/id/4/400/300" alt="联系我们" className="w-full h-60 object-cover rounded-lg mb-4" />
+                                        </div>
+                                        <div className="space-y-6">
+                                            <div className="flex items-start">
+                                                <i className="fas fa-envelope text-blue-500 text-xl mr-4 mt-1"></i>
+                                                <div>
+                                                    <h4 className="font-bold mb-1">邮箱</h4>
+                                                    <p className="text-gray-600">support@shortlink.com</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start">
+                                                <i className="fas fa-phone text-green-500 text-xl mr-4 mt-1"></i>
+                                                <div>
+                                                    <h4 className="font-bold mb-1">电话</h4>
+                                                    <p className="text-gray-600">400-123-4567</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start">
+                                                <i className="fas fa-map-marker-alt text-red-500 text-xl mr-4 mt-1"></i>
+                                                <div>
+                                                    <h4 className="font-bold mb-1">地址</h4>
+                                                    <p className="text-gray-600">北京市朝阳区科技园区</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                    
+                    <footer className={`${currentTheme.accent} text-white mt-12`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                            <div className="flex flex-col md:flex-row justify-between items-center">
+                                <div className="mb-4 md:mb-0">
+                                    <p className="text-sm">© 2024 短链神器. All rights reserved.</p>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                        <i className="fab fa-github text-xl"></i>
+                                    </a>
+                                    <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                        <i className="fab fa-twitter text-xl"></i>
+                                    </a>
+                                    <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                        <i className="fab fa-facebook text-xl"></i>
+                                    </a>
+                                    <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                        <i className="fab fa-weibo text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+        
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

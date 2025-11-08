@@ -1,0 +1,507 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有声读物平台</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const AudioBookApp = () => {
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('全部');
+            const [currentPlaying, setCurrentPlaying] = useState(null);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [playbackSpeed, setPlaybackSpeed] = useState(1);
+            const [progress, setProgress] = useState(0);
+            const [comments, setComments] = useState([]);
+            const [newComment, setNewComment] = useState('');
+            const [email, setEmail] = useState('');
+            const [subscriptionMessage, setSubscriptionMessage] = useState('');
+            const [rankingPage, setRankingPage] = useState(0);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            
+            const audioBooks = [
+                {
+                    id: 1,
+                    title: '红楼梦',
+                    author: '曹雪芹',
+                    category: '文学',
+                    description: '中国古典文学巅峰之作，描绘了贾府的兴衰历程。',
+                    cover: 'https://picsum.photos/id/1/200/300',
+                    playCount: 125000
+                },
+                {
+                    id: 2,
+                    title: '三国演义',
+                    author: '罗贯中',
+                    category: '历史',
+                    description: '东汉末年群雄逐鹿的历史传奇故事。',
+                    cover: 'https://picsum.photos/id/2/200/300',
+                    playCount: 98000
+                },
+                {
+                    id: 3,
+                    title: '人工智能简史',
+                    author: '尼克·博斯特伦',
+                    category: '科技',
+                    description: '探索人工智能发展历程与未来展望。',
+                    cover: 'https://picsum.photos/id/3/200/300',
+                    playCount: 67000
+                },
+                {
+                    id: 4,
+                    title: '小王子',
+                    author: '安托万·德·圣-埃克苏佩里',
+                    category: '儿童',
+                    description: '温暖治愈的童话故事，适合全家收听。',
+                    cover: 'https://picsum.photos/id/4/200/300',
+                    playCount: 89000
+                },
+                {
+                    id: 5,
+                    title: '西游记',
+                    author: '吴承恩',
+                    category: '文学',
+                    description: '孙悟空师徒四人西天取经的传奇故事。',
+                    cover: 'https://picsum.photos/id/5/200/300',
+                    playCount: 156000
+                },
+                {
+                    id: 6,
+                    title: '史记',
+                    author: '司马迁',
+                    category: '历史',
+                    description: '中国第一部纪传体通史，记录了从黄帝到汉武帝的历史。',
+                    cover: 'https://picsum.photos/id/6/200/300',
+                    playCount: 45000
+                },
+                {
+                    id: 7,
+                    title: '量子物理学导论',
+                    author: '理查德·费曼',
+                    category: '科技',
+                    description: '深入浅出地讲解量子物理学基本原理。',
+                    cover: 'https://picsum.photos/id/7/200/300',
+                    playCount: 23000
+                },
+                {
+                    id: 8,
+                    title: '安徒生童话',
+                    author: '汉斯·克里斯蒂安·安徒生',
+                    category: '儿童',
+                    description: '经典童话故事集，启发孩子的想象力。',
+                    cover: 'https://picsum.photos/id/8/200/300',
+                    playCount: 78000
+                }
+            ];
+            
+            const filteredBooks = audioBooks.filter(book => {
+                const matchesSearch = book.title.includes(searchKeyword) || book.author.includes(searchKeyword);
+                const matchesCategory = selectedCategory === '全部' || book.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+            
+            const rankingBooks = [...audioBooks].sort((a, b) => b.playCount - a.playCount);
+            const rankingPages = [];
+            for (let i = 0; i < rankingBooks.length; i += 5) {
+                rankingPages.push(rankingBooks.slice(i, i + 5));
+            }
+            
+            const playAudio = (book) => {
+                setCurrentPlaying(book);
+                setIsPlaying(true);
+                setProgress(0);
+            };
+            
+            const togglePlayPause = () => {
+                setIsPlaying(!isPlaying);
+            };
+            
+            const previousChapter = () => {
+                if (currentPlaying) {
+                    const currentIndex = filteredBooks.findIndex(book => book.id === currentPlaying.id);
+                    if (currentIndex > 0) {
+                        playAudio(filteredBooks[currentIndex - 1]);
+                    }
+                }
+            };
+            
+            const nextChapter = () => {
+                if (currentPlaying) {
+                    const currentIndex = filteredBooks.findIndex(book => book.id === currentPlaying.id);
+                    if (currentIndex < filteredBooks.length - 1) {
+                        playAudio(filteredBooks[currentIndex + 1]);
+                    }
+                }
+            };
+            
+            const handleProgressClick = (e) => {
+                const rect = e.target.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const newProgress = (clickX / rect.width) * 100;
+                setProgress(newProgress);
+            };
+            
+            const submitComment = () => {
+                if (newComment.trim()) {
+                    const comment = {
+                        id: Date.now(),
+                        text: newComment,
+                        likes: 0,
+                        timestamp: new Date().toLocaleString()
+                    };
+                    setComments([comment, ...comments]);
+                    setNewComment('');
+                }
+            };
+            
+            const likeComment = (id) => {
+                setComments(comments.map(comment => 
+                    comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment
+                ));
+            };
+            
+            const subscribeEmail = () => {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(email)) {
+                    setSubscriptionMessage('订阅成功！感谢您的关注。');
+                    setEmail('');
+                    setTimeout(() => setSubscriptionMessage(''), 3000);
+                } else {
+                    setSubscriptionMessage('请输入有效的邮箱地址');
+                    setTimeout(() => setSubscriptionMessage(''), 3000);
+                }
+            };
+            
+            useEffect(() => {
+                let interval;
+                if (isPlaying && currentPlaying) {
+                    interval = setInterval(() => {
+                        setProgress(prev => (prev >= 100 ? 0 : prev + 0.1));
+                    }, 100);
+                }
+                return () => clearInterval(interval);
+            }, [isPlaying, currentPlaying]);
+            
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+                    <header className="relative bg-gradient-to-r from-purple-600 to-blue-600 text-white" style={{backgroundImage: 'url(https://picsum.photos/id/10/1200/400)', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="relative container mx-auto px-4 py-8">
+                            <div className="flex items-center justify-between mb-6">
+                                <h1 className="text-3xl font-bold flex items-center">
+                                    <i className="fas fa-headphones mr-3"></i>
+                                    听书阁
+                                </h1>
+                                <button 
+                                    className="md:hidden text-2xl"
+                                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                >
+                                    <i className="fas fa-bars"></i>
+                                </button>
+                                <nav className="hidden md:flex space-x-6">
+                                    <a href="#" className="hover:text-yellow-300 transition-colors">首页</a>
+                                    <a href="#" className="hover:text-yellow-300 transition-colors">分类</a>
+                                    <a href="#" className="hover:text-yellow-300 transition-colors">排行榜</a>
+                                    <a href="#" className="hover:text-yellow-300 transition-colors">我的收藏</a>
+                                </nav>
+                            </div>
+                            
+                            {mobileMenuOpen && (
+                                <div className="md:hidden bg-white text-gray-800 rounded-lg p-4 mb-4">
+                                    <nav className="space-y-2">
+                                        <a href="#" className="block py-2 px-4 hover:bg-gray-100 rounded transition-colors">首页</a>
+                                        <a href="#" className="block py-2 px-4 hover:bg-gray-100 rounded transition-colors">分类</a>
+                                        <a href="#" className="block py-2 px-4 hover:bg-gray-100 rounded transition-colors">排行榜</a>
+                                        <a href="#" className="block py-2 px-4 hover:bg-gray-100 rounded transition-colors">我的收藏</a>
+                                    </nav>
+                                </div>
+                            )}
+                            
+                            <div className="flex max-w-md mx-auto">
+                                <input
+                                    type="text"
+                                    placeholder="搜索书名或作者..."
+                                    className="flex-1 px-4 py-3 rounded-l-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                    value={searchKeyword}
+                                    onChange={(e) => setSearchKeyword(e.target.value)}
+                                />
+                                <button className="bg-yellow-500 hover:bg-yellow-600 px-6 py-3 rounded-r-lg font-semibold text-gray-800 transition-colors">
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid lg:grid-cols-4 gap-8">
+                            <div className="lg:col-span-3">
+                                <div className="mb-6">
+                                    <label className="block text-gray-700 font-semibold mb-2">
+                                        <i className="fas fa-filter mr-2"></i>
+                                        选择分类：
+                                    </label>
+                                    <select 
+                                        className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white shadow-sm"
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                    >
+                                        <option value="全部">全部分类</option>
+                                        <option value="文学">文学</option>
+                                        <option value="历史">历史</option>
+                                        <option value="科技">科技</option>
+                                        <option value="儿童">儿童</option>
+                                    </select>
+                                </div>
+                                
+                                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                    {filteredBooks.length === 0 ? (
+                                        <div className="col-span-2 text-center py-12">
+                                            <i className="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                                            <p className="text-gray-500">未找到相关有声读物，请尝试其他关键词或分类</p>
+                                        </div>
+                                    ) : (
+                                        filteredBooks.map(book => (
+                                            <div key={book.id} className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${currentPlaying?.id === book.id ? 'ring-4 ring-purple-400 shadow-purple-200' : ''}`}>
+                                                <div className="flex">
+                                                    <img src={book.cover} alt={book.title} className="w-24 h-32 object-cover" />
+                                                    <div className="flex-1 p-4">
+                                                        <h3 className="font-bold text-lg mb-1 text-gray-800">{book.title}</h3>
+                                                        <p className="text-gray-600 text-sm mb-2">
+                                                            <i className="fas fa-user mr-1"></i>
+                                                            {book.author}
+                                                        </p>
+                                                        <span className="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full mb-2">
+                                                            {book.category}
+                                                        </span>
+                                                        <p className="text-gray-700 text-sm mb-3 line-clamp-2">{book.description}</p>
+                                                        <div className="flex items-center justify-between">
+                                                            <span className="text-sm text-gray-500 flex items-center">
+                                                                <i className="fas fa-play-circle mr-1 text-purple-500"></i>
+                                                                {book.playCount.toLocaleString()}
+                                                            </span>
+                                                            <button 
+                                                                onClick={() => playAudio(book)}
+                                                                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+                                                            >
+                                                                <i className="fas fa-play mr-1"></i>
+                                                                播放
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                                
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800">
+                                        <i className="fas fa-comments mr-2 text-blue-500"></i>
+                                        用户评论 ({comments.length})
+                                    </h3>
+                                    
+                                    <div className="mb-6">
+                                        <textarea
+                                            placeholder="分享您的听书感受..."
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none shadow-sm"
+                                            rows="3"
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                        ></textarea>
+                                        <button 
+                                            onClick={submitComment}
+                                            className="mt-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+                                        >
+                                            <i className="fas fa-paper-plane mr-2"></i>
+                                            提交评论
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="space-y-4">
+                                        {comments.length === 0 ? (
+                                            <div className="text-center py-8">
+                                                <i className="fas fa-comment-dots text-4xl text-gray-400 mb-4"></i>
+                                                <p className="text-gray-500">暂无评论，快来发表第一条评论吧！</p>
+                                            </div>
+                                        ) : (
+                                            comments.map(comment => (
+                                                <div key={comment.id} className="border-b border-gray-200 pb-4 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+                                                    <p className="text-gray-800 mb-2">{comment.text}</p>
+                                                    <div className="flex items-center justify-between text-sm">
+                                                        <span className="text-gray-500 flex items-center">
+                                                            <i className="far fa-clock mr-1"></i>
+                                                            {comment.timestamp}
+                                                        </span>
+                                                        <button 
+                                                            onClick={() => likeComment(comment.id)}
+                                                            className="text-red-500 hover:text-red-600 transition-colors flex items-center space-x-1 hover:bg-red-50 px-2 py-1 rounded"
+                                                        >
+                                                            <i className="fas fa-heart"></i>
+                                                            <span>{comment.likes}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-bold mb-4 flex items-center text-gray-800">
+                                        <i className="fas fa-envelope mr-2 text-green-500"></i>
+                                        订阅更新
+                                    </h3>
+                                    <p className="text-gray-600 text-sm mb-4">订阅我们的邮件，获取最新有声读物推荐</p>
+                                    <input
+                                        type="email"
+                                        placeholder="输入您的邮箱"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 mb-3 shadow-sm"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    <button 
+                                        onClick={subscribeEmail}
+                                        className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+                                    >
+                                        <i className="fas fa-bell mr-2"></i>
+                                        订阅
+                                    </button>
+                                    {subscriptionMessage && (
+                                        <div className={`mt-3 p-3 rounded-lg text-sm ${subscriptionMessage.includes('成功') ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>
+                                            <i className={`fas ${subscriptionMessage.includes('成功') ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2`}></i>
+                                            {subscriptionMessage}
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-bold flex items-center text-gray-800">
+                                            <i className="fas fa-trophy mr-2 text-yellow-500"></i>
+                                            热门排行榜
+                                        </h3>
+                                        <div className="flex space-x-2">
+                                            <button 
+                                                onClick={() => setRankingPage(Math.max(0, rankingPage - 1))}
+                                                disabled={rankingPage === 0}
+                                                className="px-2 py-1 text-sm bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                            >
+                                                <i className="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button 
+                                                onClick={() => setRankingPage(Math.min(rankingPages.length - 1, rankingPage + 1))}
+                                                disabled={rankingPage === rankingPages.length - 1}
+                                                className="px-2 py-1 text-sm bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                            >
+                                                <i className="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="space-y-3">
+                                        {rankingPages[rankingPage]?.map((book, index) => (
+                                            <div key={book.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${index < 3 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600' : 'bg-gray-400'}`}>
+                                                    {rankingPage * 5 + index + 1}
+                                                </span>
+                                                <img src={book.cover} alt={book.title} className="w-12 h-16 object-cover rounded shadow-sm" />
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="font-semibold text-sm truncate text-gray-800">{book.title}</p>
+                                                    <p className="text-xs text-gray-500 flex items-center">
+                                                        <i className="fas fa-play-circle mr-1 text-purple-500"></i>
+                                                        {book.playCount.toLocaleString()} 播放
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {currentPlaying && (
+                        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-2xl border-t-2 border-purple-200">
+                            <div className="container mx-auto px-4 py-4">
+                                <div className="flex items-center space-x-4">
+                                    <img src={currentPlaying.cover} alt={currentPlaying.title} className="w-12 h-16 object-cover rounded shadow-md" />
+                                    
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="font-semibold truncate text-gray-800">{currentPlaying.title}</h4>
+                                        <p className="text-sm text-gray-600 truncate">
+                                            <i className="fas fa-user mr-1"></i>
+                                            {currentPlaying.author}
+                                        </p>
+                                        
+                                        <div className="mt-2">
+                                            <div 
+                                                className="w-full bg-gray-200 rounded-full h-2 cursor-pointer shadow-inner"
+                                                onClick={handleProgressClick}
+                                            >
+                                                <div 
+                                                    className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full transition-all shadow-sm"
+                                                    style={{ width: `${progress}%` }}
+                                                ></div>
+                                            </div>
+                                            <div className="flex justify-between text-xs text-gray-500 mt-1">
+                                                <span>{Math.floor(progress)}%</span>
+                                                <span>播放中</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-center space-x-3">
+                                        <button 
+                                            onClick={previousChapter}
+                                            className="text-gray-600 hover:text-purple-600 text-lg p-2 rounded-full hover:bg-purple-50 transition-all"
+                                        >
+                                            <i className="fas fa-step-backward"></i>
+                                        </button>
+                                        <button 
+                                            onClick={togglePlayPause}
+                                            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-lg hover:shadow-xl transition-all"
+                                        >
+                                            <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
+                                        </button>
+                                        <button 
+                                            onClick={nextChapter}
+                                            className="text-gray-600 hover:text-purple-600 text-lg p-2 rounded-full hover:bg-purple-50 transition-all"
+                                        >
+                                            <i className="fas fa-step-forward"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <select 
+                                        className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white shadow-sm"
+                                        value={playbackSpeed}
+                                        onChange={(e) => setPlaybackSpeed(parseFloat(e.target.value))}
+                                    >
+                                        <option value={0.5}>0.5x</option>
+                                        <option value={1}>1x</option>
+                                        <option value={1.5}>1.5x</option>
+                                        <option value={2}>2x</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        ReactDOM.render(<AudioBookApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

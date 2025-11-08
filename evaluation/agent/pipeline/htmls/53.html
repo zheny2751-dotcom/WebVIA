@@ -1,0 +1,353 @@
+<html>
+<head>
+  <title>快捷扫码</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [selectedScene, setSelectedScene] = useState('支付扫码');
+      const [userInfo, setUserInfo] = useState({
+        authCode: '',
+        username: '',
+        phone: '',
+        email: ''
+      });
+      const [validationErrors, setValidationErrors] = useState({});
+      const [qrCode, setQrCode] = useState('');
+      const [scanRecords, setScanRecords] = useState([
+        { scene: '支付扫码', time: '2024-01-15 14:30', username: 'user123' },
+        { scene: '登录扫码', time: '2024-01-15 12:15', username: 'admin' },
+        { scene: '信息扫码', time: '2024-01-15 10:45', username: 'guest' },
+        { scene: '支付扫码', time: '2024-01-14 16:20', username: 'user456' },
+        { scene: '登录扫码', time: '2024-01-14 09:30', username: 'test' }
+      ]);
+      const [showHelp, setShowHelp] = useState(false);
+      const [feedback, setFeedback] = useState('');
+      const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+      const [buttonClicked, setButtonClicked] = useState(false);
+
+      const sceneSubtitles = {
+        '支付扫码': '快速安全的移动支付体验',
+        '登录扫码': '便捷的免密登录方式',
+        '信息扫码': '高效的信息传输工具'
+      };
+
+      const validateField = (field, value) => {
+        const errors = { ...validationErrors };
+        
+        switch (field) {
+          case 'authCode':
+            if (value.length < 6) {
+              errors[field] = '授权码至少6位';
+            } else {
+              delete errors[field];
+            }
+            break;
+          case 'username':
+            if (value.length < 2) {
+              errors[field] = '用户名至少2个字符';
+            } else {
+              delete errors[field];
+            }
+            break;
+          case 'phone':
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            if (!phoneRegex.test(value)) {
+              errors[field] = '请输入正确的手机号';
+            } else {
+              delete errors[field];
+            }
+            break;
+          case 'email':
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+              errors[field] = '请输入正确的邮箱';
+            } else {
+              delete errors[field];
+            }
+            break;
+        }
+        
+        setValidationErrors(errors);
+      };
+
+      const handleInputChange = (field, value) => {
+        setUserInfo({ ...userInfo, [field]: value });
+      };
+
+      const handleInputBlur = (field, value) => {
+        if (value.trim()) {
+          validateField(field, value);
+        }
+      };
+
+      const generateQRCode = () => {
+        setButtonClicked(true);
+        setTimeout(() => setButtonClicked(false), 200);
+        
+        const qrData = `Scene: ${selectedScene}, User: ${userInfo.username}, Auth: ${userInfo.authCode}`;
+        setQrCode('https://picsum.photos/id/1/200/200');
+        
+        const newRecord = {
+          scene: selectedScene,
+          time: new Date().toLocaleString('zh-CN'),
+          username: userInfo.username || '匿名用户'
+        };
+        setScanRecords([newRecord, ...scanRecords.slice(0, 4)]);
+      };
+
+      const clearRecords = () => {
+        setScanRecords([]);
+      };
+
+      const submitFeedback = () => {
+        if (feedback.trim()) {
+          setFeedbackSubmitted(true);
+          setFeedback('');
+          setTimeout(() => setFeedbackSubmitted(false), 3000);
+        }
+      };
+
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div className="relative h-64 bg-gradient-to-r from-blue-600 to-indigo-600 overflow-hidden">
+            <img 
+              src="https://picsum.photos/id/2/1200/300" 
+              alt="背景" 
+              className="absolute inset-0 w-full h-full object-cover opacity-20"
+            />
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
+              <h1 className="text-5xl font-bold mb-4">快捷扫码</h1>
+              <p className="text-xl opacity-90">{sceneSubtitles[selectedScene]}</p>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 py-8 max-w-6xl">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-8">
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i className="fas fa-list-alt text-blue-600 mr-3"></i>
+                    场景选择
+                  </h2>
+                  <select 
+                    value={selectedScene}
+                    onChange={(e) => setSelectedScene(e.target.value)}
+                    className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 text-lg"
+                  >
+                    <option value="支付扫码">支付扫码</option>
+                    <option value="登录扫码">登录扫码</option>
+                    <option value="信息扫码">信息扫码</option>
+                  </select>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i className="fas fa-user-edit text-green-600 mr-3"></i>
+                    用户信息
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { field: 'authCode', label: '授权码', icon: 'fas fa-key', type: 'text' },
+                      { field: 'username', label: '用户名', icon: 'fas fa-user', type: 'text' },
+                      { field: 'phone', label: '手机号', icon: 'fas fa-phone', type: 'tel' },
+                      { field: 'email', label: '邮箱', icon: 'fas fa-envelope', type: 'email' }
+                    ].map(({ field, label, icon, type }) => (
+                      <div key={field} className="relative">
+                        <div className="relative">
+                          <i className={`${icon} absolute left-3 top-3 text-gray-400`}></i>
+                          <input
+                            type={type}
+                            placeholder={label}
+                            value={userInfo[field]}
+                            onChange={(e) => handleInputChange(field, e.target.value)}
+                            onBlur={(e) => handleInputBlur(field, e.target.value)}
+                            className={`w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:ring focus:ring-blue-200 transition-all duration-200 ${
+                              validationErrors[field] 
+                                ? 'border-red-500 focus:border-red-500' 
+                                : 'border-gray-200 focus:border-blue-500'
+                            }`}
+                          />
+                        </div>
+                        {validationErrors[field] && (
+                          <p className="text-red-500 text-sm mt-1">{validationErrors[field]}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i className="fas fa-qrcode text-purple-600 mr-3"></i>
+                    二维码生成
+                  </h2>
+                  <div className="text-center">
+                    <button
+                      onClick={generateQRCode}
+                      className={`bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95 ${
+                        buttonClicked ? 'scale-95 shadow-inner' : ''
+                      }`}
+                    >
+                      <i className="fas fa-magic mr-2"></i>
+                      生成二维码
+                    </button>
+                    
+                    {qrCode && (
+                      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <img src={qrCode} alt="二维码" className="mx-auto rounded-lg shadow-md" />
+                        <p className="text-gray-600 mt-2">扫描上方二维码</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i className="fas fa-history text-orange-600 mr-3"></i>
+                    扫码记录
+                  </h2>
+                  <div className="space-y-3">
+                    {scanRecords.length > 0 ? (
+                      scanRecords.map((record, index) => (
+                        <div key={index} className="bg-gray-50 p-3 rounded-lg border-l-4 border-blue-500">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-medium text-gray-800">{record.scene}</p>
+                              <p className="text-sm text-gray-600">{record.username}</p>
+                            </div>
+                            <span className="text-xs text-gray-500">{record.time}</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8 text-gray-500">
+                        <i className="fas fa-inbox text-4xl mb-2"></i>
+                        <p>暂无记录</p>
+                      </div>
+                    )}
+                  </div>
+                  {scanRecords.length > 0 && (
+                    <button
+                      onClick={clearRecords}
+                      className="w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors duration-200"
+                    >
+                      <i className="fas fa-trash mr-2"></i>
+                      清空记录
+                    </button>
+                  )}
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i className="fas fa-question-circle text-teal-600 mr-3"></i>
+                    帮助与反馈
+                  </h2>
+                  
+                  <button
+                    onClick={() => setShowHelp(true)}
+                    className="w-full bg-teal-500 text-white py-3 rounded-lg mb-4 hover:bg-teal-600 transition-colors duration-200"
+                  >
+                    <i className="fas fa-info-circle mr-2"></i>
+                    查看帮助
+                  </button>
+
+                  <div className="space-y-3">
+                    <textarea
+                      placeholder="请输入您的反馈意见..."
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 resize-none"
+                      rows="3"
+                    />
+                    <button
+                      onClick={submitFeedback}
+                      className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                    >
+                      <i className="fas fa-paper-plane mr-2"></i>
+                      提交反馈
+                    </button>
+                  </div>
+
+                  {feedbackSubmitted && (
+                    <div className="mt-3 p-3 bg-green-100 border border-green-300 rounded-lg text-green-700">
+                      <i className="fas fa-check-circle mr-2"></i>
+                      反馈已提交
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer className="bg-gray-800 text-white py-8">
+            <div className="container mx-auto px-4 flex justify-between items-center">
+              <p>&copy; 2024 快捷扫码. 保留所有权利.</p>
+              <button
+                onClick={scrollToTop}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              >
+                <i className="fas fa-arrow-up mr-2"></i>
+                回到顶部
+              </button>
+            </div>
+          </footer>
+
+          {showHelp && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-xl p-6 max-w-md w-full max-h-96 overflow-y-auto">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold">使用帮助</h3>
+                  <button
+                    onClick={() => setShowHelp(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+                <div className="space-y-4 text-gray-700">
+                  <div>
+                    <h4 className="font-medium mb-2">1. 选择场景</h4>
+                    <p className="text-sm">根据您的需求选择相应的扫码场景</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">2. 填写信息</h4>
+                    <p className="text-sm">输入必要的用户信息，系统会自动验证格式</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">3. 生成二维码</h4>
+                    <p className="text-sm">点击按钮生成专属二维码，可供他人扫描</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">4. 查看记录</h4>
+                    <p className="text-sm">在右侧查看最近的扫码记录</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

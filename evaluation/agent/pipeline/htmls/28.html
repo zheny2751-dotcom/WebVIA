@@ -1,0 +1,404 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册福利大放送</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [formData, setFormData] = useState({
+                name: '',
+                contact: '',
+                memberLevel: 'normal',
+                inviteCode: ''
+            });
+            const [codeStatus, setCodeStatus] = useState('');
+            const [drawHistory, setDrawHistory] = useState([]);
+            const [checkInDays, setCheckInDays] = useState(0);
+            const [todayChecked, setTodayChecked] = useState(false);
+            const [faqOpen, setFaqOpen] = useState({});
+            const [showSummary, setShowSummary] = useState(false);
+            const [isDrawing, setIsDrawing] = useState(false);
+
+            const memberBenefits = {
+                normal: ['新人礼包', '生日优惠', '积分奖励'],
+                silver: ['新人礼包', '生日优惠', '积分奖励', '银卡专享折扣', '优先客服'],
+                gold: ['新人礼包', '生日优惠', '积分奖励', '银卡专享折扣', '优先客服', '金卡尊享服务', '专属活动邀请', '免费配送']
+            };
+
+            const prizes = ['10元现金券', '20%折扣券', '5积分', '免费配送券', '专属客服', '谢谢参与'];
+
+            const faqData = [
+                { q: '如何成为会员？', a: '填写注册表单，选择会员等级，提交即可成为会员。' },
+                { q: '推荐码从哪里获得？', a: '可从现有会员朋友处获得，或关注官方社媒获取。' },
+                { q: '签到有什么奖励？', a: '连续签到可获得积分奖励，7天、30天有特殊奖励。' },
+                { q: '抽奖次数有限制吗？', a: '每日可抽奖3次，会员等级越高次数越多。' }
+            ];
+
+            const handleInputChange = (field, value) => {
+                setFormData(prev => ({ ...prev, [field]: value }));
+            };
+
+            const verifyInviteCode = () => {
+                if (!formData.inviteCode) {
+                    setCodeStatus('请输入邀请码');
+                    return;
+                }
+                
+                const validCodes = ['WELCOME2024', 'FRIEND123', 'NEWBIE888'];
+                if (validCodes.includes(formData.inviteCode.toUpperCase())) {
+                    setCodeStatus('邀请码有效！获得额外10积分');
+                } else {
+                    setCodeStatus('邀请码无效，请检查后重试');
+                }
+            };
+
+            const handleDraw = () => {
+                if (isDrawing) return;
+                
+                setIsDrawing(true);
+                setTimeout(() => {
+                    const prize = prizes[Math.floor(Math.random() * prizes.length)];
+                    const newRecord = {
+                        id: Date.now(),
+                        prize,
+                        time: new Date().toLocaleTimeString()
+                    };
+                    setDrawHistory(prev => [newRecord, ...prev.slice(0, 4)]);
+                    setIsDrawing(false);
+                }, 2000);
+            };
+
+            const handleCheckIn = () => {
+                if (todayChecked) return;
+                
+                setTodayChecked(true);
+                setCheckInDays(prev => prev + 1);
+            };
+
+            const toggleFAQ = (index) => {
+                setFaqOpen(prev => ({ ...prev, [index]: !prev[index] }));
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50">
+                    <header className="bg-gradient-to-r from-blue-600 to-teal-600 text-white py-16 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                            <img src="https://picsum.photos/id/1/1200/400" alt="背景" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="container mx-auto px-4 relative z-10">
+                            <div className="text-center">
+                                <h1 className="text-5xl font-bold mb-4">注册福利大放送</h1>
+                                <p className="text-xl mb-2">立即注册，享受多重专属福利</p>
+                                <p className="text-lg opacity-90">新人礼包、积分奖励、专享折扣，一站式会员体验</p>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2 space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-user-plus text-blue-600 mr-3"></i>
+                                        注册信息
+                                    </h2>
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">姓名</label>
+                                            <input
+                                                type="text"
+                                                value={formData.name}
+                                                onChange={(e) => handleInputChange('name', e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                placeholder="请输入您的姓名"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">手机号/邮箱</label>
+                                            <input
+                                                type="text"
+                                                value={formData.contact}
+                                                onChange={(e) => handleInputChange('contact', e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                placeholder="请输入手机号或邮箱"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">会员等级</label>
+                                            <select
+                                                value={formData.memberLevel}
+                                                onChange={(e) => handleInputChange('memberLevel', e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                                <option value="normal">普通会员</option>
+                                                <option value="silver">银卡会员</option>
+                                                <option value="gold">金卡会员</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">推荐码</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    value={formData.inviteCode}
+                                                    onChange={(e) => handleInputChange('inviteCode', e.target.value)}
+                                                    className="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                    placeholder="输入推荐码"
+                                                />
+                                                <button
+                                                    onClick={verifyInviteCode}
+                                                    className="px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors"
+                                                >
+                                                    验证
+                                                </button>
+                                            </div>
+                                            {codeStatus && (
+                                                <p className={`mt-2 text-sm ${codeStatus.includes('有效') ? 'text-green-600' : 'text-red-600'}`}>
+                                                    {codeStatus}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-gift text-teal-600 mr-3"></i>
+                                        会员福利预览
+                                    </h2>
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {memberBenefits[formData.memberLevel].map((benefit, index) => (
+                                            <div key={index} className="bg-gradient-to-r from-teal-50 to-blue-50 p-4 rounded-lg border border-teal-200">
+                                                <div className="flex items-center">
+                                                    <i className="fas fa-check-circle text-teal-600 mr-2"></i>
+                                                    <span className="text-gray-800 font-medium">{benefit}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-dice text-purple-600 mr-3"></i>
+                                        幸运抽奖
+                                    </h2>
+                                    <div className="text-center mb-6">
+                                        <div className={`w-32 h-32 mx-auto rounded-full border-8 border-purple-200 flex items-center justify-center mb-4 ${isDrawing ? 'animate-spin border-purple-600' : ''}`}>
+                                            <i className={`fas fa-gift text-4xl ${isDrawing ? 'text-purple-600' : 'text-purple-400'}`}></i>
+                                        </div>
+                                        <button
+                                            onClick={handleDraw}
+                                            disabled={isDrawing}
+                                            className={`px-8 py-3 rounded-full text-white font-bold transition-all ${
+                                                isDrawing 
+                                                    ? 'bg-gray-400 cursor-not-allowed' 
+                                                    : 'bg-purple-600 hover:bg-purple-700 hover:scale-105'
+                                            }`}
+                                        >
+                                            {isDrawing ? '抽奖中...' : '立即抽奖'}
+                                        </button>
+                                    </div>
+                                    
+                                    {drawHistory.length > 0 && (
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-700 mb-3">抽奖记录</h3>
+                                            <div className="space-y-2">
+                                                {drawHistory.map((record) => (
+                                                    <div key={record.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                                                        <span className="font-medium text-gray-800">{record.prize}</span>
+                                                        <span className="text-sm text-gray-500">{record.time}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-calendar-check text-orange-600 mr-3"></i>
+                                        每日签到
+                                    </h2>
+                                    <div className="text-center">
+                                        <div className="mb-4">
+                                            <div className="text-3xl font-bold text-orange-600 mb-2">{checkInDays}</div>
+                                            <div className="text-gray-600">累计签到天数</div>
+                                        </div>
+                                        <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+                                            <div 
+                                                className="bg-orange-600 h-4 rounded-full transition-all duration-500"
+                                                style={{ width: `${Math.min((checkInDays / 30) * 100, 100)}%` }}
+                                            ></div>
+                                        </div>
+                                        <button
+                                            onClick={handleCheckIn}
+                                            disabled={todayChecked}
+                                            className={`px-6 py-3 rounded-full font-bold transition-all ${
+                                                todayChecked
+                                                    ? 'bg-gray-400 text-white cursor-not-allowed'
+                                                    : 'bg-orange-600 text-white hover:bg-orange-700'
+                                            }`}
+                                        >
+                                            {todayChecked ? '今日已签到' : '今日签到'}
+                                        </button>
+                                        {checkInDays > 0 && (
+                                            <div className="mt-4 text-sm text-gray-600">
+                                                {checkInDays >= 30 ? '恭喜！获得月度奖励' : 
+                                                 checkInDays >= 7 ? '连续签到7天，获得特别奖励！' : 
+                                                 `再签到${7 - (checkInDays % 7)}天可获得奖励`}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-question-circle text-indigo-600 mr-3"></i>
+                                        常见问题
+                                    </h2>
+                                    <div className="space-y-3">
+                                        {faqData.map((faq, index) => (
+                                            <div key={index} className="border border-gray-200 rounded-lg">
+                                                <button
+                                                    onClick={() => toggleFAQ(index)}
+                                                    className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <span className="font-medium text-gray-800">{faq.q}</span>
+                                                    <i className={`fas fa-chevron-${faqOpen[index] ? 'up' : 'down'} text-gray-500`}></i>
+                                                </button>
+                                                {faqOpen[index] && (
+                                                    <div className="px-4 pb-3 text-gray-600 border-t border-gray-200">
+                                                        {faq.a}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                        <i className="fas fa-headset text-green-600 mr-3"></i>
+                                        联系我们
+                                    </h2>
+                                    <div className="space-y-4">
+                                        <div className="flex items-center">
+                                            <i className="fas fa-envelope text-green-600 mr-3"></i>
+                                            <span>service@example.com</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <i className="fas fa-phone text-green-600 mr-3"></i>
+                                            <span>400-123-4567</span>
+                                        </div>
+                                        <div className="flex space-x-4 pt-2">
+                                            <a href="#" className="text-blue-600 hover:text-blue-800">
+                                                <i className="fab fa-weixin text-2xl"></i>
+                                            </a>
+                                            <a href="#" className="text-blue-600 hover:text-blue-800">
+                                                <i className="fab fa-weibo text-2xl"></i>
+                                            </a>
+                                            <a href="#" className="text-blue-600 hover:text-blue-800">
+                                                <i className="fab fa-qq text-2xl"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 text-center">
+                            <button
+                                onClick={() => setShowSummary(true)}
+                                className="px-12 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white font-bold text-lg rounded-full hover:from-blue-700 hover:to-teal-700 transition-all hover:scale-105 shadow-lg"
+                            >
+                                领取全部福利
+                            </button>
+                        </div>
+                    </div>
+
+                    {showSummary && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-96 overflow-y-auto">
+                                <div className="p-6">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h2 className="text-2xl font-bold text-gray-800">福利汇总</h2>
+                                        <button
+                                            onClick={() => setShowSummary(false)}
+                                            className="text-gray-400 hover:text-gray-600 text-2xl"
+                                        >
+                                            <i className="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="space-y-6">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-700 mb-3">已领取福利</h3>
+                                            <div className="space-y-2">
+                                                {drawHistory.map((record) => (
+                                                    <div key={record.id} className="flex justify-between items-center bg-green-50 p-3 rounded-lg">
+                                                        <span className="text-gray-800">{record.prize}</span>
+                                                        <a href="#" className="text-green-600 hover:text-green-800 font-medium">去使用</a>
+                                                    </div>
+                                                ))}
+                                                {todayChecked && (
+                                                    <div className="flex justify-between items-center bg-green-50 p-3 rounded-lg">
+                                                        <span className="text-gray-800">签到奖励：5积分</span>
+                                                        <a href="#" className="text-green-600 hover:text-green-800 font-medium">去使用</a>
+                                                    </div>
+                                                )}
+                                                {codeStatus.includes('有效') && (
+                                                    <div className="flex justify-between items-center bg-green-50 p-3 rounded-lg">
+                                                        <span className="text-gray-800">邀请码奖励：10积分</span>
+                                                        <a href="#" className="text-green-600 hover:text-green-800 font-medium">去使用</a>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-700 mb-3">待领取福利</h3>
+                                            <div className="space-y-2">
+                                                {memberBenefits[formData.memberLevel].map((benefit, index) => (
+                                                    <div key={index} className="flex justify-between items-center bg-blue-50 p-3 rounded-lg">
+                                                        <span className="text-gray-800">{benefit}</span>
+                                                        <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">去领取</a>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-6 pt-4 border-t border-gray-200">
+                                        <button
+                                            onClick={() => setShowSummary(false)}
+                                            className="w-full px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                                        >
+                                            关闭
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户指南</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function UserGuideApp() {
+            const [activeSection, setActiveSection] = useState('quick-start');
+            const [sidebarOpen, setSidebarOpen] = useState(true);
+            const [darkMode, setDarkMode] = useState(false);
+            const [expandedSteps, setExpandedSteps] = useState({});
+            const [selectedLanguages, setSelectedLanguages] = useState({});
+            const [expandedFAQs, setExpandedFAQs] = useState({});
+            const [feedbackType, setFeedbackType] = useState('');
+            const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+            const [searchTerm, setSearchTerm] = useState('');
+            const [emailSubscribed, setEmailSubscribed] = useState(false);
+            const [subscriptionEmail, setSubscriptionEmail] = useState('');
+            const [feedbackData, setFeedbackData] = useState({
+                type: '',
+                title: '',
+                description: '',
+                email: '',
+                priority: 'medium'
+            });
+
+            const menuItems = [
+                { id: 'quick-start', name: '快速入门', icon: 'fas fa-play-circle' },
+                { id: 'features', name: '功能介绍', icon: 'fas fa-cogs' },
+                { id: 'faq', name: '常见问题', icon: 'fas fa-question-circle' },
+                { id: 'feedback', name: '用户反馈', icon: 'fas fa-comment-dots' },
+                { id: 'contact', name: '联系我们', icon: 'fas fa-phone' }
+            ];
+
+            const quickStartSteps = [
+                {
+                    id: 1,
+                    title: '注册账户',
+                    summary: '创建您的个人账户',
+                    detail: '访问注册页面，填写必要信息包括用户名、邮箱和密码。验证邮箱后即可开始使用所有功能。',
+                    image: 'https://picsum.photos/id/1/300/200'
+                },
+                {
+                    id: 2,
+                    title: '完善资料',
+                    summary: '补充个人信息',
+                    detail: '登录后前往个人设置页面，上传头像、填写个人简介、设置偏好选项，让您的体验更加个性化。',
+                    image: 'https://picsum.photos/id/2/300/200'
+                },
+                {
+                    id: 3,
+                    title: '探索功能',
+                    summary: '熟悉核心功能',
+                    detail: '浏览主要功能模块，包括数据管理、分析工具、协作功能等。建议从基础功能开始逐步深入。',
+                    image: 'https://picsum.photos/id/3/300/200'
+                },
+                {
+                    id: 4,
+                    title: '开始使用',
+                    summary: '创建第一个项目',
+                    detail: '点击"新建项目"按钮，选择合适的模板，输入项目信息，开始您的第一个项目之旅。',
+                    image: 'https://picsum.photos/id/4/300/200'
+                }
+            ];
+
+            const features = [
+                {
+                    id: 1,
+                    name: '数据管理',
+                    descriptions: {
+                        'zh': '强大的数据管理功能，支持数据导入导出、实时同步、版本控制等特性。',
+                        'en': 'Powerful data management capabilities with import/export, real-time sync, and version control features.'
+                    },
+                    image: 'https://picsum.photos/id/5/250/150'
+                },
+                {
+                    id: 2,
+                    name: '可视化分析',
+                    descriptions: {
+                        'zh': '丰富的图表类型和自定义仪表板，让数据分析变得简单直观。',
+                        'en': 'Rich chart types and customizable dashboards make data analysis simple and intuitive.'
+                    },
+                    image: 'https://picsum.photos/id/6/250/150'
+                },
+                {
+                    id: 3,
+                    name: '团队协作',
+                    descriptions: {
+                        'zh': '支持多人协作编辑、评论、权限管理，提升团队工作效率。',
+                        'en': 'Support for multi-user collaboration, comments, and permission management to improve team efficiency.'
+                    },
+                    image: 'https://picsum.photos/id/7/250/150'
+                },
+                {
+                    id: 4,
+                    name: '智能推荐',
+                    descriptions: {
+                        'zh': '基于AI算法的智能推荐系统，为您提供个性化的内容和建议。',
+                        'en': 'AI-powered recommendation system providing personalized content and suggestions.'
+                    },
+                    image: 'https://picsum.photos/id/8/250/150'
+                }
+            ];
+
+            const faqs = [
+                {
+                    id: 1,
+                    question: '如何重置密码？',
+                    answer: '在登录页面点击"忘记密码"链接，输入注册邮箱，系统会发送重置密码的邮件到您的邮箱。按照邮件中的指引完成密码重置。'
+                },
+                {
+                    id: 2,
+                    question: '支持哪些文件格式？',
+                    answer: '我们支持多种常见文件格式：Excel (.xlsx, .xls)、CSV、JSON、XML、PDF等。最大单文件大小限制为50MB。'
+                },
+                {
+                    id: 3,
+                    question: '如何邀请团队成员？',
+                    answer: '在项目设置中点击"邀请成员"，输入邀请人的邮箱地址，选择相应的权限级别，点击发送邀请即可。'
+                },
+                {
+                    id: 4,
+                    question: '数据安全如何保障？',
+                    answer: '我们采用端到端加密技术，定期备份数据，并符合GDPR等隐私保护法规。您的数据安全是我们的首要任务。'
+                },
+                {
+                    id: 5,
+                    question: '是否有API接口？',
+                    answer: '是的，我们提供完整的RESTful API接口，支持数据读写、用户管理等操作。API文档可在开发者中心查看。'
+                }
+            ];
+
+            const contactMethods = [
+                {
+                    id: 1,
+                    type: '在线客服',
+                    detail: '工作日 9:00-18:00',
+                    contact: 'chat@userguide.com',
+                    keywords: ['客服', '在线', 'chat', '聊天']
+                },
+                {
+                    id: 2,
+                    type: '技术支持',
+                    detail: '7x24小时支持',
+                    contact: 'support@userguide.com',
+                    keywords: ['技术', '支持', 'support', 'tech']
+                },
+                {
+                    id: 3,
+                    type: '商务合作',
+                    detail: '合作咨询专线',
+                    contact: 'business@userguide.com',
+                    keywords: ['商务', '合作', 'business', '销售']
+                },
+                {
+                    id: 4,
+                    type: '官方电话',
+                    detail: '400-123-4567',
+                    contact: '服务时间：工作日 9:00-18:00',
+                    keywords: ['电话', 'phone', '400', '热线']
+                }
+            ];
+
+            useEffect(() => {
+                if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }, [darkMode]);
+
+            const toggleStep = (stepId) => {
+                setExpandedSteps(prev => ({
+                    ...prev,
+                    [stepId]: !prev[stepId]
+                }));
+            };
+
+            const changeLanguage = (featureId, language) => {
+                setSelectedLanguages(prev => ({
+                    ...prev,
+                    [featureId]: language
+                }));
+            };
+
+            const toggleFAQ = (faqId) => {
+                setExpandedFAQs(prev => ({
+                    ...prev,
+                    [faqId]: !prev[faqId]
+                }));
+            };
+
+            const handleFeedbackSubmit = () => {
+                if (feedbackData.type && feedbackData.description) {
+                    setFeedbackSubmitted(true);
+                    setTimeout(() => {
+                        setFeedbackSubmitted(false);
+                        setFeedbackData({
+                            type: '',
+                            title: '',
+                            description: '',
+                            email: '',
+                            priority: 'medium'
+                        });
+                        setFeedbackType('');
+                    }, 3000);
+                }
+            };
+
+            const handleEmailSubscription = () => {
+                if (subscriptionEmail && subscriptionEmail.includes('@')) {
+                    setEmailSubscribed(true);
+                    setTimeout(() => {
+                        setEmailSubscribed(false);
+                        setSubscriptionEmail('');
+                    }, 3000);
+                }
+            };
+
+            const filteredContacts = contactMethods.filter(contact =>
+                contact.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                contact.detail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                contact.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                contact.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+
+            const renderQuickStart = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">快速入门指南</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {quickStartSteps.map(step => (
+                            <div key={step.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+                                <img src={step.image} alt={step.title} className="w-full h-48 object-cover" />
+                                <div className="p-6">
+                                    <div className="flex items-center mb-3">
+                                        <span className="bg-primary-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
+                                            {step.id}
+                                        </span>
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{step.title}</h3>
+                                    </div>
+                                    <p className="text-gray-600 dark:text-gray-300 mb-4">{step.summary}</p>
+                                    <button
+                                        onClick={() => toggleStep(step.id)}
+                                        className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+                                    >
+                                        {expandedSteps[step.id] ? '收起详情' : '显示详情'}
+                                    </button>
+                                    {expandedSteps[step.id] && (
+                                        <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-md transition-all duration-300">
+                                            <p className="text-gray-700 dark:text-gray-300">{step.detail}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderFeatures = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">功能介绍</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {features.map(feature => (
+                            <div key={feature.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                                <img src={feature.image} alt={feature.name} className="w-full h-40 object-cover" />
+                                <div className="p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">{feature.name}</h3>
+                                    <div className="mb-4">
+                                        <select
+                                            value={selectedLanguages[feature.id] || 'zh'}
+                                            onChange={(e) => changeLanguage(feature.id, e.target.value)}
+                                            className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+                                        >
+                                            <option value="zh">中文</option>
+                                            <option value="en">English</option>
+                                        </select>
+                                    </div>
+                                    <p className="text-gray-600 dark:text-gray-300">
+                                        {feature.descriptions[selectedLanguages[feature.id] || 'zh']}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderFAQ = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">常见问题</h2>
+                    <div className="space-y-4">
+                        {faqs.map(faq => (
+                            <div key={faq.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                                <div className="p-6">
+                                    <div className="flex justify-between items-center">
+                                        <h3 className="text-lg font-medium text-gray-800 dark:text-white">{faq.question}</h3>
+                                        <button
+                                            onClick={() => toggleFAQ(faq.id)}
+                                            className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+                                        >
+                                            {expandedFAQs[faq.id] ? '隐藏答案' : '查看答案'}
+                                        </button>
+                                    </div>
+                                    {expandedFAQs[faq.id] && (
+                                        <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-md transition-all duration-300">
+                                            <p className="text-gray-700 dark:text-gray-300">{faq.answer}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderFeedback = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">用户反馈</h2>
+                    {feedbackSubmitted ? (
+                        <div className="bg-green-100 dark:bg-green-900 border border-green-400 text-green-700 dark:text-green-300 px-4 py-3 rounded-md">
+                            <i className="fas fa-check-circle mr-2"></i>
+                            反馈提交成功！我们会尽快处理您的反馈。
+                        </div>
+                    ) : (
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">反馈类型</label>
+                                    <select
+                                        value={feedbackData.type}
+                                        onChange={(e) => {
+                                            setFeedbackData(prev => ({ ...prev, type: e.target.value }));
+                                            setFeedbackType(e.target.value);
+                                        }}
+                                        className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                                    >
+                                        <option value="">请选择反馈类型</option>
+                                        <option value="bug">Bug报告</option>
+                                        <option value="feature">功能建议</option>
+                                        <option value="improvement">改进建议</option>
+                                        <option value="other">其他</option>
+                                    </select>
+                                </div>
+
+                                {feedbackData.type === 'bug' && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bug严重程度</label>
+                                        <select
+                                            value={feedbackData.priority}
+                                            onChange={(e) => setFeedbackData(prev => ({ ...prev, priority: e.target.value }))}
+                                            className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                                        >
+                                            <option value="low">低</option>
+                                            <option value="medium">中</option>
+                                            <option value="high">高</option>
+                                            <option value="critical">紧急</option>
+                                        </select>
+                                    </div>
+                                )}
+
+                                {feedbackData.type && (
+                                    <>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">标题</label>
+                                            <input
+                                                type="text"
+                                                value={feedbackData.title}
+                                                onChange={(e) => setFeedbackData(prev => ({ ...prev, title: e.target.value }))}
+                                                placeholder="请输入反馈标题"
+                                                className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">详细描述</label>
+                                            <textarea
+                                                value={feedbackData.description}
+                                                onChange={(e) => setFeedbackData(prev => ({ ...prev, description: e.target.value }))}
+                                                placeholder="请详细描述您的反馈..."
+                                                rows="4"
+                                                className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">邮箱（可选）</label>
+                                            <input
+                                                type="email"
+                                                value={feedbackData.email}
+                                                onChange={(e) => setFeedbackData(prev => ({ ...prev, email: e.target.value }))}
+                                                placeholder="your@email.com"
+                                                className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={handleFeedbackSubmit}
+                                            className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+                                        >
+                                            提交反馈
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderContact = () => (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">联系我们</h2>
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <div className="flex space-x-4 mb-6">
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="搜索联系方式..."
+                                className="flex-1 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2"
+                            />
+                            <button
+                                onClick={() => {}}
+                                className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
+                            >
+                                <i className="fas fa-search mr-2"></i>搜索
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {filteredContacts.map(contact => (
+                                <div
+                                    key={contact.id}
+                                    className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                                        searchTerm && filteredContacts.length < contactMethods.length
+                                            ? 'border-yellow-400 bg-yellow-50 dark:bg-yellow-900'
+                                            : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
+                                    }`}
+                                >
+                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{contact.type}</h3>
+                                    <p className="text-gray-600 dark:text-gray-300 mb-1">{contact.detail}</p>
+                                    <p className="text-primary-600 dark:text-primary-400 font-medium">{contact.contact}</p>
+                                </div>
+                            ))}
+                        </div>
+                        {filteredContacts.length === 0 && searchTerm && (
+                            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                                <i className="fas fa-search-minus text-4xl mb-4"></i>
+                                <p>未找到匹配的联系方式</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+
+            const renderContent = () => {
+                switch (activeSection) {
+                    case 'quick-start':
+                        return renderQuickStart();
+                    case 'features':
+                        return renderFeatures();
+                    case 'faq':
+                        return renderFAQ();
+                    case 'feedback':
+                        return renderFeedback();
+                    case 'contact':
+                        return renderContact();
+                    default:
+                        return renderQuickStart();
+                }
+            };
+
+            return (
+                <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300`}>
+                    <header className="bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center py-4">
+                                <div className="flex items-center space-x-4">
+                                    <button
+                                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                                        className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                                    >
+                                        <i className="fas fa-bars text-xl"></i>
+                                    </button>
+                                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                        <i className="fas fa-book-open mr-2 text-primary-500"></i>
+                                        用户指南
+                                    </h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="email"
+                                            value={subscriptionEmail}
+                                            onChange={(e) => setSubscriptionEmail(e.target.value)}
+                                            placeholder="订阅邮件通知"
+                                            className="hidden sm:block bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+                                        />
+                                        <button
+                                            onClick={handleEmailSubscription}
+                                            className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200"
+                                        >
+                                            订阅
+                                        </button>
+                                    </div>
+                                    <select
+                                        value={darkMode ? 'dark' : 'light'}
+                                        onChange={(e) => setDarkMode(e.target.value === 'dark')}
+                                        className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm"
+                                    >
+                                        <option value="light">浅色模式</option>
+                                        <option value="dark">深色模式</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {emailSubscribed && (
+                            <div className="bg-green-100 dark:bg-green-900 border-t border-green-400 text-green-700 dark:text-green-300 px-4 py-2 text-center">
+                                <i className="fas fa-check-circle mr-2"></i>
+                                邮件订阅成功！我们会定期发送最新资讯。
+                            </div>
+                        )}
+                    </header>
+
+                    <div className="flex">
+                        <aside className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-white dark:bg-gray-800 shadow-md min-h-screen transition-all duration-300 flex-shrink-0`}>
+                            <div className="p-4">
+                                <button
+                                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                                    className="w-full flex items-center justify-center lg:justify-start mb-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                                >
+                                    <i className={`fas ${sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'} text-lg`}></i>
+                                    {sidebarOpen && <span className="ml-2">收起菜单</span>}
+                                </button>
+                                <nav className="space-y-2">
+                                    {menuItems.map(item => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => setActiveSection(item.id)}
+                                            className={`w-full flex items-center px-3 py-2 rounded-md transition-colors duration-200 ${
+                                                activeSection === item.id
+                                                    ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300'
+                                                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                            }`}
+                                        >
+                                            <i className={`${item.icon} text-lg`}></i>
+                                            {sidebarOpen && <span className="ml-3">{item.name}</span>}
+                                        </button>
+                                    ))}
+                                </nav>
+                            </div>
+                        </aside>
+
+                        <main className="flex-1 p-6">
+                            <div className="max-w-6xl mx-auto">
+                                {renderContent()}
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<UserGuideApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>

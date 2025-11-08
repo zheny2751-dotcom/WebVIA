@@ -1,0 +1,593 @@
+<html>
+<head>
+    <title>家庭内部冷暴力匿名自省榜</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [entries, setEntries] = useState([
+                {
+                    id: 1,
+                    description: "家人经常对我的话置若罔闻，即使我在说重要的事情，他们也会故意不回应或者敷衍几句就过去了。这让我感到很孤独和被忽视。",
+                    type: "故意忽视",
+                    score: 6,
+                    timestamp: new Date('2024-01-15T09:30:00').toLocaleString()
+                },
+                {
+                    id: 2,
+                    description: "每当我想表达自己的想法时，家人总是用冷漠的眼神看着我，然后转身离开，连一个字都不说。",
+                    type: "冷落",
+                    score: 8,
+                    timestamp: new Date('2024-01-15T14:20:00').toLocaleString()
+                },
+                {
+                    id: 3,
+                    description: "家里发生矛盾时，某些家庭成员会选择长时间不说话，营造压抑的氛围，让其他人感到不安。",
+                    type: "沉默",
+                    score: 7,
+                    timestamp: new Date('2024-01-15T16:45:00').toLocaleString()
+                }
+            ]);
+            const [formData, setFormData] = useState({
+                description: '',
+                type: '冷落',
+                score: 5
+            });
+            const [filter, setFilter] = useState('全部');
+            const [showHelp, setShowHelp] = useState(false);
+            const [showResources, setShowResources] = useState(false);
+            const [highlightedEntry, setHighlightedEntry] = useState(null);
+            const [chartGenerated, setChartGenerated] = useState(false);
+            const [validationMessage, setValidationMessage] = useState('');
+            const canvasRef = useRef(null);
+
+            const navItems = [
+                { id: 'home', label: '首页', icon: 'fas fa-home' },
+                { id: 'reflect', label: '参与自省', icon: 'fas fa-edit' },
+                { id: 'ranking', label: '查看榜单', icon: 'fas fa-list' },
+                { id: 'help', label: '帮助与资源', icon: 'fas fa-question-circle' }
+            ];
+
+            const handleSubmit = () => {
+                setValidationMessage('');
+                
+                if (!formData.description.trim()) {
+                    setValidationMessage('请填写自省内容');
+                    return;
+                }
+                if (formData.score < 0 || formData.score > 10) {
+                    setValidationMessage('分数必须在0-10之间');
+                    return;
+                }
+
+                const newEntry = {
+                    id: entries.length + 1,
+                    description: formData.description,
+                    type: formData.type,
+                    score: parseInt(formData.score),
+                    timestamp: new Date().toLocaleString()
+                };
+
+                setEntries([newEntry, ...entries]);
+                setFormData({ description: '', type: '冷落', score: 5 });
+                setActiveTab('ranking');
+                setHighlightedEntry(newEntry.id);
+                setTimeout(() => setHighlightedEntry(null), 3000);
+                setValidationMessage('提交成功！您的自省已添加到榜单中。');
+            };
+
+            const getFilteredEntries = () => {
+                if (filter === '全部') return entries;
+                if (filter === '高（8-10）') return entries.filter(e => e.score >= 8);
+                if (filter === '中（4-7）') return entries.filter(e => e.score >= 4 && e.score <= 7);
+                if (filter === '低（0-3）') return entries.filter(e => e.score <= 3);
+                return entries;
+            };
+
+            const generateChart = () => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+                canvas.width = 600;
+                canvas.height = 300;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const timeSlots = ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+                const data = [2, 5, 3, 8, 6, 9, 4, 7, 3];
+
+                ctx.fillStyle = '#fef3c7';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.strokeStyle = '#d1d5db';
+                ctx.lineWidth = 1;
+
+                for (let i = 0; i <= 8; i++) {
+                    const x = 80 + (i * (canvas.width - 140) / 8);
+                    ctx.beginPath();
+                    ctx.moveTo(x, 40);
+                    ctx.lineTo(x, canvas.height - 60);
+                    ctx.stroke();
+                }
+
+                for (let i = 0; i <= 5; i++) {
+                    const y = 40 + (i * (canvas.height - 100) / 5);
+                    ctx.beginPath();
+                    ctx.moveTo(80, y);
+                    ctx.lineTo(canvas.width - 60, y);
+                    ctx.stroke();
+                }
+
+                const barWidth = (canvas.width - 140) / 9 * 0.6;
+                data.forEach((value, index) => {
+                    const x = 80 + (index * (canvas.width - 140) / 8) - barWidth / 2;
+                    const height = (value / 10) * (canvas.height - 100);
+                    const y = canvas.height - 60 - height;
+
+                    const gradient = ctx.createLinearGradient(0, y, 0, y + height);
+                    gradient.addColorStop(0, '#f59e0b');
+                    gradient.addColorStop(1, '#fbbf24');
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x, y, barWidth, height);
+
+                    ctx.fillStyle = '#374151';
+                    ctx.font = '12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(value.toString(), x + barWidth / 2, y - 5);
+                });
+
+                ctx.fillStyle = '#374151';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+
+                timeSlots.forEach((time, index) => {
+                    const x = 80 + (index * (canvas.width - 140) / 8);
+                    ctx.fillText(time, x, canvas.height - 35);
+                });
+
+                ctx.textAlign = 'right';
+                for (let i = 0; i <= 5; i++) {
+                    const y = 40 + (i * (canvas.height - 100) / 5);
+                    const value = 10 - (i * 2);
+                    ctx.fillText(value.toString(), 70, y + 5);
+                }
+
+                ctx.textAlign = 'center';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillStyle = '#1f2937';
+                ctx.fillText('今日自省趋势图 - 各时段提交数量', canvas.width / 2, 25);
+
+                setChartGenerated(true);
+            };
+
+            const renderHomeContent = () => (
+                <div className="space-y-8">
+                    <div className="text-center py-12">
+                        <img src="https://picsum.photos/id/1/400/200" alt="家庭和谐" className="mx-auto rounded-lg shadow-lg mb-6" />
+                        <h2 className="text-3xl font-bold text-gray-800 mb-4">欢迎来到家庭内部冷暴力匿名自省榜</h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                            这是一个安全、匿名的空间，让每个人都能诚实地面对和反思家庭中的冷暴力问题。
+                            通过匿名分享和自省，我们希望能够增进理解，促进家庭和谐。
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-400">
+                            <div className="flex items-center mb-4">
+                                <i className="fas fa-heart text-red-400 text-2xl mr-3"></i>
+                                <h3 className="text-xl font-semibold text-gray-800">匿名安全</h3>
+                            </div>
+                            <p className="text-gray-600">所有分享内容完全匿名，不记录任何个人身份信息，保护您的隐私安全。</p>
+                        </div>
+
+                        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-400">
+                            <div className="flex items-center mb-4">
+                                <i className="fas fa-users text-blue-400 text-2xl mr-3"></i>
+                                <h3 className="text-xl font-semibold text-gray-800">共同成长</h3>
+                            </div>
+                            <p className="text-gray-600">通过分享经历和反思，我们可以相互学习，共同面对家庭中的挑战。</p>
+                        </div>
+
+                        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-400">
+                            <div className="flex items-center mb-4">
+                                <i className="fas fa-lightbulb text-yellow-400 text-2xl mr-3"></i>
+                                <h3 className="text-xl font-semibold text-gray-800">专业支持</h3>
+                            </div>
+                            <p className="text-gray-600">我们提供专业的心理援助资源和建议，帮助您找到合适的解决方案。</p>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-8">
+                        <h3 className="text-2xl font-bold text-gray-800 mb-4">如何开始？</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div className="text-center">
+                                <div className="bg-yellow-400 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 text-xl font-bold">1</div>
+                                <p className="font-semibold text-gray-700">点击"参与自省"</p>
+                            </div>
+                            <div className="text-center">
+                                <div className="bg-orange-400 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 text-xl font-bold">2</div>
+                                <p className="font-semibold text-gray-700">匿名描述经历</p>
+                            </div>
+                            <div className="text-center">
+                                <div className="bg-red-400 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 text-xl font-bold">3</div>
+                                <p className="font-semibold text-gray-700">选择类型和评分</p>
+                            </div>
+                            <div className="text-center">
+                                <div className="bg-pink-400 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 text-xl font-bold">4</div>
+                                <p className="font-semibold text-gray-700">查看榜单交流</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderReflectContent = () => (
+                <div className="max-w-4xl mx-auto">
+                    <div className="bg-white rounded-xl shadow-lg p-8">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i className="fas fa-edit text-yellow-500 mr-3"></i>
+                            匿名自省提交
+                        </h2>
+
+                        <div className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    请匿名描述您在家庭中感受到的冷暴力经历或反思
+                                </label>
+                                <textarea
+                                    value={formData.description}
+                                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                    placeholder="请诚实地描述您的经历和感受，这将帮助其他人理解和反思类似情况。您的身份信息将完全保密。"
+                                    className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-none"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        冷暴力类型
+                                    </label>
+                                    <select
+                                        value={formData.type}
+                                        onChange={(e) => setFormData({...formData, type: e.target.value})}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                                    >
+                                        <option value="冷落">冷落</option>
+                                        <option value="沉默">沉默</option>
+                                        <option value="故意忽视">故意忽视</option>
+                                        <option value="挖苦">挖苦</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        自评分（0 最轻微，10 最严重）
+                                    </label>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="10"
+                                        value={formData.score}
+                                        onChange={(e) => setFormData({...formData, score: parseInt(e.target.value) || 0})}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                                    />
+                                </div>
+                            </div>
+
+                            {validationMessage && (
+                                <div className={`p-4 rounded-lg ${validationMessage.includes('成功') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                                    <i className={`fas ${validationMessage.includes('成功') ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2`}></i>
+                                    {validationMessage}
+                                </div>
+                            )}
+
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                <p className="text-sm text-yellow-800">
+                                    <i className="fas fa-info-circle mr-2"></i>
+                                    温馨提示：您的分享将帮助建立一个理解和支持的社区。所有内容完全匿名，仅用于促进相互理解和成长。
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={handleSubmit}
+                                className="w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-semibold py-4 px-6 rounded-lg hover:from-yellow-500 hover:to-orange-500 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                            >
+                                <i className="fas fa-paper-plane mr-2"></i>
+                                提交自省
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderRankingContent = () => (
+                <div className="space-y-6">
+                    <div className="flex flex-col md:flex-row gap-4 bg-white rounded-xl shadow-lg p-6">
+                        <div className="flex-1">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">风险等级过滤</label>
+                            <select
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                            >
+                                <option value="全部">全部</option>
+                                <option value="高（8-10）">高（8-10）</option>
+                                <option value="中（4-7）">中（4-7）</option>
+                                <option value="低（0-3）">低（0-3）</option>
+                            </select>
+                        </div>
+                        <div className="flex items-end">
+                            <button
+                                onClick={() => {
+                                    setEntries([...entries]);
+                                    setValidationMessage('榜单已刷新');
+                                    setTimeout(() => setValidationMessage(''), 2000);
+                                }}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                            >
+                                <i className="fas fa-sync-alt mr-2"></i>
+                                刷新榜单
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl shadow-lg">
+                        <div className="p-6 border-b border-gray-200">
+                            <h3 className="text-xl font-bold text-gray-800 flex items-center">
+                                <i className="fas fa-list text-blue-500 mr-3"></i>
+                                匿名自省榜单 ({getFilteredEntries().length} 条记录)
+                            </h3>
+                        </div>
+                        <div className="max-h-96 overflow-y-auto">
+                            {getFilteredEntries().map((entry, index) => (
+                                <div
+                                    key={entry.id}
+                                    className={`p-6 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                                        highlightedEntry === entry.id ? 'bg-yellow-50 border-yellow-200' : ''
+                                    }`}
+                                >
+                                    <div className="flex items-start justify-between mb-3">
+                                        <div className="flex items-center space-x-3">
+                                            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm">
+                                                #{index + 1}
+                                            </span>
+                                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                                entry.type === '冷落' ? 'bg-blue-100 text-blue-800' :
+                                                entry.type === '沉默' ? 'bg-gray-100 text-gray-800' :
+                                                entry.type === '故意忽视' ? 'bg-purple-100 text-purple-800' :
+                                                entry.type === '挖苦' ? 'bg-red-100 text-red-800' :
+                                                'bg-orange-100 text-orange-800'
+                                            }`}>
+                                                {entry.type}
+                                            </span>
+                                            <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+                                                entry.score >= 8 ? 'bg-red-100 text-red-800' :
+                                                entry.score >= 4 ? 'bg-yellow-100 text-yellow-800' :
+                                                'bg-green-100 text-green-800'
+                                            }`}>
+                                                {entry.score}/10
+                                            </span>
+                                        </div>
+                                        <span className="text-sm text-gray-500">{entry.timestamp}</span>
+                                    </div>
+                                    <div className="group">
+                                        <p className="text-gray-700 group-hover:text-gray-900 transition-colors">
+                                            {entry.description.length > 50 ? (
+                                                <>
+                                                    <span className="group-hover:hidden">{entry.description.substring(0, 50)}...</span>
+                                                    <span className="hidden group-hover:inline">{entry.description}</span>
+                                                </>
+                                            ) : entry.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl shadow-lg p-6">
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i className="fas fa-chart-bar text-green-500 mr-3"></i>
+                            趋势图表
+                        </h3>
+                        <div className="text-center">
+                            <button
+                                onClick={generateChart}
+                                className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors mb-4"
+                            >
+                                <i className="fas fa-chart-line mr-2"></i>
+                                生成今日自省趋势图
+                            </button>
+                            {chartGenerated && (
+                                <div className="mt-4">
+                                    <canvas ref={canvasRef} className="mx-auto border border-gray-200 rounded-lg"></canvas>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderHelpContent = () => (
+                <div className="space-y-6">
+                    <div className="bg-white rounded-xl shadow-lg p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i className="fas fa-question-circle text-blue-500 mr-3"></i>
+                            帮助与资源
+                        </h2>
+
+                        <div className="space-y-4">
+                            <button
+                                onClick={() => setShowHelp(!showHelp)}
+                                className="w-full bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+                            >
+                                <span>
+                                    <i className="fas fa-info-circle mr-3"></i>
+                                    查看帮助
+                                </span>
+                                <i className={`fas fa-chevron-${showHelp ? 'up' : 'down'}`}></i>
+                            </button>
+
+                            {showHelp && (
+                                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
+                                    <h4 className="font-bold text-blue-800 mb-4">常见问题与应对建议</h4>
+                                    <div className="space-y-4 text-blue-700">
+                                        <div>
+                                            <h5 className="font-semibold mb-2">Q: 什么是家庭冷暴力？</h5>
+                                            <p>A: 家庭冷暴力是指通过冷漠、忽视、沉默、威胁等非身体接触的方式，对家庭成员造成精神和心理伤害的行为。</p>
+                                        </div>
+                                        <div>
+                                            <h5 className="font-semibold mb-2">Q: 如何应对家庭冷暴力？</h5>
+                                            <p>A: 1. 保持冷静，不要情绪化回应；2. 尝试沟通，表达自己的感受；3. 寻求专业帮助；4. 建立支持网络。</p>
+                                        </div>
+                                        <div>
+                                            <h5 className="font-semibold mb-2">Q: 自省的意义是什么？</h5>
+                                            <p>A: 通过自省，我们可以更好地理解自己的感受，识别问题模式，并寻找改善关系的方法。</p>
+                                        </div>
+                                        <div>
+                                            <h5 className="font-semibold mb-2">Q: 数据安全吗？</h5>
+                                            <p>A: 是的，所有数据都是匿名的，仅保存在本地浏览器中，不会上传到任何服务器。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <button
+                                onClick={() => setShowResources(!showResources)}
+                                className="w-full bg-red-50 hover:bg-red-100 text-red-800 font-semibold py-4 px-6 rounded-lg transition-colors text-left flex items-center justify-between"
+                            >
+                                <span>
+                                    <i className="fas fa-phone mr-3"></i>
+                                    相关求助渠道
+                                </span>
+                                <i className={`fas fa-chevron-${showResources ? 'up' : 'down'}`}></i>
+                            </button>
+
+                            {showResources && (
+                                <div className="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg">
+                                    <h4 className="font-bold text-red-800 mb-4">专业求助资源</h4>
+                                    <div className="space-y-4 text-red-700">
+                                        <div className="flex items-start space-x-3">
+                                            <i className="fas fa-phone-alt text-red-500 mt-1"></i>
+                                            <div>
+                                                <h5 className="font-semibold">24小时心理援助热线</h5>
+                                                <p>400-161-9995（全国免费）</p>
+                                                <p>010-82951332（北京地区）</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start space-x-3">
+                                            <i className="fas fa-globe text-red-500 mt-1"></i>
+                                            <div>
+                                                <h5 className="font-semibold">在线心理咨询平台</h5>
+                                                <p>中国心理卫生协会：www.camh.org.cn</p>
+                                                <p>心理健康中心：www.mhcenter.org</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start space-x-3">
+                                            <i className="fas fa-envelope text-red-500 mt-1"></i>
+                                            <div>
+                                                <h5 className="font-semibold">邮件咨询</h5>
+                                                <p>help@psychhealth.org</p>
+                                            </div>
+                                        </div>
+                                        <div className="bg-red-100 border border-red-200 rounded-lg p-4 mt-4">
+                                            <p className="text-sm">
+                                                <i className="fas fa-exclamation-triangle mr-2"></i>
+                                                如果您正在经历严重的心理困扰或有自伤倾向，请立即拨打120急救电话或前往最近的医院急诊科。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6">
+                        <h3 className="text-xl font-bold text-gray-800 mb-4">相关资源</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-white rounded-lg p-4 shadow">
+                                <img src="https://picsum.photos/id/20/300/150" alt="心理健康书籍" className="w-full h-32 object-cover rounded-lg mb-3" />
+                                <h4 className="font-semibold text-gray-800">推荐阅读</h4>
+                                <p className="text-sm text-gray-600">《亲密关系》、《非暴力沟通》等心理健康书籍</p>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 shadow">
+                                <img src="https://picsum.photos/id/21/300/150" alt="家庭治疗" className="w-full h-32 object-cover rounded-lg mb-3" />
+                                <h4 className="font-semibold text-gray-800">专业治疗</h4>
+                                <p className="text-sm text-gray-600">家庭系统治疗、夫妻关系咨询等专业服务</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+                    <header className="bg-white shadow-lg border-b-4 border-yellow-400">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between h-16">
+                                <div className="flex items-center space-x-4">
+                                    <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white p-2 rounded-lg">
+                                        <i className="fas fa-home text-xl"></i>
+                                    </div>
+                                    <h1 className="text-xl font-bold text-gray-800">家庭内部冷暴力匿名自省榜</h1>
+                                </div>
+                                <nav className="flex space-x-1">
+                                    {navItems.map(item => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => setActiveTab(item.id)}
+                                            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                                                activeTab === item.id
+                                                    ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg transform scale-105'
+                                                    : 'text-gray-600 hover:text-gray-800 hover:bg-yellow-100'
+                                            }`}
+                                        >
+                                            <i className={`${item.icon} mr-2`}></i>
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {activeTab === 'home' && renderHomeContent()}
+                        {activeTab === 'reflect' && renderReflectContent()}
+                        {activeTab === 'ranking' && renderRankingContent()}
+                        {activeTab === 'help' && renderHelpContent()}
+                    </main>
+
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <p className="text-gray-300">
+                                <i className="fas fa-shield-alt mr-2"></i>
+                                本榜单仅供匿名自省交流，不记录任何个人身份信息，数据仅保存在本地浏览器或模拟接口
+                            </p>
+                            <p className="text-gray-400 mt-2 text-sm">
+                                如需专业帮助，请联系相关心理健康机构或拨打心理援助热线
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

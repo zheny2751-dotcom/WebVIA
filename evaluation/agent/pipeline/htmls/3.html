@@ -1,0 +1,479 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口味怪调料分享墙</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [spices, setSpices] = useState([
+                {
+                    id: 1,
+                    name: "魔鬼辣椒粉",
+                    description: "来自地狱的辣度，一撮就能让你流泪",
+                    type: "辣",
+                    likes: 245,
+                    image: "https://picsum.photos/id/312/300/200",
+                    comments: [
+                        { user: "辣椒爱好者", content: "真的超级辣！受不了但停不下来！" }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "彩虹盐",
+                    description: "七种颜色的海盐混合，每一口都是惊喜",
+                    type: "咸",
+                    likes: 189,
+                    image: "https://picsum.photos/id/234/300/200",
+                    comments: [
+                        { user: "美食博主", content: "颜值超高的调料，拍照必备！" }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: "棉花糖胡椒",
+                    description: "甜味开始，胡椒味收尾，口感层次丰富",
+                    type: "复合",
+                    likes: 156,
+                    image: "https://picsum.photos/id/145/300/200",
+                    comments: [
+                        { user: "美食探索家", content: "从来没吃过这么奇特的搭配！" }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "青柠爆破粒",
+                    description: "一咬就爆浆的酸味小球，刺激味蕾",
+                    type: "酸",
+                    likes: 298,
+                    image: "https://picsum.photos/id/456/300/200",
+                    comments: []
+                },
+                {
+                    id: 5,
+                    name: "蜂蜜芥末粉",
+                    description: "甜蜜与辛辣的完美结合",
+                    type: "甜",
+                    likes: 167,
+                    image: "https://picsum.photos/id/789/300/200",
+                    comments: [
+                        { user: "甜食达人", content: "甜甜的开始，刺激的结尾，爱了！" }
+                    ]
+                },
+                {
+                    id: 6,
+                    name: "雷电椒盐",
+                    description: "瞬间电击般的刺激感，让你精神百倍",
+                    type: "咸",
+                    likes: 203,
+                    image: "https://picsum.photos/id/123/300/200",
+                    comments: []
+                }
+            ]);
+
+            const [filterType, setFilterType] = useState('全部');
+            const [sortType, setSortType] = useState('点赞数');
+            const [carouselIndex, setCarouselIndex] = useState(0);
+            const [newSpice, setNewSpice] = useState({
+                name: '',
+                description: '',
+                type: '辣',
+                fileName: ''
+            });
+
+            const filteredSpices = spices.filter(spice => 
+                filterType === '全部' || spice.type === filterType
+            );
+
+            const sortedSpices = [...filteredSpices].sort((a, b) => {
+                if (sortType === '点赞数') {
+                    return b.likes - a.likes;
+                } else {
+                    return b.id - a.id;
+                }
+            });
+
+            const topSpices = [...spices].sort((a, b) => b.likes - a.likes).slice(0, 3);
+
+            const handleLike = (id) => {
+                setSpices(spices.map(spice => 
+                    spice.id === id ? { ...spice, likes: spice.likes + 1 } : spice
+                ));
+            };
+
+            const handleComment = (id, comment) => {
+                if (comment.trim()) {
+                    setSpices(spices.map(spice => 
+                        spice.id === id ? { 
+                            ...spice, 
+                            comments: [...spice.comments, { user: '游客', content: comment }] 
+                        } : spice
+                    ));
+                }
+            };
+
+            const handleAddSpice = () => {
+                if (newSpice.name && newSpice.description) {
+                    const newId = Math.max(...spices.map(s => s.id)) + 1;
+                    setSpices([...spices, {
+                        id: newId,
+                        name: newSpice.name,
+                        description: newSpice.description,
+                        type: newSpice.type,
+                        likes: 0,
+                        image: `https://picsum.photos/id/${newId + 100}/300/200`,
+                        comments: []
+                    }]);
+                    setNewSpice({ name: '', description: '', type: '辣', fileName: '' });
+                }
+            };
+
+            const nextCarousel = () => {
+                setCarouselIndex((carouselIndex + 1) % topSpices.length);
+            };
+
+            const prevCarousel = () => {
+                setCarouselIndex((carouselIndex - 1 + topSpices.length) % topSpices.length);
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+                    <div className="relative bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                        <div className="absolute inset-0 bg-black opacity-20"></div>
+                        <div className="relative container mx-auto px-4 py-16 text-center">
+                            <h1 className="text-5xl font-bold mb-4">🌶️ 口味怪调料分享墙 🧂</h1>
+                            <p className="text-xl opacity-90">发现世界上最奇特的调料，分享你的味觉冒险</p>
+                        </div>
+                    </div>
+
+                    <nav className="bg-white shadow-lg sticky top-0 z-10">
+                        <div className="container mx-auto px-4">
+                            <div className="flex justify-center space-x-8 py-4">
+                                <button className="px-6 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors">
+                                    首页
+                                </button>
+                                <button className="px-6 py-2 text-orange-500 hover:bg-orange-100 rounded-full transition-colors">
+                                    分享调料
+                                </button>
+                                <button className="px-6 py-2 text-orange-500 hover:bg-orange-100 rounded-full transition-colors">
+                                    调料排行
+                                </button>
+                                <button className="px-6 py-2 text-orange-500 hover:bg-orange-100 rounded-full transition-colors">
+                                    关于我们
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            <div className="lg:col-span-1">
+                                <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+                                    <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                                        <i className="fas fa-filter mr-2 text-orange-500"></i>
+                                        筛选调料
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">按口味类型</label>
+                                            <select 
+                                                value={filterType}
+                                                onChange={(e) => setFilterType(e.target.value)}
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                            >
+                                                <option>全部</option>
+                                                <option>辣</option>
+                                                <option>咸</option>
+                                                <option>甜</option>
+                                                <option>酸</option>
+                                                <option>复合</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">排序方式</label>
+                                            <select 
+                                                value={sortType}
+                                                onChange={(e) => setSortType(e.target.value)}
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                            >
+                                                <option>点赞数</option>
+                                                <option>最新分享</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                                        <i className="fas fa-plus-circle mr-2 text-orange-500"></i>
+                                        分享新调料
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <input
+                                            type="text"
+                                            placeholder="调料名称"
+                                            value={newSpice.name}
+                                            onChange={(e) => setNewSpice({...newSpice, name: e.target.value})}
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                        />
+                                        <textarea
+                                            placeholder="调料描述"
+                                            value={newSpice.description}
+                                            onChange={(e) => setNewSpice({...newSpice, description: e.target.value})}
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 h-20 resize-none"
+                                        />
+                                        <select 
+                                            value={newSpice.type}
+                                            onChange={(e) => setNewSpice({...newSpice, type: e.target.value})}
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                        >
+                                            <option>辣</option>
+                                            <option>咸</option>
+                                            <option>甜</option>
+                                            <option>酸</option>
+                                            <option>复合</option>
+                                        </select>
+                                        <div>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => setNewSpice({...newSpice, fileName: e.target.files[0]?.name || ''})}
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                            />
+                                            {newSpice.fileName && (
+                                                <p className="text-sm text-green-600 mt-2 flex items-center">
+                                                    <i className="fas fa-check-circle mr-1"></i>
+                                                    已选择: {newSpice.fileName}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <button
+                                            onClick={handleAddSpice}
+                                            className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center"
+                                        >
+                                            <i className="fas fa-rocket mr-2"></i>
+                                            提交分享
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-3">
+                                <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                                    <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+                                        <i className="fas fa-fire mr-2 text-red-500"></i>
+                                        热门调料展示
+                                    </h3>
+                                    <div className="relative">
+                                        <div className="flex items-center justify-between">
+                                            <button 
+                                                onClick={prevCarousel}
+                                                className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition-colors shadow-lg"
+                                            >
+                                                <i className="fas fa-chevron-left"></i>
+                                            </button>
+                                            <div className="text-center flex-1 mx-4">
+                                                <img 
+                                                    src={topSpices[carouselIndex]?.image} 
+                                                    alt={topSpices[carouselIndex]?.name}
+                                                    className="w-64 h-40 object-cover rounded-lg mx-auto mb-4 shadow-md"
+                                                />
+                                                <h4 className="text-xl font-semibold mb-2">{topSpices[carouselIndex]?.name}</h4>
+                                                <p className="text-orange-500 font-medium text-lg">
+                                                    <i className="fas fa-heart mr-1"></i>
+                                                    {topSpices[carouselIndex]?.likes} 赞
+                                                </p>
+                                            </div>
+                                            <button 
+                                                onClick={nextCarousel}
+                                                className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition-colors shadow-lg"
+                                            >
+                                                <i className="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <div className="flex justify-center space-x-2 mt-4">
+                                            {topSpices.map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`w-3 h-3 rounded-full ${
+                                                        index === carouselIndex ? 'bg-orange-500' : 'bg-gray-300'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {sortedSpices.map(spice => (
+                                        <SpiceCard 
+                                            key={spice.id} 
+                                            spice={spice} 
+                                            onLike={handleLike}
+                                            onComment={handleComment}
+                                        />
+                                    ))}
+                                </div>
+
+                                {sortedSpices.length === 0 && (
+                                    <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+                                        <div className="text-6xl mb-4">🔍</div>
+                                        <h3 className="text-xl font-semibold text-gray-600 mb-2">没有找到匹配的调料</h3>
+                                        <p className="text-gray-500">试试调整筛选条件，或者分享一个新的奇特调料吧！</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer className="bg-gray-800 text-white py-8">
+                        <div className="container mx-auto px-4 text-center">
+                            <div className="mb-4">
+                                <h4 className="text-lg font-semibold mb-4">分享给朋友们</h4>
+                                <div className="flex justify-center space-x-4">
+                                    <button className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        <i className="fab fa-facebook-f mr-2"></i>Facebook
+                                    </button>
+                                    <button className="bg-blue-400 px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors">
+                                        <i className="fab fa-twitter mr-2"></i>Twitter
+                                    </button>
+                                    <button className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        <i className="fab fa-whatsapp mr-2"></i>WhatsApp
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-700 pt-4">
+                                <p>&copy; 2024 口味怪调料分享墙. 所有权利保留.</p>
+                                <p className="text-sm text-gray-400 mt-2">让世界充满奇特的味道 🌍✨</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const SpiceCard = ({ spice, onLike, onComment }) => {
+            const [comment, setComment] = useState('');
+            const [liked, setLiked] = useState(false);
+
+            const handleLike = () => {
+                onLike(spice.id);
+                setLiked(true);
+                setTimeout(() => setLiked(false), 300);
+            };
+
+            const handleSubmitComment = () => {
+                if (comment.trim()) {
+                    onComment(spice.id, comment);
+                    setComment('');
+                }
+            };
+
+            const getTypeIcon = (type) => {
+                const icons = {
+                    '辣': '🌶️',
+                    '咸': '🧂',
+                    '甜': '🍯',
+                    '酸': '🍋',
+                    '复合': '🌈'
+                };
+                return icons[type] || '🌟';
+            };
+
+            const getTypeColor = (type) => {
+                const colors = {
+                    '辣': 'bg-red-100 text-red-600 border-red-200',
+                    '咸': 'bg-blue-100 text-blue-600 border-blue-200',
+                    '甜': 'bg-yellow-100 text-yellow-600 border-yellow-200',
+                    '酸': 'bg-green-100 text-green-600 border-green-200',
+                    '复合': 'bg-purple-100 text-purple-600 border-purple-200'
+                };
+                return colors[type] || 'bg-gray-100 text-gray-600 border-gray-200';
+            };
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <img 
+                        src={spice.image} 
+                        alt={spice.name}
+                        className="w-full h-48 object-cover"
+                    />
+                    <div className="p-6">
+                        <div className="flex items-center justify-between mb-3">
+                            <h3 className="text-xl font-semibold text-gray-800">{spice.name}</h3>
+                            <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(spice.type)}`}>
+                                {getTypeIcon(spice.type)} {spice.type}
+                            </span>
+                        </div>
+                        <p className="text-gray-600 mb-4 leading-relaxed">{spice.description}</p>
+                        
+                        <div className="flex items-center justify-between mb-4">
+                            <button 
+                                onClick={handleLike}
+                                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                                    liked ? 'bg-red-500 text-white transform scale-110' : 'bg-gray-100 hover:bg-red-100 text-gray-700 hover:text-red-600'
+                                }`}
+                            >
+                                <i className={`fas fa-heart ${liked ? 'text-white' : ''}`}></i>
+                                <span>{spice.likes}</span>
+                            </button>
+                            <div className="text-sm text-gray-500">
+                                {spice.comments.length} 条评论
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <div className="flex space-x-2">
+                                <input
+                                    type="text"
+                                    placeholder="写下你的评论..."
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSubmitComment()}
+                                    className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                                />
+                                <button 
+                                    onClick={handleSubmitComment}
+                                    className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                                >
+                                    <i className="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            
+                            {spice.comments.length > 0 && (
+                                <div className="space-y-2 max-h-32 overflow-y-auto">
+                                    {spice.comments.map((comment, index) => (
+                                        <div key={index} className="bg-gray-50 p-3 rounded-lg">
+                                            <div className="flex items-start space-x-2">
+                                                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                                    {comment.user[0]}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-sm font-medium text-gray-800">{comment.user}</p>
+                                                    <p className="text-sm text-gray-600">{comment.content}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

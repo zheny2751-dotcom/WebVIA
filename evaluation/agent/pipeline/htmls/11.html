@@ -1,0 +1,579 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小目标脱敏训练推送榜</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('主页');
+            const [darkMode, setDarkMode] = useState(false);
+            const [showModal, setShowModal] = useState(false);
+            const [modalData, setModalData] = useState(null);
+            const [checkInProgress, setCheckInProgress] = useState('');
+            const [selectedGoal, setSelectedGoal] = useState('');
+            const [newGoalName, setNewGoalName] = useState('');
+            const [newGoalDifficulty, setNewGoalDifficulty] = useState('简单');
+            const [newGoalPeriod, setNewGoalPeriod] = useState('日');
+            const [goals, setGoals] = useState([
+                {
+                    id: 1,
+                    name: '每日阅读30分钟',
+                    progress: 75,
+                    difficulty: '简单',
+                    period: '日',
+                    checkInHistory: [
+                        { date: '2024-01-01', progress: 30 },
+                        { date: '2024-01-02', progress: 45 },
+                        { date: '2024-01-03', progress: 60 },
+                        { date: '2024-01-04', progress: 75 }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: '健身训练',
+                    progress: 60,
+                    difficulty: '中等',
+                    period: '日',
+                    checkInHistory: [
+                        { date: '2024-01-01', progress: 20 },
+                        { date: '2024-01-02', progress: 40 },
+                        { date: '2024-01-03', progress: 60 }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: '学习编程',
+                    progress: 45,
+                    difficulty: '困难',
+                    period: '周',
+                    checkInHistory: [
+                        { date: '2024-01-01', progress: 15 },
+                        { date: '2024-01-02', progress: 30 },
+                        { date: '2024-01-03', progress: 45 }
+                    ]
+                }
+            ]);
+            const [stats, setStats] = useState({
+                totalCompletion: 60,
+                dailyCheckIns: 8,
+                activeUsers: 156
+            });
+
+            const sortedGoals = [...goals].sort((a, b) => b.progress - a.progress);
+
+            const handleViewDetails = (goal) => {
+                setModalData(goal);
+                setShowModal(true);
+            };
+
+            const handleCheckIn = () => {
+                if (!selectedGoal || !checkInProgress) return;
+                
+                const progress = parseInt(checkInProgress);
+                if (progress < 0 || progress > 100) return;
+
+                setGoals(prevGoals => 
+                    prevGoals.map(goal => 
+                        goal.id === parseInt(selectedGoal) 
+                            ? {
+                                ...goal,
+                                progress: Math.min(100, Math.max(0, progress)),
+                                checkInHistory: [
+                                    ...goal.checkInHistory,
+                                    { date: new Date().toISOString().split('T')[0], progress }
+                                ]
+                            }
+                            : goal
+                    )
+                );
+                
+                setCheckInProgress('');
+                setSelectedGoal('');
+            };
+
+            const handleAddGoal = () => {
+                if (!newGoalName.trim()) return;
+                
+                const newGoal = {
+                    id: Date.now(),
+                    name: newGoalName,
+                    progress: 0,
+                    difficulty: newGoalDifficulty,
+                    period: newGoalPeriod,
+                    checkInHistory: []
+                };
+                
+                setGoals(prevGoals => [...prevGoals, newGoal]);
+                setNewGoalName('');
+                setNewGoalDifficulty('简单');
+                setNewGoalPeriod('日');
+            };
+
+            const handleRefreshStats = () => {
+                setStats({
+                    totalCompletion: Math.floor(Math.random() * 100),
+                    dailyCheckIns: Math.floor(Math.random() * 20) + 1,
+                    activeUsers: Math.floor(Math.random() * 300) + 100
+                });
+            };
+
+            const themeClasses = darkMode 
+                ? 'bg-gray-900 text-white' 
+                : 'bg-gradient-to-br from-blue-50 to-green-50 text-gray-800';
+
+            return (
+                <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>
+                    <header className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b shadow-sm`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center space-x-3">
+                                    <img src="https://picsum.photos/id/1011/40/40" alt="Logo" className="w-10 h-10 rounded-full" />
+                                    <h1 className="text-xl font-bold text-blue-600">小目标脱敏训练推送榜</h1>
+                                </div>
+                                <nav className="flex space-x-1">
+                                    {['主页', '排行榜', '设置'].map(tab => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                                                activeTab === tab
+                                                    ? 'bg-blue-500 text-white shadow-md'
+                                                    : darkMode 
+                                                        ? 'text-gray-300 hover:bg-gray-700' 
+                                                        : 'text-gray-600 hover:bg-gray-100'
+                                            }`}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))}
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {activeTab === '主页' && (
+                            <div className="space-y-8">
+                                <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                    <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                        <i className="fas fa-trophy text-yellow-500 mr-3"></i>
+                                        训练目标排行榜
+                                    </h2>
+                                    <div className="grid gap-4">
+                                        {sortedGoals.map((goal, index) => (
+                                            <div key={goal.id} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 flex items-center justify-between`}>
+                                                <div className="flex items-center space-x-4">
+                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                                                        index === 0 ? 'bg-yellow-500 text-white' :
+                                                        index === 1 ? 'bg-gray-400 text-white' :
+                                                        index === 2 ? 'bg-amber-600 text-white' :
+                                                        'bg-gray-300 text-gray-700'
+                                                    }`}>
+                                                        {index + 1}
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-semibold">{goal.name}</h3>
+                                                        <div className="flex items-center space-x-2 text-sm text-gray-500">
+                                                            <span className={`px-2 py-1 rounded ${
+                                                                goal.difficulty === '简单' ? 'bg-green-100 text-green-800' :
+                                                                goal.difficulty === '中等' ? 'bg-yellow-100 text-yellow-800' :
+                                                                'bg-red-100 text-red-800'
+                                                            }`}>{goal.difficulty}</span>
+                                                            <span>·</span>
+                                                            <span>{goal.period}更新</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center space-x-4">
+                                                    <div className="text-right">
+                                                        <div className="text-2xl font-bold text-blue-600">{goal.progress}%</div>
+                                                        <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                            <div 
+                                                                className="h-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500"
+                                                                style={{ width: `${goal.progress}%` }}
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex space-x-2">
+                                                        <button
+                                                            onClick={() => handleViewDetails(goal)}
+                                                            className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+                                                        >
+                                                            查看详情
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                    <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                        <i className="fas fa-check-circle text-green-500 mr-3"></i>
+                                        今日打卡
+                                    </h2>
+                                    <div className="flex flex-wrap gap-4 items-end">
+                                        <div className="flex-1 min-w-48">
+                                            <label className="block text-sm font-medium mb-2">选择目标</label>
+                                            <select
+                                                value={selectedGoal}
+                                                onChange={(e) => setSelectedGoal(e.target.value)}
+                                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                                                }`}
+                                            >
+                                                <option value="">请选择目标</option>
+                                                {goals.map(goal => (
+                                                    <option key={goal.id} value={goal.id}>{goal.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className="flex-1 min-w-32">
+                                            <label className="block text-sm font-medium mb-2">完成进度（%）</label>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max="100"
+                                                value={checkInProgress}
+                                                onChange={(e) => setCheckInProgress(e.target.value)}
+                                                placeholder="输入0-100"
+                                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                                                }`}
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={handleCheckIn}
+                                            disabled={!selectedGoal || !checkInProgress}
+                                            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                                        >
+                                            <i className="fas fa-check mr-2"></i>
+                                            打卡
+                                        </button>
+                                    </div>
+                                </section>
+
+                                <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                    <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                        <i className="fas fa-plus-circle text-blue-500 mr-3"></i>
+                                        添加新目标
+                                    </h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">目标名称</label>
+                                            <input
+                                                type="text"
+                                                value={newGoalName}
+                                                onChange={(e) => setNewGoalName(e.target.value)}
+                                                placeholder="输入目标名称"
+                                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                                                }`}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">训练难度</label>
+                                            <select
+                                                value={newGoalDifficulty}
+                                                onChange={(e) => setNewGoalDifficulty(e.target.value)}
+                                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                                                }`}
+                                            >
+                                                <option value="简单">简单</option>
+                                                <option value="中等">中等</option>
+                                                <option value="困难">困难</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium mb-2">更新周期</label>
+                                            <select
+                                                value={newGoalPeriod}
+                                                onChange={(e) => setNewGoalPeriod(e.target.value)}
+                                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                                                }`}
+                                            >
+                                                <option value="日">日</option>
+                                                <option value="周">周</option>
+                                                <option value="月">月</option>
+                                            </select>
+                                        </div>
+                                        <button
+                                            onClick={handleAddGoal}
+                                            disabled={!newGoalName.trim()}
+                                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                                        >
+                                            <i className="fas fa-plus mr-2"></i>
+                                            添加目标
+                                        </button>
+                                    </div>
+                                </section>
+
+                                <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h2 className="text-2xl font-bold flex items-center">
+                                            <i className="fas fa-chart-bar text-purple-500 mr-3"></i>
+                                            统计数据
+                                        </h2>
+                                        <button
+                                            onClick={handleRefreshStats}
+                                            className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+                                        >
+                                            <i className="fas fa-sync-alt mr-2"></i>
+                                            刷新数据
+                                        </button>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div className={`${darkMode ? 'bg-gray-700' : 'bg-gradient-to-r from-blue-500 to-blue-600'} text-white rounded-lg p-6 text-center`}>
+                                            <i className="fas fa-percentage text-3xl mb-3"></i>
+                                            <div className="text-3xl font-bold">{stats.totalCompletion}%</div>
+                                            <div className="text-sm opacity-90">总体完成率</div>
+                                        </div>
+                                        <div className={`${darkMode ? 'bg-gray-700' : 'bg-gradient-to-r from-green-500 to-green-600'} text-white rounded-lg p-6 text-center`}>
+                                            <i className="fas fa-calendar-check text-3xl mb-3"></i>
+                                            <div className="text-3xl font-bold">{stats.dailyCheckIns}</div>
+                                            <div className="text-sm opacity-90">日均打卡数</div>
+                                        </div>
+                                        <div className={`${darkMode ? 'bg-gray-700' : 'bg-gradient-to-r from-purple-500 to-purple-600'} text-white rounded-lg p-6 text-center`}>
+                                            <i className="fas fa-users text-3xl mb-3"></i>
+                                            <div className="text-3xl font-bold">{stats.activeUsers}</div>
+                                            <div className="text-sm opacity-90">活跃用户数</div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        )}
+
+                        {activeTab === '排行榜' && (
+                            <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                    <i className="fas fa-medal text-yellow-500 mr-3"></i>
+                                    完整排行榜
+                                </h2>
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                                                <th className="px-4 py-3 text-left">排名</th>
+                                                <th className="px-4 py-3 text-left">目标名称</th>
+                                                <th className="px-4 py-3 text-left">进度</th>
+                                                <th className="px-4 py-3 text-left">难度</th>
+                                                <th className="px-4 py-3 text-left">周期</th>
+                                                <th className="px-4 py-3 text-left">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {sortedGoals.map((goal, index) => (
+                                                <tr key={goal.id} className={`border-t ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                                                    <td className="px-4 py-3">
+                                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                                                            index === 0 ? 'bg-yellow-500 text-white' :
+                                                            index === 1 ? 'bg-gray-400 text-white' :
+                                                            index === 2 ? 'bg-amber-600 text-white' :
+                                                            'bg-gray-300 text-gray-700'
+                                                        }`}>
+                                                            {index + 1}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-3 font-medium">{goal.name}</td>
+                                                    <td className="px-4 py-3">
+                                                        <div className="flex items-center space-x-2">
+                                                            <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                                <div 
+                                                                    className="h-full bg-gradient-to-r from-blue-500 to-green-500"
+                                                                    style={{ width: `${goal.progress}%` }}
+                                                                ></div>
+                                                            </div>
+                                                            <span className="text-sm font-medium">{goal.progress}%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <span className={`px-2 py-1 rounded text-xs ${
+                                                            goal.difficulty === '简单' ? 'bg-green-100 text-green-800' :
+                                                            goal.difficulty === '中等' ? 'bg-yellow-100 text-yellow-800' :
+                                                            'bg-red-100 text-red-800'
+                                                        }`}>{goal.difficulty}</span>
+                                                    </td>
+                                                    <td className="px-4 py-3">{goal.period}</td>
+                                                    <td className="px-4 py-3">
+                                                        <button
+                                                            onClick={() => handleViewDetails(goal)}
+                                                            className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
+                                                        >
+                                                            详情
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === '设置' && (
+                            <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6`}>
+                                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                                    <i className="fas fa-cog text-gray-500 mr-3"></i>
+                                    系统设置
+                                </h2>
+                                <div className="space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="text-lg font-medium">主题模式</h3>
+                                            <p className="text-sm text-gray-500">切换亮色或暗色主题</p>
+                                        </div>
+                                        <button
+                                            onClick={() => setDarkMode(!darkMode)}
+                                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                                                darkMode ? 'bg-blue-600' : 'bg-gray-200'
+                                            }`}
+                                        >
+                                            <span
+                                                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                                    darkMode ? 'translate-x-6' : 'translate-x-1'
+                                                }`}
+                                            />
+                                        </button>
+                                    </div>
+                                    <div className="border-t pt-6">
+                                        <h3 className="text-lg font-medium mb-4">关于应用</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4`}>
+                                                <img src="https://picsum.photos/id/1022/300/200" alt="应用截图" className="w-full h-32 object-cover rounded-lg mb-3" />
+                                                <h4 className="font-medium">小目标管理</h4>
+                                                <p className="text-sm text-gray-500">帮助您追踪和管理个人成长目标</p>
+                                            </div>
+                                            <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4`}>
+                                                <img src="https://picsum.photos/id/1025/300/200" alt="进度追踪" className="w-full h-32 object-cover rounded-lg mb-3" />
+                                                <h4 className="font-medium">进度追踪</h4>
+                                                <p className="text-sm text-gray-500">可视化您的成长历程和成就</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+
+                    {showModal && modalData && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                            <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
+                                <div className="p-6">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-2xl font-bold">{modalData.name} - 详细信息</h3>
+                                        <button
+                                            onClick={() => setShowModal(false)}
+                                            className="text-gray-500 hover:text-gray-700"
+                                        >
+                                            <i className="fas fa-times text-xl"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                        <div>
+                                            <h4 className="font-semibold mb-3">基本信息</h4>
+                                            <div className="space-y-2">
+                                                <div className="flex justify-between">
+                                                    <span>当前进度:</span>
+                                                    <span className="font-semibold text-blue-600">{modalData.progress}%</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>难度等级:</span>
+                                                    <span className={`px-2 py-1 rounded text-xs ${
+                                                        modalData.difficulty === '简单' ? 'bg-green-100 text-green-800' :
+                                                        modalData.difficulty === '中等' ? 'bg-yellow-100 text-yellow-800' :
+                                                        'bg-red-100 text-red-800'
+                                                    }`}>{modalData.difficulty}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>更新周期:</span>
+                                                    <span>{modalData.period}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold mb-3">进度图表</h4>
+                                            <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 h-32 flex items-end justify-around`}>
+                                                {modalData.checkInHistory.slice(-5).map((record, index) => (
+                                                    <div key={index} className="flex flex-col items-center">
+                                                        <div 
+                                                            className="bg-blue-500 rounded-t"
+                                                            style={{ 
+                                                                height: `${record.progress}px`,
+                                                                width: '20px',
+                                                                minHeight: '4px'
+                                                            }}
+                                                        ></div>
+                                                        <span className="text-xs mt-1">{record.date.slice(-2)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 className="font-semibold mb-3">打卡历史</h4>
+                                        <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 max-h-40 overflow-y-auto`}>
+                                            {modalData.checkInHistory.length > 0 ? (
+                                                <div className="space-y-2">
+                                                    {modalData.checkInHistory.slice().reverse().map((record, index) => (
+                                                        <div key={index} className="flex justify-between items-center">
+                                                            <span className="text-sm">{record.date}</span>
+                                                            <div className="flex items-center space-x-2">
+                                                                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                                    <div 
+                                                                        className="h-full bg-blue-500"
+                                                                        style={{ width: `${record.progress}%` }}
+                                                                    ></div>
+                                                                </div>
+                                                                <span className="text-sm font-medium">{record.progress}%</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <p className="text-gray-500 text-center">暂无打卡记录</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-t mt-12`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                            <div className="flex flex-col md:flex-row justify-between items-center">
+                                <div className="text-sm text-gray-500">
+                                    © 2024 小目标脱敏训练推送榜. 助力您的成长之路.
+                                </div>
+                                <div className="flex space-x-4 mt-4 md:mt-0">
+                                    <a href="#" className="text-sm text-gray-500 hover:text-blue-600">帮助中心</a>
+                                    <a href="#" className="text-sm text-gray-500 hover:text-blue-600">用户协议</a>
+                                    <a href="#" className="text-sm text-gray-500 hover:text-blue-600">隐私政策</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户评价</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        const UserReviewsApp = () => {
+            const [reviews, setReviews] = useState([
+                {
+                    id: 1,
+                    username: "张小明",
+                    avatar: "https://picsum.photos/id/64/60/60",
+                    rating: 5,
+                    content: "产品质量非常好，服务态度也很棒，会继续支持的！",
+                    timestamp: new Date('2024-01-15T10:30:00'),
+                    likes: 12,
+                    isLiked: false,
+                    isReported: false
+                },
+                {
+                    id: 2,
+                    username: "李美丽",
+                    avatar: "https://picsum.photos/id/91/60/60",
+                    rating: 4,
+                    content: "整体还不错，物流速度很快，包装也很精美。",
+                    timestamp: new Date('2024-01-14T15:20:00'),
+                    likes: 8,
+                    isLiked: false,
+                    isReported: false
+                },
+                {
+                    id: 3,
+                    username: "王强",
+                    avatar: "https://picsum.photos/id/177/60/60",
+                    rating: 3,
+                    content: "价格合理，但是颜色跟图片有点差异。",
+                    timestamp: new Date('2024-01-13T09:15:00'),
+                    likes: 3,
+                    isLiked: false,
+                    isReported: false
+                },
+                {
+                    id: 4,
+                    username: "刘芳",
+                    avatar: "https://picsum.photos/id/203/60/60",
+                    rating: 5,
+                    content: "超级满意！质量很好，客服回复也很及时。",
+                    timestamp: new Date('2024-01-12T14:45:00'),
+                    likes: 15,
+                    isLiked: false,
+                    isReported: false
+                },
+                {
+                    id: 5,
+                    username: "陈伟",
+                    avatar: "https://picsum.photos/id/342/60/60",
+                    rating: 2,
+                    content: "收到的商品有瑕疵，希望能改进质量。",
+                    timestamp: new Date('2024-01-11T11:20:00'),
+                    likes: 1,
+                    isLiked: false,
+                    isReported: false
+                },
+                {
+                    id: 6,
+                    username: "赵敏",
+                    avatar: "https://picsum.photos/id/399/60/60",
+                    rating: 4,
+                    content: "性价比很高，推荐给朋友们！",
+                    timestamp: new Date('2024-01-10T16:30:00'),
+                    likes: 7,
+                    isLiked: false,
+                    isReported: false
+                }
+            ]);
+
+            const [activeTab, setActiveTab] = useState('用户评价');
+            const [starFilter, setStarFilter] = useState('全部星级');
+            const [sortOrder, setSortOrder] = useState('按时间从新到旧');
+            const [searchKeyword, setSearchKeyword] = useState('');
+            const [newReview, setNewReview] = useState({
+                username: '',
+                rating: 5,
+                content: ''
+            });
+            const [isLoading, setIsLoading] = useState(false);
+            const [showSubmitForm, setShowSubmitForm] = useState(false);
+
+            const filteredAndSortedReviews = useMemo(() => {
+                let filtered = reviews.filter(review => {
+                    const matchesStars = starFilter === '全部星级' || review.rating === parseInt(starFilter.replace(' 星', ''));
+                    const matchesSearch = review.content.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                                        review.username.toLowerCase().includes(searchKeyword.toLowerCase());
+                    return matchesStars && matchesSearch;
+                });
+
+                filtered.sort((a, b) => {
+                    switch (sortOrder) {
+                        case '按时间从新到旧':
+                            return new Date(b.timestamp) - new Date(a.timestamp);
+                        case '按时间从旧到新':
+                            return new Date(a.timestamp) - new Date(b.timestamp);
+                        case '按星级从高到低':
+                            return b.rating - a.rating;
+                        case '按星级从低到高':
+                            return a.rating - b.rating;
+                        default:
+                            return 0;
+                    }
+                });
+
+                return filtered;
+            }, [reviews, starFilter, sortOrder, searchKeyword]);
+
+            const averageRating = useMemo(() => {
+                if (reviews.length === 0) return 0;
+                const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+                return (sum / reviews.length).toFixed(1);
+            }, [reviews]);
+
+            const handleLike = (reviewId) => {
+                setReviews(prev => prev.map(review => 
+                    review.id === reviewId 
+                        ? { 
+                            ...review, 
+                            likes: review.isLiked ? review.likes - 1 : review.likes + 1,
+                            isLiked: !review.isLiked 
+                          }
+                        : review
+                ));
+            };
+
+            const handleReport = (reviewId) => {
+                setReviews(prev => prev.map(review => 
+                    review.id === reviewId 
+                        ? { ...review, isReported: !review.isReported }
+                        : review
+                ));
+            };
+
+            const handleSubmitReview = () => {
+                if (!newReview.username.trim() || !newReview.content.trim()) {
+                    return;
+                }
+
+                const review = {
+                    id: reviews.length + 1,
+                    username: newReview.username,
+                    avatar: `https://picsum.photos/id/${Math.floor(Math.random() * 500)}/60/60`,
+                    rating: newReview.rating,
+                    content: newReview.content,
+                    timestamp: new Date(),
+                    likes: 0,
+                    isLiked: false,
+                    isReported: false
+                };
+
+                setReviews(prev => [review, ...prev]);
+                setNewReview({ username: '', rating: 5, content: '' });
+                setShowSubmitForm(false);
+            };
+
+            const loadMoreReviews = () => {
+                setIsLoading(true);
+                setTimeout(() => {
+                    const newReviews = [
+                        {
+                            id: reviews.length + 1,
+                            username: "新用户" + (reviews.length + 1),
+                            avatar: `https://picsum.photos/id/${Math.floor(Math.random() * 500)}/60/60`,
+                            rating: Math.floor(Math.random() * 5) + 1,
+                            content: "这是一条新加载的评价内容，体验非常好！",
+                            timestamp: new Date(),
+                            likes: Math.floor(Math.random() * 10),
+                            isLiked: false,
+                            isReported: false
+                        }
+                    ];
+                    setReviews(prev => [...prev, ...newReviews]);
+                    setIsLoading(false);
+                }, 1000);
+            };
+
+            const renderStars = (rating) => {
+                return Array.from({ length: 5 }, (_, index) => (
+                    <i 
+                        key={index}
+                        className={`fas fa-star ${index < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                    />
+                ));
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <nav className="bg-white shadow-lg">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center">
+                                    <img src="https://picsum.photos/id/1/40/40" alt="Logo" className="h-10 w-10 rounded-full" />
+                                    <span className="ml-3 text-xl font-bold text-gray-800">评价系统</span>
+                                </div>
+                                <div className="flex space-x-8">
+                                    {['首页', '产品', '用户评价', '联系我们'].map(tab => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                                                activeTab === tab 
+                                                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                                                    : 'text-gray-700 hover:text-blue-600'
+                                            }`}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div className="max-w-7xl mx-auto px-4 py-8">
+                        <div className="text-center mb-8">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4">用户评价</h1>
+                            <p className="text-lg text-gray-600">真实用户反馈，为您提供最可靠的购买参考</p>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                            <div className="text-center">
+                                <div className="flex justify-center items-center mb-4">
+                                    <span className="text-5xl font-bold text-yellow-500 mr-4">{averageRating}</span>
+                                    <div>
+                                        <div className="flex justify-center mb-2">
+                                            {renderStars(Math.round(averageRating))}
+                                        </div>
+                                        <p className="text-gray-600">基于 {reviews.length} 条评价</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">星级筛选</label>
+                                    <select 
+                                        value={starFilter}
+                                        onChange={(e) => setStarFilter(e.target.value)}
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option>全部星级</option>
+                                        <option>5 星</option>
+                                        <option>4 星</option>
+                                        <option>3 星</option>
+                                        <option>2 星</option>
+                                        <option>1 星</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">排序方式</label>
+                                    <select 
+                                        value={sortOrder}
+                                        onChange={(e) => setSortOrder(e.target.value)}
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option>按时间从新到旧</option>
+                                        <option>按时间从旧到新</option>
+                                        <option>按星级从高到低</option>
+                                        <option>按星级从低到高</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">关键词搜索</label>
+                                    <input
+                                        type="text"
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword(e.target.value)}
+                                        placeholder="搜索评价内容或用户名"
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                                <div className="flex items-end">
+                                    <button
+                                        onClick={() => setShowSubmitForm(true)}
+                                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                                    >
+                                        写评价
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-md">
+                            <div className="p-6 border-b border-gray-200">
+                                <h2 className="text-xl font-semibold text-gray-800">
+                                    评价列表 ({filteredAndSortedReviews.length})
+                                </h2>
+                            </div>
+                            <div className="divide-y divide-gray-200">
+                                {filteredAndSortedReviews.length === 0 ? (
+                                    <div className="p-8 text-center text-gray-500">
+                                        <i className="fas fa-search text-4xl mb-4"></i>
+                                        <p>暂无符合条件的评价</p>
+                                    </div>
+                                ) : (
+                                    filteredAndSortedReviews.map(review => (
+                                        <div key={review.id} className="p-6">
+                                            <div className="flex items-start space-x-4">
+                                                <img 
+                                                    src={review.avatar} 
+                                                    alt={review.username}
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+                                                <div className="flex-1">
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <div>
+                                                            <h3 className="font-semibold text-gray-800">{review.username}</h3>
+                                                            <div className="flex items-center space-x-2">
+                                                                <div className="flex">
+                                                                    {renderStars(review.rating)}
+                                                                </div>
+                                                                <span className="text-sm text-gray-500">
+                                                                    {review.timestamp.toLocaleDateString('zh-CN')}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex space-x-2">
+                                                            <button
+                                                                onClick={() => handleLike(review.id)}
+                                                                className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors duration-200 ${
+                                                                    review.isLiked 
+                                                                        ? 'bg-blue-100 text-blue-600' 
+                                                                        : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600'
+                                                                }`}
+                                                            >
+                                                                <i className="fas fa-thumbs-up"></i>
+                                                                <span>{review.likes}</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleReport(review.id)}
+                                                                className={`px-3 py-1 rounded-full text-sm transition-colors duration-200 ${
+                                                                    review.isReported 
+                                                                        ? 'bg-red-100 text-red-600' 
+                                                                        : 'bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600'
+                                                                }`}
+                                                            >
+                                                                <i className="fas fa-flag"></i>
+                                                                {review.isReported ? ' 已举报' : ' 举报'}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-gray-700 leading-relaxed">{review.content}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                            {filteredAndSortedReviews.length > 0 && (
+                                <div className="p-6 text-center border-t border-gray-200">
+                                    <button
+                                        onClick={loadMoreReviews}
+                                        disabled={isLoading}
+                                        className="bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+                                    >
+                                        {isLoading ? (
+                                            <>
+                                                <i className="fas fa-spinner fa-spin mr-2"></i>
+                                                加载中...
+                                            </>
+                                        ) : (
+                                            '加载更多'
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {showSubmitForm && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                            <div className="bg-white rounded-lg max-w-md w-full p-6">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-lg font-semibold">提交评价</h3>
+                                    <button
+                                        onClick={() => setShowSubmitForm(false)}
+                                        className="text-gray-400 hover:text-gray-600"
+                                    >
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">用户名</label>
+                                        <input
+                                            type="text"
+                                            value={newReview.username}
+                                            onChange={(e) => setNewReview(prev => ({ ...prev, username: e.target.value }))}
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="请输入您的用户名"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">评分</label>
+                                        <select
+                                            value={newReview.rating}
+                                            onChange={(e) => setNewReview(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value={5}>★★★★★ 5星</option>
+                                            <option value={4}>★★★★☆ 4星</option>
+                                            <option value={3}>★★★☆☆ 3星</option>
+                                            <option value={2}>★★☆☆☆ 2星</option>
+                                            <option value={1}>★☆☆☆☆ 1星</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">评价内容</label>
+                                        <textarea
+                                            value={newReview.content}
+                                            onChange={(e) => setNewReview(prev => ({ ...prev, content: e.target.value }))}
+                                            rows={4}
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="请分享您的使用体验..."
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex space-x-3 mt-6">
+                                    <button
+                                        onClick={() => setShowSubmitForm(false)}
+                                        className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors duration-200"
+                                    >
+                                        取消
+                                    </button>
+                                    <button
+                                        onClick={handleSubmitReview}
+                                        className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                                    >
+                                        提交评价
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<UserReviewsApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
